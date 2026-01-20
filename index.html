@@ -82,9 +82,9 @@
 
         @keyframes gradient-drift {
             0%, 100% { transform: translate(0, 0) rotate(0deg); }
-            25% { transform: translate(-5%, -3%) rotate(1deg); }
-            50% { transform: translate(-2%, -5%) rotate(-1deg); }
-            75% { transform: translate(-7%, -2%) rotate(0.5deg); }
+            25% { transform: translate(-2%, -1.5%) rotate(0.5deg); }
+            50% { transform: translate(-1%, -2.5%) rotate(-0.5deg); }
+            75% { transform: translate(-3%, -1%) rotate(0.25deg); }
         }
 
         /* ============================================
@@ -107,24 +107,24 @@
             font-family: 'Fira Code', monospace;
             font-size: 14px;
             line-height: 1.8;
-            color: rgba(253, 180, 75, 0.7);
-            text-shadow: 0 0 20px rgba(253, 180, 75, 0.5), 0 0 40px rgba(253, 180, 75, 0.3);
+            color: rgba(253, 180, 75, 0.4);
+            text-shadow: 0 0 15px rgba(253, 180, 75, 0.3), 0 0 30px rgba(253, 180, 75, 0.15);
             animation: code-fall linear infinite;
             white-space: nowrap;
             writing-mode: vertical-rl;
             text-orientation: mixed;
         }
 
-        .code-column:nth-child(1) { left: 5%; animation-duration: 25s; animation-delay: 0s; }
-        .code-column:nth-child(2) { left: 15%; animation-duration: 20s; animation-delay: 5s; color: rgba(220, 68, 68, 0.6); }
-        .code-column:nth-child(3) { left: 25%; animation-duration: 28s; animation-delay: 2s; }
-        .code-column:nth-child(4) { left: 35%; animation-duration: 22s; animation-delay: 8s; color: rgba(220, 68, 68, 0.6); }
-        .code-column:nth-child(5) { left: 45%; animation-duration: 30s; animation-delay: 4s; }
-        .code-column:nth-child(6) { left: 55%; animation-duration: 18s; animation-delay: 10s; color: rgba(220, 68, 68, 0.6); }
-        .code-column:nth-child(7) { left: 65%; animation-duration: 26s; animation-delay: 6s; }
-        .code-column:nth-child(8) { left: 75%; animation-duration: 24s; animation-delay: 12s; color: rgba(220, 68, 68, 0.6); }
-        .code-column:nth-child(9) { left: 85%; animation-duration: 21s; animation-delay: 3s; }
-        .code-column:nth-child(10) { left: 92%; animation-duration: 27s; animation-delay: 7s; color: rgba(220, 68, 68, 0.6); }
+        .code-column:nth-child(1) { left: 5%; animation-duration: 45s; animation-delay: 0s; }
+        .code-column:nth-child(2) { left: 15%; animation-duration: 40s; animation-delay: 8s; color: rgba(220, 68, 68, 0.4); }
+        .code-column:nth-child(3) { left: 25%; animation-duration: 50s; animation-delay: 4s; }
+        .code-column:nth-child(4) { left: 35%; animation-duration: 42s; animation-delay: 12s; color: rgba(220, 68, 68, 0.4); }
+        .code-column:nth-child(5) { left: 45%; animation-duration: 55s; animation-delay: 6s; }
+        .code-column:nth-child(6) { left: 55%; animation-duration: 38s; animation-delay: 15s; color: rgba(220, 68, 68, 0.4); }
+        .code-column:nth-child(7) { left: 65%; animation-duration: 48s; animation-delay: 10s; }
+        .code-column:nth-child(8) { left: 75%; animation-duration: 44s; animation-delay: 18s; color: rgba(220, 68, 68, 0.4); }
+        .code-column:nth-child(9) { left: 85%; animation-duration: 41s; animation-delay: 5s; }
+        .code-column:nth-child(10) { left: 92%; animation-duration: 52s; animation-delay: 14s; color: rgba(220, 68, 68, 0.4); }
 
         @keyframes code-fall {
             0% { transform: translateY(-100%); opacity: 0; }
@@ -137,22 +137,22 @@
         .code-line-horizontal {
             position: absolute;
             font-family: 'Fira Code', monospace;
-            font-size: 13px;
-            color: rgba(253, 180, 75, 0.8);
+            font-size: 12px;
+            color: rgba(253, 180, 75, 0.5);
             white-space: nowrap;
             animation: float-horizontal 15s linear infinite;
-            text-shadow: 0 0 15px rgba(253, 180, 75, 0.4);
+            text-shadow: 0 0 10px rgba(253, 180, 75, 0.2);
             padding: 8px 16px;
-            background: linear-gradient(90deg, transparent, rgba(43, 21, 21, 0.8), rgba(43, 21, 21, 0.8), transparent);
+            background: linear-gradient(90deg, transparent, rgba(43, 21, 21, 0.6), rgba(43, 21, 21, 0.6), transparent);
             border-radius: 4px;
         }
 
-        .code-line-horizontal:nth-child(1) { top: 12%; animation-duration: 18s; }
-        .code-line-horizontal:nth-child(2) { top: 28%; animation-duration: 22s; animation-delay: 3s; }
-        .code-line-horizontal:nth-child(3) { top: 44%; animation-duration: 16s; animation-delay: 6s; }
-        .code-line-horizontal:nth-child(4) { top: 60%; animation-duration: 20s; animation-delay: 2s; }
-        .code-line-horizontal:nth-child(5) { top: 76%; animation-duration: 24s; animation-delay: 8s; }
-        .code-line-horizontal:nth-child(6) { top: 88%; animation-duration: 19s; animation-delay: 5s; }
+        .code-line-horizontal:nth-child(1) { top: 12%; animation-duration: 35s; }
+        .code-line-horizontal:nth-child(2) { top: 28%; animation-duration: 42s; animation-delay: 6s; }
+        .code-line-horizontal:nth-child(3) { top: 44%; animation-duration: 32s; animation-delay: 12s; }
+        .code-line-horizontal:nth-child(4) { top: 60%; animation-duration: 40s; animation-delay: 4s; }
+        .code-line-horizontal:nth-child(5) { top: 76%; animation-duration: 48s; animation-delay: 16s; }
+        .code-line-horizontal:nth-child(6) { top: 88%; animation-duration: 38s; animation-delay: 10s; }
 
         @keyframes float-horizontal {
             0% { transform: translateX(-100%); opacity: 0; }
@@ -185,31 +185,31 @@
 
         .data-symbol.large {
             font-size: 48px;
-            opacity: 0.15;
+            opacity: 0.08;
         }
 
         .data-symbol.medium {
             font-size: 32px;
-            opacity: 0.25;
+            opacity: 0.12;
         }
 
         .data-symbol.small {
             font-size: 20px;
-            opacity: 0.4;
+            opacity: 0.2;
         }
 
         @keyframes symbol-float {
-            0%, 100% { 
-                transform: translateY(0) rotate(0deg) scale(1); 
+            0%, 100% {
+                transform: translateY(0) rotate(0deg) scale(1);
             }
-            25% { 
-                transform: translateY(-30px) rotate(5deg) scale(1.05); 
+            25% {
+                transform: translateY(-15px) rotate(2deg) scale(1.02);
             }
-            50% { 
-                transform: translateY(-15px) rotate(-3deg) scale(0.95); 
+            50% {
+                transform: translateY(-8px) rotate(-1deg) scale(0.98);
             }
-            75% { 
-                transform: translateY(-40px) rotate(2deg) scale(1.02); 
+            75% {
+                transform: translateY(-20px) rotate(1deg) scale(1.01);
             }
         }
 
@@ -232,8 +232,8 @@
         }
 
         @keyframes grid-pulse {
-            0%, 100% { opacity: 0.3; }
-            50% { opacity: 0.6; }
+            0%, 100% { opacity: 0.15; }
+            50% { opacity: 0.3; }
         }
 
         /* ============================================
@@ -466,15 +466,23 @@
             50% { transform: translateY(-30px) scale(1.1); opacity: 0.5; }
         }
 
-        /* KPI pulse */
+        /* KPI pulse con cambio de color */
         .kpi-number {
             display: inline-block;
-            animation: kpi-pulse 2s ease-in-out infinite;
+            animation: kpi-pulse 3s ease-in-out infinite, kpi-color 4s ease-in-out infinite;
         }
 
         @keyframes kpi-pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.08); }
+            0%, 100% { transform: scale(1) translateY(0); }
+            25% { transform: scale(1.05) translateY(-3px); }
+            50% { transform: scale(1.1) translateY(-5px); }
+            75% { transform: scale(1.05) translateY(-3px); }
+        }
+
+        @keyframes kpi-color {
+            0%, 100% { color: #FDB44B; text-shadow: 0 0 20px rgba(253, 180, 75, 0.3); }
+            33% { color: #FFD480; text-shadow: 0 0 25px rgba(255, 212, 128, 0.4); }
+            66% { color: #E8A030; text-shadow: 0 0 25px rgba(232, 160, 48, 0.4); }
         }
 
         /* ============================================
@@ -566,6 +574,38 @@
                 font-size: 32px;
             }
         }
+
+        /* ============================================
+           NAVEGACIÓN ACTIVA
+           ============================================ */
+        .nav-link {
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link.active {
+            color: #FDB44B;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #FDB44B;
+            transition: width 0.3s ease;
+        }
+
+        .nav-link.active::after {
+            width: 100%;
+        }
+
+        .nav-link-mobile.active {
+            color: #FDB44B;
+            background: rgba(253, 180, 75, 0.1);
+        }
     </style>
 </head>
 <body class="text-slate-700 antialiased">
@@ -593,11 +633,11 @@
                 </div>
 
                 <div class="hidden md:flex items-center space-x-8">
-                    <a href="#inicio" class="text-sm font-medium hover:text-brand-accent transition-colors">Inicio</a>
-                    <a href="#consultoria" class="text-sm font-medium hover:text-brand-accent transition-colors">Consultoría</a>
-                    <a href="#academia" class="text-sm font-medium hover:text-brand-accent transition-colors">Academia</a>
-                    <a href="#sobre-nosotros" class="text-sm font-medium hover:text-brand-accent transition-colors">Expertos</a>
-                    <a href="#contacto" class="px-4 py-2 border border-white/20 rounded-full hover:bg-brand-accent hover:text-brand-dark hover:border-transparent transition-all text-sm font-medium">Contacto</a>
+                    <a href="#inicio" class="nav-link text-sm font-medium hover:text-brand-accent transition-colors">Inicio</a>
+                    <a href="#cursos" class="nav-link text-sm font-medium hover:text-brand-accent transition-colors">Cursos</a>
+                    <a href="#consultoria" class="nav-link text-sm font-medium hover:text-brand-accent transition-colors">Consultoría</a>
+                    <a href="#sobre-nosotros" class="nav-link text-sm font-medium hover:text-brand-accent transition-colors">Expertos</a>
+                    <a href="#contacto" class="nav-link text-sm font-medium hover:text-brand-accent transition-colors">Contacto</a>
                 </div>
 
                 <div class="hidden md:flex items-center space-x-4">
@@ -618,10 +658,11 @@
 
         <div id="mobile-menu" class="hidden md:hidden bg-brand-dark border-t border-white/10">
             <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                <a href="#inicio" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-white/10 hover:text-brand-accent">Inicio</a>
-                <a href="#consultoria" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-white/10 hover:text-brand-accent">Consultoría</a>
-                <a href="#academia" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-white/10 hover:text-brand-accent">Academia</a>
-                <a href="#contacto" class="block px-3 py-2 rounded-md text-base font-medium text-brand-accent">Contacto</a>
+                <a href="#inicio" class="nav-link-mobile block px-3 py-2 rounded-md text-base font-medium hover:bg-white/10 hover:text-brand-accent">Inicio</a>
+                <a href="#cursos" class="nav-link-mobile block px-3 py-2 rounded-md text-base font-medium hover:bg-white/10 hover:text-brand-accent">Cursos</a>
+                <a href="#consultoria" class="nav-link-mobile block px-3 py-2 rounded-md text-base font-medium hover:bg-white/10 hover:text-brand-accent">Consultoría</a>
+                <a href="#sobre-nosotros" class="nav-link-mobile block px-3 py-2 rounded-md text-base font-medium hover:bg-white/10 hover:text-brand-accent">Expertos</a>
+                <a href="#contacto" class="nav-link-mobile block px-3 py-2 rounded-md text-base font-medium hover:bg-white/10 hover:text-brand-accent">Contacto</a>
             </div>
         </div>
     </nav>
@@ -756,6 +797,199 @@
         </div>
     </div>
 
+    <!-- COURSES SECTION (B2C) -->
+    <section id="cursos" class="py-20 bg-white relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-12">
+                <div class="max-w-2xl">
+                    <span class="text-brand-primary font-semibold tracking-wider uppercase text-sm">Academia Tecnológica</span>
+                    <h2 class="font-heading text-3xl md:text-4xl font-bold text-brand-dark mt-2">Aprende con los Consultores que Lideran la Industria</h2>
+                    <p class="mt-4 text-slate-600 text-lg">No solo teoría. Te enseñamos exactamente lo que aplicamos en nuestros proyectos de consultoría.</p>
+                </div>
+
+                <div class="mt-6 md:mt-0 bg-slate-100 p-1 rounded-lg inline-flex relative">
+                    <button id="btn-objective" onclick="toggleCourses('objective')" class="relative z-10 px-6 py-2 text-sm font-bold rounded-md transition-all duration-300 bg-white text-brand-primary shadow-sm">Según Objetivo</button>
+                    <button id="btn-tool" onclick="toggleCourses('tool')" class="relative z-10 px-6 py-2 text-sm font-bold rounded-md transition-all duration-300 text-slate-500 hover:text-brand-dark">Según Herramienta</button>
+                </div>
+            </div>
+
+            <!-- Courses Grid -->
+            <div id="courses-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- SEGÚN OBJETIVO - Analista de Datos -->
+                <div class="course-card objective group border border-slate-200 rounded-2xl overflow-hidden hover:shadow-lg transition-all">
+                    <div class="h-48 bg-slate-200 relative overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2070&auto=format&fit=crop" alt="Analista de Datos" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <div class="absolute top-4 left-4 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-xs font-bold text-brand-dark">Ruta Completa</div>
+                    </div>
+                    <div class="p-6">
+                        <h4 class="font-heading font-bold text-xl text-brand-dark mb-2 group-hover:text-brand-primary transition-colors">Analista de Datos</h4>
+                        <p class="text-slate-600 text-sm mb-4">Domina el ciclo completo de datos: Desde Excel avanzado hasta visualización profesional en Power BI y análisis estadístico.</p>
+                        <div class="flex justify-between items-center border-t border-slate-100 pt-4">
+                            <span class="text-xs text-slate-500 font-semibold flex items-center gap-1"><i data-lucide="target" class="w-3 h-3"></i> Excel, SQL, Power BI</span>
+                            <span class="text-brand-primary font-bold">Ver programa</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SEGÚN OBJETIVO - Automatización de Procesos -->
+                <div class="course-card objective group border border-slate-200 rounded-2xl overflow-hidden hover:shadow-lg transition-all">
+                    <div class="h-48 bg-slate-200 relative overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=2070&auto=format&fit=crop" alt="Automatización" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <div class="absolute top-4 left-4 bg-brand-accent text-brand-dark px-3 py-1 rounded-full text-xs font-bold">Best Seller</div>
+                    </div>
+                    <div class="p-6">
+                        <h4 class="font-heading font-bold text-xl text-brand-dark mb-2 group-hover:text-brand-primary transition-colors">Automatización de Procesos</h4>
+                        <p class="text-slate-600 text-sm mb-4">Deja de hacer tareas repetitivas. Aprende a automatizar flujos de trabajo con Python, Selenium y APIs.</p>
+                        <div class="flex justify-between items-center border-t border-slate-100 pt-4">
+                            <span class="text-xs text-slate-500 font-semibold flex items-center gap-1"><i data-lucide="bot" class="w-3 h-3"></i> Python, APIs, RPA</span>
+                            <span class="text-brand-primary font-bold">Ver programa</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SEGÚN OBJETIVO - Inteligencia de Negocios -->
+                <div class="course-card objective group border border-slate-200 rounded-2xl overflow-hidden hover:shadow-lg transition-all">
+                    <div class="h-48 bg-slate-200 relative overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2070&auto=format&fit=crop" alt="Business Intelligence" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <div class="absolute top-4 left-4 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-xs font-bold text-brand-dark">Avanzado</div>
+                    </div>
+                    <div class="p-6">
+                        <h4 class="font-heading font-bold text-xl text-brand-dark mb-2 group-hover:text-brand-primary transition-colors">Inteligencia de Negocios</h4>
+                        <p class="text-slate-600 text-sm mb-4">Transforma datos en decisiones estratégicas. Dashboards ejecutivos, KPIs y reportería empresarial.</p>
+                        <div class="flex justify-between items-center border-t border-slate-100 pt-4">
+                            <span class="text-xs text-slate-500 font-semibold flex items-center gap-1"><i data-lucide="bar-chart-2" class="w-3 h-3"></i> Power BI, Tableau</span>
+                            <span class="text-brand-primary font-bold">Ver programa</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SEGÚN HERRAMIENTA - Excel -->
+                <div class="course-card tool hidden group border border-slate-200 rounded-2xl overflow-hidden hover:shadow-lg transition-all">
+                    <div class="h-48 bg-gradient-to-br from-green-600 to-green-800 relative overflow-hidden flex items-center justify-center">
+                        <div class="text-center">
+                            <i data-lucide="table" class="w-16 h-16 text-white mx-auto mb-2"></i>
+                            <span class="text-white font-bold text-lg">Microsoft Excel</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h4 class="font-heading font-bold text-xl text-brand-dark mb-2 group-hover:text-brand-primary transition-colors">Excel Avanzado</h4>
+                        <p class="text-slate-600 text-sm mb-4">Domina fórmulas avanzadas, tablas dinámicas, macros y automatización con VBA para análisis de datos profesional.</p>
+                        <div class="flex justify-between items-center border-t border-slate-100 pt-4">
+                            <span class="text-xs text-slate-500 font-semibold flex items-center gap-1"><i data-lucide="video" class="w-3 h-3"></i> 20 horas de video</span>
+                            <span class="text-brand-primary font-bold">Ver programa</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SEGÚN HERRAMIENTA - Python -->
+                <div class="course-card tool hidden group border border-slate-200 rounded-2xl overflow-hidden hover:shadow-lg transition-all">
+                    <div class="h-48 bg-gradient-to-br from-blue-600 to-yellow-500 relative overflow-hidden flex items-center justify-center">
+                        <div class="text-center">
+                            <i data-lucide="code" class="w-16 h-16 text-white mx-auto mb-2"></i>
+                            <span class="text-white font-bold text-lg">Python</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h4 class="font-heading font-bold text-xl text-brand-dark mb-2 group-hover:text-brand-primary transition-colors">Python para Datos</h4>
+                        <p class="text-slate-600 text-sm mb-4">Desde cero hasta análisis avanzado. Pandas, NumPy, visualización y conexión con APIs de IA.</p>
+                        <div class="flex justify-between items-center border-t border-slate-100 pt-4">
+                            <span class="text-xs text-slate-500 font-semibold flex items-center gap-1"><i data-lucide="code" class="w-3 h-3"></i> Proyectos Reales</span>
+                            <span class="text-brand-primary font-bold">Ver programa</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SEGÚN HERRAMIENTA - ArcGIS -->
+                <div class="course-card tool hidden group border border-slate-200 rounded-2xl overflow-hidden hover:shadow-lg transition-all">
+                    <div class="h-48 bg-gradient-to-br from-teal-600 to-blue-700 relative overflow-hidden flex items-center justify-center">
+                        <div class="text-center">
+                            <i data-lucide="globe-2" class="w-16 h-16 text-white mx-auto mb-2"></i>
+                            <span class="text-white font-bold text-lg">ArcGIS</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h4 class="font-heading font-bold text-xl text-brand-dark mb-2 group-hover:text-brand-primary transition-colors">ArcGIS y Análisis Espacial</h4>
+                        <p class="text-slate-600 text-sm mb-4">Análisis geoespacial profesional. Mapas temáticos, geoprocesamiento y modelado territorial.</p>
+                        <div class="flex justify-between items-center border-t border-slate-100 pt-4">
+                            <span class="text-xs text-slate-500 font-semibold flex items-center gap-1"><i data-lucide="map" class="w-3 h-3"></i> GIS Profesional</span>
+                            <span class="text-brand-primary font-bold">Ver programa</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SEGÚN HERRAMIENTA - Power BI -->
+                <div class="course-card tool hidden group border border-slate-200 rounded-2xl overflow-hidden hover:shadow-lg transition-all">
+                    <div class="h-48 bg-gradient-to-br from-yellow-500 to-orange-600 relative overflow-hidden flex items-center justify-center">
+                        <div class="text-center">
+                            <i data-lucide="bar-chart-2" class="w-16 h-16 text-white mx-auto mb-2"></i>
+                            <span class="text-white font-bold text-lg">Power BI</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h4 class="font-heading font-bold text-xl text-brand-dark mb-2 group-hover:text-brand-primary transition-colors">Power BI Completo</h4>
+                        <p class="text-slate-600 text-sm mb-4">Crea dashboards impactantes. Conexión de datos, DAX, visualizaciones y publicación empresarial.</p>
+                        <div class="flex justify-between items-center border-t border-slate-100 pt-4">
+                            <span class="text-xs text-slate-500 font-semibold flex items-center gap-1"><i data-lucide="layout-dashboard" class="w-3 h-3"></i> Dashboards Pro</span>
+                            <span class="text-brand-primary font-bold">Ver programa</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Lead Magnet -->
+            <div class="mt-16 bg-brand-primary rounded-2xl p-8 md:p-12 relative overflow-hidden">
+                <div class="absolute top-0 right-0 -mt-10 -mr-10 w-64 h-64 bg-white opacity-10 rounded-full blur-3xl"></div>
+                <div class="relative z-10 flex flex-col md:flex-row items-center gap-8">
+                    <div class="flex-1 text-center md:text-left">
+                        <span class="bg-brand-accent text-brand-dark text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide">Masterclass Gratuita</span>
+                        <h3 class="font-heading text-2xl md:text-3xl font-bold text-white mt-4 mb-2">El Fin de la Tarea Repetitiva</h3>
+                        <p class="text-teal-100">Aprende a automatizar un flujo de trabajo real en 45 minutos con el Dr. Oscar Vargas.</p>
+                    </div>
+                    <div class="flex-shrink-0">
+                        <button class="bg-white text-brand-primary hover:bg-teal-50 px-8 py-3 rounded-lg font-bold shadow-lg transition-transform hover:scale-105 flex items-center gap-2">
+                            <i data-lucide="play-circle" class="w-5 h-5"></i> Acceso Gratuito
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- STATS SECTION - Métricas de Impacto -->
+    <section class="py-16 bg-gradient-to-br from-brand-dark via-brand-navy to-brand-dark relative overflow-hidden">
+        <!-- Efecto de código de fondo mejorado -->
+        <div class="absolute inset-0 opacity-20">
+            <div class="code-line-horizontal" style="top: 15%; animation-duration: 35s;">model.accuracy = 0.97 | precision = 0.95 | recall = 0.93</div>
+            <div class="code-line-horizontal" style="top: 45%; animation-duration: 30s; animation-delay: 2s;">df.shape: (100000, 45) | processed in 2.3s</div>
+            <div class="code-line-horizontal" style="top: 75%; animation-duration: 38s; animation-delay: 4s;">pipeline.execute() | SUCCESS | ROI: +340%</div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-6 text-center">
+                <div class="tech-card p-6 rounded-lg bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 transition-all">
+                    <div class="text-4xl md:text-5xl font-bold text-brand-accent mb-2 font-heading kpi-number">20</div>
+                    <div class="text-slate-300 text-xs uppercase tracking-wider">Proyectos Desarrollados</div>
+                </div>
+                <div class="tech-card p-6 rounded-lg bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 transition-all">
+                    <div class="text-4xl md:text-5xl font-bold text-brand-accent mb-2 font-heading kpi-number" style="animation-delay: 0.3s;">6</div>
+                    <div class="text-slate-300 text-xs uppercase tracking-wider">Países</div>
+                </div>
+                <div class="tech-card p-6 rounded-lg bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 transition-all">
+                    <div class="text-4xl md:text-5xl font-bold text-brand-accent mb-2 font-heading kpi-number" style="animation-delay: 0.6s;">300</div>
+                    <div class="text-slate-300 text-xs uppercase tracking-wider">Estudiantes Formados</div>
+                </div>
+                <div class="tech-card p-6 rounded-lg bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 transition-all">
+                    <div class="text-4xl md:text-5xl font-bold text-brand-accent mb-2 font-heading kpi-number" style="animation-delay: 0.9s;">10</div>
+                    <div class="text-slate-300 text-xs uppercase tracking-wider">Herramientas</div>
+                </div>
+                <div class="tech-card p-6 rounded-lg bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 transition-all">
+                    <div class="text-4xl md:text-5xl font-bold text-brand-accent mb-2 font-heading kpi-number" style="animation-delay: 1.2s;">9</div>
+                    <div class="text-slate-300 text-xs uppercase tracking-wider">Publicaciones Científicas</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- CONSULTING SECTION (B2B) -->
     <section id="consultoria" class="py-20 bg-slate-50 relative">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -808,126 +1042,6 @@
         </div>
     </section>
 
-    <!-- STATS SECTION - Métricas de Impacto -->
-    <section class="py-16 bg-gradient-to-br from-brand-dark via-brand-navy to-brand-dark relative overflow-hidden">
-        <!-- Efecto de código de fondo mejorado -->
-        <div class="absolute inset-0 opacity-20">
-            <div class="code-line-horizontal" style="top: 15%; animation-duration: 35s;">model.accuracy = 0.97 | precision = 0.95 | recall = 0.93</div>
-            <div class="code-line-horizontal" style="top: 45%; animation-duration: 30s; animation-delay: 2s;">df.shape: (100000, 45) | processed in 2.3s</div>
-            <div class="code-line-horizontal" style="top: 75%; animation-duration: 38s; animation-delay: 4s;">pipeline.execute() | SUCCESS | ROI: +340%</div>
-        </div>
-
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="grid grid-cols-2 md:grid-cols-5 gap-6 text-center">
-                <div class="tech-card p-6 rounded-lg bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 transition-all">
-                    <div class="text-4xl md:text-5xl font-bold text-brand-accent mb-2 font-heading kpi-number">20</div>
-                    <div class="text-slate-300 text-xs uppercase tracking-wider">Proyectos Desarrollados</div>
-                </div>
-                <div class="tech-card p-6 rounded-lg bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 transition-all">
-                    <div class="text-4xl md:text-5xl font-bold text-brand-accent mb-2 font-heading kpi-number" style="animation-delay: 0.3s;">6</div>
-                    <div class="text-slate-300 text-xs uppercase tracking-wider">Países</div>
-                </div>
-                <div class="tech-card p-6 rounded-lg bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 transition-all">
-                    <div class="text-4xl md:text-5xl font-bold text-brand-accent mb-2 font-heading kpi-number" style="animation-delay: 0.6s;">300</div>
-                    <div class="text-slate-300 text-xs uppercase tracking-wider">Estudiantes Formados</div>
-                </div>
-                <div class="tech-card p-6 rounded-lg bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 transition-all">
-                    <div class="text-4xl md:text-5xl font-bold text-brand-accent mb-2 font-heading kpi-number" style="animation-delay: 0.9s;">10</div>
-                    <div class="text-slate-300 text-xs uppercase tracking-wider">Herramientas</div>
-                </div>
-                <div class="tech-card p-6 rounded-lg bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 transition-all">
-                    <div class="text-4xl md:text-5xl font-bold text-brand-accent mb-2 font-heading kpi-number" style="animation-delay: 1.2s;">9</div>
-                    <div class="text-slate-300 text-xs uppercase tracking-wider">Publicaciones Científicas</div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ACADEMY SECTION (B2C) -->
-    <section id="academia" class="py-20 bg-white relative">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex flex-col md:flex-row justify-between items-end mb-12">
-                <div class="max-w-2xl">
-                    <span class="text-brand-primary font-semibold tracking-wider uppercase text-sm">Academia Tecnológica</span>
-                    <h2 class="font-heading text-3xl md:text-4xl font-bold text-brand-dark mt-2">Aprende con los Consultores que Lideran la Industria</h2>
-                    <p class="mt-4 text-slate-600 text-lg">No solo teoría. Te enseñamos exactamente lo que aplicamos en nuestros proyectos de consultoría.</p>
-                </div>
-                
-                <div class="mt-6 md:mt-0 bg-slate-100 p-1 rounded-lg inline-flex relative">
-                    <button id="btn-recorded" onclick="toggleCourses('recorded')" class="relative z-10 px-6 py-2 text-sm font-bold rounded-md transition-all duration-300 bg-white text-brand-primary shadow-sm">Clases Grabadas</button>
-                    <button id="btn-live" onclick="toggleCourses('live')" class="relative z-10 px-6 py-2 text-sm font-bold rounded-md transition-all duration-300 text-slate-500 hover:text-brand-dark">En Vivo / Bootcamps</button>
-                </div>
-            </div>
-
-            <!-- Courses Grid -->
-            <div id="courses-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Course 1 -->
-                <div class="course-card recorded group border border-slate-200 rounded-2xl overflow-hidden hover:shadow-lg transition-all">
-                    <div class="h-48 bg-slate-200 relative overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2070&auto=format&fit=crop" alt="Data Analysis" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                        <div class="absolute top-4 left-4 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-xs font-bold text-brand-dark">Principiante</div>
-                    </div>
-                    <div class="p-6">
-                        <h4 class="font-heading font-bold text-xl text-brand-dark mb-2 group-hover:text-brand-primary transition-colors">Ruta Analista de Datos</h4>
-                        <p class="text-slate-600 text-sm mb-4">Domina el ciclo completo de datos: Desde Excel avanzado hasta visualización profesional en Power BI.</p>
-                        <div class="flex justify-between items-center border-t border-slate-100 pt-4">
-                            <span class="text-xs text-slate-500 font-semibold flex items-center gap-1"><i data-lucide="video" class="w-3 h-3"></i> 24 horas de video</span>
-                            <span class="text-brand-primary font-bold">Ver programa</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Course 2 -->
-                <div class="course-card recorded group border border-slate-200 rounded-2xl overflow-hidden hover:shadow-lg transition-all">
-                    <div class="h-48 bg-slate-200 relative overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=2070&auto=format&fit=crop" alt="Python Code" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                        <div class="absolute top-4 left-4 bg-brand-accent text-brand-dark px-3 py-1 rounded-full text-xs font-bold">Best Seller</div>
-                    </div>
-                    <div class="p-6">
-                        <h4 class="font-heading font-bold text-xl text-brand-dark mb-2 group-hover:text-brand-primary transition-colors">Automatización con Python e IA</h4>
-                        <p class="text-slate-600 text-sm mb-4">Deja de hacer tareas repetitivas. Aprende Pandas, Selenium y conexión con APIs de OpenAI.</p>
-                        <div class="flex justify-between items-center border-t border-slate-100 pt-4">
-                            <span class="text-xs text-slate-500 font-semibold flex items-center gap-1"><i data-lucide="code" class="w-3 h-3"></i> Proyectos Reales</span>
-                            <span class="text-brand-primary font-bold">Ver programa</span>
-                        </div>
-                    </div>
-                </div>
-
-                 <!-- Course 3 (Live only) -->
-                 <div class="course-card live hidden group border border-slate-200 rounded-2xl overflow-hidden hover:shadow-lg transition-all border-l-4 border-l-brand-primary">
-                    <div class="h-48 bg-slate-800 relative overflow-hidden flex items-center justify-center">
-                        <div class="text-center">
-                            <i data-lucide="calendar" class="w-12 h-12 text-brand-accent mx-auto mb-2"></i>
-                            <span class="text-white font-bold">Próxima Cohorte: Mayo 15</span>
-                        </div>
-                    </div>
-                    <div class="p-6">
-                        <h4 class="font-heading font-bold text-xl text-brand-dark mb-2">Bootcamp Data Science Acelerado</h4>
-                        <p class="text-slate-600 text-sm mb-4">8 Semanas intensivas con mentoría en vivo. Del código a la contratación.</p>
-                        <button class="w-full py-2 bg-brand-dark text-white rounded font-medium hover:bg-brand-navy">Aplicar ahora</button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Lead Magnet -->
-            <div class="mt-16 bg-brand-primary rounded-2xl p-8 md:p-12 relative overflow-hidden">
-                <div class="absolute top-0 right-0 -mt-10 -mr-10 w-64 h-64 bg-white opacity-10 rounded-full blur-3xl"></div>
-                <div class="relative z-10 flex flex-col md:flex-row items-center gap-8">
-                    <div class="flex-1 text-center md:text-left">
-                        <span class="bg-brand-accent text-brand-dark text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide">Masterclass Gratuita</span>
-                        <h3 class="font-heading text-2xl md:text-3xl font-bold text-white mt-4 mb-2">El Fin de la Tarea Repetitiva</h3>
-                        <p class="text-teal-100">Aprende a automatizar un flujo de trabajo real en 45 minutos con el Dr. Oscar Vargas.</p>
-                    </div>
-                    <div class="flex-shrink-0">
-                        <button class="bg-white text-brand-primary hover:bg-teal-50 px-8 py-3 rounded-lg font-bold shadow-lg transition-transform hover:scale-105 flex items-center gap-2">
-                            <i data-lucide="play-circle" class="w-5 h-5"></i> Acceso Gratuito
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <!-- ABOUT US -->
     <section id="sobre-nosotros" class="py-20 bg-slate-50 border-t border-slate-200 relative">
         <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -939,20 +1053,33 @@
                 <div class="text-center md:text-left">
                     <h2 class="font-heading text-3xl font-bold text-brand-dark mb-1">Oscar Ivan Vargas Pineda, PhD</h2>
                     <p class="text-brand-primary font-medium text-lg mb-4">Docente Investigador y Científico de Datos</p>
-                    <p class="text-slate-600 leading-relaxed mb-6">
+                    <p class="text-slate-600 leading-relaxed mb-4">
                         "Mi misión es conectar la investigación científica con las necesidades reales de los entornos sociales, económicos y ambientales, tanto a nivel organizacional como territorial. He liderado proyectos de inteligencia de datos que integran el rigor científico con la práctica en entidades nacionales e internacionales como <strong class="text-brand-dark">Ecopetrol, ALISOS, el BID, el Banco Mundial y el Earth Innovation Institute.</strong>"
                     </p>
-                    <a href="https://drive.google.com/file/d/1CpJm0tONPb-I1p2hjAkx4pJZRgljlKw8/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-6 py-3 bg-brand-primary text-white rounded-lg font-semibold hover:bg-brand-navy transition-all shadow-md hover:shadow-lg transform hover:-translate-y-1 mx-auto md:mx-0">
-                        <i data-lucide="file-text" class="w-5 h-5"></i>
-                        Descargar CV
-                    </a>
+                    <p class="text-slate-600 mb-6">
+                        <a href="mailto:oscarvargas@trabajocientifico.org" class="hover:text-brand-primary transition-colors"><i data-lucide="mail" class="w-4 h-4 inline-block mr-1"></i>oscarvargas@trabajocientifico.org</a>
+                    </p>
+                    <div class="flex flex-wrap gap-3 justify-center md:justify-start">
+                        <a href="https://drive.google.com/file/d/1CpJm0tONPb-I1p2hjAkx4pJZRgljlKw8/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-5 py-2.5 bg-brand-primary text-white rounded-lg font-semibold hover:bg-brand-navy transition-all shadow-md hover:shadow-lg transform hover:-translate-y-1">
+                            <i data-lucide="file-text" class="w-4 h-4"></i>
+                            Ver Hoja de Vida
+                        </a>
+                        <a href="https://www.linkedin.com/in/oscar-ivan-vargas-pineda-2aa543240/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-5 py-2.5 bg-[#0077B5] text-white rounded-lg font-semibold hover:bg-[#005885] transition-all shadow-md hover:shadow-lg transform hover:-translate-y-1">
+                            <i data-lucide="linkedin" class="w-4 h-4"></i>
+                            LinkedIn
+                        </a>
+                        <a href="https://github.com/OscarIvaVP" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-5 py-2.5 bg-[#333] text-white rounded-lg font-semibold hover:bg-[#555] transition-all shadow-md hover:shadow-lg transform hover:-translate-y-1">
+                            <i data-lucide="github" class="w-4 h-4"></i>
+                            GitHub
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- FOOTER -->
-    <footer class="bg-brand-dark text-slate-400 py-12 border-t border-white/10 relative">
+    <footer id="contacto" class="bg-brand-dark text-slate-400 py-12 border-t border-white/10 relative">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-8">
             <div class="col-span-1 md:col-span-1">
                 <div class="flex items-center gap-2 text-white mb-4">
@@ -984,7 +1111,7 @@
                     <a href="https://github.com/OscarIvaVP" target="_blank" rel="noopener noreferrer" class="w-8 h-8 rounded bg-white/10 flex items-center justify-center hover:bg-brand-accent hover:text-brand-dark transition-all"><i data-lucide="github" class="w-4 h-4"></i></a>
                 </div>
                 <div class="space-y-1 text-sm">
-                    <a href="mailto:trabajocientifico@gmail.com" class="block hover:text-brand-accent transition-colors">trabajocientifico@gmail.com</a>
+                    <a href="mailto:info@trabajocientifico.org" class="block hover:text-brand-accent transition-colors">info@trabajocientifico.org</a>
                 </div>
             </div>
         </div>
@@ -1171,39 +1298,41 @@
         // TOGGLE DE CURSOS
         // ============================================
         function toggleCourses(type) {
-            const btnRecorded = document.getElementById('btn-recorded');
-            const btnLive = document.getElementById('btn-live');
+            const btnObjective = document.getElementById('btn-objective');
+            const btnTool = document.getElementById('btn-tool');
             const courses = document.querySelectorAll('.course-card');
-            
-            if(type === 'recorded') {
-                btnRecorded.classList.add('bg-white', 'text-brand-primary', 'shadow-sm');
-                btnRecorded.classList.remove('text-slate-500', 'hover:text-brand-dark');
-                
-                btnLive.classList.remove('bg-white', 'text-brand-primary', 'shadow-sm');
-                btnLive.classList.add('text-slate-500', 'hover:text-brand-dark');
-                
+
+            if(type === 'objective') {
+                btnObjective.classList.add('bg-white', 'text-brand-primary', 'shadow-sm');
+                btnObjective.classList.remove('text-slate-500', 'hover:text-brand-dark');
+
+                btnTool.classList.remove('bg-white', 'text-brand-primary', 'shadow-sm');
+                btnTool.classList.add('text-slate-500', 'hover:text-brand-dark');
+
                 courses.forEach(card => {
-                    if(card.classList.contains('recorded')) {
+                    if(card.classList.contains('objective')) {
                         card.classList.remove('hidden');
                     } else {
                         card.classList.add('hidden');
                     }
                 });
             } else {
-                btnLive.classList.add('bg-white', 'text-brand-primary', 'shadow-sm');
-                btnLive.classList.remove('text-slate-500', 'hover:text-brand-dark');
-                
-                btnRecorded.classList.remove('bg-white', 'text-brand-primary', 'shadow-sm');
-                btnRecorded.classList.add('text-slate-500', 'hover:text-brand-dark');
-                
+                btnTool.classList.add('bg-white', 'text-brand-primary', 'shadow-sm');
+                btnTool.classList.remove('text-slate-500', 'hover:text-brand-dark');
+
+                btnObjective.classList.remove('bg-white', 'text-brand-primary', 'shadow-sm');
+                btnObjective.classList.add('text-slate-500', 'hover:text-brand-dark');
+
                 courses.forEach(card => {
-                    if(card.classList.contains('live')) {
+                    if(card.classList.contains('tool')) {
                         card.classList.remove('hidden');
                     } else {
                         card.classList.add('hidden');
                     }
                 });
             }
+            // Reinicializar iconos Lucide para las nuevas tarjetas
+            lucide.createIcons();
         }
 
         // ============================================
@@ -1237,6 +1366,51 @@
         });
 
         waMenu.addEventListener('click', (e) => e.stopPropagation());
+
+        // ============================================
+        // NAVEGACIÓN ACTIVA POR SECCIÓN
+        // ============================================
+        const sections = document.querySelectorAll('section[id]');
+        const navLinks = document.querySelectorAll('.nav-link');
+        const navLinksMobile = document.querySelectorAll('.nav-link-mobile');
+
+        function updateActiveNav() {
+            let current = '';
+            const scrollPosition = window.scrollY + 100;
+
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.offsetHeight;
+                if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            // También verificar si estamos en el footer (contacto)
+            const footer = document.querySelector('footer');
+            if (footer && scrollPosition >= footer.offsetTop - 200) {
+                current = 'contacto';
+            }
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                const href = link.getAttribute('href');
+                if (href === '#' + current || (current === '' && href === '#inicio')) {
+                    link.classList.add('active');
+                }
+            });
+
+            navLinksMobile.forEach(link => {
+                link.classList.remove('active');
+                const href = link.getAttribute('href');
+                if (href === '#' + current || (current === '' && href === '#inicio')) {
+                    link.classList.add('active');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', updateActiveNav);
+        window.addEventListener('load', updateActiveNav);
     </script>
 </body>
 </html>
