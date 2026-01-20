@@ -8,7 +8,7 @@
     <!-- Fuentes: Montserrat (Títulos) y Inter (Cuerpo) para un look académico pero moderno -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Montserrat:wght@500;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Montserrat:wght@500;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
     
     <!-- Tailwind CSS vía CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -23,16 +23,17 @@
                 extend: {
                     colors: {
                         brand: {
-                            dark: '#2B1515',   /* Rojo muy oscuro (Casi negro) - Rigor y profesionalismo */
-                            navy: '#3D1F1F',   /* Rojo oscuro corporativo */
-                            primary: '#DC4444', /* Rojo brillante - Color principal Trabajo Científico */
-                            accent: '#FDB44B',  /* Naranja/Dorado vibrante - Acento complementario */
-                            light: '#F8FAFC'    /* Blanco grisáceo - Espacio limpio */
+                            dark: '#2B1515',
+                            navy: '#3D1F1F',
+                            primary: '#DC4444',
+                            accent: '#FDB44B',
+                            light: '#F8FAFC'
                         }
                     },
                     fontFamily: {
                         sans: ['Inter', 'sans-serif'],
                         heading: ['Montserrat', 'sans-serif'],
+                        mono: ['Fira Code', 'monospace'],
                     }
                 }
             }
@@ -40,72 +41,320 @@
     </script>
 
     <style>
-        /* Estilos personalizados para efectos específicos */
         body {
             background-color: #F8FAFC;
         }
         
+        /* ============================================
+           HERO BACKGROUND - IMPACTANTE Y PROFESIONAL
+           ============================================ */
         .hero-bg {
-            /* Fondo abstracto de red de datos */
-            background-image: linear-gradient(to right bottom, rgba(43, 21, 21, 0.95), rgba(220, 68, 68, 0.85)),
-                              url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072&auto=format&fit=crop');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
+            background: linear-gradient(135deg, #2B1515 0%, #3D1F1F 50%, #1a0a0a 100%);
             position: relative;
             overflow: hidden;
         }
 
-        /* Efecto de código flotante en el fondo - MÁS NOTORIO */
-        .code-background {
+        /* Canvas para red neuronal - CAPA PRINCIPAL */
+        #neural-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        /* Gradiente animado de fondo */
+        .hero-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 200%;
+            height: 200%;
+            background: 
+                radial-gradient(ellipse 800px 600px at 20% 30%, rgba(220, 68, 68, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse 600px 400px at 80% 70%, rgba(253, 180, 75, 0.12) 0%, transparent 50%),
+                radial-gradient(ellipse 1000px 800px at 50% 50%, rgba(220, 68, 68, 0.08) 0%, transparent 60%);
+            animation: gradient-drift 20s ease-in-out infinite;
+            z-index: 2;
+        }
+
+        @keyframes gradient-drift {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(-5%, -3%) rotate(1deg); }
+            50% { transform: translate(-2%, -5%) rotate(-1deg); }
+            75% { transform: translate(-7%, -2%) rotate(0.5deg); }
+        }
+
+        /* ============================================
+           CÓDIGO FLOTANTE - MÁS VISIBLE Y DINÁMICO
+           ============================================ */
+        .code-rain {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             overflow: hidden;
-            opacity: 0.35;
+            z-index: 3;
             pointer-events: none;
         }
 
-        .code-line {
+        .code-column {
             position: absolute;
-            font-family: 'Courier New', monospace;
-            font-size: 13px;
-            color: #FDB44B;
+            top: -100%;
+            font-family: 'Fira Code', monospace;
+            font-size: 14px;
+            line-height: 1.8;
+            color: rgba(253, 180, 75, 0.7);
+            text-shadow: 0 0 20px rgba(253, 180, 75, 0.5), 0 0 40px rgba(253, 180, 75, 0.3);
+            animation: code-fall linear infinite;
             white-space: nowrap;
-            animation: float-code 20s linear infinite;
-            text-shadow: 0 0 10px rgba(253, 180, 75, 0.3);
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
         }
 
-        .code-line:nth-child(1) { top: 8%; animation-duration: 22s; animation-delay: 0s; }
-        .code-line:nth-child(2) { top: 20%; animation-duration: 26s; animation-delay: 2s; }
-        .code-line:nth-child(3) { top: 32%; animation-duration: 20s; animation-delay: 4s; }
-        .code-line:nth-child(4) { top: 44%; animation-duration: 24s; animation-delay: 1s; }
-        .code-line:nth-child(5) { top: 56%; animation-duration: 28s; animation-delay: 3s; }
-        .code-line:nth-child(6) { top: 68%; animation-duration: 19s; animation-delay: 6s; }
-        .code-line:nth-child(7) { top: 80%; animation-duration: 23s; animation-delay: 5s; }
-        .code-line:nth-child(8) { top: 92%; animation-duration: 25s; animation-delay: 7s; }
+        .code-column:nth-child(1) { left: 5%; animation-duration: 25s; animation-delay: 0s; }
+        .code-column:nth-child(2) { left: 15%; animation-duration: 20s; animation-delay: 5s; color: rgba(220, 68, 68, 0.6); }
+        .code-column:nth-child(3) { left: 25%; animation-duration: 28s; animation-delay: 2s; }
+        .code-column:nth-child(4) { left: 35%; animation-duration: 22s; animation-delay: 8s; color: rgba(220, 68, 68, 0.6); }
+        .code-column:nth-child(5) { left: 45%; animation-duration: 30s; animation-delay: 4s; }
+        .code-column:nth-child(6) { left: 55%; animation-duration: 18s; animation-delay: 10s; color: rgba(220, 68, 68, 0.6); }
+        .code-column:nth-child(7) { left: 65%; animation-duration: 26s; animation-delay: 6s; }
+        .code-column:nth-child(8) { left: 75%; animation-duration: 24s; animation-delay: 12s; color: rgba(220, 68, 68, 0.6); }
+        .code-column:nth-child(9) { left: 85%; animation-duration: 21s; animation-delay: 3s; }
+        .code-column:nth-child(10) { left: 92%; animation-duration: 27s; animation-delay: 7s; color: rgba(220, 68, 68, 0.6); }
 
-        @keyframes float-code {
-            0% {
-                transform: translateX(-100%);
-                opacity: 0;
+        @keyframes code-fall {
+            0% { transform: translateY(-100%); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(100vh); opacity: 0; }
+        }
+
+        /* Líneas de código horizontales flotantes */
+        .code-line-horizontal {
+            position: absolute;
+            font-family: 'Fira Code', monospace;
+            font-size: 13px;
+            color: rgba(253, 180, 75, 0.8);
+            white-space: nowrap;
+            animation: float-horizontal 15s linear infinite;
+            text-shadow: 0 0 15px rgba(253, 180, 75, 0.4);
+            padding: 8px 16px;
+            background: linear-gradient(90deg, transparent, rgba(43, 21, 21, 0.8), rgba(43, 21, 21, 0.8), transparent);
+            border-radius: 4px;
+        }
+
+        .code-line-horizontal:nth-child(1) { top: 12%; animation-duration: 18s; }
+        .code-line-horizontal:nth-child(2) { top: 28%; animation-duration: 22s; animation-delay: 3s; }
+        .code-line-horizontal:nth-child(3) { top: 44%; animation-duration: 16s; animation-delay: 6s; }
+        .code-line-horizontal:nth-child(4) { top: 60%; animation-duration: 20s; animation-delay: 2s; }
+        .code-line-horizontal:nth-child(5) { top: 76%; animation-duration: 24s; animation-delay: 8s; }
+        .code-line-horizontal:nth-child(6) { top: 88%; animation-duration: 19s; animation-delay: 5s; }
+
+        @keyframes float-horizontal {
+            0% { transform: translateX(-100%); opacity: 0; }
+            5% { opacity: 1; }
+            95% { opacity: 1; }
+            100% { transform: translateX(calc(100vw + 100%)); opacity: 0; }
+        }
+
+        /* ============================================
+           PARTÍCULAS DE DATOS - SÍMBOLOS FLOTANTES
+           ============================================ */
+        .data-symbols {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 4;
+            pointer-events: none;
+        }
+
+        .data-symbol {
+            position: absolute;
+            font-family: 'Fira Code', monospace;
+            font-weight: 600;
+            animation: symbol-float 12s ease-in-out infinite;
+            text-shadow: 0 0 30px currentColor;
+        }
+
+        .data-symbol.large {
+            font-size: 48px;
+            opacity: 0.15;
+        }
+
+        .data-symbol.medium {
+            font-size: 32px;
+            opacity: 0.25;
+        }
+
+        .data-symbol.small {
+            font-size: 20px;
+            opacity: 0.4;
+        }
+
+        @keyframes symbol-float {
+            0%, 100% { 
+                transform: translateY(0) rotate(0deg) scale(1); 
             }
-            10% {
-                opacity: 0.4;
+            25% { 
+                transform: translateY(-30px) rotate(5deg) scale(1.05); 
             }
-            90% {
-                opacity: 0.4;
+            50% { 
+                transform: translateY(-15px) rotate(-3deg) scale(0.95); 
             }
-            100% {
-                transform: translateX(100vw);
-                opacity: 0;
+            75% { 
+                transform: translateY(-40px) rotate(2deg) scale(1.02); 
             }
         }
 
-        /* Partículas de datos flotantes - Efecto global */
-        .data-particles {
+        /* ============================================
+           GRID DE DATOS ANIMADO
+           ============================================ */
+        .data-grid-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image:
+                linear-gradient(rgba(220, 68, 68, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(220, 68, 68, 0.1) 1px, transparent 1px);
+            background-size: 60px 60px;
+            animation: grid-pulse 4s ease-in-out infinite;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        @keyframes grid-pulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.6; }
+        }
+
+        /* ============================================
+           ONDAS DE DATOS
+           ============================================ */
+        .data-waves {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 200px;
+            z-index: 5;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .wave {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 200%;
+            height: 100%;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z' fill='rgba(220,68,68,0.1)'/%3E%3C/svg%3E");
+            background-size: 1200px 100%;
+            animation: wave-flow 15s linear infinite;
+        }
+
+        .wave:nth-child(2) {
+            bottom: 10px;
+            animation-delay: -5s;
+            animation-duration: 20s;
+            opacity: 0.5;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z' fill='rgba(253,180,75,0.08)'/%3E%3C/svg%3E");
+            background-size: 1200px 100%;
+        }
+
+        @keyframes wave-flow {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* ============================================
+           EFECTO DE TERMINAL/CONSOLA
+           ============================================ */
+        .terminal-effect {
+            position: absolute;
+            bottom: 15%;
+            right: 5%;
+            width: 350px;
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(253, 180, 75, 0.3);
+            border-radius: 8px;
+            padding: 16px;
+            font-family: 'Fira Code', monospace;
+            font-size: 12px;
+            z-index: 6;
+            backdrop-filter: blur(10px);
+            animation: terminal-glow 3s ease-in-out infinite;
+        }
+
+        @keyframes terminal-glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(253, 180, 75, 0.2); }
+            50% { box-shadow: 0 0 40px rgba(253, 180, 75, 0.4); }
+        }
+
+        .terminal-header {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .terminal-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+
+        .terminal-line {
+            color: rgba(255, 255, 255, 0.9);
+            margin: 4px 0;
+            opacity: 0;
+            animation: type-line 0.5s ease forwards;
+        }
+
+        .terminal-line .prompt { color: #DC4444; }
+        .terminal-line .command { color: #FDB44B; }
+        .terminal-line .output { color: #4ade80; }
+        .terminal-line .number { color: #60a5fa; }
+
+        .terminal-line:nth-child(2) { animation-delay: 0.5s; }
+        .terminal-line:nth-child(3) { animation-delay: 1.5s; }
+        .terminal-line:nth-child(4) { animation-delay: 2.5s; }
+        .terminal-line:nth-child(5) { animation-delay: 3.5s; }
+        .terminal-line:nth-child(6) { animation-delay: 4.5s; }
+
+        @keyframes type-line {
+            0% { opacity: 0; transform: translateX(-10px); }
+            100% { opacity: 1; transform: translateX(0); }
+        }
+
+        .cursor-blink {
+            display: inline-block;
+            width: 8px;
+            height: 14px;
+            background: #FDB44B;
+            animation: blink 1s infinite;
+            vertical-align: middle;
+            margin-left: 2px;
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+
+        /* ============================================
+           PARTÍCULAS GLOBALES PARA OTRAS SECCIONES
+           ============================================ */
+        .global-particles {
             position: fixed;
             top: 0;
             left: 0;
@@ -116,49 +365,67 @@
             overflow: hidden;
         }
 
-        .particle {
+        .g-particle {
             position: absolute;
-            font-family: 'Courier New', monospace;
-            font-size: 14px;
+            font-family: 'Fira Code', monospace;
+            font-size: 28px;
             font-weight: bold;
-            color: rgba(220, 68, 68, 0.15);
-            animation: float-particle 15s ease-in-out infinite;
+            animation: g-particle-rise 20s ease-in-out infinite;
         }
 
-        .particle:nth-child(1) { left: 10%; animation-delay: 0s; }
-        .particle:nth-child(2) { left: 25%; animation-delay: 2s; }
-        .particle:nth-child(3) { left: 40%; animation-delay: 4s; }
-        .particle:nth-child(4) { left: 55%; animation-delay: 1s; }
-        .particle:nth-child(5) { left: 70%; animation-delay: 3s; }
-        .particle:nth-child(6) { left: 85%; animation-delay: 5s; }
+        .g-particle.red { color: rgba(220, 68, 68, 0.25); text-shadow: 0 0 15px rgba(220, 68, 68, 0.3); }
+        .g-particle.gold { color: rgba(253, 180, 75, 0.3); text-shadow: 0 0 15px rgba(253, 180, 75, 0.3); }
 
-        @keyframes float-particle {
-            0% {
-                transform: translateY(100vh) rotate(0deg);
-                opacity: 0;
-            }
-            10% {
-                opacity: 0.2;
-            }
-            90% {
-                opacity: 0.2;
-            }
-            100% {
-                transform: translateY(-100vh) rotate(360deg);
-                opacity: 0;
-            }
+        @keyframes g-particle-rise {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
         }
 
-        /* Efecto de pulso en las tarjetas */
-        .tech-card {
+        /* Grid de fondo global mejorado */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image:
+                repeating-linear-gradient(0deg, rgba(220, 68, 68, 0.04) 0px, rgba(220, 68, 68, 0.04) 1px, transparent 1px, transparent 80px),
+                repeating-linear-gradient(90deg, rgba(220, 68, 68, 0.04) 0px, rgba(220, 68, 68, 0.04) 1px, transparent 1px, transparent 80px);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* ============================================
+           CONTENIDO SOBRE LOS EFECTOS
+           ============================================ */
+        .hero-content {
             position: relative;
+            z-index: 10;
+        }
+
+        nav, section, footer {
+            position: relative;
+            z-index: 10;
+        }
+
+        section {
             overflow: hidden;
         }
 
-        /* Asegurar que todo el contenido esté por encima de los fondos */
         section > div {
             position: relative;
             z-index: 1;
+        }
+
+        /* ============================================
+           EFECTOS EN TARJETAS
+           ============================================ */
+        .tech-card {
+            position: relative;
+            overflow: hidden;
         }
 
         .tech-card::before {
@@ -168,90 +435,51 @@
             left: -50%;
             width: 200%;
             height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(220, 68, 68, 0.1), transparent);
-            animation: card-glow 3s linear infinite;
+            background: linear-gradient(45deg, transparent, rgba(220, 68, 68, 0.08), transparent);
+            animation: card-shine 4s linear infinite;
+            opacity: 0;
+            transition: opacity 0.3s;
         }
 
-        @keyframes card-glow {
-            0% {
-                transform: rotate(0deg);
-            }
-            100% {
-                transform: rotate(360deg);
-            }
+        .tech-card:hover::before {
+            opacity: 1;
         }
 
-        /* Números flotantes para métricas */
+        @keyframes card-shine {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Métricas flotantes en tarjetas */
         .metric-float {
             position: absolute;
-            font-family: 'Courier New', monospace;
+            font-family: 'Fira Code', monospace;
             font-size: 18px;
             font-weight: bold;
-            color: rgba(253, 180, 75, 0.25);
+            color: rgba(253, 180, 75, 0.3);
             pointer-events: none;
-            animation: metric-rise 12s ease-in-out infinite;
+            animation: metric-rise 8s ease-in-out infinite;
         }
 
         @keyframes metric-rise {
-            0%, 100% {
-                transform: translateY(0) scale(1);
-                opacity: 0;
-            }
-            10%, 90% {
-                opacity: 0.3;
-            }
-            50% {
-                transform: translateY(-50px) scale(1.2);
-                opacity: 0.3;
-            }
+            0%, 100% { transform: translateY(0) scale(1); opacity: 0.2; }
+            50% { transform: translateY(-30px) scale(1.1); opacity: 0.5; }
         }
 
-        /* Animación de pulso en números KPI */
+        /* KPI pulse */
         .kpi-number {
             display: inline-block;
-            animation: kpi-pulse 3s ease-in-out infinite;
+            animation: kpi-pulse 2s ease-in-out infinite;
         }
 
         @keyframes kpi-pulse {
-            0%, 100% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.15);
-            }
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.08); }
         }
 
-        /* Fondo tecnológico global - PATRÓN DE GRID MÁS VISIBLE */
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image:
-                /* Patrón de grilla de datos - MÁS VISIBLE */
-                repeating-linear-gradient(0deg, rgba(220, 68, 68, 0.12) 0px, rgba(220, 68, 68, 0.12) 2px, transparent 2px, transparent 40px),
-                repeating-linear-gradient(90deg, rgba(220, 68, 68, 0.12) 0px, rgba(220, 68, 68, 0.12) 2px, transparent 2px, transparent 40px),
-                /* Líneas diagonales - MÁS VISIBLES */
-                repeating-linear-gradient(45deg, transparent, transparent 80px, rgba(253, 180, 75, 0.1) 80px, rgba(253, 180, 75, 0.1) 160px);
-            pointer-events: none;
-            z-index: 0;
-            animation: grid-pulse 8s ease-in-out infinite;
-        }
-
-        @keyframes grid-pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.7; }
-        }
-
-        /* Asegurar que el contenido esté por encima del fondo */
-        nav, section, footer {
-            position: relative;
-            z-index: 10;
-        }
-
-        /* Efectos de fondo animado en secciones blancas */
+        /* ============================================
+           SECCIONES CON FONDOS ANIMADOS
+           ============================================ */
         section.bg-white::before,
         section.bg-slate-50::before {
             content: '';
@@ -261,131 +489,21 @@
             width: 100%;
             height: 100%;
             background-image:
-                radial-gradient(circle at 20% 30%, rgba(220, 68, 68, 0.03) 0%, transparent 50%),
-                radial-gradient(circle at 80% 70%, rgba(253, 180, 75, 0.03) 0%, transparent 50%),
-                radial-gradient(circle at 50% 50%, rgba(220, 68, 68, 0.02) 0%, transparent 70%);
+                radial-gradient(ellipse at 10% 20%, rgba(220, 68, 68, 0.06) 0%, transparent 50%),
+                radial-gradient(ellipse at 90% 80%, rgba(253, 180, 75, 0.06) 0%, transparent 50%);
             pointer-events: none;
             z-index: 0;
-            animation: bg-float 20s ease-in-out infinite;
+            animation: section-breathe 8s ease-in-out infinite;
         }
 
-        @keyframes bg-float {
-            0%, 100% {
-                background-position: 0% 0%, 100% 100%, 50% 50%;
-            }
-            50% {
-                background-position: 100% 100%, 0% 0%, 30% 70%;
-            }
+        @keyframes section-breathe {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(1.02); }
         }
 
-        /* Símbolos flotantes en cada sección */
-        section::after {
-            content: '{ } </> [ ] λ ∫ Σ π ∇ ∞';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-family: 'Courier New', monospace;
-            font-size: 200px;
-            font-weight: bold;
-            color: rgba(220, 68, 68, 0.02);
-            white-space: nowrap;
-            pointer-events: none;
-            z-index: 0;
-            animation: symbol-rotate 60s linear infinite;
-        }
-
-        @keyframes symbol-rotate {
-            0% { transform: translate(-50%, -50%) rotate(0deg); opacity: 0.02; }
-            50% { opacity: 0.04; }
-            100% { transform: translate(-50%, -50%) rotate(360deg); opacity: 0.02; }
-        }
-
-        /* Evitar símbolos en hero y secciones oscuras */
-        section.hero-bg::after,
-        section.bg-gradient-to-br::after {
-            display: none;
-        }
-
-        /* Puntos flotantes animados - efecto de datos dispersos */
-        body::after {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 1;
-            box-shadow:
-                100px 150px 0 1px rgba(220, 68, 68, 0.2),
-                300px 80px 0 2px rgba(253, 180, 75, 0.2),
-                500px 200px 0 1px rgba(220, 68, 68, 0.15),
-                700px 120px 0 2px rgba(253, 180, 75, 0.15),
-                900px 180px 0 1px rgba(220, 68, 68, 0.2),
-                1100px 90px 0 2px rgba(253, 180, 75, 0.2),
-                1300px 160px 0 1px rgba(220, 68, 68, 0.15),
-                200px 350px 0 2px rgba(253, 180, 75, 0.2),
-                450px 420px 0 1px rgba(220, 68, 68, 0.2),
-                650px 380px 0 2px rgba(253, 180, 75, 0.15),
-                850px 450px 0 1px rgba(220, 68, 68, 0.2),
-                1050px 400px 0 2px rgba(253, 180, 75, 0.15),
-                1250px 430px 0 1px rgba(220, 68, 68, 0.2),
-                150px 600px 0 2px rgba(253, 180, 75, 0.2),
-                400px 650px 0 1px rgba(220, 68, 68, 0.15),
-                600px 580px 0 2px rgba(253, 180, 75, 0.2),
-                800px 630px 0 1px rgba(220, 68, 68, 0.2),
-                1000px 590px 0 2px rgba(253, 180, 75, 0.15),
-                1200px 620px 0 1px rgba(220, 68, 68, 0.2);
-            animation: float-dots 25s ease-in-out infinite;
-        }
-
-        @keyframes float-dots {
-            0%, 100% {
-                transform: translateY(0px);
-                opacity: 1;
-            }
-            25% {
-                transform: translateY(-30px);
-            }
-            50% {
-                transform: translateY(-15px);
-                opacity: 0.7;
-            }
-            75% {
-                transform: translateY(-40px);
-            }
-        }
-
-        /* Animación suave para el menú de Whatsapp */
-        .whatsapp-menu {
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            transform-origin: bottom right;
-        }
-        
-        .whatsapp-menu.hidden-menu {
-            opacity: 0;
-            transform: scale(0.95) translateY(10px);
-            pointer-events: none;
-        }
-        
-        .whatsapp-menu.visible-menu {
-            opacity: 1;
-            transform: scale(1) translateY(0);
-            pointer-events: auto;
-        }
-
-        /* Toggle Switch Animation */
-        .toggle-checkbox:checked {
-            right: 0;
-            border-color: #DC4444;
-        }
-        .toggle-checkbox:checked + .toggle-label {
-            background-color: #DC4444;
-        }
-
-        /* Carrusel infinito de logos */
+        /* ============================================
+           CARRUSEL DE LOGOS
+           ============================================ */
         .logos-carousel {
             display: flex;
             overflow: hidden;
@@ -405,12 +523,8 @@
         }
 
         @keyframes scroll-logos {
-            0% {
-                transform: translateX(0);
-            }
-            100% {
-                transform: translateX(-50%);
-            }
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
         }
 
         .logo-item {
@@ -419,21 +533,65 @@
             align-items: center;
             justify-content: center;
         }
+
+        /* ============================================
+           WHATSAPP MENU
+           ============================================ */
+        .whatsapp-menu {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-origin: bottom right;
+        }
+        
+        .whatsapp-menu.hidden-menu {
+            opacity: 0;
+            transform: scale(0.95) translateY(10px);
+            pointer-events: none;
+        }
+        
+        .whatsapp-menu.visible-menu {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+            pointer-events: auto;
+        }
+
+        /* Responsive: ocultar terminal en móvil */
+        @media (max-width: 768px) {
+            .terminal-effect {
+                display: none;
+            }
+            .code-column {
+                font-size: 11px;
+            }
+            .data-symbol.large {
+                font-size: 32px;
+            }
+        }
     </style>
 </head>
-<body class="text-slate-700 antialiased" style="position: relative; min-height: 100vh;">
+<body class="text-slate-700 antialiased">
 
+    <!-- Partículas globales de datos -->
+    <div class="global-particles">
+        <div class="g-particle red" style="left: 5%; animation-delay: 0s;">∑</div>
+        <div class="g-particle gold" style="left: 15%; animation-delay: 3s;">λ</div>
+        <div class="g-particle red" style="left: 25%; animation-delay: 6s;">{}</div>
+        <div class="g-particle gold" style="left: 35%; animation-delay: 2s;">π</div>
+        <div class="g-particle red" style="left: 45%; animation-delay: 8s;">∇</div>
+        <div class="g-particle gold" style="left: 55%; animation-delay: 4s;">//</div>
+        <div class="g-particle red" style="left: 65%; animation-delay: 10s;">[]</div>
+        <div class="g-particle gold" style="left: 75%; animation-delay: 1s;">∞</div>
+        <div class="g-particle red" style="left: 85%; animation-delay: 7s;">01</div>
+        <div class="g-particle gold" style="left: 92%; animation-delay: 5s;">&lt;/&gt;</div>
+    </div>
 
     <!-- HEADER -->
     <nav class="fixed w-full z-50 bg-brand-dark/95 backdrop-blur-md border-b border-white/10 text-white transition-all duration-300" id="navbar">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-20">
-                <!-- Logo -->
                 <div class="flex-shrink-0 flex items-center gap-2 cursor-pointer">
                     <img src="images/logo-trabajo-cientifico.png" alt="Trabajo Científico" class="h-14 md:h-16 w-auto">
                 </div>
 
-                <!-- Desktop Menu -->
                 <div class="hidden md:flex items-center space-x-8">
                     <a href="#inicio" class="text-sm font-medium hover:text-brand-accent transition-colors">Inicio</a>
                     <a href="#consultoria" class="text-sm font-medium hover:text-brand-accent transition-colors">Consultoría</a>
@@ -442,7 +600,6 @@
                     <a href="#contacto" class="px-4 py-2 border border-white/20 rounded-full hover:bg-brand-accent hover:text-brand-dark hover:border-transparent transition-all text-sm font-medium">Contacto</a>
                 </div>
 
-                <!-- Icons Right -->
                 <div class="hidden md:flex items-center space-x-4">
                     <button class="hover:text-brand-accent transition-colors"><i data-lucide="search" class="w-5 h-5"></i></button>
                     <button class="hover:text-brand-accent transition-colors relative">
@@ -451,7 +608,6 @@
                     </button>
                 </div>
 
-                <!-- Mobile menu button -->
                 <div class="md:hidden flex items-center">
                     <button id="mobile-menu-btn" class="text-white hover:text-brand-accent focus:outline-none">
                         <i data-lucide="menu" class="w-7 h-7"></i>
@@ -460,7 +616,6 @@
             </div>
         </div>
 
-        <!-- Mobile Menu Panel -->
         <div id="mobile-menu" class="hidden md:hidden bg-brand-dark border-t border-white/10">
             <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
                 <a href="#inicio" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-white/10 hover:text-brand-accent">Inicio</a>
@@ -471,21 +626,76 @@
         </div>
     </nav>
 
-    <!-- HERO SECTION -->
+    <!-- ============================================
+         HERO SECTION - CON TODOS LOS EFECTOS
+         ============================================ -->
     <section id="inicio" class="relative min-h-screen flex items-center hero-bg pt-20">
-        <!-- Fondo animado de código - MÁS LÍNEAS Y MÁS NOTORIO -->
-        <div class="code-background">
-            <div class="code-line">import pandas as pd | df = pd.read_csv('data.csv') | model.fit(X_train, y_train) | accuracy_score(y_test, predictions)</div>
-            <div class="code-line">SELECT * FROM analytics WHERE insight = 'valuable' | GROUP BY category | ORDER BY impact DESC</div>
-            <div class="code-line">for i in range(len(data)): | predictions = model.predict(X_test) | confidence: 0.94</div>
-            <div class="code-line">def analyze_data(dataset): | return insights | accuracy: 0.97 | precision: 0.95</div>
-            <div class="code-line">import numpy as np | from sklearn.ensemble import RandomForestClassifier | import tensorflow as tf</div>
-            <div class="code-line">plt.plot(x, y) | plt.show() | correlation = df.corr() | print(results) | sns.heatmap()</div>
-            <div class="code-line">df.groupby('region')['sales'].sum() | transform(lambda x: x*100) | pipeline.execute()</div>
-            <div class="code-line">model = XGBoost() | hyperparameter_tuning() | cross_validation(cv=5) | r_squared: 0.92</div>
+        
+        <!-- Canvas para red neuronal interactiva -->
+        <canvas id="neural-canvas"></canvas>
+
+        <!-- Grid de datos animado -->
+        <div class="data-grid-overlay"></div>
+
+        <!-- Lluvia de código vertical -->
+        <div class="code-rain">
+            <div class="code-column">import pandas • numpy • sklearn • tensorflow • keras • matplotlib</div>
+            <div class="code-column">def analyze() • return insights • accuracy: 0.97 • precision: 0.95</div>
+            <div class="code-column">SELECT * FROM data • WHERE value > threshold • GROUP BY category</div>
+            <div class="code-column">model.fit(X, y) • predictions = model.predict() • score: 0.94</div>
+            <div class="code-column">for i in range(n): • process(data[i]) • yield results</div>
+            <div class="code-column">class DataPipeline: • def __init__(self): • self.clean()</div>
+            <div class="code-column">df.groupby('region') • .agg({'sales': 'sum'}) • .sort_values()</div>
+            <div class="code-column">plt.figure() • sns.heatmap(corr) • plt.savefig('output.png')</div>
+            <div class="code-column">api.fetch('/data') • response.json() • transform(data)</div>
+            <div class="code-column">pipeline.execute() • SUCCESS • ROI: +340% • Time: 2.3s</div>
         </div>
 
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+        <!-- Líneas de código horizontales -->
+        <div class="code-rain">
+            <div class="code-line-horizontal">>>> model = RandomForestClassifier(n_estimators=100) | accuracy_score: 0.97</div>
+            <div class="code-line-horizontal">>>> df.describe() | mean: 42.5 | std: 12.3 | count: 10000</div>
+            <div class="code-line-horizontal">>>> SELECT AVG(revenue) FROM sales WHERE year = 2024 GROUP BY region</div>
+            <div class="code-line-horizontal">>>> from transformers import pipeline | nlp = pipeline('sentiment')</div>
+            <div class="code-line-horizontal">>>> plt.plot(x, predictions, '--r') | correlation: 0.89 | p_value: 0.001</div>
+            <div class="code-line-horizontal">>>> neural_network.fit(epochs=100) | loss: 0.023 | val_accuracy: 0.96</div>
+        </div>
+
+        <!-- Símbolos de datos flotantes -->
+        <div class="data-symbols">
+            <div class="data-symbol large" style="top: 10%; left: 8%; color: rgba(220, 68, 68, 0.2); animation-delay: 0s;">∑</div>
+            <div class="data-symbol medium" style="top: 25%; right: 15%; color: rgba(253, 180, 75, 0.3); animation-delay: 2s;">λ</div>
+            <div class="data-symbol small" style="top: 40%; left: 20%; color: rgba(220, 68, 68, 0.4); animation-delay: 4s;">{x}</div>
+            <div class="data-symbol large" style="top: 60%; right: 25%; color: rgba(253, 180, 75, 0.2); animation-delay: 1s;">∇</div>
+            <div class="data-symbol medium" style="top: 75%; left: 12%; color: rgba(220, 68, 68, 0.3); animation-delay: 3s;">π</div>
+            <div class="data-symbol small" style="top: 15%; right: 8%; color: rgba(253, 180, 75, 0.4); animation-delay: 5s;">∞</div>
+            <div class="data-symbol medium" style="top: 50%; left: 5%; color: rgba(220, 68, 68, 0.25); animation-delay: 6s;">μ</div>
+            <div class="data-symbol large" style="top: 85%; right: 10%; color: rgba(253, 180, 75, 0.15); animation-delay: 2.5s;">σ</div>
+        </div>
+
+        <!-- Ondas de datos en la parte inferior -->
+        <div class="data-waves">
+            <div class="wave"></div>
+            <div class="wave"></div>
+        </div>
+
+        <!-- Terminal flotante -->
+        <div class="terminal-effect">
+            <div class="terminal-header">
+                <div class="terminal-dot" style="background: #ff5f56;"></div>
+                <div class="terminal-dot" style="background: #ffbd2e;"></div>
+                <div class="terminal-dot" style="background: #27ca40;"></div>
+            </div>
+            <div class="terminal-line"><span class="prompt">$</span> <span class="command">python analyze.py</span></div>
+            <div class="terminal-line"><span class="output">Loading dataset...</span> <span class="number">10,000 rows</span></div>
+            <div class="terminal-line"><span class="output">Training model...</span> <span class="number">accuracy: 97.2%</span></div>
+            <div class="terminal-line"><span class="output">Generating insights...</span></div>
+            <div class="terminal-line"><span class="output">✓ Pipeline completed in</span> <span class="number">2.3s</span></div>
+            <div class="terminal-line"><span class="prompt">$</span> <span class="cursor-blink"></span></div>
+        </div>
+
+        <!-- Contenido del Hero -->
+        <div class="hero-content max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
             <div class="max-w-3xl">
                 <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-accent/10 border border-brand-accent/20 text-brand-accent text-xs font-semibold tracking-wide uppercase mb-6">
                     <span class="w-2 h-2 rounded-full bg-brand-accent animate-pulse"></span>
@@ -512,7 +722,7 @@
         </div>
         
         <!-- Scroll Down Indicator -->
-        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce hidden md:block">
+        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce hidden md:block" style="z-index: 10;">
             <i data-lucide="chevron-down" class="text-white/50 w-8 h-8"></i>
         </div>
     </section>
@@ -523,7 +733,6 @@
             <p class="text-center text-sm font-semibold text-slate-400 uppercase tracking-widest mb-6">Nuestros Equipos ha trabajado con instituciones como:</p>
             <div class="logos-carousel grayscale opacity-60 hover:opacity-100 hover:grayscale-0 transition-all duration-300">
                 <div class="logos-track">
-                    <!-- Primer set de logos -->
                     <div class="logo-item"><img src="images/instituciones/banco-mundial.png" alt="Banco Mundial" class="h-12 md:h-14 w-auto"></div>
                     <div class="logo-item"><img src="images/instituciones/ecopetrol.png" alt="Ecopetrol" class="h-12 md:h-14 w-auto"></div>
                     <div class="logo-item"><img src="images/instituciones/bid.png" alt="BID - Banco Interamericano de Desarrollo" class="h-12 md:h-14 w-auto"></div>
@@ -601,38 +810,33 @@
 
     <!-- STATS SECTION - Métricas de Impacto -->
     <section class="py-16 bg-gradient-to-br from-brand-dark via-brand-navy to-brand-dark relative overflow-hidden">
-        <!-- Efecto de código de fondo -->
-        <div class="absolute inset-0 opacity-10">
-            <div class="code-line" style="top: 15%; animation-duration: 35s;">model.accuracy = 0.97 | precision = 0.95 | recall = 0.93</div>
-            <div class="code-line" style="top: 45%; animation-duration: 30s; animation-delay: 2s;">df.shape: (100000, 45) | processed in 2.3s</div>
-            <div class="code-line" style="top: 75%; animation-duration: 38s; animation-delay: 4s;">pipeline.execute() | SUCCESS | ROI: +340%</div>
+        <!-- Efecto de código de fondo mejorado -->
+        <div class="absolute inset-0 opacity-20">
+            <div class="code-line-horizontal" style="top: 15%; animation-duration: 35s;">model.accuracy = 0.97 | precision = 0.95 | recall = 0.93</div>
+            <div class="code-line-horizontal" style="top: 45%; animation-duration: 30s; animation-delay: 2s;">df.shape: (100000, 45) | processed in 2.3s</div>
+            <div class="code-line-horizontal" style="top: 75%; animation-duration: 38s; animation-delay: 4s;">pipeline.execute() | SUCCESS | ROI: +340%</div>
         </div>
 
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div class="grid grid-cols-2 md:grid-cols-5 gap-6 text-center">
                 <div class="tech-card p-6 rounded-lg bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 transition-all">
-                    <div class="metric-float" style="top: 20%; right: 15%; animation-delay: 1s; color: rgba(253, 180, 75, 0.4);">+</div>
-                    <div class="text-4xl md:text-5xl font-bold text-brand-accent mb-2 font-heading kpi-number" style="animation-delay: 0s;">20</div>
+                    <div class="text-4xl md:text-5xl font-bold text-brand-accent mb-2 font-heading kpi-number">20</div>
                     <div class="text-slate-300 text-xs uppercase tracking-wider">Proyectos Desarrollados</div>
                 </div>
                 <div class="tech-card p-6 rounded-lg bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 transition-all">
-                    <div class="metric-float" style="top: 25%; left: 10%; animation-delay: 2s; color: rgba(253, 180, 75, 0.4);">🌍</div>
-                    <div class="text-4xl md:text-5xl font-bold text-brand-accent mb-2 font-heading kpi-number" style="animation-delay: 0.6s;">6</div>
+                    <div class="text-4xl md:text-5xl font-bold text-brand-accent mb-2 font-heading kpi-number" style="animation-delay: 0.3s;">6</div>
                     <div class="text-slate-300 text-xs uppercase tracking-wider">Países</div>
                 </div>
                 <div class="tech-card p-6 rounded-lg bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 transition-all">
-                    <div class="metric-float" style="top: 30%; right: 20%; animation-delay: 3s; color: rgba(253, 180, 75, 0.4);">👨‍🎓</div>
-                    <div class="text-4xl md:text-5xl font-bold text-brand-accent mb-2 font-heading kpi-number" style="animation-delay: 1.2s;">300</div>
+                    <div class="text-4xl md:text-5xl font-bold text-brand-accent mb-2 font-heading kpi-number" style="animation-delay: 0.6s;">300</div>
                     <div class="text-slate-300 text-xs uppercase tracking-wider">Estudiantes Formados</div>
                 </div>
                 <div class="tech-card p-6 rounded-lg bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 transition-all">
-                    <div class="metric-float" style="top: 20%; left: 15%; animation-delay: 4s; color: rgba(253, 180, 75, 0.4);">⚙️</div>
-                    <div class="text-4xl md:text-5xl font-bold text-brand-accent mb-2 font-heading kpi-number" style="animation-delay: 1.8s;">10</div>
+                    <div class="text-4xl md:text-5xl font-bold text-brand-accent mb-2 font-heading kpi-number" style="animation-delay: 0.9s;">10</div>
                     <div class="text-slate-300 text-xs uppercase tracking-wider">Herramientas</div>
                 </div>
                 <div class="tech-card p-6 rounded-lg bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 transition-all">
-                    <div class="metric-float" style="top: 25%; right: 18%; animation-delay: 5s; color: rgba(253, 180, 75, 0.4);">📄</div>
-                    <div class="text-4xl md:text-5xl font-bold text-brand-accent mb-2 font-heading kpi-number" style="animation-delay: 2.4s;">9</div>
+                    <div class="text-4xl md:text-5xl font-bold text-brand-accent mb-2 font-heading kpi-number" style="animation-delay: 1.2s;">9</div>
                     <div class="text-slate-300 text-xs uppercase tracking-wider">Publicaciones Científicas</div>
                 </div>
             </div>
@@ -649,7 +853,6 @@
                     <p class="mt-4 text-slate-600 text-lg">No solo teoría. Te enseñamos exactamente lo que aplicamos en nuestros proyectos de consultoría.</p>
                 </div>
                 
-                <!-- Toggle Switch UI -->
                 <div class="mt-6 md:mt-0 bg-slate-100 p-1 rounded-lg inline-flex relative">
                     <button id="btn-recorded" onclick="toggleCourses('recorded')" class="relative z-10 px-6 py-2 text-sm font-bold rounded-md transition-all duration-300 bg-white text-brand-primary shadow-sm">Clases Grabadas</button>
                     <button id="btn-live" onclick="toggleCourses('live')" class="relative z-10 px-6 py-2 text-sm font-bold rounded-md transition-all duration-300 text-slate-500 hover:text-brand-dark">En Vivo / Bootcamps</button>
@@ -690,7 +893,7 @@
                     </div>
                 </div>
 
-                 <!-- Course 3 (Live only - Hidden initially via JS logic logic implies toggle, strictly visually mocked here) -->
+                 <!-- Course 3 (Live only) -->
                  <div class="course-card live hidden group border border-slate-200 rounded-2xl overflow-hidden hover:shadow-lg transition-all border-l-4 border-l-brand-primary">
                     <div class="h-48 bg-slate-800 relative overflow-hidden flex items-center justify-center">
                         <div class="text-center">
@@ -726,12 +929,11 @@
     </section>
 
     <!-- ABOUT US -->
-    <section id="sobre-nosotros" class="py-20 bg-slate-50 border-t border-slate-200 relative" style="z-index: 10;">
+    <section id="sobre-nosotros" class="py-20 bg-slate-50 border-t border-slate-200 relative">
         <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex flex-col md:flex-row items-center gap-12">
                 <div class="w-48 h-48 md:w-64 md:h-64 flex-shrink-0 relative">
                     <div class="absolute inset-0 bg-brand-accent rounded-full transform rotate-6"></div>
-                    <!-- Foto profesional de Oscar Ivan Vargas Pineda -->
                     <img src="images/oscar-vargas.jpg" alt="Oscar Ivan Vargas Pineda, PhD" class="absolute inset-0 w-full h-full object-cover rounded-full border-4 border-white shadow-xl grayscale hover:grayscale-0 transition-all duration-500">
                 </div>
                 <div class="text-center md:text-left">
@@ -750,7 +952,7 @@
     </section>
 
     <!-- FOOTER -->
-    <footer class="bg-brand-dark text-slate-400 py-12 border-t border-white/10 relative" style="z-index: 10;">
+    <footer class="bg-brand-dark text-slate-400 py-12 border-t border-white/10 relative">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-8">
             <div class="col-span-1 md:col-span-1">
                 <div class="flex items-center gap-2 text-white mb-4">
@@ -782,9 +984,7 @@
                     <a href="https://github.com/OscarIvaVP" target="_blank" rel="noopener noreferrer" class="w-8 h-8 rounded bg-white/10 flex items-center justify-center hover:bg-brand-accent hover:text-brand-dark transition-all"><i data-lucide="github" class="w-4 h-4"></i></a>
                 </div>
                 <div class="space-y-1 text-sm">
-                    <a href="mailto:oscarvargas@trabajocientifico.org" class="block hover:text-brand-accent transition-colors">oscarvargas@trabajocientifico.org</a>
-                    <a href="mailto:formacion@trabajocientifico.org" class="block hover:text-brand-accent transition-colors">formacion@trabajocientifico.org</a>
-                    <a href="mailto:consultorias@trabajocientifico.org" class="block hover:text-brand-accent transition-colors">consultorias@trabajocientifico.org</a>
+                    <a href="mailto:trabajocientifico@gmail.com" class="block hover:text-brand-accent transition-colors">trabajocientifico@gmail.com</a>
                 </div>
             </div>
         </div>
@@ -829,11 +1029,9 @@
 
         <!-- Main Button -->
         <button id="wa-button" class="bg-[#25D366] hover:bg-[#20bd5a] text-white w-14 h-14 rounded-full shadow-lg flex items-center justify-center transition-all transform hover:scale-110 focus:outline-none focus:ring-4 focus:ring-[#25D366]/30">
-            <!-- Logo oficial de WhatsApp -->
             <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
             </svg>
-            <!-- Badge de notificación -->
             <span class="absolute top-0 right-0 flex h-3 w-3">
                 <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
                 <span class="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
@@ -841,12 +1039,127 @@
         </button>
     </div>
 
-    <!-- JAVASCRIPT LOGIC -->
+    <!-- JAVASCRIPT -->
     <script>
-        // Inicializar Iconos
+        // Inicializar Iconos Lucide
         lucide.createIcons();
 
-        // 1. Lógica del Menú Móvil
+        // ============================================
+        // RED NEURONAL INTERACTIVA EN CANVAS
+        // ============================================
+        const canvas = document.getElementById('neural-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        let mouse = { x: null, y: null, radius: 150 };
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 3 + 1;
+                this.speedX = (Math.random() - 0.5) * 0.8;
+                this.speedY = (Math.random() - 0.5) * 0.8;
+                this.color = Math.random() > 0.5 ? 'rgba(220, 68, 68, 0.8)' : 'rgba(253, 180, 75, 0.8)';
+            }
+
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+
+                // Rebote en bordes
+                if (this.x > canvas.width || this.x < 0) this.speedX *= -1;
+                if (this.y > canvas.height || this.y < 0) this.speedY *= -1;
+
+                // Interacción con mouse
+                if (mouse.x != null && mouse.y != null) {
+                    let dx = mouse.x - this.x;
+                    let dy = mouse.y - this.y;
+                    let distance = Math.sqrt(dx * dx + dy * dy);
+                    if (distance < mouse.radius) {
+                        let force = (mouse.radius - distance) / mouse.radius;
+                        this.x -= dx * force * 0.03;
+                        this.y -= dy * force * 0.03;
+                    }
+                }
+            }
+
+            draw() {
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function initParticles() {
+            particles = [];
+            const numParticles = Math.min(100, Math.floor((canvas.width * canvas.height) / 15000));
+            for (let i = 0; i < numParticles; i++) {
+                particles.push(new Particle());
+            }
+        }
+
+        function connectParticles() {
+            for (let a = 0; a < particles.length; a++) {
+                for (let b = a + 1; b < particles.length; b++) {
+                    let dx = particles[a].x - particles[b].x;
+                    let dy = particles[a].y - particles[b].y;
+                    let distance = Math.sqrt(dx * dx + dy * dy);
+
+                    if (distance < 150) {
+                        let opacity = 1 - (distance / 150);
+                        ctx.strokeStyle = `rgba(220, 68, 68, ${opacity * 0.3})`;
+                        ctx.lineWidth = 1;
+                        ctx.beginPath();
+                        ctx.moveTo(particles[a].x, particles[a].y);
+                        ctx.lineTo(particles[b].x, particles[b].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            for (let particle of particles) {
+                particle.update();
+                particle.draw();
+            }
+            
+            connectParticles();
+            requestAnimationFrame(animateParticles);
+        }
+
+        // Inicializar canvas
+        resizeCanvas();
+        initParticles();
+        animateParticles();
+
+        window.addEventListener('resize', () => {
+            resizeCanvas();
+            initParticles();
+        });
+
+        canvas.addEventListener('mousemove', (e) => {
+            const rect = canvas.getBoundingClientRect();
+            mouse.x = e.clientX - rect.left;
+            mouse.y = e.clientY - rect.top;
+        });
+
+        canvas.addEventListener('mouseleave', () => {
+            mouse.x = null;
+            mouse.y = null;
+        });
+
+        // ============================================
+        // MENÚ MÓVIL
+        // ============================================
         const btn = document.getElementById('mobile-menu-btn');
         const menu = document.getElementById('mobile-menu');
 
@@ -854,13 +1167,14 @@
             menu.classList.toggle('hidden');
         });
 
-        // 2. Lógica del Selector de Cursos (Toggle)
+        // ============================================
+        // TOGGLE DE CURSOS
+        // ============================================
         function toggleCourses(type) {
             const btnRecorded = document.getElementById('btn-recorded');
             const btnLive = document.getElementById('btn-live');
             const courses = document.querySelectorAll('.course-card');
             
-            // Estilos de los botones
             if(type === 'recorded') {
                 btnRecorded.classList.add('bg-white', 'text-brand-primary', 'shadow-sm');
                 btnRecorded.classList.remove('text-slate-500', 'hover:text-brand-dark');
@@ -868,7 +1182,6 @@
                 btnLive.classList.remove('bg-white', 'text-brand-primary', 'shadow-sm');
                 btnLive.classList.add('text-slate-500', 'hover:text-brand-dark');
                 
-                // Mostrar tarjetas
                 courses.forEach(card => {
                     if(card.classList.contains('recorded')) {
                         card.classList.remove('hidden');
@@ -883,7 +1196,6 @@
                 btnRecorded.classList.remove('bg-white', 'text-brand-primary', 'shadow-sm');
                 btnRecorded.classList.add('text-slate-500', 'hover:text-brand-dark');
                 
-                // Mostrar tarjetas
                 courses.forEach(card => {
                     if(card.classList.contains('live')) {
                         card.classList.remove('hidden');
@@ -894,7 +1206,9 @@
             }
         }
 
-        // 3. Lógica del Botón Flotante de WhatsApp
+        // ============================================
+        // WHATSAPP BUTTON
+        // ============================================
         const waButton = document.getElementById('wa-button');
         const waMenu = document.getElementById('wa-menu');
         let isMenuOpen = false;
@@ -905,7 +1219,6 @@
             if (isMenuOpen) {
                 waMenu.classList.remove('hidden-menu');
                 waMenu.classList.add('visible-menu');
-                // Cambiar icono a X
                 waButton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>';
             } else {
                 closeWaMenu();
@@ -916,27 +1229,14 @@
             waMenu.classList.remove('visible-menu');
             waMenu.classList.add('hidden-menu');
             isMenuOpen = false;
-            // Restaurar logo oficial de WhatsApp
             waButton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg><span class="absolute top-0 right-0 flex h-3 w-3"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span><span class="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span></span>';
         }
 
-        // Cerrar menú si se hace clic fuera
-        document.addEventListener('click', (e) => {
-            if (!waMenu.contains(e.target) && !waButton.contains(e.target)) {
-                closeWaMenu();
-            }
+        document.addEventListener('click', () => {
+            if (isMenuOpen) closeWaMenu();
         });
 
-        // 4. Efecto de cambio de color en el Navbar al hacer scroll
-        const navbar = document.getElementById('navbar');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) {
-                navbar.classList.add('shadow-lg');
-            } else {
-                navbar.classList.remove('shadow-lg');
-            }
-        });
-
+        waMenu.addEventListener('click', (e) => e.stopPropagation());
     </script>
 </body>
 </html>
