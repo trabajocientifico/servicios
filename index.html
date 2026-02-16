@@ -637,6 +637,7 @@
                     <a href="#cursos" class="nav-link text-sm font-medium hover:text-brand-accent transition-colors">Cursos</a>
                     <a href="#consultoria" class="nav-link text-sm font-medium hover:text-brand-accent transition-colors">Consultoría</a>
                     <a href="#sobre-nosotros" class="nav-link text-sm font-medium hover:text-brand-accent transition-colors">Expertos</a>
+                    <a href="#experiencias" class="nav-link text-sm font-medium hover:text-brand-accent transition-colors">Experiencias</a>
                     <a href="#contacto" class="nav-link text-sm font-medium hover:text-brand-accent transition-colors">Contacto</a>
                 </div>
 
@@ -662,6 +663,7 @@
                 <a href="#cursos" class="nav-link-mobile block px-3 py-2 rounded-md text-base font-medium hover:bg-white/10 hover:text-brand-accent">Cursos</a>
                 <a href="#consultoria" class="nav-link-mobile block px-3 py-2 rounded-md text-base font-medium hover:bg-white/10 hover:text-brand-accent">Consultoría</a>
                 <a href="#sobre-nosotros" class="nav-link-mobile block px-3 py-2 rounded-md text-base font-medium hover:bg-white/10 hover:text-brand-accent">Expertos</a>
+                <a href="#experiencias" class="nav-link-mobile block px-3 py-2 rounded-md text-base font-medium hover:bg-white/10 hover:text-brand-accent">Experiencias</a>
                 <a href="#contacto" class="nav-link-mobile block px-3 py-2 rounded-md text-base font-medium hover:bg-white/10 hover:text-brand-accent">Contacto</a>
             </div>
         </div>
@@ -751,11 +753,15 @@
                 </p>
                 
                 <div class="flex flex-col sm:flex-row gap-4">
-                    <a href="#consultoria" class="inline-flex justify-center items-center px-8 py-4 border border-transparent text-base font-bold rounded-lg text-brand-dark bg-brand-accent hover:bg-teal-300 transition-all shadow-lg hover:shadow-brand-accent/25 transform hover:-translate-y-1">
+                    <a href="https://forms.gle/TWCxZTT18KM5kJA59" target="_blank" rel="noopener noreferrer" class="inline-flex justify-center items-center px-8 py-4 border border-transparent text-base font-bold rounded-lg text-brand-dark bg-brand-accent hover:bg-teal-300 transition-all shadow-lg hover:shadow-brand-accent/25 transform hover:-translate-y-1 animate-pulse hover:animate-none">
+                        <i data-lucide="pencil-line" class="mr-2 w-5 h-5"></i>
+                        Inscríbete Ahora
+                    </a>
+                    <a href="#consultoria" class="inline-flex justify-center items-center px-8 py-4 border-2 border-brand-accent text-base font-bold rounded-lg text-brand-accent hover:bg-brand-accent hover:text-brand-dark transition-all transform hover:-translate-y-1">
                         Soluciones para Empresas
                         <i data-lucide="arrow-right" class="ml-2 w-5 h-5"></i>
                     </a>
-                    <a href="#academia" class="inline-flex justify-center items-center px-8 py-4 border-2 border-slate-300 text-base font-bold rounded-lg text-white hover:bg-white hover:text-brand-dark transition-all transform hover:-translate-y-1">
+                    <a href="#cursos" class="inline-flex justify-center items-center px-8 py-4 border-2 border-slate-300 text-base font-bold rounded-lg text-white hover:bg-white hover:text-brand-dark transition-all transform hover:-translate-y-1">
                         Ver Rutas de Aprendizaje
                     </a>
                 </div>
@@ -769,10 +775,10 @@
     </section>
 
     <!-- AUTHORITY BAR (Social Proof) -->
-    <div class="bg-white border-b border-slate-200 py-8 overflow-hidden relative">
+    <div class="bg-white border-b border-slate-200 py-10 overflow-hidden relative">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <p class="text-center text-sm font-semibold text-slate-400 uppercase tracking-widest mb-6">Nuestros Equipos ha trabajado con instituciones como:</p>
-            <div class="logos-carousel grayscale opacity-60 hover:opacity-100 hover:grayscale-0 transition-all duration-300">
+            <p class="text-center text-base font-bold text-brand-dark uppercase tracking-widest mb-8">Nuestros Equipos ha trabajado con instituciones como:</p>
+            <div class="logos-carousel transition-all duration-300">
                 <div class="logos-track">
                     <div class="logo-item"><img src="images/instituciones/banco-mundial.png" alt="Banco Mundial" class="h-12 md:h-14 w-auto"></div>
                     <div class="logo-item"><img src="images/instituciones/ecopetrol.png" alt="Ecopetrol" class="h-12 md:h-14 w-auto"></div>
@@ -807,16 +813,156 @@
                     <p class="mt-4 text-slate-600 text-lg">No solo teoría. Te enseñamos exactamente lo que aplicamos en nuestros proyectos de consultoría.</p>
                 </div>
 
-                <div class="mt-6 md:mt-0 bg-slate-100 p-1 rounded-lg inline-flex relative">
-                    <button id="btn-objective" onclick="toggleCourses('objective')" class="relative z-10 px-6 py-2 text-sm font-bold rounded-md transition-all duration-300 bg-white text-brand-primary shadow-sm">Según Objetivo</button>
+                <div class="mt-6 md:mt-0 bg-slate-100 p-1 rounded-lg inline-flex relative flex-wrap">
+                    <button id="btn-program" onclick="toggleCourses('program')" class="relative z-10 px-6 py-2 text-sm font-bold rounded-md transition-all duration-300 bg-white text-brand-primary shadow-sm">Programas</button>
+                    <button id="btn-objective" onclick="toggleCourses('objective')" class="relative z-10 px-6 py-2 text-sm font-bold rounded-md transition-all duration-300 text-slate-500 hover:text-brand-dark">Según Objetivo</button>
                     <button id="btn-tool" onclick="toggleCourses('tool')" class="relative z-10 px-6 py-2 text-sm font-bold rounded-md transition-all duration-300 text-slate-500 hover:text-brand-dark">Según Herramienta</button>
                 </div>
             </div>
 
             <!-- Courses Grid -->
             <div id="courses-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+                <!-- ============================================
+                     PROGRAMAS
+                     ============================================ -->
+
+                <!-- PROGRAMA - IA Científica -->
+                <div class="course-card program group border border-slate-200 rounded-2xl overflow-hidden hover:shadow-lg transition-all">
+                    <div class="h-48 bg-gradient-to-br from-purple-600 to-indigo-800 relative overflow-hidden flex items-center justify-center">
+                        <div class="text-center">
+                            <i data-lucide="brain" class="w-16 h-16 text-white mx-auto mb-2"></i>
+                            <span class="text-white font-bold text-lg">IA Científica</span>
+                        </div>
+                        <div class="absolute top-4 left-4 bg-brand-accent text-brand-dark px-3 py-1 rounded-full text-xs font-bold">Programa</div>
+                    </div>
+                    <div class="p-6">
+                        <h4 class="font-heading font-bold text-xl text-brand-dark mb-2 group-hover:text-brand-primary transition-colors">IA Científica</h4>
+                        <p class="text-slate-600 text-sm mb-3">Aprende a integrar la inteligencia artificial en tu vida cotidiana y profesional para potenciar tu productividad.</p>
+                        <div class="space-y-2 mb-4">
+                            <div class="flex items-center gap-2 text-xs text-slate-500"><span class="w-5 h-5 bg-purple-100 text-purple-700 rounded-full flex items-center justify-center font-bold text-[10px]">1</span> Fundamentos de IA y Herramientas Básicas</div>
+                            <div class="flex items-center gap-2 text-xs text-slate-500"><span class="w-5 h-5 bg-purple-100 text-purple-700 rounded-full flex items-center justify-center font-bold text-[10px]">2</span> IA Aplicada a la Productividad</div>
+                            <div class="flex items-center gap-2 text-xs text-slate-500"><span class="w-5 h-5 bg-purple-100 text-purple-700 rounded-full flex items-center justify-center font-bold text-[10px]">3</span> IA Avanzada y Automatización Personal</div>
+                        </div>
+                        <div class="flex justify-between items-center border-t border-slate-100 pt-4">
+                            <a href="#" onclick="alert('Enlace al PDF del programa IA Científica. Reemplaza este # con el enlace de Google Drive.')" class="text-brand-primary text-sm font-bold hover:underline cursor-pointer">Ver programa</a>
+                            <a href="https://forms.gle/TWCxZTT18KM5kJA59" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 px-4 py-2 bg-brand-primary text-white text-sm font-bold rounded-lg hover:bg-brand-dark transition-all transform hover:-translate-y-0.5 shadow-sm hover:shadow-md">
+                                <i data-lucide="pencil-line" class="w-3.5 h-3.5"></i> Inscríbete
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PROGRAMA - Excel para la Vida -->
+                <div class="course-card program group border border-slate-200 rounded-2xl overflow-hidden hover:shadow-lg transition-all">
+                    <div class="h-48 bg-gradient-to-br from-green-600 to-emerald-800 relative overflow-hidden flex items-center justify-center">
+                        <div class="text-center">
+                            <i data-lucide="table" class="w-16 h-16 text-white mx-auto mb-2"></i>
+                            <span class="text-white font-bold text-lg">Excel para la Vida</span>
+                        </div>
+                        <div class="absolute top-4 left-4 bg-brand-accent text-brand-dark px-3 py-1 rounded-full text-xs font-bold">Programa</div>
+                    </div>
+                    <div class="p-6">
+                        <h4 class="font-heading font-bold text-xl text-brand-dark mb-2 group-hover:text-brand-primary transition-colors">Excel para la Vida</h4>
+                        <p class="text-slate-600 text-sm mb-3">Domina Excel desde lo básico hasta nivel avanzado con aplicaciones reales para cualquier profesión.</p>
+                        <div class="space-y-2 mb-4">
+                            <div class="flex items-center gap-2 text-xs text-slate-500"><span class="w-5 h-5 bg-green-100 text-green-700 rounded-full flex items-center justify-center font-bold text-[10px]">1</span> Excel Básico e Intermedio</div>
+                            <div class="flex items-center gap-2 text-xs text-slate-500"><span class="w-5 h-5 bg-green-100 text-green-700 rounded-full flex items-center justify-center font-bold text-[10px]">2</span> Excel Avanzado y Tablas Dinámicas</div>
+                            <div class="flex items-center gap-2 text-xs text-slate-500"><span class="w-5 h-5 bg-green-100 text-green-700 rounded-full flex items-center justify-center font-bold text-[10px]">3</span> Macros, VBA y Dashboards</div>
+                        </div>
+                        <div class="flex justify-between items-center border-t border-slate-100 pt-4">
+                            <a href="#" onclick="alert('Enlace al PDF del programa Excel para la Vida. Reemplaza este # con el enlace de Google Drive.')" class="text-brand-primary text-sm font-bold hover:underline cursor-pointer">Ver programa</a>
+                            <a href="https://forms.gle/TWCxZTT18KM5kJA59" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 px-4 py-2 bg-brand-primary text-white text-sm font-bold rounded-lg hover:bg-brand-dark transition-all transform hover:-translate-y-0.5 shadow-sm hover:shadow-md">
+                                <i data-lucide="pencil-line" class="w-3.5 h-3.5"></i> Inscríbete
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PROGRAMA - Python + IA -->
+                <div class="course-card program group border border-slate-200 rounded-2xl overflow-hidden hover:shadow-lg transition-all">
+                    <div class="h-48 bg-gradient-to-br from-blue-600 to-cyan-800 relative overflow-hidden flex items-center justify-center">
+                        <div class="text-center">
+                            <i data-lucide="code" class="w-16 h-16 text-white mx-auto mb-2"></i>
+                            <span class="text-white font-bold text-lg">Python + IA</span>
+                        </div>
+                        <div class="absolute top-4 left-4 bg-brand-accent text-brand-dark px-3 py-1 rounded-full text-xs font-bold">Programa</div>
+                    </div>
+                    <div class="p-6">
+                        <h4 class="font-heading font-bold text-xl text-brand-dark mb-2 group-hover:text-brand-primary transition-colors">Python + IA</h4>
+                        <p class="text-slate-600 text-sm mb-3">Aprende Python desde cero y combínalo con IA para análisis de datos, automatización y machine learning.</p>
+                        <div class="space-y-2 mb-4">
+                            <div class="flex items-center gap-2 text-xs text-slate-500"><span class="w-5 h-5 bg-blue-100 text-blue-700 rounded-full flex items-center justify-center font-bold text-[10px]">1</span> Fundamentos de Python y Librerías</div>
+                            <div class="flex items-center gap-2 text-xs text-slate-500"><span class="w-5 h-5 bg-blue-100 text-blue-700 rounded-full flex items-center justify-center font-bold text-[10px]">2</span> Análisis de Datos con Pandas y NumPy</div>
+                            <div class="flex items-center gap-2 text-xs text-slate-500"><span class="w-5 h-5 bg-blue-100 text-blue-700 rounded-full flex items-center justify-center font-bold text-[10px]">3</span> Machine Learning e IA Aplicada</div>
+                        </div>
+                        <div class="flex justify-between items-center border-t border-slate-100 pt-4">
+                            <a href="#" onclick="alert('Enlace al PDF del programa Python + IA. Reemplaza este # con el enlace de Google Drive.')" class="text-brand-primary text-sm font-bold hover:underline cursor-pointer">Ver programa</a>
+                            <a href="https://forms.gle/TWCxZTT18KM5kJA59" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 px-4 py-2 bg-brand-primary text-white text-sm font-bold rounded-lg hover:bg-brand-dark transition-all transform hover:-translate-y-0.5 shadow-sm hover:shadow-md">
+                                <i data-lucide="pencil-line" class="w-3.5 h-3.5"></i> Inscríbete
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PROGRAMA - IA para la Investigación -->
+                <div class="course-card program group border border-slate-200 rounded-2xl overflow-hidden hover:shadow-lg transition-all">
+                    <div class="h-48 bg-gradient-to-br from-amber-600 to-red-700 relative overflow-hidden flex items-center justify-center">
+                        <div class="text-center">
+                            <i data-lucide="microscope" class="w-16 h-16 text-white mx-auto mb-2"></i>
+                            <span class="text-white font-bold text-lg">IA para Investigación</span>
+                        </div>
+                        <div class="absolute top-4 left-4 bg-brand-accent text-brand-dark px-3 py-1 rounded-full text-xs font-bold">Programa</div>
+                    </div>
+                    <div class="p-6">
+                        <h4 class="font-heading font-bold text-xl text-brand-dark mb-2 group-hover:text-brand-primary transition-colors">IA para la Investigación</h4>
+                        <p class="text-slate-600 text-sm mb-3">Potencia tu investigación científica con herramientas de IA para revisión bibliográfica, análisis y redacción.</p>
+                        <div class="space-y-2 mb-4">
+                            <div class="flex items-center gap-2 text-xs text-slate-500"><span class="w-5 h-5 bg-amber-100 text-amber-700 rounded-full flex items-center justify-center font-bold text-[10px]">1</span> IA para Revisión Bibliográfica</div>
+                            <div class="flex items-center gap-2 text-xs text-slate-500"><span class="w-5 h-5 bg-amber-100 text-amber-700 rounded-full flex items-center justify-center font-bold text-[10px]">2</span> IA para Análisis de Datos Científicos</div>
+                            <div class="flex items-center gap-2 text-xs text-slate-500"><span class="w-5 h-5 bg-amber-100 text-amber-700 rounded-full flex items-center justify-center font-bold text-[10px]">3</span> IA para Redacción y Publicación Académica</div>
+                        </div>
+                        <div class="flex justify-between items-center border-t border-slate-100 pt-4">
+                            <a href="#" onclick="alert('Enlace al PDF del programa IA para la Investigación. Reemplaza este # con el enlace de Google Drive.')" class="text-brand-primary text-sm font-bold hover:underline cursor-pointer">Ver programa</a>
+                            <a href="https://forms.gle/TWCxZTT18KM5kJA59" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 px-4 py-2 bg-brand-primary text-white text-sm font-bold rounded-lg hover:bg-brand-dark transition-all transform hover:-translate-y-0.5 shadow-sm hover:shadow-md">
+                                <i data-lucide="pencil-line" class="w-3.5 h-3.5"></i> Inscríbete
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PROGRAMA - GeoAnálisis de la Información -->
+                <div class="course-card program group border border-slate-200 rounded-2xl overflow-hidden hover:shadow-lg transition-all">
+                    <div class="h-48 bg-gradient-to-br from-teal-600 to-emerald-800 relative overflow-hidden flex items-center justify-center">
+                        <div class="text-center">
+                            <i data-lucide="globe-2" class="w-16 h-16 text-white mx-auto mb-2"></i>
+                            <span class="text-white font-bold text-lg">GeoAnálisis</span>
+                        </div>
+                        <div class="absolute top-4 left-4 bg-brand-accent text-brand-dark px-3 py-1 rounded-full text-xs font-bold">Programa</div>
+                    </div>
+                    <div class="p-6">
+                        <h4 class="font-heading font-bold text-xl text-brand-dark mb-2 group-hover:text-brand-primary transition-colors">GeoAnálisis de la Información</h4>
+                        <p class="text-slate-600 text-sm mb-3">Domina el análisis geoespacial profesional con ArcGIS PRO para la toma de decisiones territoriales y ambientales.</p>
+                        <div class="space-y-2 mb-4">
+                            <div class="flex items-center gap-2 text-xs text-slate-500"><span class="w-5 h-5 bg-teal-100 text-teal-700 rounded-full flex items-center justify-center font-bold text-[10px]">1</span> Fundamentos de ArcGIS PRO y Cartografía</div>
+                            <div class="flex items-center gap-2 text-xs text-slate-500"><span class="w-5 h-5 bg-teal-100 text-teal-700 rounded-full flex items-center justify-center font-bold text-[10px]">2</span> Geoprocesamiento y Análisis Espacial</div>
+                            <div class="flex items-center gap-2 text-xs text-slate-500"><span class="w-5 h-5 bg-teal-100 text-teal-700 rounded-full flex items-center justify-center font-bold text-[10px]">3</span> Modelado Territorial y Visualización Avanzada</div>
+                        </div>
+                        <div class="flex justify-between items-center border-t border-slate-100 pt-4">
+                            <a href="#" onclick="alert('Enlace al PDF del programa GeoAnálisis. Reemplaza este # con el enlace de Google Drive.')" class="text-brand-primary text-sm font-bold hover:underline cursor-pointer">Ver programa</a>
+                            <a href="https://forms.gle/TWCxZTT18KM5kJA59" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 px-4 py-2 bg-brand-primary text-white text-sm font-bold rounded-lg hover:bg-brand-dark transition-all transform hover:-translate-y-0.5 shadow-sm hover:shadow-md">
+                                <i data-lucide="pencil-line" class="w-3.5 h-3.5"></i> Inscríbete
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ============================================
+                     SEGÚN OBJETIVO
+                     ============================================ -->
+
                 <!-- SEGÚN OBJETIVO - Analista de Datos -->
-                <div class="course-card objective group border border-slate-200 rounded-2xl overflow-hidden hover:shadow-lg transition-all">
+                <div class="course-card objective hidden group border border-slate-200 rounded-2xl overflow-hidden hover:shadow-lg transition-all">
                     <div class="h-48 bg-slate-200 relative overflow-hidden">
                         <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2070&auto=format&fit=crop" alt="Analista de Datos" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                         <div class="absolute top-4 left-4 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-xs font-bold text-brand-dark">Ruta Completa</div>
@@ -832,7 +978,7 @@
                 </div>
 
                 <!-- SEGÚN OBJETIVO - Automatización de Procesos -->
-                <div class="course-card objective group border border-slate-200 rounded-2xl overflow-hidden hover:shadow-lg transition-all">
+                <div class="course-card objective hidden group border border-slate-200 rounded-2xl overflow-hidden hover:shadow-lg transition-all">
                     <div class="h-48 bg-slate-200 relative overflow-hidden">
                         <img src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=2070&auto=format&fit=crop" alt="Automatización" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                         <div class="absolute top-4 left-4 bg-brand-accent text-brand-dark px-3 py-1 rounded-full text-xs font-bold">Best Seller</div>
@@ -848,7 +994,7 @@
                 </div>
 
                 <!-- SEGÚN OBJETIVO - Inteligencia de Negocios -->
-                <div class="course-card objective group border border-slate-200 rounded-2xl overflow-hidden hover:shadow-lg transition-all">
+                <div class="course-card objective hidden group border border-slate-200 rounded-2xl overflow-hidden hover:shadow-lg transition-all">
                     <div class="h-48 bg-slate-200 relative overflow-hidden">
                         <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2070&auto=format&fit=crop" alt="Business Intelligence" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                         <div class="absolute top-4 left-4 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-xs font-bold text-brand-dark">Avanzado</div>
@@ -936,22 +1082,6 @@
                 </div>
             </div>
 
-            <!-- Lead Magnet -->
-            <div class="mt-16 bg-brand-primary rounded-2xl p-8 md:p-12 relative overflow-hidden">
-                <div class="absolute top-0 right-0 -mt-10 -mr-10 w-64 h-64 bg-white opacity-10 rounded-full blur-3xl"></div>
-                <div class="relative z-10 flex flex-col md:flex-row items-center gap-8">
-                    <div class="flex-1 text-center md:text-left">
-                        <span class="bg-brand-accent text-brand-dark text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide">Masterclass Gratuita</span>
-                        <h3 class="font-heading text-2xl md:text-3xl font-bold text-white mt-4 mb-2">El Fin de la Tarea Repetitiva</h3>
-                        <p class="text-teal-100">Aprende a automatizar un flujo de trabajo real en 45 minutos con el Dr. Oscar Vargas.</p>
-                    </div>
-                    <div class="flex-shrink-0">
-                        <button class="bg-white text-brand-primary hover:bg-teal-50 px-8 py-3 rounded-lg font-bold shadow-lg transition-transform hover:scale-105 flex items-center gap-2">
-                            <i data-lucide="play-circle" class="w-5 h-5"></i> Acceso Gratuito
-                        </button>
-                    </div>
-                </div>
-            </div>
         </div>
     </section>
 
@@ -1042,38 +1172,243 @@
         </div>
     </section>
 
-    <!-- ABOUT US -->
+    <!-- NUESTRO EQUIPO -->
     <section id="sobre-nosotros" class="py-20 bg-slate-50 border-t border-slate-200 relative">
-        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex flex-col md:flex-row items-center gap-12">
-                <div class="w-48 h-48 md:w-64 md:h-64 flex-shrink-0 relative">
-                    <div class="absolute inset-0 bg-brand-accent rounded-full transform rotate-6"></div>
-                    <img src="images/oscar-vargas.jpg" alt="Oscar Ivan Vargas Pineda, PhD" class="absolute inset-0 w-full h-full object-cover rounded-full border-4 border-white shadow-xl grayscale hover:grayscale-0 transition-all duration-500">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-brand-primary font-semibold tracking-wider uppercase text-sm">Nuestro Equipo</span>
+                <h2 class="font-heading text-3xl md:text-4xl font-bold text-brand-dark mt-2">Expertos que Lideran la Transformación</h2>
+                <p class="mt-4 text-slate-600 text-lg">Profesionales con experiencia real en proyectos de alto impacto a nivel nacional e internacional.</p>
+                <div class="w-24 h-1 bg-brand-accent mx-auto mt-6 rounded-full"></div>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+
+                <!-- Oscar Ivan Vargas Pineda -->
+                <div class="text-center group cursor-pointer" onclick="openExpertModal('oscar')">
+                    <div class="w-28 h-28 mx-auto mb-4 relative">
+                        <div class="absolute inset-0 bg-brand-accent rounded-full transform rotate-6 group-hover:rotate-12 transition-transform duration-300"></div>
+                        <img src="images/equipo/oscar-vargas.jpg" alt="Oscar Ivan Vargas Pineda" class="absolute inset-0 w-full h-full object-cover rounded-full border-3 border-white shadow-lg group-hover:scale-105 transition-transform duration-300">
+                    </div>
+                    <h4 class="font-heading font-bold text-sm text-brand-dark group-hover:text-brand-primary transition-colors">Oscar Ivan Vargas P.</h4>
+                    <p class="text-brand-primary text-xs font-semibold mt-1">CEO & Científico de Datos</p>
+                    <p class="text-slate-400 text-[11px] mt-1 flex items-center justify-center gap-1"><i data-lucide="expand" class="w-3 h-3"></i> Ver más</p>
                 </div>
-                <div class="text-center md:text-left">
-                    <h2 class="font-heading text-3xl font-bold text-brand-dark mb-1">Oscar Ivan Vargas Pineda, PhD</h2>
-                    <p class="text-brand-primary font-medium text-lg mb-4">Docente Investigador y Científico de Datos</p>
-                    <p class="text-slate-600 leading-relaxed mb-4">
-                        "Mi misión es conectar la investigación científica con las necesidades reales de los entornos sociales, económicos y ambientales, tanto a nivel organizacional como territorial. He liderado proyectos de inteligencia de datos que integran el rigor científico con la práctica en entidades nacionales e internacionales como <strong class="text-brand-dark">Ecopetrol, ALISOS, el BID, el Banco Mundial y el Earth Innovation Institute.</strong>"
-                    </p>
-                    <p class="text-slate-600 mb-6">
-                        <a href="mailto:oscarvargas@trabajocientifico.org" class="hover:text-brand-primary transition-colors"><i data-lucide="mail" class="w-4 h-4 inline-block mr-1"></i>oscarvargas@trabajocientifico.org</a>
-                    </p>
-                    <div class="flex flex-wrap gap-3 justify-center md:justify-start">
-                        <a href="https://drive.google.com/file/d/1CpJm0tONPb-I1p2hjAkx4pJZRgljlKw8/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-5 py-2.5 bg-brand-primary text-white rounded-lg font-semibold hover:bg-brand-navy transition-all shadow-md hover:shadow-lg transform hover:-translate-y-1">
-                            <i data-lucide="file-text" class="w-4 h-4"></i>
-                            Ver Hoja de Vida
-                        </a>
-                        <a href="https://www.linkedin.com/in/oscar-ivan-vargas-pineda-2aa543240/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-5 py-2.5 bg-[#0077B5] text-white rounded-lg font-semibold hover:bg-[#005885] transition-all shadow-md hover:shadow-lg transform hover:-translate-y-1">
-                            <i data-lucide="linkedin" class="w-4 h-4"></i>
-                            LinkedIn
-                        </a>
-                        <a href="https://github.com/OscarIvaVP" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-5 py-2.5 bg-[#333] text-white rounded-lg font-semibold hover:bg-[#555] transition-all shadow-md hover:shadow-lg transform hover:-translate-y-1">
-                            <i data-lucide="github" class="w-4 h-4"></i>
-                            GitHub
-                        </a>
+
+                <!-- Lali Valentina Pedroza Amado -->
+                <div class="text-center group cursor-pointer" onclick="openExpertModal('lali')">
+                    <div class="w-28 h-28 mx-auto mb-4 relative">
+                        <div class="absolute inset-0 bg-pink-400 rounded-full transform rotate-6 group-hover:rotate-12 transition-transform duration-300"></div>
+                        <img src="images/equipo/lali-pedroza.jpg" alt="Lali Valentina Pedroza Amado" class="absolute inset-0 w-full h-full object-cover rounded-full border-3 border-white shadow-lg group-hover:scale-105 transition-transform duration-300">
+                    </div>
+                    <h4 class="font-heading font-bold text-sm text-brand-dark group-hover:text-brand-primary transition-colors">Lali Valentina Pedroza</h4>
+                    <p class="text-brand-primary text-xs font-semibold mt-1">Educadora Gestora Académica</p>
+                    <p class="text-slate-400 text-[11px] mt-1 flex items-center justify-center gap-1"><i data-lucide="expand" class="w-3 h-3"></i> Ver más</p>
+                </div>
+
+                <!-- Claudia Bibiana Ruiz -->
+                <div class="text-center group cursor-pointer" onclick="openExpertModal('bibiana')">
+                    <div class="w-28 h-28 mx-auto mb-4 relative">
+                        <div class="absolute inset-0 bg-indigo-400 rounded-full transform rotate-6 group-hover:rotate-12 transition-transform duration-300"></div>
+                        <img src="images/equipo/bibiana-ruiz.jpg" alt="Claudia Bibiana Ruiz" class="absolute inset-0 w-full h-full object-cover rounded-full border-3 border-white shadow-lg group-hover:scale-105 transition-transform duration-300">
+                    </div>
+                    <h4 class="font-heading font-bold text-sm text-brand-dark group-hover:text-brand-primary transition-colors">Claudia Bibiana Ruiz</h4>
+                    <p class="text-brand-primary text-xs font-semibold mt-1">Experta en IA Cognitiva</p>
+                    <p class="text-slate-400 text-[11px] mt-1 flex items-center justify-center gap-1"><i data-lucide="expand" class="w-3 h-3"></i> Ver más</p>
+                </div>
+
+                <!-- Héctor Manuel Ávila -->
+                <div class="text-center group cursor-pointer" onclick="openExpertModal('hector')">
+                    <div class="w-28 h-28 mx-auto mb-4 relative">
+                        <div class="absolute inset-0 bg-teal-400 rounded-full transform rotate-6 group-hover:rotate-12 transition-transform duration-300"></div>
+                        <img src="images/equipo/hector-avila.jpg" alt="Héctor Manuel Ávila" class="absolute inset-0 w-full h-full object-cover rounded-full border-3 border-white shadow-lg group-hover:scale-105 transition-transform duration-300">
+                    </div>
+                    <h4 class="font-heading font-bold text-sm text-brand-dark group-hover:text-brand-primary transition-colors">Héctor Manuel Ávila</h4>
+                    <p class="text-brand-primary text-xs font-semibold mt-1">Relacionamiento Estratégico</p>
+                    <p class="text-slate-400 text-[11px] mt-1 flex items-center justify-center gap-1"><i data-lucide="expand" class="w-3 h-3"></i> Ver más</p>
+                </div>
+
+                <!-- Johana Ariza Marín -->
+                <div class="text-center group cursor-pointer" onclick="openExpertModal('johana')">
+                    <div class="w-28 h-28 mx-auto mb-4 relative">
+                        <div class="absolute inset-0 bg-amber-400 rounded-full transform rotate-6 group-hover:rotate-12 transition-transform duration-300"></div>
+                        <img src="images/equipo/johana-ariza.jpg" alt="Johana Ariza Marín" class="absolute inset-0 w-full h-full object-cover rounded-full border-3 border-white shadow-lg group-hover:scale-105 transition-transform duration-300">
+                    </div>
+                    <h4 class="font-heading font-bold text-sm text-brand-dark group-hover:text-brand-primary transition-colors">Johana Ariza Marín</h4>
+                    <p class="text-brand-primary text-xs font-semibold mt-1">Experta en GeoAnálisis</p>
+                    <p class="text-slate-400 text-[11px] mt-1 flex items-center justify-center gap-1"><i data-lucide="expand" class="w-3 h-3"></i> Ver más</p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- MODAL DE EXPERTO -->
+    <div id="expert-modal" class="fixed inset-0 z-[100] hidden items-center justify-center p-4" style="background: rgba(0,0,0,0.6); backdrop-filter: blur(4px);">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto relative" onclick="event.stopPropagation()">
+            <button onclick="closeExpertModal()" class="absolute top-4 right-4 w-10 h-10 bg-slate-100 hover:bg-brand-primary hover:text-white rounded-full flex items-center justify-center transition-colors z-10">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+            <div class="flex flex-col md:flex-row">
+                <!-- Lado izquierdo: Imagen grande -->
+                <div id="modal-left" class="md:w-2/5 relative rounded-t-2xl md:rounded-l-2xl md:rounded-tr-none overflow-hidden flex-shrink-0">
+                    <div id="modal-banner" class="absolute inset-0"></div>
+                    <div class="relative z-10 flex flex-col items-center justify-center p-8 min-h-[280px] md:min-h-full">
+                        <img id="modal-img" src="" alt="" class="w-40 h-40 md:w-48 md:h-48 rounded-full border-4 border-white shadow-xl object-cover mb-4">
+                        <h3 id="modal-name" class="font-heading text-xl md:text-2xl font-bold text-white text-center"></h3>
+                        <p id="modal-role" class="text-white/80 font-semibold text-sm mt-1 text-center"></p>
                     </div>
                 </div>
+                <!-- Lado derecho: Información -->
+                <div class="md:w-3/5 p-6 md:p-8">
+                    <!-- Bio -->
+                    <div class="mb-6">
+                        <h4 class="font-heading font-bold text-brand-dark text-sm uppercase tracking-wider mb-2 flex items-center gap-2">
+                            <i data-lucide="user" class="w-4 h-4 text-brand-primary"></i> Acerca de
+                        </h4>
+                        <p id="modal-bio" class="text-slate-600 text-sm leading-relaxed"></p>
+                    </div>
+                    <!-- Formación -->
+                    <div class="mb-6">
+                        <h4 class="font-heading font-bold text-brand-dark text-sm uppercase tracking-wider mb-3 flex items-center gap-2">
+                            <i data-lucide="graduation-cap" class="w-4 h-4 text-brand-primary"></i> Formación Académica
+                        </h4>
+                        <div id="modal-education" class="space-y-2"></div>
+                    </div>
+                    <!-- Redes y enlaces -->
+                    <div>
+                        <h4 class="font-heading font-bold text-brand-dark text-sm uppercase tracking-wider mb-3 flex items-center gap-2">
+                            <i data-lucide="link" class="w-4 h-4 text-brand-primary"></i> Enlaces
+                        </h4>
+                        <div id="modal-links" class="flex flex-wrap gap-3"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- EXPERIENCIAS SECTION -->
+    <section id="experiencias" class="py-20 bg-white relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-brand-primary font-semibold tracking-wider uppercase text-sm">Nuestra Trayectoria</span>
+                <h2 class="font-heading text-3xl md:text-4xl font-bold text-brand-dark mt-2">Experiencias</h2>
+                <p class="mt-4 text-slate-600 text-lg">Proyectos, encuentros, clases y productos que reflejan nuestro compromiso con la excelencia.</p>
+                <div class="w-24 h-1 bg-brand-accent mx-auto mt-6 rounded-full"></div>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                <!-- Experiencia 1 -->
+                <div class="group relative overflow-hidden rounded-xl aspect-square cursor-pointer">
+                    <img src="images/experiencias/experiencia-1.jpg" alt="Proyecto de datos" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                    <div class="absolute inset-0 bg-gradient-to-t from-brand-dark/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+                        <p class="text-white text-sm font-semibold">Desarrollo de Proyectos</p>
+                    </div>
+                </div>
+                <!-- Experiencia 2 -->
+                <div class="group relative overflow-hidden rounded-xl aspect-square cursor-pointer">
+                    <img src="images/experiencias/experiencia-2.jpg" alt="Encuentro académico" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                    <div class="absolute inset-0 bg-gradient-to-t from-brand-dark/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+                        <p class="text-white text-sm font-semibold">Encuentros Académicos</p>
+                    </div>
+                </div>
+                <!-- Experiencia 3 -->
+                <div class="group relative overflow-hidden rounded-xl aspect-square cursor-pointer">
+                    <img src="images/experiencias/experiencia-3.jpg" alt="Clases en vivo" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                    <div class="absolute inset-0 bg-gradient-to-t from-brand-dark/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+                        <p class="text-white text-sm font-semibold">Clases en Vivo</p>
+                    </div>
+                </div>
+                <!-- Experiencia 4 -->
+                <div class="group relative overflow-hidden rounded-xl aspect-square cursor-pointer">
+                    <img src="images/experiencias/experiencia-4.jpg" alt="Productos y resultados" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                    <div class="absolute inset-0 bg-gradient-to-t from-brand-dark/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+                        <p class="text-white text-sm font-semibold">Productos y Resultados</p>
+                    </div>
+                </div>
+                <!-- Experiencia 5 -->
+                <div class="group relative overflow-hidden rounded-xl aspect-square cursor-pointer">
+                    <img src="images/experiencias/experiencia-5.jpg" alt="Consultoría empresarial" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                    <div class="absolute inset-0 bg-gradient-to-t from-brand-dark/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+                        <p class="text-white text-sm font-semibold">Consultoría Empresarial</p>
+                    </div>
+                </div>
+                <!-- Experiencia 6 -->
+                <div class="group relative overflow-hidden rounded-xl aspect-square cursor-pointer">
+                    <img src="images/experiencias/experiencia-6.jpg" alt="Talleres prácticos" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                    <div class="absolute inset-0 bg-gradient-to-t from-brand-dark/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+                        <p class="text-white text-sm font-semibold">Talleres Prácticos</p>
+                    </div>
+                </div>
+                <!-- Experiencia 7 -->
+                <div class="group relative overflow-hidden rounded-xl aspect-square cursor-pointer">
+                    <img src="images/experiencias/experiencia-7.jpg" alt="Capacitaciones" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                    <div class="absolute inset-0 bg-gradient-to-t from-brand-dark/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+                        <p class="text-white text-sm font-semibold">Capacitaciones</p>
+                    </div>
+                </div>
+                <!-- Experiencia 8 -->
+                <div class="group relative overflow-hidden rounded-xl aspect-square cursor-pointer">
+                    <img src="images/experiencias/experiencia-8.jpg" alt="Investigación científica" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                    <div class="absolute inset-0 bg-gradient-to-t from-brand-dark/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+                        <p class="text-white text-sm font-semibold">Investigación Científica</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- RECURSOS GRATUITOS - YOUTUBE -->
+    <section id="recursos" class="py-20 bg-gradient-to-br from-brand-dark via-brand-navy to-brand-dark relative overflow-hidden">
+        <div class="absolute inset-0 opacity-10">
+            <div class="code-line-horizontal" style="top: 20%; animation-duration: 40s;">subscribe(channel) | learn(skills) | transform(career)</div>
+            <div class="code-line-horizontal" style="top: 60%; animation-duration: 35s; animation-delay: 3s;">tutorials.count() = 50+ | views > 10K | FREE</div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center max-w-3xl mx-auto mb-14">
+                <span class="text-brand-accent font-semibold tracking-wider uppercase text-sm">Aprende Gratis</span>
+                <h2 class="font-heading text-3xl md:text-4xl font-bold text-white mt-2">Recursos Gratuitos en YouTube</h2>
+                <p class="mt-4 text-slate-300 text-lg">Tutoriales, tips y contenido exclusivo para que empieces a transformar tu carrera desde hoy.</p>
+                <div class="w-24 h-1 bg-brand-accent mx-auto mt-6 rounded-full"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+                <!-- Tutorial 1 - Automatización con Python -->
+                <a href="https://www.youtube.com/watch?v=ll1S9qvNsOQ&list=PLt8xoSPhGDUrL7Tob9omU2VJsFuk4SXlF" target="_blank" rel="noopener noreferrer" class="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-6 hover:bg-white/10 transition-all group block">
+                    <div class="w-12 h-12 bg-red-600/20 rounded-lg flex items-center justify-center mb-4 group-hover:bg-red-600 group-hover:text-white transition-colors">
+                        <i data-lucide="play" class="w-6 h-6 text-red-500 group-hover:text-white"></i>
+                    </div>
+                    <h4 class="font-heading font-bold text-white mb-2 group-hover:text-brand-accent transition-colors">Automatización con Python</h4>
+                    <p class="text-slate-400 text-sm mb-4">Aprende a automatizar procesos y tareas repetitivas con Python paso a paso.</p>
+                    <span class="text-brand-accent text-xs font-semibold flex items-center gap-1"><i data-lucide="list-video" class="w-3 h-3"></i> Playlist completa</span>
+                </a>
+                <!-- Tutorial 2 - Gráficos en Excel -->
+                <a href="https://www.youtube.com/watch?v=7-20OCmniIo&list=PLt8xoSPhGDUowMGyMdZCYUJ9IXPSdqCMR" target="_blank" rel="noopener noreferrer" class="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-6 hover:bg-white/10 transition-all group block">
+                    <div class="w-12 h-12 bg-red-600/20 rounded-lg flex items-center justify-center mb-4 group-hover:bg-red-600 group-hover:text-white transition-colors">
+                        <i data-lucide="play" class="w-6 h-6 text-red-500 group-hover:text-white"></i>
+                    </div>
+                    <h4 class="font-heading font-bold text-white mb-2 group-hover:text-brand-accent transition-colors">Gráficos en Excel</h4>
+                    <p class="text-slate-400 text-sm mb-4">Crea visualizaciones profesionales e impactantes en Excel para presentaciones y reportes.</p>
+                    <span class="text-brand-accent text-xs font-semibold flex items-center gap-1"><i data-lucide="list-video" class="w-3 h-3"></i> Playlist completa</span>
+                </a>
+                <!-- Tutorial 3 - Análisis Estadístico de Datos -->
+                <a href="https://www.youtube.com/watch?v=HJQNPKK2LkE&list=PLt8xoSPhGDUouPOq8ZXYr7h_EnWSnweaN" target="_blank" rel="noopener noreferrer" class="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-6 hover:bg-white/10 transition-all group block">
+                    <div class="w-12 h-12 bg-red-600/20 rounded-lg flex items-center justify-center mb-4 group-hover:bg-red-600 group-hover:text-white transition-colors">
+                        <i data-lucide="play" class="w-6 h-6 text-red-500 group-hover:text-white"></i>
+                    </div>
+                    <h4 class="font-heading font-bold text-white mb-2 group-hover:text-brand-accent transition-colors">Análisis Estadístico de Datos</h4>
+                    <p class="text-slate-400 text-sm mb-4">Domina las técnicas estadísticas fundamentales para el análisis e interpretación de datos.</p>
+                    <span class="text-brand-accent text-xs font-semibold flex items-center gap-1"><i data-lucide="list-video" class="w-3 h-3"></i> Playlist completa</span>
+                </a>
+            </div>
+
+            <div class="text-center">
+                <a href="https://www.youtube.com/@TCientifico" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-3 px-8 py-4 bg-red-600 hover:bg-red-700 text-white font-bold rounded-xl shadow-lg hover:shadow-red-600/25 transition-all transform hover:-translate-y-1 text-lg">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                    Visita nuestro Canal de YouTube
+                </a>
+                <p class="text-slate-400 text-sm mt-4">Suscríbete y activa la campanita para no perderte ningún tutorial</p>
             </div>
         </div>
     </section>
@@ -1298,39 +1633,32 @@
         // TOGGLE DE CURSOS
         // ============================================
         function toggleCourses(type) {
+            const btnProgram = document.getElementById('btn-program');
             const btnObjective = document.getElementById('btn-objective');
             const btnTool = document.getElementById('btn-tool');
             const courses = document.querySelectorAll('.course-card');
+            const allBtns = [btnProgram, btnObjective, btnTool];
 
-            if(type === 'objective') {
-                btnObjective.classList.add('bg-white', 'text-brand-primary', 'shadow-sm');
-                btnObjective.classList.remove('text-slate-500', 'hover:text-brand-dark');
+            // Reset all buttons
+            allBtns.forEach(btn => {
+                btn.classList.remove('bg-white', 'text-brand-primary', 'shadow-sm');
+                btn.classList.add('text-slate-500', 'hover:text-brand-dark');
+            });
 
-                btnTool.classList.remove('bg-white', 'text-brand-primary', 'shadow-sm');
-                btnTool.classList.add('text-slate-500', 'hover:text-brand-dark');
+            // Activate selected button
+            const activeBtn = type === 'program' ? btnProgram : type === 'objective' ? btnObjective : btnTool;
+            activeBtn.classList.add('bg-white', 'text-brand-primary', 'shadow-sm');
+            activeBtn.classList.remove('text-slate-500', 'hover:text-brand-dark');
 
-                courses.forEach(card => {
-                    if(card.classList.contains('objective')) {
-                        card.classList.remove('hidden');
-                    } else {
-                        card.classList.add('hidden');
-                    }
-                });
-            } else {
-                btnTool.classList.add('bg-white', 'text-brand-primary', 'shadow-sm');
-                btnTool.classList.remove('text-slate-500', 'hover:text-brand-dark');
+            // Show/hide cards
+            courses.forEach(card => {
+                if(card.classList.contains(type)) {
+                    card.classList.remove('hidden');
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
 
-                btnObjective.classList.remove('bg-white', 'text-brand-primary', 'shadow-sm');
-                btnObjective.classList.add('text-slate-500', 'hover:text-brand-dark');
-
-                courses.forEach(card => {
-                    if(card.classList.contains('tool')) {
-                        card.classList.remove('hidden');
-                    } else {
-                        card.classList.add('hidden');
-                    }
-                });
-            }
             // Reinicializar iconos Lucide para las nuevas tarjetas
             lucide.createIcons();
         }
@@ -1411,6 +1739,129 @@
 
         window.addEventListener('scroll', updateActiveNav);
         window.addEventListener('load', updateActiveNav);
+
+        // ============================================
+        // MODAL DE EXPERTOS
+        // ============================================
+        const expertsData = {
+            oscar: {
+                name: 'Oscar Ivan Vargas Pineda, PhD',
+                role: 'CEO & Científico de Datos',
+                img: 'images/equipo/oscar-vargas.jpg',
+                banner: 'linear-gradient(135deg, #FDB44B, #DC4444)',
+                bio: 'Mi misión es conectar la investigación científica con las necesidades reales de los entornos sociales, económicos y ambientales, tanto a nivel organizacional como territorial. He liderado proyectos de inteligencia de datos que integran el rigor científico con la práctica en entidades nacionales e internacionales como Ecopetrol, ALISOS, el BID, el Banco Mundial y el Earth Innovation Institute.',
+                education: [
+                    { degree: 'PhD en Ciencias Agrarias', icon: 'award' },
+                    { degree: 'Magíster en Gestión Ambiental Sostenible', icon: 'book-open' },
+                    { degree: 'Especialista en Gestión Integral del Recurso Hídrico', icon: 'book-open' },
+                    { degree: 'Ingeniero Agroindustrial', icon: 'graduation-cap' }
+                ],
+                links: [
+                    { label: 'Hoja de Vida', url: 'https://drive.google.com/file/d/1CpJm0tONPb-I1p2hjAkx4pJZRgljlKw8/view?usp=sharing', icon: 'file-text', color: 'bg-brand-primary' },
+                    { label: 'LinkedIn', url: 'https://www.linkedin.com/in/oscar-ivan-vargas-pineda-2aa543240/', icon: 'linkedin', color: 'bg-[#0077B5]' },
+                    { label: 'GitHub', url: 'https://github.com/OscarIvaVP', icon: 'github', color: 'bg-[#333]' }
+                ]
+            },
+            lali: {
+                name: 'Lali Valentina Pedroza Amado',
+                role: 'Educadora Gestora Académica',
+                img: 'images/equipo/lali-pedroza.jpg',
+                banner: 'linear-gradient(135deg, #ec4899, #f472b6)',
+                bio: 'Educadora apasionada por la gestión académica y el diseño de experiencias de aprendizaje transformadoras. Lidera la estructuración de los programas formativos de Trabajo Científico, asegurando que cada ruta de aprendizaje sea práctica, accesible y orientada a resultados reales.',
+                education: [
+                    { degree: 'Pendiente de agregar formación', icon: 'graduation-cap' }
+                ],
+                links: []
+            },
+            bibiana: {
+                name: 'Claudia Bibiana Ruiz',
+                role: 'Experta en IA Cognitiva',
+                img: 'images/equipo/bibiana-ruiz.jpg',
+                banner: 'linear-gradient(135deg, #6366f1, #818cf8)',
+                bio: 'Especialista en inteligencia artificial cognitiva con enfoque en el procesamiento de lenguaje natural y sistemas inteligentes. Aplica técnicas avanzadas de IA para resolver problemas complejos en investigación y entornos corporativos.',
+                education: [
+                    { degree: 'Pendiente de agregar formación', icon: 'graduation-cap' }
+                ],
+                links: []
+            },
+            hector: {
+                name: 'Héctor Manuel Ávila',
+                role: 'Relacionamiento Estratégico',
+                img: 'images/equipo/hector-avila.jpg',
+                banner: 'linear-gradient(135deg, #14b8a6, #2dd4bf)',
+                bio: 'Experto en relacionamiento estratégico y desarrollo de alianzas institucionales. Conecta a Trabajo Científico con organizaciones, gobiernos y sector privado para generar proyectos de alto impacto en ciencia de datos y transformación digital.',
+                education: [
+                    { degree: 'Pendiente de agregar formación', icon: 'graduation-cap' }
+                ],
+                links: []
+            },
+            johana: {
+                name: 'Johana Ariza Marín',
+                role: 'Experta en GeoAnálisis',
+                img: 'images/equipo/johana-ariza.jpg',
+                banner: 'linear-gradient(135deg, #f59e0b, #fbbf24)',
+                bio: 'Profesional especializada en análisis geoespacial y sistemas de información geográfica. Lidera proyectos de modelado territorial, análisis espacial y visualización cartográfica aplicados a la planificación y toma de decisiones.',
+                education: [
+                    { degree: 'Pendiente de agregar formación', icon: 'graduation-cap' }
+                ],
+                links: []
+            }
+        };
+
+        function openExpertModal(key) {
+            const data = expertsData[key];
+            if (!data) return;
+
+            const modal = document.getElementById('expert-modal');
+            document.getElementById('modal-banner').style.background = data.banner;
+            document.getElementById('modal-img').src = data.img;
+            document.getElementById('modal-img').alt = data.name;
+            document.getElementById('modal-name').textContent = data.name;
+            document.getElementById('modal-role').textContent = data.role;
+            document.getElementById('modal-bio').textContent = data.bio;
+
+            // Formación académica
+            const eduContainer = document.getElementById('modal-education');
+            eduContainer.innerHTML = '';
+            data.education.forEach(edu => {
+                const div = document.createElement('div');
+                div.className = 'flex items-center gap-3 p-2.5 bg-slate-50 rounded-lg';
+                div.innerHTML = `<div class="w-8 h-8 bg-brand-primary/10 rounded-full flex items-center justify-center flex-shrink-0"><i data-lucide="${edu.icon}" class="w-4 h-4 text-brand-primary"></i></div><span class="text-slate-700 text-sm">${edu.degree}</span>`;
+                eduContainer.appendChild(div);
+            });
+
+            // Enlaces
+            const linksContainer = document.getElementById('modal-links');
+            linksContainer.innerHTML = '';
+            if (data.links.length === 0) {
+                linksContainer.innerHTML = '<span class="text-slate-400 text-sm">Próximamente</span>';
+            } else {
+                data.links.forEach(link => {
+                    const a = document.createElement('a');
+                    a.href = link.url;
+                    a.target = '_blank';
+                    a.rel = 'noopener noreferrer';
+                    a.className = `inline-flex items-center gap-2 px-4 py-2 ${link.color} text-white rounded-lg text-sm font-semibold hover:opacity-90 transition-all shadow-md`;
+                    a.innerHTML = `<i data-lucide="${link.icon}" class="w-4 h-4"></i> ${link.label}`;
+                    linksContainer.appendChild(a);
+                });
+            }
+
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            document.body.style.overflow = 'hidden';
+            lucide.createIcons();
+        }
+
+        function closeExpertModal() {
+            const modal = document.getElementById('expert-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            document.body.style.overflow = '';
+        }
+
+        document.getElementById('expert-modal').addEventListener('click', closeExpertModal);
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeExpertModal(); });
     </script>
 </body>
 </html>
