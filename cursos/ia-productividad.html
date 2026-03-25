@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>IA + Productividad — Trabajo Científico</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap');
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:'Inter',sans-serif;background:#f0f0f0;color:#1a1a1a;}
+  .page{width:794px;min-height:1123px;margin:0 auto 40px;background:#fff;position:relative;overflow:hidden;page-break-after:always;}
+  :root{--c1:#7c3aed;--c2:#4c1d95;--c3:#ddd6fe;--c4:#f5f3ff;}
+  .cover{background:linear-gradient(145deg,var(--c2) 0%,var(--c1) 60%,#a78bfa 100%);min-height:1123px;display:flex;flex-direction:column;justify-content:space-between;padding:0;}
+  .cover-top{padding:48px 56px 0;}
+  .cover-logo{font-family:'Montserrat',sans-serif;font-weight:800;font-size:13px;letter-spacing:3px;color:rgba(255,255,255,0.7);text-transform:uppercase;}
+  .cover-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.3);border-radius:20px;padding:6px 16px;font-size:12px;color:#fff;margin-top:32px;font-weight:600;letter-spacing:1px;}
+  .cover-dot{width:8px;height:8px;background:#ddd6fe;border-radius:50%;}
+  .cover-main{padding:48px 56px;}
+  .cover-icon{font-size:72px;margin-bottom:24px;}
+  .cover-title{font-family:'Montserrat',sans-serif;font-weight:800;font-size:48px;color:#fff;line-height:1.1;margin-bottom:16px;}
+  .cover-sub{font-size:18px;color:rgba(255,255,255,0.85);font-weight:300;line-height:1.5;max-width:480px;margin-bottom:48px;}
+  .cover-stats{display:flex;gap:32px;}
+  .stat{background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);border-radius:12px;padding:20px 28px;text-align:center;}
+  .stat-num{font-family:'Montserrat',sans-serif;font-weight:800;font-size:32px;color:#ddd6fe;}
+  .stat-label{font-size:11px;color:rgba(255,255,255,0.75);text-transform:uppercase;letter-spacing:1px;margin-top:4px;}
+  .cover-bottom{padding:32px 56px;background:rgba(0,0,0,0.2);display:flex;justify-content:space-between;align-items:center;}
+  .cover-bottom-text{color:rgba(255,255,255,0.7);font-size:12px;}
+  .cover-url{color:#ddd6fe;font-weight:600;font-size:13px;}
+  .content-page{padding:56px;}
+  .section-badge{display:inline-block;background:var(--c3);color:var(--c2);font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:5px 14px;border-radius:20px;margin-bottom:12px;}
+  .section-title{font-family:'Montserrat',sans-serif;font-weight:800;font-size:28px;color:#1a1a1a;margin-bottom:8px;}
+  .section-sub{color:#64748b;font-size:14px;margin-bottom:36px;line-height:1.5;}
+  .divider{width:60px;height:4px;background:var(--c1);border-radius:2px;margin-bottom:36px;}
+  .level-card{border:1px solid #e2e8f0;border-radius:16px;overflow:hidden;margin-bottom:24px;}
+  .level-header{background:var(--c4);border-bottom:1px solid var(--c3);padding:18px 24px;display:flex;align-items:center;gap:16px;}
+  .level-num{background:var(--c1);color:#fff;font-family:'Montserrat',sans-serif;font-weight:800;font-size:13px;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .level-title{font-family:'Montserrat',sans-serif;font-weight:700;font-size:16px;color:#1a1a1a;}
+  .level-hours{margin-left:auto;background:var(--c1);color:#fff;font-size:11px;font-weight:700;padding:4px 12px;border-radius:20px;}
+  .level-body{padding:20px 24px;}
+  .topic-list{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+  .topic-list li{font-size:13px;color:#374151;display:flex;align-items:flex-start;gap:8px;line-height:1.4;}
+  .topic-list li::before{content:'▸';color:var(--c1);font-size:12px;flex-shrink:0;margin-top:1px;}
+  .method-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:32px;}
+  .method-card{background:var(--c4);border:1px solid var(--c3);border-radius:12px;padding:20px;text-align:center;}
+  .method-icon{font-size:28px;margin-bottom:10px;}
+  .method-title{font-family:'Montserrat',sans-serif;font-weight:700;font-size:13px;color:var(--c2);margin-bottom:6px;}
+  .method-text{font-size:12px;color:#64748b;line-height:1.4;}
+  .benefit-list{list-style:none;margin-bottom:32px;}
+  .benefit-list li{padding:10px 0;border-bottom:1px solid #f1f5f9;font-size:13px;color:#374151;display:flex;align-items:flex-start;gap:10px;line-height:1.4;}
+  .benefit-list li:last-child{border-bottom:none;}
+  .benefit-list li::before{content:'✓';color:var(--c1);font-weight:700;font-size:14px;flex-shrink:0;}
+  .cta-box{background:linear-gradient(135deg,var(--c2),var(--c1));border-radius:16px;padding:28px 32px;color:#fff;display:flex;justify-content:space-between;align-items:center;}
+  .cta-text h3{font-family:'Montserrat',sans-serif;font-weight:800;font-size:18px;margin-bottom:6px;}
+  .cta-text p{font-size:13px;opacity:0.85;line-height:1.4;}
+  .cta-btn{background:#fff;color:var(--c2);font-family:'Montserrat',sans-serif;font-weight:700;font-size:13px;padding:12px 24px;border-radius:10px;text-decoration:none;white-space:nowrap;}
+  .contact-info{margin-top:24px;display:flex;gap:24px;font-size:12px;color:#64748b;}
+  @media print{body{background:#fff;}.page{margin:0;box-shadow:none;}}
+</style>
+</head>
+<body>
+
+<div class="page">
+  <div class="cover">
+    <div class="cover-top">
+      <div class="cover-logo">Trabajo Científico · Academia Tecnológica</div>
+      <div class="cover-badge"><span class="cover-dot"></span> Programa Certificado</div>
+    </div>
+    <div class="cover-main">
+      <div class="cover-icon">🤖</div>
+      <div class="cover-title">IA +<br>Productividad</div>
+      <div class="cover-sub">Integra la inteligencia artificial en tu vida personal y profesional para multiplicar tu productividad y automatizar lo repetitivo.</div>
+      <div class="cover-stats">
+        <div class="stat"><div class="stat-num">3</div><div class="stat-label">Niveles</div></div>
+        <div class="stat"><div class="stat-num">36h</div><div class="stat-label">Total</div></div>
+        <div class="stat"><div class="stat-num">100%</div><div class="stat-label">Online</div></div>
+      </div>
+    </div>
+    <div class="cover-bottom">
+      <div class="cover-bottom-text">Mediado por tecnología · Plataforma interactiva · Certificado al finalizar</div>
+      <div class="cover-url">trabajocientifico.org</div>
+    </div>
+  </div>
+</div>
+
+<div class="page">
+  <div class="content-page">
+    <div class="section-badge">Contenido del Programa</div>
+    <div class="section-title">Tres niveles · 12 horas cada uno</div>
+    <div class="section-sub">Aprende a usar las herramientas de IA más potentes del mercado para transformar tu manera de trabajar, estudiar y crear.</div>
+    <div class="divider"></div>
+
+    <div class="level-card">
+      <div class="level-header">
+        <div class="level-num">1</div>
+        <div class="level-title">Fundamentos de IA y Herramientas Básicas</div>
+        <div class="level-hours">12 horas</div>
+      </div>
+      <div class="level-body">
+        <ul class="topic-list">
+          <li>¿Qué es la IA generativa y cómo funciona?</li>
+          <li>ChatGPT, Gemini y Claude: diferencias y usos</li>
+          <li>Prompting básico: cómo hacer buenas preguntas</li>
+          <li>IA para redacción y corrección de textos</li>
+          <li>Generación de imágenes con IA (Midjourney, DALL·E)</li>
+          <li>IA para resúmenes y síntesis de documentos</li>
+          <li>Herramientas gratuitas vs. premium</li>
+          <li>Ética y uso responsable de la IA</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="level-card">
+      <div class="level-header">
+        <div class="level-num">2</div>
+        <div class="level-title">IA Aplicada a la Productividad</div>
+        <div class="level-hours">12 horas</div>
+      </div>
+      <div class="level-body">
+        <ul class="topic-list">
+          <li>Automatización de correos y documentos con IA</li>
+          <li>IA en Microsoft 365: Copilot para Word y Excel</li>
+          <li>Gestión de proyectos asistida por IA</li>
+          <li>Creación de presentaciones con IA (Gamma, Canva)</li>
+          <li>IA para análisis de datos sin código</li>
+          <li>Transcripción y resumen de reuniones</li>
+          <li>Chatbots personalizados para atención</li>
+          <li>Flujos de trabajo con Zapier e IA</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="level-card">
+      <div class="level-header">
+        <div class="level-num">3</div>
+        <div class="level-title">IA Avanzada y Automatización Personal</div>
+        <div class="level-hours">12 horas</div>
+      </div>
+      <div class="level-body">
+        <ul class="topic-list">
+          <li>Prompt engineering avanzado y cadenas de prompts</li>
+          <li>Agentes de IA y flujos autónomos</li>
+          <li>Gemini CLI: IA desde la línea de comandos</li>
+          <li>Claude Code: asistente de programación con IA</li>
+          <li>APIs de IA: integración sin programación</li>
+          <li>Construcción de pipelines de automatización</li>
+          <li>IA para análisis de datos y reportes automáticos</li>
+          <li>Proyecto final: sistema personalizado con IA</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="page">
+  <div class="content-page">
+    <div class="section-badge">Metodología</div>
+    <div class="section-title">Aprende haciendo con IA real</div>
+    <div class="section-sub">Cada sesión es un laboratorio donde practicas directamente con las herramientas más actuales del mercado.</div>
+    <div class="divider"></div>
+    <div class="method-grid">
+      <div class="method-card"><div class="method-icon">🎬</div><div class="method-title">Video-clases HD</div><div class="method-text">Sesiones en vivo y grabadas con demostraciones reales de cada herramienta de IA.</div></div>
+      <div class="method-card"><div class="method-icon">🧪</div><div class="method-title">Laboratorios en Vivo</div><div class="method-text">Prácticas guiadas donde usas las herramientas de IA durante la clase, no después.</div></div>
+      <div class="method-card"><div class="method-icon">📁</div><div class="method-title">Casos Reales</div><div class="method-text">Cada ejercicio está basado en situaciones reales de trabajo y productividad personal.</div></div>
+      <div class="method-card"><div class="method-icon">🏆</div><div class="method-title">Certificado Digital</div><div class="method-text">Certificado verificable al completar cada nivel, respaldado por Trabajo Científico.</div></div>
+    </div>
+    <div class="section-badge">¿Qué lograrás?</div>
+    <ul class="benefit-list" style="margin-top:16px;">
+      <li>Reducir hasta un 60% el tiempo en tareas administrativas y de redacción</li>
+      <li>Dominar las herramientas de IA más usadas en el mercado laboral actual</li>
+      <li>Crear flujos de automatización que trabajan por ti de forma autónoma</li>
+      <li>Aplicar IA en tu área profesional específica con confianza y criterio</li>
+      <li>Mantenerte actualizado en el ecosistema de IA que cambia cada semana</li>
+    </ul>
+    <div class="cta-box">
+      <div class="cta-text"><h3>¡Inscríbete hoy!</h3><p>Cupos limitados · Inicio inmediato<br>Acceso completo a la plataforma interactiva</p></div>
+      <a class="cta-btn" href="https://forms.gle/LTbJyNjncE4rocP9A">Inscríbete →</a>
+    </div>
+    <div class="contact-info">
+      <span>🌐 trabajocientifico.org</span>
+      <span>✉ info@trabajocientifico.org</span>
+      <span>📱 WhatsApp disponible</span>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
