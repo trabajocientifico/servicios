@@ -5,7 +5,8 @@
       "Bash(do)",
       "Bash(sed -i 's|https://forms\\\\.gle/TWCxZTT18KM5kJA59|https://forms.gle/LTbJyNjncE4rocP9A|g' \"$f\")",
       "Bash(done)",
-      "Bash(grep:*)"
+      "Bash(grep:*)",
+      "WebFetch(domain:trabajocientifico.github.io)"
     ]
   }
 }
