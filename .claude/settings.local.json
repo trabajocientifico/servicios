@@ -6,7 +6,9 @@
       "Bash(sed -i 's|https://forms\\\\.gle/TWCxZTT18KM5kJA59|https://forms.gle/LTbJyNjncE4rocP9A|g' \"$f\")",
       "Bash(done)",
       "Bash(grep:*)",
-      "WebFetch(domain:trabajocientifico.github.io)"
+      "WebFetch(domain:trabajocientifico.github.io)",
+      "Bash(python -m http.server 8000)",
+      "Bash(curl -s -o /dev/null -w \"HTTP %{http_code} - %{size_download} bytes\\\\n\" http://localhost:8000/)"
     ]
   }
 }

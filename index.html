@@ -383,7 +383,7 @@
             100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
         }
 
-        /* Grid de fondo global mejorado */
+        /* Patrón sutil de fondo - estilo ejecutivo */
         body::before {
             content: '';
             position: fixed;
@@ -392,8 +392,8 @@
             width: 100%;
             height: 100%;
             background-image:
-                repeating-linear-gradient(0deg, rgba(220, 68, 68, 0.04) 0px, rgba(220, 68, 68, 0.04) 1px, transparent 1px, transparent 80px),
-                repeating-linear-gradient(90deg, rgba(220, 68, 68, 0.04) 0px, rgba(220, 68, 68, 0.04) 1px, transparent 1px, transparent 80px);
+                repeating-linear-gradient(0deg, rgba(43, 21, 21, 0.025) 0px, rgba(43, 21, 21, 0.025) 1px, transparent 1px, transparent 120px),
+                repeating-linear-gradient(90deg, rgba(43, 21, 21, 0.025) 0px, rgba(43, 21, 21, 0.025) 1px, transparent 1px, transparent 120px);
             pointer-events: none;
             z-index: 0;
         }
@@ -429,25 +429,7 @@
         }
 
         .tech-card::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(220, 68, 68, 0.08), transparent);
-            animation: card-shine 4s linear infinite;
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-
-        .tech-card:hover::before {
-            opacity: 1;
-        }
-
-        @keyframes card-shine {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            display: none;
         }
 
         /* Métricas flotantes en tarjetas */
@@ -466,23 +448,10 @@
             50% { transform: translateY(-30px) scale(1.1); opacity: 0.5; }
         }
 
-        /* KPI pulse con cambio de color */
+        /* KPI - estilo ejecutivo, sin animación */
         .kpi-number {
             display: inline-block;
-            animation: kpi-pulse 3s ease-in-out infinite, kpi-color 4s ease-in-out infinite;
-        }
-
-        @keyframes kpi-pulse {
-            0%, 100% { transform: scale(1) translateY(0); }
-            25% { transform: scale(1.05) translateY(-3px); }
-            50% { transform: scale(1.1) translateY(-5px); }
-            75% { transform: scale(1.05) translateY(-3px); }
-        }
-
-        @keyframes kpi-color {
-            0%, 100% { color: #FDB44B; text-shadow: 0 0 20px rgba(253, 180, 75, 0.3); }
-            33% { color: #FFD480; text-shadow: 0 0 25px rgba(255, 212, 128, 0.4); }
-            66% { color: #E8A030; text-shadow: 0 0 25px rgba(232, 160, 48, 0.4); }
+            color: #FDB44B;
         }
 
         /* ============================================
@@ -608,6 +577,38 @@
         }
 
         /* ============================================
+           ACADEMIA - TABS Y CARDS EJECUTIVAS
+           ============================================ */
+        .academy-tab {
+            color: #64748b;
+            background: transparent;
+        }
+        .academy-tab:hover:not(.academy-tab-active) {
+            color: #2B1515;
+        }
+        .academy-tab-active {
+            color: #ffffff;
+            background: #2B1515;
+            box-shadow: 0 4px 10px -2px rgba(43, 21, 21, 0.25);
+        }
+
+        .academy-card {
+            position: relative;
+        }
+        .academy-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 0.75rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+            pointer-events: none;
+            transition: box-shadow 0.3s ease;
+        }
+        .academy-card:hover::after {
+            box-shadow: 0 20px 40px -15px rgba(43, 21, 21, 0.18);
+        }
+
+        /* ============================================
            KPI POPUPS
            ============================================ */
         .kpi-popup {
@@ -628,20 +629,6 @@
 </head>
 <body class="text-slate-700 antialiased">
 
-    <!-- Partículas globales de datos -->
-    <div class="global-particles">
-        <div class="g-particle red" style="left: 5%; animation-delay: 0s;">∑</div>
-        <div class="g-particle gold" style="left: 15%; animation-delay: 3s;">λ</div>
-        <div class="g-particle red" style="left: 25%; animation-delay: 6s;">{}</div>
-        <div class="g-particle gold" style="left: 35%; animation-delay: 2s;">π</div>
-        <div class="g-particle red" style="left: 45%; animation-delay: 8s;">∇</div>
-        <div class="g-particle gold" style="left: 55%; animation-delay: 4s;">//</div>
-        <div class="g-particle red" style="left: 65%; animation-delay: 10s;">[]</div>
-        <div class="g-particle gold" style="left: 75%; animation-delay: 1s;">∞</div>
-        <div class="g-particle red" style="left: 85%; animation-delay: 7s;">01</div>
-        <div class="g-particle gold" style="left: 92%; animation-delay: 5s;">&lt;/&gt;</div>
-    </div>
-
     <!-- HEADER -->
     <nav class="fixed w-full z-50 bg-brand-dark/95 backdrop-blur-md border-b border-white/10 text-white transition-all duration-300" id="navbar">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -652,7 +639,7 @@
 
                 <div class="hidden md:flex items-center space-x-8">
                     <a href="#inicio" class="nav-link text-sm font-medium hover:text-brand-accent transition-colors">Inicio</a>
-                    <a href="#cursos" class="nav-link text-sm font-medium hover:text-brand-accent transition-colors">Cursos</a>
+                    <a href="#cursos" class="nav-link text-sm font-medium hover:text-brand-accent transition-colors">Academia</a>
                     <a href="#consultoria" class="nav-link text-sm font-medium hover:text-brand-accent transition-colors">Consultoría</a>
                     <a href="#sobre-nosotros" class="nav-link text-sm font-medium hover:text-brand-accent transition-colors">Expertos</a>
                     <a href="#experiencias" class="nav-link text-sm font-medium hover:text-brand-accent transition-colors">Experiencias</a>
@@ -678,7 +665,7 @@
         <div id="mobile-menu" class="hidden md:hidden bg-brand-dark border-t border-white/10">
             <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
                 <a href="#inicio" class="nav-link-mobile block px-3 py-2 rounded-md text-base font-medium hover:bg-white/10 hover:text-brand-accent">Inicio</a>
-                <a href="#cursos" class="nav-link-mobile block px-3 py-2 rounded-md text-base font-medium hover:bg-white/10 hover:text-brand-accent">Cursos</a>
+                <a href="#cursos" class="nav-link-mobile block px-3 py-2 rounded-md text-base font-medium hover:bg-white/10 hover:text-brand-accent">Academia</a>
                 <a href="#consultoria" class="nav-link-mobile block px-3 py-2 rounded-md text-base font-medium hover:bg-white/10 hover:text-brand-accent">Consultoría</a>
                 <a href="#sobre-nosotros" class="nav-link-mobile block px-3 py-2 rounded-md text-base font-medium hover:bg-white/10 hover:text-brand-accent">Expertos</a>
                 <a href="#experiencias" class="nav-link-mobile block px-3 py-2 rounded-md text-base font-medium hover:bg-white/10 hover:text-brand-accent">Experiencias</a>
@@ -688,107 +675,46 @@
     </nav>
 
     <!-- ============================================
-         HERO SECTION - CON TODOS LOS EFECTOS
+         HERO SECTION - ESTÉTICA EJECUTIVA
          ============================================ -->
     <section id="inicio" class="relative min-h-screen flex items-center hero-bg pt-20">
-        
-        <!-- Canvas para red neuronal interactiva -->
+
+        <!-- Red neuronal sutil de fondo -->
         <canvas id="neural-canvas"></canvas>
 
-        <!-- Grid de datos animado -->
-        <div class="data-grid-overlay"></div>
-
-        <!-- Lluvia de código vertical -->
-        <div class="code-rain">
-            <div class="code-column">import pandas • numpy • sklearn • tensorflow • keras • matplotlib</div>
-            <div class="code-column">def analyze() • return insights • accuracy: 0.97 • precision: 0.95</div>
-            <div class="code-column">SELECT * FROM data • WHERE value > threshold • GROUP BY category</div>
-            <div class="code-column">model.fit(X, y) • predictions = model.predict() • score: 0.94</div>
-            <div class="code-column">for i in range(n): • process(data[i]) • yield results</div>
-            <div class="code-column">class DataPipeline: • def __init__(self): • self.clean()</div>
-            <div class="code-column">df.groupby('region') • .agg({'sales': 'sum'}) • .sort_values()</div>
-            <div class="code-column">plt.figure() • sns.heatmap(corr) • plt.savefig('output.png')</div>
-            <div class="code-column">api.fetch('/data') • response.json() • transform(data)</div>
-            <div class="code-column">pipeline.execute() • SUCCESS • ROI: +340% • Time: 2.3s</div>
-        </div>
-
-        <!-- Líneas de código horizontales -->
-        <div class="code-rain">
-            <div class="code-line-horizontal">>>> model = RandomForestClassifier(n_estimators=100) | accuracy_score: 0.97</div>
-            <div class="code-line-horizontal">>>> df.describe() | mean: 42.5 | std: 12.3 | count: 10000</div>
-            <div class="code-line-horizontal">>>> SELECT AVG(revenue) FROM sales WHERE year = 2024 GROUP BY region</div>
-            <div class="code-line-horizontal">>>> from transformers import pipeline | nlp = pipeline('sentiment')</div>
-            <div class="code-line-horizontal">>>> plt.plot(x, predictions, '--r') | correlation: 0.89 | p_value: 0.001</div>
-            <div class="code-line-horizontal">>>> neural_network.fit(epochs=100) | loss: 0.023 | val_accuracy: 0.96</div>
-        </div>
-
-        <!-- Símbolos de datos flotantes -->
-        <div class="data-symbols">
-            <div class="data-symbol large" style="top: 10%; left: 8%; color: rgba(220, 68, 68, 0.2); animation-delay: 0s;">∑</div>
-            <div class="data-symbol medium" style="top: 25%; right: 15%; color: rgba(253, 180, 75, 0.3); animation-delay: 2s;">λ</div>
-            <div class="data-symbol small" style="top: 40%; left: 20%; color: rgba(220, 68, 68, 0.4); animation-delay: 4s;">{x}</div>
-            <div class="data-symbol large" style="top: 60%; right: 25%; color: rgba(253, 180, 75, 0.2); animation-delay: 1s;">∇</div>
-            <div class="data-symbol medium" style="top: 75%; left: 12%; color: rgba(220, 68, 68, 0.3); animation-delay: 3s;">π</div>
-            <div class="data-symbol small" style="top: 15%; right: 8%; color: rgba(253, 180, 75, 0.4); animation-delay: 5s;">∞</div>
-            <div class="data-symbol medium" style="top: 50%; left: 5%; color: rgba(220, 68, 68, 0.25); animation-delay: 6s;">μ</div>
-            <div class="data-symbol large" style="top: 85%; right: 10%; color: rgba(253, 180, 75, 0.15); animation-delay: 2.5s;">σ</div>
-        </div>
-
-        <!-- Ondas de datos en la parte inferior -->
-        <div class="data-waves">
-            <div class="wave"></div>
-            <div class="wave"></div>
-        </div>
-
-        <!-- Terminal flotante -->
-        <div class="terminal-effect">
-            <div class="terminal-header">
-                <div class="terminal-dot" style="background: #ff5f56;"></div>
-                <div class="terminal-dot" style="background: #ffbd2e;"></div>
-                <div class="terminal-dot" style="background: #27ca40;"></div>
-            </div>
-            <div class="terminal-line"><span class="prompt">$</span> <span class="command">python analyze.py</span></div>
-            <div class="terminal-line"><span class="output">Loading dataset...</span> <span class="number">10,000 rows</span></div>
-            <div class="terminal-line"><span class="output">Training model...</span> <span class="number">accuracy: 97.2%</span></div>
-            <div class="terminal-line"><span class="output">Generating insights...</span></div>
-            <div class="terminal-line"><span class="output">✓ Pipeline completed in</span> <span class="number">2.3s</span></div>
-            <div class="terminal-line"><span class="prompt">$</span> <span class="cursor-blink"></span></div>
-        </div>
+        <!-- Velo de oscurecimiento para máxima legibilidad -->
+        <div class="absolute inset-0 bg-gradient-to-r from-brand-dark/95 via-brand-dark/80 to-brand-dark/50 z-[5]"></div>
 
         <!-- Contenido del Hero -->
         <div class="hero-content max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
             <div class="max-w-3xl">
-                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-accent/10 border border-brand-accent/20 text-brand-accent text-xs font-semibold tracking-wide uppercase mb-6">
-                    <span class="w-2 h-2 rounded-full bg-brand-accent animate-pulse"></span>
-                    Innovación basada en evidencia
+                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-brand-accent/30 text-brand-accent text-[11px] font-semibold tracking-[0.2em] uppercase mb-8">
+                    <span class="w-1.5 h-1.5 rounded-full bg-brand-accent"></span>
+                    Consultoría en Ciencia de Datos
                 </div>
-                <h1 class="font-heading text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white leading-tight mb-6">
-                    Ciencia de Datos Aplicada:<br>
-                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-accent to-teal-200">Del Rigor Académico al Impacto Real.</span>
+                <h1 class="font-heading text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white leading-[1.1] mb-6">
+                    Decisiones estratégicas<br>
+                    <span class="text-brand-accent">respaldadas por datos.</span>
                 </h1>
-                <p class="text-lg sm:text-xl text-slate-300 mb-10 max-w-2xl font-light">
-                    Consultoría avanzada y rutas de aprendizaje profesional respaldadas por expertos PhD. Especialistas en Python, IA y Analítica Espacial.
+                <p class="text-lg sm:text-xl text-slate-300 mb-10 max-w-2xl font-light leading-relaxed">
+                    Consultoría avanzada y programas de formación profesional liderados por expertos PhD. Especialistas en Python, Inteligencia Artificial y Analítica Espacial para organizaciones de alto desempeño.
                 </p>
-                
+
                 <div class="flex flex-col sm:flex-row gap-4">
-                    <a href="https://forms.gle/LTbJyNjncE4rocP9A" target="_blank" rel="noopener noreferrer" class="inline-flex justify-center items-center px-8 py-4 border border-transparent text-base font-bold rounded-lg text-brand-dark bg-brand-accent hover:bg-teal-300 transition-all shadow-lg hover:shadow-brand-accent/25 transform hover:-translate-y-1 animate-pulse hover:animate-none">
-                        <i data-lucide="pencil-line" class="mr-2 w-5 h-5"></i>
-                        Inscríbete Ahora
-                    </a>
-                    <a href="#consultoria" class="inline-flex justify-center items-center px-8 py-4 border-2 border-brand-accent text-base font-bold rounded-lg text-brand-accent hover:bg-brand-accent hover:text-brand-dark transition-all transform hover:-translate-y-1">
-                        Soluciones para Empresas
+                    <a href="#consultoria" class="inline-flex justify-center items-center px-8 py-4 text-base font-bold rounded-lg text-brand-dark bg-brand-accent hover:bg-white transition-all shadow-lg">
+                        Soluciones Corporativas
                         <i data-lucide="arrow-right" class="ml-2 w-5 h-5"></i>
                     </a>
-                    <a href="#cursos" class="inline-flex justify-center items-center px-8 py-4 border-2 border-slate-300 text-base font-bold rounded-lg text-white hover:bg-white hover:text-brand-dark transition-all transform hover:-translate-y-1">
-                        Ver Rutas de Aprendizaje
+                    <a href="#cursos" class="inline-flex justify-center items-center px-8 py-4 border border-white/30 text-base font-bold rounded-lg text-white hover:bg-white/10 transition-all">
+                        Academia Profesional
                     </a>
                 </div>
             </div>
         </div>
-        
+
         <!-- Scroll Down Indicator -->
-        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce hidden md:block" style="z-index: 10;">
-            <i data-lucide="chevron-down" class="text-white/50 w-8 h-8"></i>
+        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 hidden md:block" style="z-index: 10;">
+            <i data-lucide="chevron-down" class="text-white/40 w-6 h-6 animate-bounce"></i>
         </div>
     </section>
 
@@ -821,181 +747,343 @@
         </div>
     </div>
 
-    <!-- COURSES SECTION (B2C) -->
-    <section id="cursos" class="py-20 bg-white relative">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex flex-col md:flex-row justify-between items-end mb-12">
-                <div class="max-w-2xl">
-                    <span class="text-brand-primary font-semibold tracking-wider uppercase text-sm">Academia Tecnológica</span>
-                    <h2 class="font-heading text-3xl md:text-4xl font-bold text-brand-dark mt-2">Aprende con los Consultores que Lideran la Industria</h2>
-                    <p class="mt-4 text-slate-600 text-lg">No solo teoría. Te enseñamos exactamente lo que aplicamos en nuestros proyectos de consultoría.</p>
+    <!-- ACADEMIA TRABAJO CIENTÍFICO - REDISEÑO EJECUTIVO -->
+    <section id="cursos" class="py-24 bg-slate-50 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+
+            <!-- Encabezado ejecutivo -->
+            <div class="text-center max-w-3xl mx-auto mb-12">
+                <span class="text-brand-primary font-semibold tracking-[0.25em] uppercase text-xs">Academia Trabajo Científico</span>
+                <h2 class="font-heading text-3xl md:text-4xl lg:text-5xl font-bold text-brand-dark mt-4 leading-tight">
+                    Formación profesional en Datos, IA y Analítica
+                </h2>
+                <p class="mt-5 text-slate-600 text-lg leading-relaxed">
+                    Programas diseñados por consultores con experiencia real en proyectos para el Banco Mundial, BID, Ecopetrol y universidades líderes.
+                </p>
+                <div class="w-16 h-0.5 bg-brand-accent mx-auto mt-8"></div>
+            </div>
+
+            <!-- Barra de credenciales -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-px bg-slate-200 rounded-xl overflow-hidden border border-slate-200 mb-16 shadow-sm">
+                <div class="bg-white px-4 py-7 text-center">
+                    <div class="text-3xl md:text-4xl font-bold text-brand-dark font-heading">14</div>
+                    <div class="text-[10px] uppercase tracking-[0.15em] text-slate-500 mt-2 font-semibold">Programas activos</div>
                 </div>
+                <div class="bg-white px-4 py-7 text-center">
+                    <div class="text-3xl md:text-4xl font-bold text-brand-dark font-heading">+150h</div>
+                    <div class="text-[10px] uppercase tracking-[0.15em] text-slate-500 mt-2 font-semibold">Contenido especializado</div>
+                </div>
+                <div class="bg-white px-4 py-7 text-center">
+                    <div class="text-3xl md:text-4xl font-bold text-brand-dark font-heading">+300</div>
+                    <div class="text-[10px] uppercase tracking-[0.15em] text-slate-500 mt-2 font-semibold">Profesionales formados</div>
+                </div>
+                <div class="bg-white px-4 py-7 text-center">
+                    <div class="text-3xl md:text-4xl font-bold text-brand-dark font-heading">100%</div>
+                    <div class="text-[10px] uppercase tracking-[0.15em] text-slate-500 mt-2 font-semibold">Aplicación práctica</div>
+                </div>
+            </div>
+
+            <!-- Tabs ejecutivas -->
+            <div class="flex justify-center mb-12">
+                <div class="inline-flex bg-white border border-slate-200 rounded-lg p-1.5 shadow-sm">
+                    <button id="tab-intro" onclick="switchAcademyTab('intro')" class="academy-tab academy-tab-active px-5 md:px-8 py-3 text-sm font-semibold rounded-md transition-all flex items-center gap-2">
+                        Cursos Introductorios
+                        <span class="text-[10px] bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded-full font-bold tracking-wide">GRATIS</span>
+                    </button>
+                    <button id="tab-pro" onclick="switchAcademyTab('pro')" class="academy-tab px-5 md:px-8 py-3 text-sm font-semibold rounded-md transition-all">
+                        Programas Profesionales
+                    </button>
+                </div>
+            </div>
+
+            <!-- ============== CURSOS INTRODUCTORIOS (GRATIS) ============== -->
+            <div id="academy-intro" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+                <!-- Bibliometrix en Rstudio -->
+                <a href="https://trabajocientifico.github.io/cursos/" target="_blank" rel="noopener noreferrer" class="academy-card group bg-white border border-slate-200 rounded-xl p-7 hover:border-brand-primary hover:shadow-xl transition-all block">
+                    <div class="flex items-start justify-between mb-5">
+                        <div class="w-12 h-12 rounded-lg bg-slate-50 border border-slate-100 flex items-center justify-center group-hover:bg-brand-dark group-hover:border-brand-dark transition-all">
+                            <i data-lucide="line-chart" class="w-6 h-6 text-brand-primary group-hover:text-brand-accent transition-colors"></i>
+                        </div>
+                        <span class="text-[10px] font-bold uppercase tracking-wider text-emerald-700 bg-emerald-50 border border-emerald-100 px-2.5 py-1 rounded">Gratis · 9h</span>
+                    </div>
+                    <h4 class="font-heading font-bold text-lg text-brand-dark mb-2 group-hover:text-brand-primary transition-colors">Bibliometrix en Rstudio</h4>
+                    <p class="text-slate-600 text-sm leading-relaxed mb-6">Analiza la producción científica con herramientas estadísticas avanzadas en R.</p>
+                    <div class="flex items-center justify-between pt-4 border-t border-slate-100">
+                        <span class="text-[10px] uppercase tracking-[0.15em] text-slate-400 font-semibold">Introductorio</span>
+                        <span class="inline-flex items-center gap-1.5 text-brand-primary text-sm font-bold group-hover:gap-2.5 transition-all">
+                            Ver programa <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+                        </span>
+                    </div>
+                </a>
+
+                <!-- Python + IA en GeoInformación -->
+                <a href="https://trabajocientifico.github.io/cursos/" target="_blank" rel="noopener noreferrer" class="academy-card group bg-white border border-slate-200 rounded-xl p-7 hover:border-brand-primary hover:shadow-xl transition-all block">
+                    <div class="flex items-start justify-between mb-5">
+                        <div class="w-12 h-12 rounded-lg bg-slate-50 border border-slate-100 flex items-center justify-center group-hover:bg-brand-dark group-hover:border-brand-dark transition-all">
+                            <i data-lucide="map-pin" class="w-6 h-6 text-brand-primary group-hover:text-brand-accent transition-colors"></i>
+                        </div>
+                        <span class="text-[10px] font-bold uppercase tracking-wider text-emerald-700 bg-emerald-50 border border-emerald-100 px-2.5 py-1 rounded">Gratis · 9h</span>
+                    </div>
+                    <h4 class="font-heading font-bold text-lg text-brand-dark mb-2 group-hover:text-brand-primary transition-colors">Python + IA en GeoInformación</h4>
+                    <p class="text-slate-600 text-sm leading-relaxed mb-6">Procesa datos espaciales con herramientas de Inteligencia Artificial de vanguardia.</p>
+                    <div class="flex items-center justify-between pt-4 border-t border-slate-100">
+                        <span class="text-[10px] uppercase tracking-[0.15em] text-slate-400 font-semibold">Introductorio</span>
+                        <span class="inline-flex items-center gap-1.5 text-brand-primary text-sm font-bold group-hover:gap-2.5 transition-all">
+                            Ver programa <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+                        </span>
+                    </div>
+                </a>
+
+                <!-- AgroClima con Python y RStudio -->
+                <a href="https://trabajocientifico.github.io/cursos/" target="_blank" rel="noopener noreferrer" class="academy-card group bg-white border border-slate-200 rounded-xl p-7 hover:border-brand-primary hover:shadow-xl transition-all block">
+                    <div class="flex items-start justify-between mb-5">
+                        <div class="w-12 h-12 rounded-lg bg-slate-50 border border-slate-100 flex items-center justify-center group-hover:bg-brand-dark group-hover:border-brand-dark transition-all">
+                            <i data-lucide="cloud-sun" class="w-6 h-6 text-brand-primary group-hover:text-brand-accent transition-colors"></i>
+                        </div>
+                        <span class="text-[10px] font-bold uppercase tracking-wider text-emerald-700 bg-emerald-50 border border-emerald-100 px-2.5 py-1 rounded">Gratis · 9h</span>
+                    </div>
+                    <h4 class="font-heading font-bold text-lg text-brand-dark mb-2 group-hover:text-brand-primary transition-colors">AgroClima con Python y RStudio</h4>
+                    <p class="text-slate-600 text-sm leading-relaxed mb-6">Analiza datos climáticos y agrícolas para soportar decisiones del sector.</p>
+                    <div class="flex items-center justify-between pt-4 border-t border-slate-100">
+                        <span class="text-[10px] uppercase tracking-[0.15em] text-slate-400 font-semibold">Introductorio</span>
+                        <span class="inline-flex items-center gap-1.5 text-brand-primary text-sm font-bold group-hover:gap-2.5 transition-all">
+                            Ver programa <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+                        </span>
+                    </div>
+                </a>
+
+                <!-- Excel Inteligente -->
+                <a href="https://trabajocientifico.github.io/cursos/" target="_blank" rel="noopener noreferrer" class="academy-card group bg-white border border-slate-200 rounded-xl p-7 hover:border-brand-primary hover:shadow-xl transition-all block">
+                    <div class="flex items-start justify-between mb-5">
+                        <div class="w-12 h-12 rounded-lg bg-slate-50 border border-slate-100 flex items-center justify-center group-hover:bg-brand-dark group-hover:border-brand-dark transition-all">
+                            <i data-lucide="sparkles" class="w-6 h-6 text-brand-primary group-hover:text-brand-accent transition-colors"></i>
+                        </div>
+                        <span class="text-[10px] font-bold uppercase tracking-wider text-emerald-700 bg-emerald-50 border border-emerald-100 px-2.5 py-1 rounded">Gratis · 9h</span>
+                    </div>
+                    <h4 class="font-heading font-bold text-lg text-brand-dark mb-2 group-hover:text-brand-primary transition-colors">Excel Inteligente</h4>
+                    <p class="text-slate-600 text-sm leading-relaxed mb-6">Domina las funciones avanzadas de Excel potenciadas con Inteligencia Artificial.</p>
+                    <div class="flex items-center justify-between pt-4 border-t border-slate-100">
+                        <span class="text-[10px] uppercase tracking-[0.15em] text-slate-400 font-semibold">Introductorio</span>
+                        <span class="inline-flex items-center gap-1.5 text-brand-primary text-sm font-bold group-hover:gap-2.5 transition-all">
+                            Ver programa <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+                        </span>
+                    </div>
+                </a>
+
+                <!-- Python + IA en Ciencia de Datos -->
+                <a href="https://trabajocientifico.github.io/cursos/" target="_blank" rel="noopener noreferrer" class="academy-card group bg-white border border-slate-200 rounded-xl p-7 hover:border-brand-primary hover:shadow-xl transition-all block">
+                    <div class="flex items-start justify-between mb-5">
+                        <div class="w-12 h-12 rounded-lg bg-slate-50 border border-slate-100 flex items-center justify-center group-hover:bg-brand-dark group-hover:border-brand-dark transition-all">
+                            <i data-lucide="brain-circuit" class="w-6 h-6 text-brand-primary group-hover:text-brand-accent transition-colors"></i>
+                        </div>
+                        <span class="text-[10px] font-bold uppercase tracking-wider text-emerald-700 bg-emerald-50 border border-emerald-100 px-2.5 py-1 rounded">Gratis · 9h</span>
+                    </div>
+                    <h4 class="font-heading font-bold text-lg text-brand-dark mb-2 group-hover:text-brand-primary transition-colors">Python + IA en Ciencia de Datos</h4>
+                    <p class="text-slate-600 text-sm leading-relaxed mb-6">Domina la programación científica de datos potenciada por Inteligencia Artificial.</p>
+                    <div class="flex items-center justify-between pt-4 border-t border-slate-100">
+                        <span class="text-[10px] uppercase tracking-[0.15em] text-slate-400 font-semibold">Introductorio</span>
+                        <span class="inline-flex items-center gap-1.5 text-brand-primary text-sm font-bold group-hover:gap-2.5 transition-all">
+                            Ver programa <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+                        </span>
+                    </div>
+                </a>
+
+                <!-- Visualización Gráfica con Python + IA -->
+                <a href="https://trabajocientifico.github.io/cursos/" target="_blank" rel="noopener noreferrer" class="academy-card group bg-white border border-slate-200 rounded-xl p-7 hover:border-brand-primary hover:shadow-xl transition-all block relative">
+                    <span class="absolute -top-2 -right-2 text-[10px] font-bold uppercase tracking-wider text-white bg-brand-primary px-2.5 py-1 rounded shadow-md">Próximamente</span>
+                    <div class="flex items-start justify-between mb-5">
+                        <div class="w-12 h-12 rounded-lg bg-slate-50 border border-slate-100 flex items-center justify-center group-hover:bg-brand-dark group-hover:border-brand-dark transition-all">
+                            <i data-lucide="bar-chart-3" class="w-6 h-6 text-brand-primary group-hover:text-brand-accent transition-colors"></i>
+                        </div>
+                        <span class="text-[10px] font-bold uppercase tracking-wider text-emerald-700 bg-emerald-50 border border-emerald-100 px-2.5 py-1 rounded">Gratis · 9h</span>
+                    </div>
+                    <h4 class="font-heading font-bold text-lg text-brand-dark mb-2 group-hover:text-brand-primary transition-colors">Visualización Gráfica con Python + IA</h4>
+                    <p class="text-slate-600 text-sm leading-relaxed mb-6">Crea visualizaciones científicas potentes y dashboards inteligentes con Python e IA.</p>
+                    <div class="flex items-center justify-between pt-4 border-t border-slate-100">
+                        <span class="text-[10px] uppercase tracking-[0.15em] text-slate-400 font-semibold">Inicia 2 de junio</span>
+                        <span class="inline-flex items-center gap-1.5 text-brand-primary text-sm font-bold group-hover:gap-2.5 transition-all">
+                            Ver programa <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+                        </span>
+                    </div>
+                </a>
 
             </div>
 
-            <!-- Courses Grid -->
-            <div id="courses-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- ============== PROGRAMAS PROFESIONALES ============== -->
+            <div id="academy-pro" class="hidden grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 
-                <!-- ============================================
-                     PROGRAMAS
-                     ============================================ -->
-
-                <!-- PROGRAMA - Excel para la Vida -->
-                <div class="course-card program group border border-slate-200 rounded-2xl overflow-hidden hover:shadow-lg transition-all">
-                    <div class="h-48 bg-gradient-to-br from-green-600 to-emerald-800 relative overflow-hidden flex items-center justify-center">
-                        <div class="text-center">
-                            <i data-lucide="table" class="w-16 h-16 text-white mx-auto mb-2"></i>
-                            <span class="text-white font-bold text-lg">Excel para la Vida</span>
+                <!-- Excel para la Vida -->
+                <a href="https://trabajocientifico.github.io/cursos/" target="_blank" rel="noopener noreferrer" class="academy-card group bg-white border border-slate-200 rounded-xl p-7 hover:border-brand-primary hover:shadow-xl transition-all block">
+                    <div class="flex items-start justify-between mb-5">
+                        <div class="w-12 h-12 rounded-lg bg-slate-50 border border-slate-100 flex items-center justify-center group-hover:bg-brand-dark group-hover:border-brand-dark transition-all">
+                            <i data-lucide="table-2" class="w-6 h-6 text-brand-primary group-hover:text-brand-accent transition-colors"></i>
                         </div>
-                        <div class="absolute top-4 left-4 bg-brand-accent text-brand-dark px-3 py-1 rounded-full text-xs font-bold">Programa</div>
+                        <span class="text-[10px] font-bold uppercase tracking-wider text-brand-dark bg-brand-accent/20 border border-brand-accent/30 px-2.5 py-1 rounded">Profesional · 12h</span>
                     </div>
-                    <div class="p-6">
-                        <h4 class="font-heading font-bold text-xl text-brand-dark mb-2 group-hover:text-brand-primary transition-colors">Excel para la Vida</h4>
-                        <p class="text-slate-600 text-sm mb-3">Domina Excel desde lo básico hasta nivel avanzado con aplicaciones reales para cualquier profesión.</p>
-                        <div class="space-y-2 mb-4">
-                            <div class="flex items-center gap-2 text-xs text-slate-500"><span class="w-5 h-5 bg-green-100 text-green-700 rounded-full flex items-center justify-center font-bold text-[10px]">1</span> Excel Básico e Intermedio</div>
-                            <div class="flex items-center gap-2 text-xs text-slate-500"><span class="w-5 h-5 bg-green-100 text-green-700 rounded-full flex items-center justify-center font-bold text-[10px]">2</span> Excel Avanzado y Tablas Dinámicas</div>
-                            <div class="flex items-center gap-2 text-xs text-slate-500"><span class="w-5 h-5 bg-green-100 text-green-700 rounded-full flex items-center justify-center font-bold text-[10px]">3</span> Macros, VBA y Dashboards</div>
+                    <h4 class="font-heading font-bold text-lg text-brand-dark mb-2 group-hover:text-brand-primary transition-colors">Excel para la Vida</h4>
+                    <p class="text-slate-600 text-sm leading-relaxed mb-6">Domina Excel desde lo básico hasta nivel avanzado con aplicaciones reales para cualquier profesión.</p>
+                    <div class="flex items-center justify-between pt-4 border-t border-slate-100">
+                        <span class="text-[10px] uppercase tracking-[0.15em] text-slate-400 font-semibold">Con certificado</span>
+                        <span class="inline-flex items-center gap-1.5 text-brand-primary text-sm font-bold group-hover:gap-2.5 transition-all">
+                            Ver programa <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+                        </span>
+                    </div>
+                </a>
+
+                <!-- Dashboard con Power BI -->
+                <a href="https://trabajocientifico.github.io/cursos/" target="_blank" rel="noopener noreferrer" class="academy-card group bg-white border border-slate-200 rounded-xl p-7 hover:border-brand-primary hover:shadow-xl transition-all block">
+                    <div class="flex items-start justify-between mb-5">
+                        <div class="w-12 h-12 rounded-lg bg-slate-50 border border-slate-100 flex items-center justify-center group-hover:bg-brand-dark group-hover:border-brand-dark transition-all">
+                            <i data-lucide="bar-chart-2" class="w-6 h-6 text-brand-primary group-hover:text-brand-accent transition-colors"></i>
                         </div>
-                        <div class="flex justify-between items-center border-t border-slate-100 pt-4">
-                            <a href="cursos/excel-para-la-vida.html" target="_blank" rel="noopener noreferrer" class="text-brand-primary text-sm font-bold hover:underline cursor-pointer">Ver programa</a>
-                            <a href="https://forms.gle/LTbJyNjncE4rocP9A" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 px-4 py-2 bg-brand-primary text-white text-sm font-bold rounded-lg hover:bg-brand-dark transition-all transform hover:-translate-y-0.5 shadow-sm hover:shadow-md">
-                                <i data-lucide="pencil-line" class="w-3.5 h-3.5"></i> Inscríbete
-                            </a>
+                        <span class="text-[10px] font-bold uppercase tracking-wider text-brand-dark bg-brand-accent/20 border border-brand-accent/30 px-2.5 py-1 rounded">Profesional · 12h</span>
+                    </div>
+                    <h4 class="font-heading font-bold text-lg text-brand-dark mb-2 group-hover:text-brand-primary transition-colors">Dashboard con Power BI</h4>
+                    <p class="text-slate-600 text-sm leading-relaxed mb-6">Construye dashboards ejecutivos interactivos para la toma de decisiones estratégicas.</p>
+                    <div class="flex items-center justify-between pt-4 border-t border-slate-100">
+                        <span class="text-[10px] uppercase tracking-[0.15em] text-slate-400 font-semibold">Con certificado</span>
+                        <span class="inline-flex items-center gap-1.5 text-brand-primary text-sm font-bold group-hover:gap-2.5 transition-all">
+                            Ver programa <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+                        </span>
+                    </div>
+                </a>
+
+                <!-- Analizando con ArcGIS PRO -->
+                <a href="https://trabajocientifico.github.io/cursos/" target="_blank" rel="noopener noreferrer" class="academy-card group bg-white border border-slate-200 rounded-xl p-7 hover:border-brand-primary hover:shadow-xl transition-all block">
+                    <div class="flex items-start justify-between mb-5">
+                        <div class="w-12 h-12 rounded-lg bg-slate-50 border border-slate-100 flex items-center justify-center group-hover:bg-brand-dark group-hover:border-brand-dark transition-all">
+                            <i data-lucide="globe-2" class="w-6 h-6 text-brand-primary group-hover:text-brand-accent transition-colors"></i>
                         </div>
+                        <span class="text-[10px] font-bold uppercase tracking-wider text-brand-dark bg-brand-accent/20 border border-brand-accent/30 px-2.5 py-1 rounded">Profesional · 12h</span>
+                    </div>
+                    <h4 class="font-heading font-bold text-lg text-brand-dark mb-2 group-hover:text-brand-primary transition-colors">Analizando con ArcGIS PRO</h4>
+                    <p class="text-slate-600 text-sm leading-relaxed mb-6">Análisis geoespacial profesional para decisiones territoriales y ambientales.</p>
+                    <div class="flex items-center justify-between pt-4 border-t border-slate-100">
+                        <span class="text-[10px] uppercase tracking-[0.15em] text-slate-400 font-semibold">Con certificado</span>
+                        <span class="inline-flex items-center gap-1.5 text-brand-primary text-sm font-bold group-hover:gap-2.5 transition-all">
+                            Ver programa <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+                        </span>
+                    </div>
+                </a>
+
+                <!-- Python + IA Visualización Inteligente -->
+                <a href="https://trabajocientifico.github.io/cursos/" target="_blank" rel="noopener noreferrer" class="academy-card group bg-white border border-slate-200 rounded-xl p-7 hover:border-brand-primary hover:shadow-xl transition-all block">
+                    <div class="flex items-start justify-between mb-5">
+                        <div class="w-12 h-12 rounded-lg bg-slate-50 border border-slate-100 flex items-center justify-center group-hover:bg-brand-dark group-hover:border-brand-dark transition-all">
+                            <i data-lucide="pie-chart" class="w-6 h-6 text-brand-primary group-hover:text-brand-accent transition-colors"></i>
+                        </div>
+                        <span class="text-[10px] font-bold uppercase tracking-wider text-brand-dark bg-brand-accent/20 border border-brand-accent/30 px-2.5 py-1 rounded">Profesional · 12h</span>
+                    </div>
+                    <h4 class="font-heading font-bold text-lg text-brand-dark mb-2 group-hover:text-brand-primary transition-colors">Python + IA Visualización Inteligente</h4>
+                    <p class="text-slate-600 text-sm leading-relaxed mb-6">Crea visualizaciones impactantes combinando Python con Inteligencia Artificial.</p>
+                    <div class="flex items-center justify-between pt-4 border-t border-slate-100">
+                        <span class="text-[10px] uppercase tracking-[0.15em] text-slate-400 font-semibold">Con certificado</span>
+                        <span class="inline-flex items-center gap-1.5 text-brand-primary text-sm font-bold group-hover:gap-2.5 transition-all">
+                            Ver programa <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+                        </span>
+                    </div>
+                </a>
+
+                <!-- GeoEstadística con Python -->
+                <a href="https://trabajocientifico.github.io/cursos/" target="_blank" rel="noopener noreferrer" class="academy-card group bg-white border border-slate-200 rounded-xl p-7 hover:border-brand-primary hover:shadow-xl transition-all block">
+                    <div class="flex items-start justify-between mb-5">
+                        <div class="w-12 h-12 rounded-lg bg-slate-50 border border-slate-100 flex items-center justify-center group-hover:bg-brand-dark group-hover:border-brand-dark transition-all">
+                            <i data-lucide="layers" class="w-6 h-6 text-brand-primary group-hover:text-brand-accent transition-colors"></i>
+                        </div>
+                        <span class="text-[10px] font-bold uppercase tracking-wider text-brand-dark bg-brand-accent/20 border border-brand-accent/30 px-2.5 py-1 rounded">Profesional · 12h</span>
+                    </div>
+                    <h4 class="font-heading font-bold text-lg text-brand-dark mb-2 group-hover:text-brand-primary transition-colors">GeoEstadística con Python</h4>
+                    <p class="text-slate-600 text-sm leading-relaxed mb-6">Métodos estadísticos avanzados aplicados al análisis de datos espaciales.</p>
+                    <div class="flex items-center justify-between pt-4 border-t border-slate-100">
+                        <span class="text-[10px] uppercase tracking-[0.15em] text-slate-400 font-semibold">Con certificado</span>
+                        <span class="inline-flex items-center gap-1.5 text-brand-primary text-sm font-bold group-hover:gap-2.5 transition-all">
+                            Ver programa <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+                        </span>
+                    </div>
+                </a>
+
+                <!-- Automatización de Tareas con Python -->
+                <a href="https://trabajocientifico.github.io/cursos/" target="_blank" rel="noopener noreferrer" class="academy-card group bg-white border border-slate-200 rounded-xl p-7 hover:border-brand-primary hover:shadow-xl transition-all block">
+                    <div class="flex items-start justify-between mb-5">
+                        <div class="w-12 h-12 rounded-lg bg-slate-50 border border-slate-100 flex items-center justify-center group-hover:bg-brand-dark group-hover:border-brand-dark transition-all">
+                            <i data-lucide="bot" class="w-6 h-6 text-brand-primary group-hover:text-brand-accent transition-colors"></i>
+                        </div>
+                        <span class="text-[10px] font-bold uppercase tracking-wider text-brand-dark bg-brand-accent/20 border border-brand-accent/30 px-2.5 py-1 rounded">Profesional · 12h</span>
+                    </div>
+                    <h4 class="font-heading font-bold text-lg text-brand-dark mb-2 group-hover:text-brand-primary transition-colors">Automatización de Tareas con Python</h4>
+                    <p class="text-slate-600 text-sm leading-relaxed mb-6">Elimina trabajo repetitivo y libera tiempo estratégico automatizando con Python.</p>
+                    <div class="flex items-center justify-between pt-4 border-t border-slate-100">
+                        <span class="text-[10px] uppercase tracking-[0.15em] text-slate-400 font-semibold">Con certificado</span>
+                        <span class="inline-flex items-center gap-1.5 text-brand-primary text-sm font-bold group-hover:gap-2.5 transition-all">
+                            Ver programa <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+                        </span>
+                    </div>
+                </a>
+
+                <!-- IA para la Vida -->
+                <a href="https://trabajocientifico.github.io/cursos/" target="_blank" rel="noopener noreferrer" class="academy-card group bg-white border border-slate-200 rounded-xl p-7 hover:border-brand-primary hover:shadow-xl transition-all block">
+                    <div class="flex items-start justify-between mb-5">
+                        <div class="w-12 h-12 rounded-lg bg-slate-50 border border-slate-100 flex items-center justify-center group-hover:bg-brand-dark group-hover:border-brand-dark transition-all">
+                            <i data-lucide="brain" class="w-6 h-6 text-brand-primary group-hover:text-brand-accent transition-colors"></i>
+                        </div>
+                        <span class="text-[10px] font-bold uppercase tracking-wider text-brand-dark bg-brand-accent/20 border border-brand-accent/30 px-2.5 py-1 rounded">Profesional · 12h</span>
+                    </div>
+                    <h4 class="font-heading font-bold text-lg text-brand-dark mb-2 group-hover:text-brand-primary transition-colors">IA para la Vida</h4>
+                    <p class="text-slate-600 text-sm leading-relaxed mb-6">Integra la IA en tu vida personal y profesional para potenciar tu productividad.</p>
+                    <div class="flex items-center justify-between pt-4 border-t border-slate-100">
+                        <span class="text-[10px] uppercase tracking-[0.15em] text-slate-400 font-semibold">Con certificado</span>
+                        <span class="inline-flex items-center gap-1.5 text-brand-primary text-sm font-bold group-hover:gap-2.5 transition-all">
+                            Ver programa <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+                        </span>
+                    </div>
+                </a>
+
+                <!-- Optimización Científica con IA -->
+                <a href="https://trabajocientifico.github.io/cursos/" target="_blank" rel="noopener noreferrer" class="academy-card group bg-white border border-slate-200 rounded-xl p-7 hover:border-brand-primary hover:shadow-xl transition-all block">
+                    <div class="flex items-start justify-between mb-5">
+                        <div class="w-12 h-12 rounded-lg bg-slate-50 border border-slate-100 flex items-center justify-center group-hover:bg-brand-dark group-hover:border-brand-dark transition-all">
+                            <i data-lucide="microscope" class="w-6 h-6 text-brand-primary group-hover:text-brand-accent transition-colors"></i>
+                        </div>
+                        <span class="text-[10px] font-bold uppercase tracking-wider text-brand-dark bg-brand-accent/20 border border-brand-accent/30 px-2.5 py-1 rounded">Profesional · 12h</span>
+                    </div>
+                    <h4 class="font-heading font-bold text-lg text-brand-dark mb-2 group-hover:text-brand-primary transition-colors">Optimización Científica con IA</h4>
+                    <p class="text-slate-600 text-sm leading-relaxed mb-6">Potencia tu investigación científica con IA para análisis, redacción y publicación.</p>
+                    <div class="flex items-center justify-between pt-4 border-t border-slate-100">
+                        <span class="text-[10px] uppercase tracking-[0.15em] text-slate-400 font-semibold">Con certificado</span>
+                        <span class="inline-flex items-center gap-1.5 text-brand-primary text-sm font-bold group-hover:gap-2.5 transition-all">
+                            Ver programa <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+                        </span>
+                    </div>
+                </a>
+
+            </div>
+
+            <!-- Enlace al catálogo completo -->
+            <div class="text-center mt-12">
+                <a href="https://trabajocientifico.github.io/cursos/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-brand-dark hover:text-brand-primary font-semibold text-sm transition-colors group">
+                    Explorar catálogo completo de cursos
+                    <i data-lucide="external-link" class="w-4 h-4 group-hover:translate-x-0.5 transition-transform"></i>
+                </a>
+            </div>
+
+            <!-- CTA Corporativo In-Company -->
+            <div class="mt-20 bg-brand-dark rounded-2xl p-8 md:p-12 relative overflow-hidden border border-white/5">
+                <div class="absolute top-0 right-0 w-64 h-64 bg-brand-primary/10 rounded-full -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
+                <div class="absolute bottom-0 left-0 w-48 h-48 bg-brand-accent/10 rounded-full translate-y-1/2 -translate-x-1/2 pointer-events-none"></div>
+                <div class="relative grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
+                    <div class="md:col-span-2">
+                        <span class="text-brand-accent font-semibold tracking-[0.25em] uppercase text-xs">Programas In-Company</span>
+                        <h3 class="font-heading text-2xl md:text-3xl font-bold text-white mt-3 leading-tight">Capacitación a la medida para su organización</h3>
+                        <p class="text-slate-300 mt-4 leading-relaxed">Diseñamos rutas de formación personalizadas para equipos corporativos, gubernamentales y académicos. Reciba una propuesta con alcance, cronograma e inversión en menos de 48 horas.</p>
+                    </div>
+                    <div class="md:text-right">
+                        <a href="https://wa.me/573184280112?text=Hola,%20me%20interesa%20una%20capacitación%20In-Company%20para%20mi%20organización" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-6 py-3.5 bg-brand-accent text-brand-dark font-bold rounded-lg hover:bg-white transition-all shadow-lg">
+                            Solicitar propuesta
+                            <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                        </a>
                     </div>
                 </div>
-
-                <!-- PROGRAMA - IA + Productividad -->
-                <div class="course-card program group border border-slate-200 rounded-2xl overflow-hidden hover:shadow-lg transition-all">
-                    <div class="h-48 bg-gradient-to-br from-purple-600 to-indigo-800 relative overflow-hidden flex items-center justify-center">
-                        <div class="text-center">
-                            <i data-lucide="brain" class="w-16 h-16 text-white mx-auto mb-2"></i>
-                            <span class="text-white font-bold text-lg">IA + Productividad</span>
-                        </div>
-                        <div class="absolute top-4 left-4 bg-brand-accent text-brand-dark px-3 py-1 rounded-full text-xs font-bold">Programa</div>
-                    </div>
-                    <div class="p-6">
-                        <h4 class="font-heading font-bold text-xl text-brand-dark mb-2 group-hover:text-brand-primary transition-colors">IA + Productividad</h4>
-                        <p class="text-slate-600 text-sm mb-3">Aprende a integrar la inteligencia artificial en tu vida cotidiana y profesional para potenciar tu productividad.</p>
-                        <div class="space-y-2 mb-4">
-                            <div class="flex items-center gap-2 text-xs text-slate-500"><span class="w-5 h-5 bg-purple-100 text-purple-700 rounded-full flex items-center justify-center font-bold text-[10px]">1</span> Fundamentos de IA y Herramientas Básicas</div>
-                            <div class="flex items-center gap-2 text-xs text-slate-500"><span class="w-5 h-5 bg-purple-100 text-purple-700 rounded-full flex items-center justify-center font-bold text-[10px]">2</span> IA Aplicada a la Productividad</div>
-                            <div class="flex items-center gap-2 text-xs text-slate-500"><span class="w-5 h-5 bg-purple-100 text-purple-700 rounded-full flex items-center justify-center font-bold text-[10px]">3</span> IA Avanzada y Automatización Personal</div>
-                        </div>
-                        <div class="flex justify-between items-center border-t border-slate-100 pt-4">
-                            <a href="cursos/ia-productividad.html" target="_blank" rel="noopener noreferrer" class="text-brand-primary text-sm font-bold hover:underline cursor-pointer">Ver programa</a>
-                            <a href="https://forms.gle/LTbJyNjncE4rocP9A" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 px-4 py-2 bg-brand-primary text-white text-sm font-bold rounded-lg hover:bg-brand-dark transition-all transform hover:-translate-y-0.5 shadow-sm hover:shadow-md">
-                                <i data-lucide="pencil-line" class="w-3.5 h-3.5"></i> Inscríbete
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- PROGRAMA - IA Científica -->
-                <div class="course-card program group border border-slate-200 rounded-2xl overflow-hidden hover:shadow-lg transition-all">
-                    <div class="h-48 bg-gradient-to-br from-amber-600 to-red-700 relative overflow-hidden flex items-center justify-center">
-                        <div class="text-center">
-                            <i data-lucide="microscope" class="w-16 h-16 text-white mx-auto mb-2"></i>
-                            <span class="text-white font-bold text-lg">IA Científica</span>
-                        </div>
-                        <div class="absolute top-4 left-4 bg-brand-accent text-brand-dark px-3 py-1 rounded-full text-xs font-bold">Programa</div>
-                    </div>
-                    <div class="p-6">
-                        <h4 class="font-heading font-bold text-xl text-brand-dark mb-2 group-hover:text-brand-primary transition-colors">IA Científica</h4>
-                        <p class="text-slate-600 text-sm mb-3">Potencia tu investigación científica con herramientas de IA para revisión bibliográfica, análisis y redacción.</p>
-                        <div class="space-y-2 mb-4">
-                            <div class="flex items-center gap-2 text-xs text-slate-500"><span class="w-5 h-5 bg-amber-100 text-amber-700 rounded-full flex items-center justify-center font-bold text-[10px]">1</span> IA para Revisión Bibliográfica</div>
-                            <div class="flex items-center gap-2 text-xs text-slate-500"><span class="w-5 h-5 bg-amber-100 text-amber-700 rounded-full flex items-center justify-center font-bold text-[10px]">2</span> IA para Análisis de Datos Científicos</div>
-                            <div class="flex items-center gap-2 text-xs text-slate-500"><span class="w-5 h-5 bg-amber-100 text-amber-700 rounded-full flex items-center justify-center font-bold text-[10px]">3</span> IA para Redacción y Publicación Académica</div>
-                        </div>
-                        <div class="flex justify-between items-center border-t border-slate-100 pt-4">
-                            <a href="cursos/ia-cientifica.html" target="_blank" rel="noopener noreferrer" class="text-brand-primary text-sm font-bold hover:underline cursor-pointer">Ver programa</a>
-                            <a href="https://forms.gle/LTbJyNjncE4rocP9A" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 px-4 py-2 bg-brand-primary text-white text-sm font-bold rounded-lg hover:bg-brand-dark transition-all transform hover:-translate-y-0.5 shadow-sm hover:shadow-md">
-                                <i data-lucide="pencil-line" class="w-3.5 h-3.5"></i> Inscríbete
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- PROGRAMA - Python + IA + Datos -->
-                <div class="course-card program group border border-slate-200 rounded-2xl overflow-hidden hover:shadow-lg transition-all">
-                    <div class="h-48 bg-gradient-to-br from-blue-600 to-cyan-800 relative overflow-hidden flex items-center justify-center">
-                        <div class="text-center">
-                            <i data-lucide="code" class="w-16 h-16 text-white mx-auto mb-2"></i>
-                            <span class="text-white font-bold text-lg">Python + IA + Datos</span>
-                        </div>
-                        <div class="absolute top-4 left-4 bg-brand-accent text-brand-dark px-3 py-1 rounded-full text-xs font-bold">Programa</div>
-                    </div>
-                    <div class="p-6">
-                        <h4 class="font-heading font-bold text-xl text-brand-dark mb-2 group-hover:text-brand-primary transition-colors">Python + IA + Datos</h4>
-                        <p class="text-slate-600 text-sm mb-3">Aprende Python desde cero y combínalo con IA para análisis de datos, automatización y machine learning.</p>
-                        <div class="space-y-2 mb-4">
-                            <div class="flex items-center gap-2 text-xs text-slate-500"><span class="w-5 h-5 bg-blue-100 text-blue-700 rounded-full flex items-center justify-center font-bold text-[10px]">1</span> Fundamentos de Python y Librerías</div>
-                            <div class="flex items-center gap-2 text-xs text-slate-500"><span class="w-5 h-5 bg-blue-100 text-blue-700 rounded-full flex items-center justify-center font-bold text-[10px]">2</span> Análisis de Datos con Pandas y NumPy</div>
-                            <div class="flex items-center gap-2 text-xs text-slate-500"><span class="w-5 h-5 bg-blue-100 text-blue-700 rounded-full flex items-center justify-center font-bold text-[10px]">3</span> Machine Learning e IA Aplicada</div>
-                        </div>
-                        <div class="flex justify-between items-center border-t border-slate-100 pt-4">
-                            <a href="cursos/python-ia-datos.html" target="_blank" rel="noopener noreferrer" class="text-brand-primary text-sm font-bold hover:underline cursor-pointer">Ver programa</a>
-                            <a href="https://forms.gle/LTbJyNjncE4rocP9A" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 px-4 py-2 bg-brand-primary text-white text-sm font-bold rounded-lg hover:bg-brand-dark transition-all transform hover:-translate-y-0.5 shadow-sm hover:shadow-md">
-                                <i data-lucide="pencil-line" class="w-3.5 h-3.5"></i> Inscríbete
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- PROGRAMA - GeoAnálisis con ArcGIS PRO -->
-                <div class="course-card program group border border-slate-200 rounded-2xl overflow-hidden hover:shadow-lg transition-all">
-                    <div class="h-48 bg-gradient-to-br from-teal-600 to-emerald-800 relative overflow-hidden flex items-center justify-center">
-                        <div class="text-center">
-                            <i data-lucide="globe-2" class="w-16 h-16 text-white mx-auto mb-2"></i>
-                            <span class="text-white font-bold text-lg">GeoAnálisis con ArcGIS PRO</span>
-                        </div>
-                        <div class="absolute top-4 left-4 bg-brand-accent text-brand-dark px-3 py-1 rounded-full text-xs font-bold">Programa</div>
-                    </div>
-                    <div class="p-6">
-                        <h4 class="font-heading font-bold text-xl text-brand-dark mb-2 group-hover:text-brand-primary transition-colors">GeoAnálisis con ArcGIS PRO</h4>
-                        <p class="text-slate-600 text-sm mb-3">Domina el análisis geoespacial profesional con ArcGIS PRO para la toma de decisiones territoriales y ambientales.</p>
-                        <div class="space-y-2 mb-4">
-                            <div class="flex items-center gap-2 text-xs text-slate-500"><span class="w-5 h-5 bg-teal-100 text-teal-700 rounded-full flex items-center justify-center font-bold text-[10px]">1</span> Fundamentos de ArcGIS PRO y Cartografía</div>
-                            <div class="flex items-center gap-2 text-xs text-slate-500"><span class="w-5 h-5 bg-teal-100 text-teal-700 rounded-full flex items-center justify-center font-bold text-[10px]">2</span> Geoprocesamiento y Análisis Espacial</div>
-                            <div class="flex items-center gap-2 text-xs text-slate-500"><span class="w-5 h-5 bg-teal-100 text-teal-700 rounded-full flex items-center justify-center font-bold text-[10px]">3</span> Modelado Territorial y Visualización Avanzada</div>
-                        </div>
-                        <div class="flex justify-between items-center border-t border-slate-100 pt-4">
-                            <a href="cursos/geoanalisis-arcgis-pro.html" target="_blank" rel="noopener noreferrer" class="text-brand-primary text-sm font-bold hover:underline cursor-pointer">Ver programa</a>
-                            <a href="https://forms.gle/LTbJyNjncE4rocP9A" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 px-4 py-2 bg-brand-primary text-white text-sm font-bold rounded-lg hover:bg-brand-dark transition-all transform hover:-translate-y-0.5 shadow-sm hover:shadow-md">
-                                <i data-lucide="pencil-line" class="w-3.5 h-3.5"></i> Inscríbete
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- PROGRAMA - Dashboard con Power BI -->
-                <div class="course-card program group border border-slate-200 rounded-2xl overflow-hidden hover:shadow-lg transition-all">
-                    <div class="h-48 bg-gradient-to-br from-yellow-500 to-orange-600 relative overflow-hidden flex items-center justify-center">
-                        <div class="text-center">
-                            <i data-lucide="bar-chart-2" class="w-16 h-16 text-white mx-auto mb-2"></i>
-                            <span class="text-white font-bold text-lg">Dashboard con Power BI</span>
-                        </div>
-                        <div class="absolute top-4 left-4 bg-brand-accent text-brand-dark px-3 py-1 rounded-full text-xs font-bold">Programa</div>
-                    </div>
-                    <div class="p-6">
-                        <h4 class="font-heading font-bold text-xl text-brand-dark mb-2 group-hover:text-brand-primary transition-colors">Dashboard con Power BI</h4>
-                        <p class="text-slate-600 text-sm mb-3">Crea dashboards interactivos y reportes empresariales profesionales con Power BI para la toma de decisiones estratégicas.</p>
-                        <div class="space-y-2 mb-4">
-                            <div class="flex items-center gap-2 text-xs text-slate-500"><span class="w-5 h-5 bg-yellow-100 text-yellow-700 rounded-full flex items-center justify-center font-bold text-[10px]">1</span> Fundamentos de Power BI y Conexión de Datos</div>
-                            <div class="flex items-center gap-2 text-xs text-slate-500"><span class="w-5 h-5 bg-yellow-100 text-yellow-700 rounded-full flex items-center justify-center font-bold text-[10px]">2</span> DAX, KPIs y Visualizaciones Avanzadas</div>
-                            <div class="flex items-center gap-2 text-xs text-slate-500"><span class="w-5 h-5 bg-yellow-100 text-yellow-700 rounded-full flex items-center justify-center font-bold text-[10px]">3</span> Dashboards Ejecutivos y Publicación Empresarial</div>
-                        </div>
-                        <div class="flex justify-between items-center border-t border-slate-100 pt-4">
-                            <a href="cursos/dashboard-power-bi.html" target="_blank" rel="noopener noreferrer" class="text-brand-primary text-sm font-bold hover:underline cursor-pointer">Ver programa</a>
-                            <a href="https://forms.gle/LTbJyNjncE4rocP9A" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 px-4 py-2 bg-brand-primary text-white text-sm font-bold rounded-lg hover:bg-brand-dark transition-all transform hover:-translate-y-0.5 shadow-sm hover:shadow-md">
-                                <i data-lucide="pencil-line" class="w-3.5 h-3.5"></i> Inscríbete
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
             </div>
 
         </div>
@@ -1003,11 +1091,6 @@
 
     <!-- STATS SECTION - Métricas de Impacto -->
     <section class="py-16 bg-gradient-to-br from-brand-dark via-brand-navy to-brand-dark relative overflow-hidden">
-        <div class="absolute inset-0 opacity-20">
-            <div class="code-line-horizontal" style="top: 15%; animation-duration: 35s;">model.accuracy = 0.97 | precision = 0.95 | recall = 0.93</div>
-            <div class="code-line-horizontal" style="top: 45%; animation-duration: 30s; animation-delay: 2s;">df.shape: (100000, 45) | processed in 2.3s</div>
-            <div class="code-line-horizontal" style="top: 75%; animation-duration: 38s; animation-delay: 4s;">pipeline.execute() | SUCCESS | ROI: +340%</div>
-        </div>
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div class="grid grid-cols-2 md:grid-cols-5 gap-6 text-center">
                 <div class="tech-card p-6 rounded-lg bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 transition-all cursor-pointer" onclick="showKpi('kpi-proyectos', this, event)">
@@ -1051,8 +1134,6 @@
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <!-- Card 1 -->
                 <div class="tech-card bg-white p-8 rounded-xl shadow-sm border border-slate-100 hover:shadow-xl hover:border-brand-primary/20 hover:bg-brand-dark transition-all duration-500 group">
-                    <div class="metric-float" style="top: 20%; right: 10%;">97%</div>
-                    <div class="metric-float" style="top: 50%; left: 15%; animation-delay: 3s;">Python</div>
                     <div class="w-14 h-14 bg-blue-50 rounded-lg flex items-center justify-center mb-6 group-hover:bg-brand-accent group-hover:text-brand-dark transition-colors relative z-10">
                         <i data-lucide="bot" class="w-8 h-8 text-brand-primary group-hover:text-brand-dark"></i>
                     </div>
@@ -1064,8 +1145,6 @@
 
                 <!-- Card 2 -->
                 <div class="tech-card bg-white p-8 rounded-xl shadow-sm border border-slate-100 hover:shadow-xl hover:border-brand-primary/20 hover:bg-brand-dark transition-all duration-500 group">
-                    <div class="metric-float" style="top: 25%; right: 15%; animation-delay: 1s;">BI</div>
-                    <div class="metric-float" style="top: 55%; left: 10%; animation-delay: 4s;">KPI</div>
                     <div class="w-14 h-14 bg-blue-50 rounded-lg flex items-center justify-center mb-6 group-hover:bg-brand-accent group-hover:text-brand-dark transition-colors relative z-10">
                         <i data-lucide="bar-chart-2" class="w-8 h-8 text-brand-primary group-hover:text-brand-dark"></i>
                     </div>
@@ -1077,8 +1156,6 @@
 
                 <!-- Card 3 -->
                 <div class="tech-card bg-white p-8 rounded-xl shadow-sm border border-slate-100 hover:shadow-xl hover:border-brand-primary/20 hover:bg-brand-dark transition-all duration-500 group">
-                    <div class="metric-float" style="top: 30%; right: 12%; animation-delay: 2s;">GIS</div>
-                    <div class="metric-float" style="top: 60%; left: 18%; animation-delay: 5s;">ML</div>
                     <div class="w-14 h-14 bg-blue-50 rounded-lg flex items-center justify-center mb-6 group-hover:bg-brand-accent group-hover:text-brand-dark transition-colors relative z-10">
                         <i data-lucide="globe-2" class="w-8 h-8 text-brand-primary group-hover:text-brand-dark"></i>
                     </div>
@@ -1258,11 +1335,6 @@
 
     <!-- RECURSOS GRATUITOS - YOUTUBE -->
     <section id="recursos" class="py-20 bg-gradient-to-br from-brand-dark via-brand-navy to-brand-dark relative overflow-hidden">
-        <div class="absolute inset-0 opacity-10">
-            <div class="code-line-horizontal" style="top: 20%; animation-duration: 40s;">subscribe(channel) | learn(skills) | transform(career)</div>
-            <div class="code-line-horizontal" style="top: 60%; animation-duration: 35s; animation-delay: 3s;">tutorials.count() = 50+ | views > 10K | FREE</div>
-        </div>
-
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div class="text-center max-w-3xl mx-auto mb-14">
                 <span class="text-brand-accent font-semibold tracking-wider uppercase text-sm">Aprende Gratis</span>
@@ -1329,11 +1401,11 @@
                 </ul>
             </div>
             <div>
-                <h4 class="text-white font-bold mb-4 uppercase text-xs tracking-wider">Estudiantes</h4>
+                <h4 class="text-white font-bold mb-4 uppercase text-xs tracking-wider">Academia</h4>
                 <ul class="space-y-2 text-sm">
-                    <li><a href="#" class="hover:text-brand-accent transition-colors">Todos los Cursos</a></li>
-                    <li><a href="#" class="hover:text-brand-accent transition-colors">Mentoria 1-on-1</a></li>
-                    <li><a href="#" class="hover:text-brand-accent transition-colors">Recursos Gratuitos</a></li>
+                    <li><a href="https://trabajocientifico.github.io/cursos/" target="_blank" rel="noopener noreferrer" class="hover:text-brand-accent transition-colors">Catálogo de Cursos</a></li>
+                    <li><a href="https://trabajocientifico.github.io/cursos/" target="_blank" rel="noopener noreferrer" class="hover:text-brand-accent transition-colors">Cursos Gratuitos</a></li>
+                    <li><a href="#recursos" class="hover:text-brand-accent transition-colors">Recursos en YouTube</a></li>
                 </ul>
             </div>
             <div>
@@ -1537,36 +1609,24 @@
         });
 
         // ============================================
-        // TOGGLE DE CURSOS
+        // ACADEMIA - SWITCH ENTRE INTRODUCTORIOS / PROFESIONALES
         // ============================================
-        function toggleCourses(type) {
-            const btnProgram = document.getElementById('btn-program');
-            const btnObjective = document.getElementById('btn-objective');
-            const btnTool = document.getElementById('btn-tool');
-            const courses = document.querySelectorAll('.course-card');
-            const allBtns = [btnProgram, btnObjective, btnTool];
+        function switchAcademyTab(type) {
+            const intro = document.getElementById('academy-intro');
+            const pro = document.getElementById('academy-pro');
+            const tabIntro = document.getElementById('tab-intro');
+            const tabPro = document.getElementById('tab-pro');
 
-            // Reset all buttons
-            allBtns.forEach(btn => {
-                btn.classList.remove('bg-white', 'text-brand-primary', 'shadow-sm');
-                btn.classList.add('text-slate-500', 'hover:text-brand-dark');
-            });
+            const showIntro = type === 'intro';
 
-            // Activate selected button
-            const activeBtn = type === 'program' ? btnProgram : type === 'objective' ? btnObjective : btnTool;
-            activeBtn.classList.add('bg-white', 'text-brand-primary', 'shadow-sm');
-            activeBtn.classList.remove('text-slate-500', 'hover:text-brand-dark');
+            intro.classList.toggle('hidden', !showIntro);
+            intro.classList.toggle('grid', showIntro);
+            pro.classList.toggle('hidden', showIntro);
+            pro.classList.toggle('grid', !showIntro);
 
-            // Show/hide cards
-            courses.forEach(card => {
-                if(card.classList.contains(type)) {
-                    card.classList.remove('hidden');
-                } else {
-                    card.classList.add('hidden');
-                }
-            });
+            tabIntro.classList.toggle('academy-tab-active', showIntro);
+            tabPro.classList.toggle('academy-tab-active', !showIntro);
 
-            // Reinicializar iconos Lucide para las nuevas tarjetas
             lucide.createIcons();
         }
 
