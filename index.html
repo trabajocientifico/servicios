@@ -16,6 +16,10 @@
     <!-- Iconos Lucide -->
     <script src="https://unpkg.com/lucide@latest"></script>
 
+    <!-- Calendly Widget (popup para agendar reuniones) -->
+    <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
+    <script src="https://assets.calendly.com/assets/external/widget.js" async></script>
+
     <!-- Configuración personalizada de Tailwind -->
     <script>
         tailwind.config = {
@@ -625,6 +629,719 @@
             background: rgba(253, 180, 75, 0.4);
             border-radius: 2px;
         }
+
+        /* ============================================
+           EDITOR DE CÓDIGO PYTHON - HERO
+           ============================================ */
+        .code-editor-wrapper {
+            position: relative;
+            z-index: 12;
+        }
+        .code-editor {
+            position: relative;
+            background: rgba(13, 17, 23, 0.95);
+            border: 1px solid rgba(253, 180, 75, 0.3);
+            border-radius: 14px;
+            box-shadow: 0 30px 80px -15px rgba(0,0,0,0.7), 0 0 60px rgba(220, 68, 68, 0.18);
+            overflow: hidden;
+            font-family: 'Fira Code', monospace;
+            backdrop-filter: blur(8px);
+            animation: editor-float 7s ease-in-out infinite;
+        }
+        @keyframes editor-float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        .code-editor::before {
+            content: '';
+            position: absolute;
+            inset: -1px;
+            border-radius: 14px;
+            padding: 1px;
+            background: linear-gradient(135deg, rgba(220,68,68,0.55), rgba(253,180,75,0.1) 45%, rgba(253,180,75,0.55));
+            -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+            -webkit-mask-composite: xor;
+                    mask-composite: exclude;
+            pointer-events: none;
+            animation: border-shimmer 5s ease-in-out infinite;
+            z-index: 1;
+        }
+        @keyframes border-shimmer {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+        .code-editor-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 11px 16px;
+            background: linear-gradient(180deg, rgba(43, 21, 21, 0.9), rgba(13,17,23,0.95));
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            position: relative;
+            z-index: 2;
+        }
+        .code-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            box-shadow: inset 0 0 4px rgba(0,0,0,0.3);
+        }
+        .code-dot.red { background: #ff5f57; }
+        .code-dot.yellow { background: #febc2e; }
+        .code-dot.green { background: #28c840; }
+        .code-file {
+            margin-left: 10px;
+            font-size: 12px;
+            color: rgba(253, 180, 75, 0.95);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            letter-spacing: 0.02em;
+        }
+        .code-file::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #28c840;
+            box-shadow: 0 0 10px #28c840;
+            animation: pulse-dot 1.5s ease-in-out infinite;
+        }
+        .code-lang {
+            margin-left: auto;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.18em;
+            color: rgba(253, 180, 75, 0.6);
+            font-weight: 600;
+        }
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.35; }
+        }
+        .code-body {
+            display: flex;
+            padding: 18px 0 22px;
+            font-size: 13px;
+            line-height: 1.6;
+            min-height: 360px;
+            max-height: 360px;
+            overflow: hidden;
+            position: relative;
+            z-index: 2;
+            background:
+                linear-gradient(180deg, rgba(43,21,21,0.0), rgba(43,21,21,0.35)),
+                radial-gradient(circle at 80% 20%, rgba(220, 68, 68, 0.06), transparent 55%);
+        }
+        .code-gutter {
+            flex-shrink: 0;
+            padding: 0 12px 0 18px;
+            color: rgba(148, 163, 184, 0.4);
+            user-select: none;
+            text-align: right;
+            font-variant-numeric: tabular-nums;
+            border-right: 1px solid rgba(148,163,184,0.08);
+            margin: 0 14px 0 0;
+            white-space: pre;
+            font-size: 12px;
+            line-height: 1.6;
+        }
+        .code-content {
+            flex: 1;
+            padding-right: 18px;
+            white-space: pre;
+            color: #e2e8f0;
+            margin: 0;
+            overflow: hidden;
+            transition: opacity 0.35s ease;
+            font-family: 'Fira Code', monospace;
+        }
+        .code-content.fading { opacity: 0.15; }
+        .code-cursor {
+            display: inline-block;
+            width: 7px;
+            height: 14px;
+            background: #FDB44B;
+            vertical-align: -2px;
+            animation: cursor-blink 1s steps(1) infinite;
+            margin-left: 1px;
+            box-shadow: 0 0 10px rgba(253,180,75,0.7);
+        }
+        @keyframes cursor-blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+        /* Sintaxis Python */
+        .tok-cmt { color: #8b949e; font-style: italic; }
+        .tok-kw  { color: #ff7b72; font-weight: 500; }
+        .tok-mod { color: #ffa657; }
+        .tok-def { color: #d2a8ff; font-weight: 500; }
+        .tok-fn  { color: #FDB44B; }
+        .tok-var { color: #e2e8f0; }
+        .tok-str { color: #a5d6ff; }
+        .tok-num { color: #79c0ff; }
+        .tok-op  { color: #ff7b72; }
+
+        /* Layout del hero: 2 columnas en desktop */
+        @media (min-width: 1024px) {
+            .hero-grid {
+                display: grid;
+                grid-template-columns: 1.05fr 0.95fr;
+                gap: 3.5rem;
+                align-items: center;
+            }
+        }
+        @media (max-width: 1023px) {
+            .code-editor-wrapper { margin-top: 2.5rem; }
+        }
+        @media (max-width: 640px) {
+            .code-body { font-size: 11px; min-height: 280px; max-height: 280px; padding: 14px 0; line-height: 1.55; }
+            .code-gutter { padding-left: 12px; padding-right: 10px; margin-right: 10px; font-size: 10px; line-height: 1.55; }
+            .code-editor { border-radius: 10px; }
+        }
+
+        /* ============================================
+           ACADEMY CARDS - DISEÑO PREMIUM POR CURSO
+           ============================================ */
+        .academy-card {
+            --accent: #DC4444;
+            --accent-soft: rgba(220, 68, 68, 0.10);
+            --accent-border: rgba(220, 68, 68, 0.35);
+            --accent-dark: #a93232;
+            position: relative;
+            overflow: hidden;
+            isolation: isolate;
+            background: linear-gradient(180deg, #ffffff 0%, #fbfbfd 100%) !important;
+            box-shadow:
+                0 1px 2px rgba(15, 23, 42, 0.04),
+                0 8px 24px -10px rgba(15, 23, 42, 0.10),
+                inset 0 1px 0 rgba(255, 255, 255, 0.6);
+            transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+                        border-color 0.3s ease,
+                        box-shadow 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        /* Barra superior SIEMPRE visible y con resplandor en hover */
+        .academy-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent), var(--accent-dark));
+            box-shadow: 0 0 12px var(--accent-soft);
+            transition: filter 0.4s ease, height 0.3s ease;
+            pointer-events: none;
+            border-radius: 0.75rem 0.75rem 0 0;
+            z-index: 3;
+        }
+        .academy-card:hover::before {
+            height: 5px;
+            filter: brightness(1.15) drop-shadow(0 0 10px var(--accent));
+        }
+        /* Sheen que cruza la barra superior en hover */
+        .academy-card::after {
+            content: '';
+            position: absolute;
+            top: 0; left: -60%;
+            width: 45%; height: 5px;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.85), transparent);
+            transform: skewX(-20deg);
+            transition: left 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+            z-index: 4;
+            pointer-events: none;
+            opacity: 0;
+        }
+        .academy-card:hover::after {
+            left: 110%;
+            opacity: 1;
+        }
+        .academy-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent-border) !important;
+            box-shadow:
+                0 30px 60px -22px rgba(43, 21, 21, 0.28),
+                0 16px 28px -16px var(--accent-soft),
+                0 0 0 1px var(--accent-border),
+                inset 0 1px 0 rgba(255, 255, 255, 0.6);
+        }
+
+        /* Caja del icono — oscura por defecto, se llena con el color en hover */
+        .academy-card .card-icon-box {
+            position: relative;
+            background: linear-gradient(135deg, #2B1515 0%, #1a0a0a 100%) !important;
+            border-color: rgba(43, 21, 21, 0.85) !important;
+            box-shadow:
+                inset 0 1px 0 rgba(255, 255, 255, 0.08),
+                0 6px 14px -4px rgba(43, 21, 21, 0.35);
+            transition: all 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+            overflow: hidden;
+        }
+        .academy-card .card-icon-box::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 30% 30%, var(--accent-soft), transparent 70%);
+            opacity: 0.6;
+            transition: opacity 0.3s ease;
+        }
+        .academy-card .card-icon-box i,
+        .academy-card .card-icon-box svg {
+            color: var(--accent) !important;
+            filter: drop-shadow(0 0 6px var(--accent-soft));
+            transition: color 0.3s ease, filter 0.3s ease;
+            position: relative;
+            z-index: 1;
+        }
+        .academy-card:hover .card-icon-box {
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%) !important;
+            border-color: var(--accent) !important;
+            transform: scale(1.12) rotate(-6deg);
+            box-shadow:
+                0 14px 28px -6px var(--accent),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        }
+        .academy-card:hover .card-icon-box::before { opacity: 1; }
+        .academy-card:hover .card-icon-box i,
+        .academy-card:hover .card-icon-box svg {
+            color: #fff !important;
+            filter: drop-shadow(0 0 8px rgba(255,255,255,0.5));
+        }
+
+        .academy-card .card-cta { color: var(--accent) !important; }
+        .academy-card .card-title-hover { transition: color 0.3s ease; }
+        .academy-card:hover .card-title-hover { color: var(--accent) !important; }
+
+        /* Chips de herramientas */
+        .card-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin: 0 0 14px;
+        }
+        .card-tag {
+            font-size: 10px;
+            font-weight: 700;
+            background: var(--accent-soft);
+            color: var(--accent-dark);
+            padding: 4px 10px;
+            border-radius: 999px;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            border: 1px solid color-mix(in srgb, var(--accent) 18%, transparent);
+            transition: background 0.3s ease, transform 0.25s ease, color 0.3s ease;
+        }
+        .academy-card:hover .card-tag {
+            transform: translateY(-1px);
+            background: color-mix(in srgb, var(--accent) 18%, white);
+        }
+
+        /* Patrón radial de fondo (esquina superior derecha) */
+        .academy-card .card-pattern {
+            position: absolute;
+            top: 0; right: 0;
+            width: 180px; height: 180px;
+            background:
+                radial-gradient(circle at 100% 0%, var(--accent-soft) 0%, transparent 65%);
+            opacity: 0.7;
+            transition: opacity 0.4s ease, transform 0.6s ease;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .academy-card:hover .card-pattern {
+            opacity: 1;
+            transform: scale(1.15);
+        }
+
+        /* Decoración grande en esquina (carácter monoespaciado en hover) */
+        .academy-card .card-deco {
+            position: absolute;
+            bottom: -28px;
+            right: -14px;
+            font-family: 'Fira Code', monospace;
+            font-size: 130px;
+            font-weight: 800;
+            line-height: 1;
+            color: var(--accent);
+            opacity: 0.045;
+            pointer-events: none;
+            transition: opacity 0.5s ease, transform 0.5s ease;
+            z-index: 0;
+            user-select: none;
+        }
+        .academy-card:hover .card-deco {
+            opacity: 0.13;
+            transform: translateX(-6px) translateY(-6px) rotate(-2deg);
+        }
+
+        /* Glow radial contenido dentro de la tarjeta */
+        .academy-card .card-glow {
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 80% 100%, var(--accent-soft), transparent 55%);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .academy-card:hover .card-glow { opacity: 1; }
+
+        /* Asegurar que el contenido quede sobre los efectos */
+        .academy-card > h4,
+        .academy-card > p,
+        .academy-card > div { position: relative; z-index: 1; }
+
+        /* Badge "Próximamente" - reubicado dentro del padding */
+        .card-soon-badge {
+            position: absolute;
+            top: 14px;
+            right: 14px;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: #fff;
+            background: linear-gradient(135deg, #DC4444, #b91c1c);
+            padding: 5px 11px;
+            border-radius: 999px;
+            box-shadow: 0 6px 18px -4px rgba(220, 68, 68, 0.55), inset 0 1px 0 rgba(255,255,255,0.25);
+            z-index: 5;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .card-soon-badge::before {
+            content: '';
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: #fff;
+            box-shadow: 0 0 6px #fff;
+            animation: pulse-dot 1.5s ease-in-out infinite;
+        }
+
+        /* ============================================
+           CTA BANNER CANAL WHATSAPP
+           ============================================ */
+        .wa-channel-banner {
+            position: relative;
+            background: linear-gradient(135deg, #128C7E 0%, #25D366 50%, #1ebe57 100%);
+            border-radius: 1.5rem;
+            overflow: hidden;
+            box-shadow: 0 25px 60px -18px rgba(37, 211, 102, 0.45);
+        }
+        .wa-channel-banner::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(circle at 15% 30%, rgba(255,255,255,0.18), transparent 40%),
+                radial-gradient(circle at 85% 70%, rgba(255,255,255,0.15), transparent 45%);
+            pointer-events: none;
+        }
+        .wa-channel-banner::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: repeating-linear-gradient(45deg, transparent, transparent 22px, rgba(255,255,255,0.04) 22px, rgba(255,255,255,0.04) 24px);
+            animation: wa-stripes 22s linear infinite;
+            pointer-events: none;
+        }
+        @keyframes wa-stripes {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(-100px, -100px); }
+        }
+        .wa-pulse-ring {
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            border: 2px solid rgba(255,255,255,0.5);
+            animation: wa-ping 2.2s ease-out infinite;
+        }
+        @keyframes wa-ping {
+            0% { transform: scale(1); opacity: 0.8; }
+            100% { transform: scale(1.8); opacity: 0; }
+        }
+
+        /* ============================================
+           CONTACT FORM (segmentado empresa / profesional)
+           ============================================ */
+        .contact-shell {
+            position: relative;
+            background: linear-gradient(135deg, #ffffff 0%, #fffaf3 100%);
+            border-radius: 1.5rem;
+            box-shadow: 0 30px 80px -30px rgba(43, 21, 21, 0.25);
+            border: 1px solid rgba(220, 68, 68, 0.10);
+            overflow: hidden;
+        }
+        .contact-shell::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #DC4444 0%, #FDB44B 50%, #DC4444 100%);
+            background-size: 200% 100%;
+            animation: contact-bar-shine 5s linear infinite;
+        }
+        @keyframes contact-bar-shine {
+            0% { background-position: 0% 0%; }
+            100% { background-position: 200% 0%; }
+        }
+        .contact-tabs {
+            display: inline-flex;
+            background: #f1f5f9;
+            border-radius: 999px;
+            padding: 5px;
+            gap: 4px;
+            border: 1px solid #e2e8f0;
+        }
+        .contact-tab {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 22px;
+            font-size: 0.875rem;
+            font-weight: 700;
+            color: #64748b;
+            background: transparent;
+            border: none;
+            border-radius: 999px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            font-family: inherit;
+        }
+        .contact-tab:hover { color: #2B1515; }
+        .contact-tab.active {
+            background: #2B1515;
+            color: #FDB44B;
+            box-shadow: 0 8px 20px -8px rgba(43, 21, 21, 0.55);
+        }
+        .contact-tab.active .tab-dot { background: #FDB44B; }
+        .tab-dot {
+            width: 6px; height: 6px;
+            border-radius: 50%;
+            background: #cbd5e1;
+            transition: background 0.25s ease;
+        }
+        .contact-form { display: none; }
+        .contact-form.active { display: block; animation: contact-fade 0.4s ease; }
+        @keyframes contact-fade {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .contact-field { position: relative; }
+        .contact-field label {
+            display: block;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #2B1515;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 6px;
+        }
+        .contact-field label .req { color: #DC4444; }
+        .contact-input,
+        .contact-textarea,
+        .contact-select {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            font-family: inherit;
+            color: #1e293b;
+            background: #ffffff;
+            transition: all 0.2s ease;
+        }
+        .contact-input:focus,
+        .contact-textarea:focus,
+        .contact-select:focus {
+            outline: none;
+            border-color: #DC4444;
+            box-shadow: 0 0 0 4px rgba(220, 68, 68, 0.10);
+        }
+        .contact-textarea { min-height: 110px; resize: vertical; }
+        .contact-submit {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            padding: 14px 28px;
+            background: linear-gradient(135deg, #DC4444 0%, #b83232 100%);
+            color: #ffffff;
+            font-weight: 700;
+            font-size: 1rem;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            box-shadow: 0 12px 30px -10px rgba(220, 68, 68, 0.55);
+        }
+        .contact-submit:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 18px 40px -12px rgba(220, 68, 68, 0.65);
+        }
+        .contact-submit:disabled { opacity: 0.6; cursor: wait; }
+        .contact-feedback {
+            display: none;
+            margin-top: 16px;
+            padding: 14px 18px;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+        .contact-feedback.show { display: flex; align-items: center; gap: 10px; }
+        .contact-feedback.success { background: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; }
+        .contact-feedback.error { background: #fef2f2; color: #b91c1c; border: 1px solid #fecaca; }
+        .contact-side {
+            background: linear-gradient(160deg, #2B1515 0%, #3D1F1F 100%);
+            color: #fff;
+            position: relative;
+            overflow: hidden;
+        }
+        .contact-side::before {
+            content: '';
+            position: absolute;
+            top: -40%;
+            right: -30%;
+            width: 80%; height: 80%;
+            background: radial-gradient(circle, rgba(253, 180, 75, 0.18) 0%, transparent 60%);
+            pointer-events: none;
+        }
+        .contact-side::after {
+            content: '';
+            position: absolute;
+            bottom: -50%;
+            left: -30%;
+            width: 90%; height: 90%;
+            background: radial-gradient(circle, rgba(220, 68, 68, 0.20) 0%, transparent 60%);
+            pointer-events: none;
+        }
+        .contact-side-item {
+            display: flex;
+            gap: 14px;
+            align-items: flex-start;
+            padding: 14px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+        .contact-side-item:last-child { border-bottom: none; }
+        .contact-side-icon {
+            flex-shrink: 0;
+            width: 40px; height: 40px;
+            background: rgba(253, 180, 75, 0.12);
+            border: 1px solid rgba(253, 180, 75, 0.25);
+            border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            color: #FDB44B;
+        }
+
+        /* ============================================
+           TESTIMONIALS
+           ============================================ */
+        .testimonial-card {
+            position: relative;
+            background: #ffffff;
+            border-radius: 1rem;
+            padding: 28px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 10px 30px -15px rgba(43, 21, 21, 0.18);
+            transition: all 0.35s ease;
+            overflow: hidden;
+        }
+        .testimonial-card::before {
+            content: '"';
+            position: absolute;
+            top: -10px;
+            right: 18px;
+            font-family: Georgia, serif;
+            font-size: 120px;
+            line-height: 1;
+            color: rgba(220, 68, 68, 0.08);
+            font-weight: 700;
+        }
+        .testimonial-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 25px 50px -20px rgba(43, 21, 21, 0.28);
+            border-color: rgba(220, 68, 68, 0.25);
+        }
+        .testimonial-card .quote {
+            position: relative;
+            z-index: 1;
+            color: #334155;
+            line-height: 1.65;
+            font-size: 0.97rem;
+        }
+        .testimonial-stars { color: #FDB44B; display: inline-flex; gap: 2px; margin-bottom: 12px; }
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 18px;
+            padding-top: 16px;
+            border-top: 1px solid #f1f5f9;
+            position: relative;
+            z-index: 1;
+        }
+        .testimonial-avatar {
+            width: 48px; height: 48px;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 700;
+            color: #ffffff;
+            font-size: 1rem;
+            flex-shrink: 0;
+            box-shadow: 0 6px 14px -6px rgba(0,0,0,0.25);
+        }
+        .testimonial-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            padding: 4px 10px;
+            border-radius: 999px;
+            margin-bottom: 14px;
+        }
+        .testimonial-tag.b2b { background: rgba(220, 68, 68, 0.10); color: #DC4444; }
+        .testimonial-tag.b2c { background: rgba(253, 180, 75, 0.18); color: #b8801f; }
+
+        /* ============================================
+           CALENDLY CTA
+           ============================================ */
+        .calendly-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 22px;
+            background: #ffffff;
+            color: #2B1515;
+            font-weight: 700;
+            font-size: 0.95rem;
+            border-radius: 12px;
+            border: 2px solid #FDB44B;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            box-shadow: 0 10px 25px -10px rgba(253, 180, 75, 0.5);
+        }
+        .calendly-btn:hover {
+            background: #FDB44B;
+            transform: translateY(-2px);
+            box-shadow: 0 16px 35px -12px rgba(253, 180, 75, 0.7);
+        }
+        .calendly-btn .pulse-dot {
+            width: 8px; height: 8px;
+            background: #DC4444;
+            border-radius: 50%;
+            animation: cal-pulse 2s ease-in-out infinite;
+        }
+        @keyframes cal-pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.3); }
+        }
     </style>
 </head>
 <body class="text-slate-700 antialiased">
@@ -683,31 +1400,62 @@
         <canvas id="neural-canvas"></canvas>
 
         <!-- Velo de oscurecimiento para máxima legibilidad -->
-        <div class="absolute inset-0 bg-gradient-to-r from-brand-dark/95 via-brand-dark/80 to-brand-dark/50 z-[5]"></div>
+        <div class="absolute inset-0 bg-gradient-to-r from-brand-dark/95 via-brand-dark/70 to-brand-dark/30 z-[5]"></div>
 
         <!-- Contenido del Hero -->
         <div class="hero-content max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-            <div class="max-w-3xl">
-                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-brand-accent/30 text-brand-accent text-[11px] font-semibold tracking-[0.2em] uppercase mb-8">
-                    <span class="w-1.5 h-1.5 rounded-full bg-brand-accent"></span>
-                    Consultoría en Ciencia de Datos
-                </div>
-                <h1 class="font-heading text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white leading-[1.1] mb-6">
-                    Decisiones estratégicas<br>
-                    <span class="text-brand-accent">respaldadas por datos.</span>
-                </h1>
-                <p class="text-lg sm:text-xl text-slate-300 mb-10 max-w-2xl font-light leading-relaxed">
-                    Consultoría avanzada y programas de formación profesional liderados por expertos PhD. Especialistas en Python, Inteligencia Artificial y Analítica Espacial para organizaciones de alto desempeño.
-                </p>
+            <div class="hero-grid">
+                <div>
+                    <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-brand-accent/30 text-brand-accent text-[11px] font-semibold tracking-[0.2em] uppercase mb-8">
+                        <span class="w-1.5 h-1.5 rounded-full bg-brand-accent"></span>
+                        Consultoría en Ciencia de Datos
+                    </div>
+                    <h1 class="font-heading text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white leading-[1.1] mb-6">
+                        Decisiones estratégicas<br>
+                        <span class="text-brand-accent">respaldadas por datos.</span>
+                    </h1>
+                    <p class="text-lg sm:text-xl text-slate-300 mb-10 max-w-2xl font-light leading-relaxed">
+                        Consultoría avanzada y programas de formación profesional liderados por expertos PhD. Especialistas en Python, Inteligencia Artificial y Analítica Espacial para organizaciones de alto desempeño.
+                    </p>
 
-                <div class="flex flex-col sm:flex-row gap-4">
-                    <a href="#consultoria" class="inline-flex justify-center items-center px-8 py-4 text-base font-bold rounded-lg text-brand-dark bg-brand-accent hover:bg-white transition-all shadow-lg">
-                        Soluciones Corporativas
-                        <i data-lucide="arrow-right" class="ml-2 w-5 h-5"></i>
-                    </a>
-                    <a href="#cursos" class="inline-flex justify-center items-center px-8 py-4 border border-white/30 text-base font-bold rounded-lg text-white hover:bg-white/10 transition-all">
-                        Academia Profesional
-                    </a>
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <a href="#consultoria" class="inline-flex justify-center items-center px-8 py-4 text-base font-bold rounded-lg text-brand-dark bg-brand-accent hover:bg-white transition-all shadow-lg">
+                            Soluciones Corporativas
+                            <i data-lucide="arrow-right" class="ml-2 w-5 h-5"></i>
+                        </a>
+                        <a href="#cursos" class="inline-flex justify-center items-center px-8 py-4 border border-white/30 text-base font-bold rounded-lg text-white hover:bg-white/10 transition-all">
+                            Academia Profesional
+                        </a>
+                    </div>
+
+                    <!-- CTA secundaria - Agenda Calendly -->
+                    <button type="button" onclick="openCalendly()" class="mt-6 inline-flex items-center gap-3 text-sm text-white/85 hover:text-brand-accent transition-colors group">
+                        <span class="relative inline-flex items-center justify-center w-9 h-9 rounded-full bg-white/10 border border-brand-accent/40 group-hover:bg-brand-accent group-hover:border-brand-accent transition-all">
+                            <i data-lucide="calendar-check" class="w-4 h-4 group-hover:text-brand-dark transition-colors"></i>
+                            <span class="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 bg-brand-accent rounded-full animate-ping"></span>
+                            <span class="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 bg-brand-accent rounded-full"></span>
+                        </span>
+                        <span>
+                            <span class="font-semibold underline decoration-dotted underline-offset-4">Agenda 30 min gratis</span> con un experto · Sin compromiso
+                        </span>
+                    </button>
+                </div>
+
+                <!-- Editor de código Python en vivo -->
+                <div class="code-editor-wrapper">
+                    <div class="code-editor">
+                        <div class="code-editor-header">
+                            <span class="code-dot red"></span>
+                            <span class="code-dot yellow"></span>
+                            <span class="code-dot green"></span>
+                            <span class="code-file" id="code-file">analisis_amazonia.py</span>
+                            <span class="code-lang">Python 3.12</span>
+                        </div>
+                        <div class="code-body">
+                            <pre class="code-gutter" id="code-gutter">1</pre>
+                            <pre class="code-content" id="code-content"></pre>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -891,7 +1639,7 @@
 
                 <!-- Visualización Gráfica con Python + IA -->
                 <a href="https://trabajocientifico.github.io/cursos/" target="_blank" rel="noopener noreferrer" class="academy-card group bg-white border border-slate-200 rounded-xl p-7 hover:border-brand-primary hover:shadow-xl transition-all block relative">
-                    <span class="absolute -top-2 -right-2 text-[10px] font-bold uppercase tracking-wider text-white bg-brand-primary px-2.5 py-1 rounded shadow-md">Próximamente</span>
+                    <span class="card-soon-badge">Próximamente</span>
                     <div class="flex items-start justify-between mb-5">
                         <div class="w-12 h-12 rounded-lg bg-slate-50 border border-slate-100 flex items-center justify-center group-hover:bg-brand-dark group-hover:border-brand-dark transition-all">
                             <i data-lucide="bar-chart-3" class="w-6 h-6 text-brand-primary group-hover:text-brand-accent transition-colors"></i>
@@ -1168,6 +1916,123 @@
         </div>
     </section>
 
+    <!-- TESTIMONIOS -->
+    <!--
+      INSTRUCCIONES: Estos testimonios son PLACEHOLDERS anonimizados.
+      Reemplaza el contenido con citas reales de clientes/estudiantes.
+      Si tienes autorización, puedes añadir nombre completo y entidad real.
+      Cambia las iniciales en .testimonial-avatar y el color de fondo si quieres.
+    -->
+    <section class="py-20 bg-white relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+            <div class="text-center max-w-3xl mx-auto mb-14">
+                <span class="text-brand-primary font-semibold tracking-wider uppercase text-sm">Lo que dicen de nosotros</span>
+                <h2 class="font-heading text-3xl md:text-4xl font-bold text-brand-dark mt-2">Resultados que hablan por sí solos</h2>
+                <p class="mt-4 text-slate-600 text-lg">Voces de organizaciones y profesionales con los que hemos trabajado.</p>
+                <div class="w-24 h-1 bg-brand-accent mx-auto mt-6 rounded-full"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
+                <!-- Testimonio B2B 1 -->
+                <div class="testimonial-card">
+                    <span class="testimonial-tag b2b"><i data-lucide="building-2" class="w-3 h-3"></i> Consultoría Corporativa</span>
+                    <div class="testimonial-stars">
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                    </div>
+                    <p class="quote">
+                        "Trabajamos con Trabajo Científico en un modelo hidroeconómico de gran complejidad. Su rigor académico y la calidad de la entrega nos permitió tomar decisiones de política pública con un nivel de confianza poco común. Recomendados ampliamente."
+                    </p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar" style="background: linear-gradient(135deg, #DC4444 0%, #b83232 100%);">EI</div>
+                        <div>
+                            <p class="font-bold text-brand-dark text-sm">Equipo Técnico</p>
+                            <p class="text-slate-500 text-xs">Organización multilateral · Sector cooperación internacional</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Testimonio B2B 2 -->
+                <div class="testimonial-card">
+                    <span class="testimonial-tag b2b"><i data-lucide="building-2" class="w-3 h-3"></i> Consultoría Corporativa</span>
+                    <div class="testimonial-stars">
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                    </div>
+                    <p class="quote">
+                        "Automatizaron procesos de reportería que nos tomaban días enteros. Lo que antes era un cuello de botella mensual ahora se resuelve en minutos. Más allá del código, entendieron nuestro negocio."
+                    </p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar" style="background: linear-gradient(135deg, #2B1515 0%, #3D1F1F 100%);">UN</div>
+                        <div>
+                            <p class="font-bold text-brand-dark text-sm">Coordinación Académica</p>
+                            <p class="text-slate-500 text-xs">Universidad pública · Sector educación superior</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Testimonio B2C 1 -->
+                <div class="testimonial-card">
+                    <span class="testimonial-tag b2c"><i data-lucide="user" class="w-3 h-3"></i> Formación Profesional</span>
+                    <div class="testimonial-stars">
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                    </div>
+                    <p class="quote">
+                        "Tomé el curso de Python + IA + Datos sin tener background técnico. La metodología es práctica, los proyectos son del mundo real y los instructores realmente saben. Hoy uso lo aprendido a diario en mi trabajo."
+                    </p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar" style="background: linear-gradient(135deg, #FDB44B 0%, #d99327 100%);">MC</div>
+                        <div>
+                            <p class="font-bold text-brand-dark text-sm">Profesional en Datos</p>
+                            <p class="text-slate-500 text-xs">Estudiante egresada · Sector financiero</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Testimonio B2C 2 -->
+                <div class="testimonial-card">
+                    <span class="testimonial-tag b2c"><i data-lucide="user" class="w-3 h-3"></i> Formación Profesional</span>
+                    <div class="testimonial-stars">
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                    </div>
+                    <p class="quote">
+                        "El programa de GeoAnálisis con ArcGIS PRO me dio una ventaja real en mi tesis de maestría. Los talleres se sienten cercanos, hay acompañamiento y los certificados pesan en mi hoja de vida."
+                    </p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar" style="background: linear-gradient(135deg, #10b981 0%, #047857 100%);">JA</div>
+                        <div>
+                            <p class="font-bold text-brand-dark text-sm">Investigador en Geociencias</p>
+                            <p class="text-slate-500 text-xs">Estudiante de maestría · Sector ambiental</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mini CTA bajo testimonios -->
+            <div class="text-center mt-12">
+                <p class="text-slate-500 text-sm mb-4">¿Listo para sumarte a quienes ya confían en nosotros?</p>
+                <a href="#contacto" class="inline-flex items-center gap-2 px-6 py-3 bg-brand-dark text-white font-semibold rounded-lg hover:bg-brand-primary transition-all">
+                    Hablemos
+                    <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
     <!-- NUESTRO EQUIPO -->
     <section id="sobre-nosotros" class="py-20 bg-slate-50 border-t border-slate-200 relative">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -1257,6 +2122,15 @@
                         </h4>
                         <div id="modal-links" class="flex flex-wrap gap-3"></div>
                     </div>
+
+                    <!-- CTA - Agendar reunión con Calendly -->
+                    <div class="mt-6 pt-6 border-t border-slate-100">
+                        <button type="button" onclick="openCalendly()" class="w-full inline-flex items-center justify-center gap-3 px-6 py-3.5 bg-gradient-to-r from-brand-dark to-brand-navy text-white font-bold rounded-xl hover:from-brand-primary hover:to-brand-primary transition-all shadow-lg group">
+                            <i data-lucide="calendar-check" class="w-5 h-5 text-brand-accent group-hover:text-white transition-colors"></i>
+                            Agenda una reunión gratis
+                            <span class="text-brand-accent group-hover:text-white text-xs font-normal opacity-80">· 30 min</span>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1333,6 +2207,247 @@
         </div>
     </section>
 
+    <!-- CONTACTO - FORMULARIO SEGMENTADO -->
+    <section id="contacto" class="py-20 bg-white relative overflow-hidden">
+        <!-- Decoraciones de fondo -->
+        <div class="absolute top-0 right-0 w-96 h-96 bg-brand-primary/5 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl pointer-events-none"></div>
+        <div class="absolute bottom-0 left-0 w-96 h-96 bg-brand-accent/5 rounded-full translate-y-1/2 -translate-x-1/2 blur-3xl pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+            <div class="text-center max-w-3xl mx-auto mb-12">
+                <span class="text-brand-primary font-semibold tracking-wider uppercase text-sm">Hablemos</span>
+                <h2 class="font-heading text-3xl md:text-4xl font-bold text-brand-dark mt-2">Cuéntanos lo que necesitas</h2>
+                <p class="mt-4 text-slate-600 text-lg">Respondemos en menos de 24 horas hábiles. Elige el camino que mejor te describe.</p>
+                <div class="w-24 h-1 bg-brand-accent mx-auto mt-6 rounded-full"></div>
+            </div>
+
+            <div class="contact-shell grid lg:grid-cols-5">
+                <!-- COLUMNA FORMULARIO -->
+                <div class="lg:col-span-3 p-8 md:p-12 pt-12">
+                    <!-- Tabs -->
+                    <div class="flex justify-center lg:justify-start mb-8">
+                        <div class="contact-tabs" role="tablist">
+                            <button type="button" class="contact-tab active" data-tab="empresa" role="tab" aria-selected="true">
+                                <span class="tab-dot"></span>
+                                <i data-lucide="building-2" class="w-4 h-4"></i>
+                                Soy Empresa / Organización
+                            </button>
+                            <button type="button" class="contact-tab" data-tab="profesional" role="tab" aria-selected="false">
+                                <span class="tab-dot"></span>
+                                <i data-lucide="user" class="w-4 h-4"></i>
+                                Soy Profesional / Estudiante
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- FORMULARIO EMPRESA -->
+                    <!--
+                      CONFIGURACIÓN FORMSPREE:
+                      1. Crea una cuenta gratuita en https://formspree.io
+                      2. Crea dos formularios separados (Empresa y Profesional) o uno único
+                      3. Reemplaza YOUR_FORMSPREE_ID_EMPRESA y YOUR_FORMSPREE_ID_PROFESIONAL en los <form action="...">
+                    -->
+                    <form id="form-empresa" class="contact-form active" action="https://formspree.io/f/YOUR_FORMSPREE_ID_EMPRESA" method="POST" novalidate>
+                        <input type="hidden" name="_subject" value="Nueva solicitud B2B - trabajocientifico.org">
+                        <input type="hidden" name="origen" value="empresa">
+
+                        <div class="grid sm:grid-cols-2 gap-5">
+                            <div class="contact-field">
+                                <label for="emp-nombre">Tu nombre <span class="req">*</span></label>
+                                <input type="text" id="emp-nombre" name="nombre" required class="contact-input" placeholder="Nombre y apellido">
+                            </div>
+                            <div class="contact-field">
+                                <label for="emp-cargo">Cargo</label>
+                                <input type="text" id="emp-cargo" name="cargo" class="contact-input" placeholder="Director de operaciones, etc.">
+                            </div>
+                            <div class="contact-field">
+                                <label for="emp-organizacion">Organización <span class="req">*</span></label>
+                                <input type="text" id="emp-organizacion" name="organizacion" required class="contact-input" placeholder="Nombre de tu empresa o entidad">
+                            </div>
+                            <div class="contact-field">
+                                <label for="emp-email">Correo corporativo <span class="req">*</span></label>
+                                <input type="email" id="emp-email" name="email" required class="contact-input" placeholder="nombre@empresa.com">
+                            </div>
+                            <div class="contact-field sm:col-span-2">
+                                <label for="emp-servicio">¿Qué servicio te interesa? <span class="req">*</span></label>
+                                <select id="emp-servicio" name="servicio" required class="contact-select">
+                                    <option value="">Selecciona una opción</option>
+                                    <option>Automatización de procesos con Python</option>
+                                    <option>Dashboards interactivos (Power BI / Tableau)</option>
+                                    <option>Modelado de datos y machine learning</option>
+                                    <option>Análisis geoespacial (GIS)</option>
+                                    <option>Capacitación corporativa a la medida</option>
+                                    <option>Otro / Aún por definir</option>
+                                </select>
+                            </div>
+                            <div class="contact-field sm:col-span-2">
+                                <label for="emp-mensaje">Cuéntanos brevemente tu reto <span class="req">*</span></label>
+                                <textarea id="emp-mensaje" name="mensaje" required class="contact-textarea" placeholder="¿Qué problema quieres resolver? ¿Tienes un timeline o presupuesto estimado?"></textarea>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="contact-submit mt-6">
+                            <i data-lucide="send" class="w-5 h-5"></i>
+                            Enviar solicitud
+                        </button>
+
+                        <div class="contact-feedback" data-feedback>
+                            <i data-lucide="check-circle" class="w-5 h-5"></i>
+                            <span class="feedback-text"></span>
+                        </div>
+                    </form>
+
+                    <!-- FORMULARIO PROFESIONAL -->
+                    <form id="form-profesional" class="contact-form" action="https://formspree.io/f/YOUR_FORMSPREE_ID_PROFESIONAL" method="POST" novalidate>
+                        <input type="hidden" name="_subject" value="Nueva solicitud B2C - trabajocientifico.org">
+                        <input type="hidden" name="origen" value="profesional">
+
+                        <div class="grid sm:grid-cols-2 gap-5">
+                            <div class="contact-field">
+                                <label for="pro-nombre">Tu nombre <span class="req">*</span></label>
+                                <input type="text" id="pro-nombre" name="nombre" required class="contact-input" placeholder="Nombre y apellido">
+                            </div>
+                            <div class="contact-field">
+                                <label for="pro-email">Correo electrónico <span class="req">*</span></label>
+                                <input type="email" id="pro-email" name="email" required class="contact-input" placeholder="tu@correo.com">
+                            </div>
+                            <div class="contact-field">
+                                <label for="pro-pais">País / Ciudad</label>
+                                <input type="text" id="pro-pais" name="pais" class="contact-input" placeholder="Colombia, Bogotá">
+                            </div>
+                            <div class="contact-field">
+                                <label for="pro-perfil">¿Cuál es tu perfil?</label>
+                                <select id="pro-perfil" name="perfil" class="contact-select">
+                                    <option value="">Selecciona</option>
+                                    <option>Estudiante de pregrado</option>
+                                    <option>Estudiante de posgrado</option>
+                                    <option>Profesional en ejercicio</option>
+                                    <option>Docente / Investigador</option>
+                                    <option>Emprendedor</option>
+                                </select>
+                            </div>
+                            <div class="contact-field sm:col-span-2">
+                                <label for="pro-programa">¿Qué programa te interesa? <span class="req">*</span></label>
+                                <select id="pro-programa" name="programa" required class="contact-select">
+                                    <option value="">Selecciona un programa</option>
+                                    <option>Excel para la Vida</option>
+                                    <option>IA + Productividad</option>
+                                    <option>IA Científica</option>
+                                    <option>Python + IA + Datos</option>
+                                    <option>GeoAnálisis con ArcGIS PRO</option>
+                                    <option>Dashboard con Power BI</option>
+                                    <option>Bibliometrix en RStudio</option>
+                                    <option>Aún no decido / Quiero asesoría</option>
+                                </select>
+                            </div>
+                            <div class="contact-field sm:col-span-2">
+                                <label for="pro-mensaje">¿Cómo podemos ayudarte? <span class="req">*</span></label>
+                                <textarea id="pro-mensaje" name="mensaje" required class="contact-textarea" placeholder="Cuéntanos qué buscas aprender o por qué te interesa este programa."></textarea>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="contact-submit mt-6">
+                            <i data-lucide="send" class="w-5 h-5"></i>
+                            Enviar solicitud
+                        </button>
+
+                        <div class="contact-feedback" data-feedback>
+                            <i data-lucide="check-circle" class="w-5 h-5"></i>
+                            <span class="feedback-text"></span>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- COLUMNA INFO LATERAL -->
+                <div class="lg:col-span-2 contact-side p-8 md:p-12 relative">
+                    <div class="relative z-10">
+                        <span class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.2em] text-brand-accent mb-3">
+                            <i data-lucide="zap" class="w-4 h-4"></i> Respuesta rápida
+                        </span>
+                        <h3 class="font-heading text-2xl font-extrabold mb-3">¿Prefieres hablar antes?</h3>
+                        <p class="text-slate-300 text-sm leading-relaxed mb-6">
+                            Agenda una llamada gratuita de 30 minutos con uno de nuestros expertos. Sin compromiso, solo para entender tu necesidad.
+                        </p>
+
+                        <button type="button" class="calendly-btn mb-8" onclick="openCalendly()">
+                            <span class="pulse-dot"></span>
+                            <i data-lucide="calendar-check" class="w-5 h-5"></i>
+                            Agendar 30 min gratis
+                        </button>
+
+                        <div class="space-y-1">
+                            <div class="contact-side-item">
+                                <div class="contact-side-icon"><i data-lucide="mail" class="w-5 h-5"></i></div>
+                                <div>
+                                    <p class="text-xs uppercase tracking-wider text-slate-400 font-semibold">Correo</p>
+                                    <a href="mailto:info@trabajocientifico.org" class="text-white hover:text-brand-accent text-sm font-medium">info@trabajocientifico.org</a>
+                                </div>
+                            </div>
+                            <div class="contact-side-item">
+                                <div class="contact-side-icon"><i data-lucide="message-circle" class="w-5 h-5"></i></div>
+                                <div>
+                                    <p class="text-xs uppercase tracking-wider text-slate-400 font-semibold">WhatsApp</p>
+                                    <a href="https://wa.me/573204487179" target="_blank" rel="noopener" class="text-white hover:text-brand-accent text-sm font-medium">+57 320 448 7179</a>
+                                </div>
+                            </div>
+                            <div class="contact-side-item">
+                                <div class="contact-side-icon"><i data-lucide="map-pin" class="w-5 h-5"></i></div>
+                                <div>
+                                    <p class="text-xs uppercase tracking-wider text-slate-400 font-semibold">Sedes</p>
+                                    <p class="text-white text-sm font-medium">Bogotá · Villavicencio</p>
+                                </div>
+                            </div>
+                            <div class="contact-side-item">
+                                <div class="contact-side-icon"><i data-lucide="clock" class="w-5 h-5"></i></div>
+                                <div>
+                                    <p class="text-xs uppercase tracking-wider text-slate-400 font-semibold">Horario</p>
+                                    <p class="text-white text-sm font-medium">Lun a Vie · 8 am – 6 pm (COT)</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA CANAL DE WHATSAPP -->
+    <section class="py-16 bg-slate-50 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+            <div class="wa-channel-banner p-8 md:p-14">
+                <div class="relative grid md:grid-cols-3 gap-8 items-center">
+                    <div class="md:col-span-2 text-white">
+                        <span class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.25em] text-white/90 mb-4">
+                            <span class="relative inline-block w-2.5 h-2.5">
+                                <span class="absolute inset-0 rounded-full wa-pulse-ring"></span>
+                                <span class="relative block w-2.5 h-2.5 rounded-full bg-white"></span>
+                            </span>
+                            Comunidad en vivo
+                        </span>
+                        <h3 class="font-heading text-2xl md:text-4xl font-extrabold leading-tight">
+                            Únete al <span class="underline decoration-white/50 underline-offset-4">Canal de WhatsApp</span> de Trabajo Científico
+                        </h3>
+                        <p class="text-white/95 mt-4 text-base md:text-lg max-w-2xl leading-relaxed">
+                            Recibe de primera mano nuevos cursos, recursos gratuitos, tips de Python e IA y oportunidades exclusivas para nuestra comunidad de profesionales en datos.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mt-5">
+                            <span class="text-xs font-semibold bg-white/15 backdrop-blur-sm border border-white/25 text-white px-3 py-1.5 rounded-full">Cursos primero</span>
+                            <span class="text-xs font-semibold bg-white/15 backdrop-blur-sm border border-white/25 text-white px-3 py-1.5 rounded-full">Tips semanales</span>
+                            <span class="text-xs font-semibold bg-white/15 backdrop-blur-sm border border-white/25 text-white px-3 py-1.5 rounded-full">Recursos gratis</span>
+                        </div>
+                    </div>
+                    <div class="md:text-right">
+                        <a href="https://chat.whatsapp.com/GhF8Q1NkdP07CsZGwDAoJu" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-3 px-7 py-4 bg-white text-[#128C7E] font-bold rounded-xl shadow-2xl hover:bg-brand-accent hover:text-brand-dark transition-all transform hover:-translate-y-1 text-base">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+                            Quiero unirme
+                        </a>
+                        <p class="text-white/80 text-xs mt-3">Gratis · Sin spam · Cancela cuando quieras</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- RECURSOS GRATUITOS - YOUTUBE -->
     <section id="recursos" class="py-20 bg-gradient-to-br from-brand-dark via-brand-navy to-brand-dark relative overflow-hidden">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -1384,7 +2499,7 @@
     </section>
 
     <!-- FOOTER -->
-    <footer id="contacto" class="bg-brand-dark text-slate-400 py-12 border-t border-white/10 relative">
+    <footer class="bg-brand-dark text-slate-400 py-12 border-t border-white/10 relative">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-8">
             <div class="col-span-1 md:col-span-1">
                 <div class="flex items-center gap-2 text-white mb-4">
@@ -1465,6 +2580,17 @@
                     </div>
                     <i data-lucide="chevron-right" class="w-4 h-4 ml-auto text-slate-300 group-hover:text-brand-primary"></i>
                 </a>
+                <div class="h-px bg-slate-100 my-1"></div>
+                <a href="https://chat.whatsapp.com/GhF8Q1NkdP07CsZGwDAoJu" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 p-3 hover:bg-slate-50 rounded-md transition-colors group">
+                    <div class="w-8 h-8 bg-[#25D366] rounded-full flex items-center justify-center text-white">
+                        <i data-lucide="megaphone" class="w-4 h-4"></i>
+                    </div>
+                    <div>
+                        <p class="text-sm font-bold text-brand-dark">Únete al Canal</p>
+                        <p class="text-xs text-slate-500">Comunidad WhatsApp</p>
+                    </div>
+                    <i data-lucide="chevron-right" class="w-4 h-4 ml-auto text-slate-300 group-hover:text-brand-primary"></i>
+                </a>
             </div>
         </div>
 
@@ -1484,6 +2610,177 @@
     <script>
         // Inicializar Iconos Lucide
         lucide.createIcons();
+
+        // ============================================
+        // EDITOR DE CÓDIGO PYTHON ANIMADO (HERO)
+        // ============================================
+        (function initCodeEditor() {
+            const content = document.getElementById('code-content');
+            const gutter = document.getElementById('code-gutter');
+            const fileLabel = document.getElementById('code-file');
+            if (!content || !gutter) return;
+
+            const snippets = [
+                {
+                    file: 'analisis_amazonia.py',
+                    lines: [
+                        [['cmt','# Pipeline de análisis amazónico — BID']],
+                        [['kw','import '], ['mod','pandas'], ['kw',' as '], ['mod','pd']],
+                        [['kw','import '], ['mod','geopandas'], ['kw',' as '], ['mod','gpd']],
+                        [['kw','from '], ['mod','sklearn.ensemble'], ['kw',' import '], ['def','RandomForestRegressor']],
+                        [],
+                        [['cmt','# Cargar dataset (5 países amazónicos)']],
+                        [['var','df'], ['', ' = '], ['mod','pd'], ['','.'], ['fn','read_parquet'], ['','('], ['str','"amazonia_2025.parquet"'], ['',')']],
+                        [['var','df'], ['','.'], ['fn','dropna'], ['','(inplace='], ['kw','True'], ['',')']],
+                        [],
+                        [['cmt','# Entrenar modelo de deforestación']],
+                        [['var','modelo'], ['',' = '], ['def','RandomForestRegressor'], ['','(n_estimators='], ['num','500'], ['',')']],
+                        [['var','modelo'], ['','.'], ['fn','fit'], ['','(X_train, y_train)']],
+                        [['var','score'], ['',' = '], ['var','modelo'], ['','.'], ['fn','score'], ['','(X_test, y_test)']],
+                        [['fn','print'], ['','('], ['str','f"R² = {score:.3f}"'], ['',')']],
+                        [['cmt','# >>> R² = 0.942  ✓ listo']],
+                    ]
+                },
+                {
+                    file: 'huella_hidrica.py',
+                    lines: [
+                        [['cmt','# Visualización: Río Ocoa 1981-2024']],
+                        [['kw','import '], ['mod','matplotlib.pyplot'], ['kw',' as '], ['mod','plt']],
+                        [['kw','import '], ['mod','seaborn'], ['kw',' as '], ['mod','sns']],
+                        [],
+                        [['var','sns'], ['','.'], ['fn','set_theme'], ['','(style='], ['str','"whitegrid"'], ['',')']],
+                        [['var','fig'], ['',', '], ['var','ax'], ['',' = '], ['var','plt'], ['','.'], ['fn','subplots'], ['','(figsize=('], ['num','12'], ['',','], ['num','6'], ['','))']],
+                        [],
+                        [['var','sns'], ['','.'], ['fn','lineplot'], ['','(']],
+                        [['','    data='], ['var','huella'], ['',', x='], ['str','"año"'], ['',', y='], ['str','"m3/ha"']],
+                        [['',')']],
+                        [['var','ax'], ['','.'], ['fn','set_title'], ['','('], ['str','"Huella hídrica Ocoa"'], ['',')']],
+                        [['var','plt'], ['','.'], ['fn','savefig'], ['','('], ['str','"ocoa.png"'], ['',', dpi='], ['num','300'], ['',')']],
+                        [['cmt','# ✓ Reporte generado en 1.2s']],
+                    ]
+                },
+                {
+                    file: 'modelo_agroclima.py',
+                    lines: [
+                        [['cmt','# Clasificador agroclima con Deep Learning']],
+                        [['kw','import '], ['mod','torch']],
+                        [['kw','from '], ['mod','torch'], ['kw',' import '], ['mod','nn']],
+                        [],
+                        [['kw','class '], ['def','AgroNet'], ['','('], ['mod','nn'], ['','.'], ['def','Module'], ['','):']],
+                        [['','    '], ['kw','def '], ['fn','__init__'], ['','('], ['kw','self'], ['','):']],
+                        [['','        '], ['fn','super'], ['','().'], ['fn','__init__'], ['','()']],
+                        [['','        '], ['kw','self'], ['','.net = '], ['mod','nn'], ['','.'], ['def','Sequential'], ['','(']],
+                        [['','            '], ['mod','nn'], ['','.'], ['def','Linear'], ['','('], ['num','64'], ['',','], ['num','128'], ['',')'], ['','  '], ['cmt','# capa oculta']],
+                        [['','            '], ['mod','nn'], ['','.'], ['def','ReLU'], ['','(),']],
+                        [['','            '], ['mod','nn'], ['','.'], ['def','Linear'], ['','('], ['num','128'], ['',','], ['num','3'], ['',')']],
+                        [['','        )']],
+                        [['cmt','# Accuracy: 96.4% — listo para producción']],
+                    ]
+                }
+            ];
+
+            const escapeHTML = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+
+            let snippetIdx = 0;
+
+            function renderState(linesDone, partialTokens, currentTokenChars) {
+                let html = '';
+                // líneas completas
+                for (let i = 0; i < linesDone.length; i++) {
+                    html += renderLine(linesDone[i]) + '\n';
+                }
+                // línea actual parcial
+                if (partialTokens) {
+                    html += renderLine(partialTokens, currentTokenChars);
+                }
+                html += '<span class="code-cursor"></span>';
+                content.innerHTML = html;
+
+                // gutter
+                const totalLines = linesDone.length + (partialTokens ? 1 : 0);
+                let g = '';
+                for (let i = 1; i <= Math.max(totalLines, 1); i++) g += i + '\n';
+                gutter.textContent = g;
+            }
+
+            function renderLine(tokens, charLimit) {
+                if (!tokens || tokens.length === 0) return '';
+                let out = '';
+                let remaining = (typeof charLimit === 'number') ? charLimit : Infinity;
+                for (const tok of tokens) {
+                    if (remaining <= 0) break;
+                    const [type, text] = tok;
+                    const sliced = text.slice(0, remaining);
+                    remaining -= sliced.length;
+                    const cls = type ? `tok-${type}` : '';
+                    out += cls ? `<span class="${cls}">${escapeHTML(sliced)}</span>` : escapeHTML(sliced);
+                }
+                return out;
+            }
+
+            async function typeSnippet(snippet) {
+                if (fileLabel) fileLabel.textContent = snippet.file;
+                content.classList.remove('fading');
+                const linesDone = [];
+
+                for (let li = 0; li < snippet.lines.length; li++) {
+                    const line = snippet.lines[li];
+
+                    if (!line || line.length === 0) {
+                        linesDone.push([]);
+                        renderState(linesDone, null, 0);
+                        await wait(90);
+                        continue;
+                    }
+
+                    const lineLength = line.reduce((sum, t) => sum + t[1].length, 0);
+                    for (let c = 1; c <= lineLength; c++) {
+                        renderState(linesDone, line, c);
+                        // pequeñas pausas naturales en saltos, puntos y signos
+                        const lastChar = sliceJoined(line, c).slice(-1);
+                        let delay = 18 + Math.random() * 22;
+                        if (lastChar === '.' || lastChar === ',' || lastChar === '(') delay += 25;
+                        await wait(delay);
+                    }
+                    linesDone.push(line);
+                    await wait(120 + Math.random() * 80);
+                }
+
+                // pausa final con cursor parpadeando
+                await wait(3000);
+
+                // fade out
+                content.classList.add('fading');
+                await wait(450);
+                content.innerHTML = '<span class="code-cursor"></span>';
+                gutter.textContent = '1';
+                await wait(350);
+                content.classList.remove('fading');
+            }
+
+            function sliceJoined(tokens, n) {
+                let acc = '';
+                for (const t of tokens) {
+                    if (acc.length >= n) break;
+                    acc += t[1];
+                }
+                return acc.slice(0, n);
+            }
+
+            const wait = (ms) => new Promise(r => setTimeout(r, ms));
+
+            async function loop() {
+                while (true) {
+                    await typeSnippet(snippets[snippetIdx]);
+                    snippetIdx = (snippetIdx + 1) % snippets.length;
+                }
+            }
+
+            // Inicializar gutter con número 1 visible
+            renderState([], null, 0);
+            // arrancar después de un pequeño delay para no competir con el render inicial
+            setTimeout(loop, 600);
+        })();
 
         // ============================================
         // RED NEURONAL INTERACTIVA EN CANVAS
@@ -1629,6 +2926,88 @@
 
             lucide.createIcons();
         }
+
+        // ============================================
+        // PERSONALIZACIÓN DE TARJETAS DE CURSOS
+        // ============================================
+        (function personalizeCourseCards() {
+            const themes = {
+                'Bibliometrix en Rstudio':              { c: '#f59e0b', tags: ['Rstudio','Bibliometrix','Scopus'],        glyph: '®' },
+                'Python + IA en GeoInformación':        { c: '#10b981', tags: ['Python','GeoPandas','IA'],                glyph: '◉' },
+                'AgroClima con Python y RStudio':       { c: '#14b8a6', tags: ['Python','R','Clima'],                     glyph: '❀' },
+                'Excel Inteligente':                    { c: '#21a366', tags: ['Excel','Fórmulas','IA'],                  glyph: 'Σ' },
+                'Python + IA en Ciencia de Datos':      { c: '#3776ab', tags: ['Python','Pandas','scikit-learn'],         glyph: 'λ' },
+                'Visualización Gráfica con Python + IA':{ c: '#8b5cf6', tags: ['Matplotlib','Plotly','IA'],               glyph: '▣' },
+                'Excel para la Vida':                   { c: '#21a366', tags: ['Excel','Funciones','Dashboards'],         glyph: 'Σ' },
+                'Dashboard con Power BI':               { c: '#F2C811', tags: ['Power BI','DAX','Modelado'],              glyph: '▦' },
+                'Analizando con ArcGIS PRO':            { c: '#047857', tags: ['ArcGIS','SIG','Espacial'],                glyph: '◎' },
+                'Python + IA Visualización Inteligente':{ c: '#a855f7', tags: ['Python','Plotly','IA'],                   glyph: '◈' },
+                'GeoEstadística con Python':            { c: '#6366f1', tags: ['Python','SciPy','Kriging'],               glyph: 'σ' },
+                'Automatización de Tareas con Python':  { c: '#0891b2', tags: ['Python','APIs','RPA'],                    glyph: '⚡' },
+                'IA para la Vida':                      { c: '#e11d48', tags: ['ChatGPT','Gemini','Productividad'],       glyph: '∞' },
+                'Optimización Científica con IA':       { c: '#059669', tags: ['IA','Research','LaTeX'],                  glyph: '∇' }
+            };
+
+            const hexToRgba = (hex, a) => {
+                const h = hex.replace('#','');
+                const r = parseInt(h.slice(0,2),16);
+                const g = parseInt(h.slice(2,4),16);
+                const b = parseInt(h.slice(4,6),16);
+                return `rgba(${r},${g},${b},${a})`;
+            };
+            const darken = (hex, amount) => {
+                const h = hex.replace('#','');
+                let r = parseInt(h.slice(0,2),16);
+                let g = parseInt(h.slice(2,4),16);
+                let b = parseInt(h.slice(4,6),16);
+                r = Math.max(0, Math.floor(r * (1 - amount)));
+                g = Math.max(0, Math.floor(g * (1 - amount)));
+                b = Math.max(0, Math.floor(b * (1 - amount)));
+                return `rgb(${r}, ${g}, ${b})`;
+            };
+
+            document.querySelectorAll('.academy-card').forEach(card => {
+                const h4 = card.querySelector('h4');
+                if (!h4) return;
+                const title = h4.textContent.trim();
+                const theme = themes[title];
+                if (!theme) return;
+
+                card.style.setProperty('--accent', theme.c);
+                card.style.setProperty('--accent-soft', hexToRgba(theme.c, 0.13));
+                card.style.setProperty('--accent-border', hexToRgba(theme.c, 0.45));
+                card.style.setProperty('--accent-dark', darken(theme.c, 0.22));
+
+                const iconBox = card.querySelector('div.w-12.h-12');
+                if (iconBox) iconBox.classList.add('card-icon-box');
+                h4.classList.add('card-title-hover');
+                const cta = card.querySelector('span.text-brand-primary');
+                if (cta) cta.classList.add('card-cta');
+
+                // capas decorativas (insertadas detrás del contenido)
+                const pattern = document.createElement('div');
+                pattern.className = 'card-pattern';
+                card.insertBefore(pattern, card.firstChild);
+
+                const glow = document.createElement('div');
+                glow.className = 'card-glow';
+                card.insertBefore(glow, card.firstChild);
+
+                const deco = document.createElement('div');
+                deco.className = 'card-deco';
+                deco.textContent = theme.glyph || '·';
+                card.appendChild(deco);
+
+                // chips de herramientas
+                const desc = card.querySelector('p.text-slate-600');
+                if (desc && theme.tags && theme.tags.length) {
+                    const tagRow = document.createElement('div');
+                    tagRow.className = 'card-tags';
+                    tagRow.innerHTML = theme.tags.map(t => `<span class="card-tag">${t}</span>`).join('');
+                    desc.insertAdjacentElement('afterend', tagRow);
+                }
+            });
+        })();
 
         // ============================================
         // WHATSAPP BUTTON
@@ -1842,6 +3221,97 @@
             modal.classList.remove('flex');
         }
         document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeKpiModal(); });
+
+        // ============================================
+        // CALENDLY - Reemplaza con tu URL personal
+        // 1. Crea cuenta gratuita en https://calendly.com
+        // 2. Crea un evento de 30 min "Consulta inicial"
+        // 3. Reemplaza CALENDLY_URL abajo con tu enlace (ej: https://calendly.com/oscar-vargas/30min)
+        // ============================================
+        const CALENDLY_URL = 'https://calendly.com/opvargas23/30min';
+
+        function openCalendly() {
+            if (window.Calendly && typeof window.Calendly.initPopupWidget === 'function') {
+                window.Calendly.initPopupWidget({ url: CALENDLY_URL });
+            } else {
+                window.open(CALENDLY_URL, '_blank', 'noopener');
+            }
+            return false;
+        }
+
+        // ============================================
+        // CONTACT FORM - Tabs + Envío AJAX (Formspree)
+        // ============================================
+        (function initContactForm() {
+            const tabs = document.querySelectorAll('.contact-tab');
+            const forms = document.querySelectorAll('.contact-form');
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const target = tab.dataset.tab;
+                    tabs.forEach(t => {
+                        const active = t.dataset.tab === target;
+                        t.classList.toggle('active', active);
+                        t.setAttribute('aria-selected', active ? 'true' : 'false');
+                    });
+                    forms.forEach(f => {
+                        f.classList.toggle('active', f.id === `form-${target}`);
+                    });
+                });
+            });
+
+            forms.forEach(form => {
+                form.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    const submitBtn = form.querySelector('.contact-submit');
+                    const feedback = form.querySelector('[data-feedback]');
+                    const feedbackText = feedback.querySelector('.feedback-text');
+
+                    if (form.action.includes('YOUR_FORMSPREE_ID')) {
+                        feedback.classList.remove('success');
+                        feedback.classList.add('error', 'show');
+                        feedbackText.textContent = 'El formulario aún no está conectado. Configura Formspree para activarlo.';
+                        return;
+                    }
+
+                    const originalBtnHTML = submitBtn.innerHTML;
+                    submitBtn.disabled = true;
+                    submitBtn.innerHTML = '<span style="display:inline-block;width:18px;height:18px;border:2.5px solid #fff;border-top-color:transparent;border-radius:50%;animation:spin 0.7s linear infinite;"></span> Enviando…';
+                    feedback.classList.remove('show', 'success', 'error');
+
+                    try {
+                        const response = await fetch(form.action, {
+                            method: 'POST',
+                            body: new FormData(form),
+                            headers: { 'Accept': 'application/json' }
+                        });
+
+                        if (response.ok) {
+                            form.reset();
+                            feedback.classList.add('success', 'show');
+                            feedbackText.textContent = '¡Gracias! Recibimos tu mensaje. Te respondemos en menos de 24 horas hábiles.';
+                        } else {
+                            throw new Error('Respuesta no OK');
+                        }
+                    } catch (err) {
+                        feedback.classList.add('error', 'show');
+                        feedbackText.textContent = 'No pudimos enviar tu mensaje. Escríbenos directo a info@trabajocientifico.org';
+                    } finally {
+                        submitBtn.disabled = false;
+                        submitBtn.innerHTML = originalBtnHTML;
+                        if (window.lucide) window.lucide.createIcons();
+                    }
+                });
+            });
+        })();
+
+        // Spinner keyframes inyectados
+        if (!document.getElementById('spin-keyframes')) {
+            const s = document.createElement('style');
+            s.id = 'spin-keyframes';
+            s.textContent = '@keyframes spin{to{transform:rotate(360deg)}}';
+            document.head.appendChild(s);
+        }
     </script>
 
     <!-- KPI MODAL -->
