@@ -1441,6 +1441,34 @@
 
     <!-- HEADER -->
     <nav class="fixed w-full z-50 bg-brand-dark/95 backdrop-blur-md border-b border-white/10 text-white transition-all duration-300" id="navbar">
+
+        <!-- ============== STICKY CTA BAR (Cohorte EN VIVO Julio) ============== -->
+        <div id="announcement-bar" class="bg-gradient-to-r from-red-700 via-red-600 to-red-700 border-b border-red-500/30 shadow-md">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 flex items-center justify-between gap-3">
+                <div class="flex items-center gap-2.5 min-w-0 flex-1">
+                    <span class="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider text-red-700 bg-white px-2 py-1 rounded shadow-sm flex-shrink-0">
+                        <span class="relative flex w-1.5 h-1.5">
+                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-600 opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-1.5 w-1.5 bg-red-600"></span>
+                        </span>
+                        EN VIVO
+                    </span>
+                    <span class="text-white text-xs sm:text-sm font-semibold truncate">
+                        <span class="hidden sm:inline">Cohorte Julio 2026 · 3 cursos pagos · </span>
+                        <span class="sm:hidden">Julio 2026 · </span>
+                        <span class="text-brand-accent font-bold">USD $25 / COP $90.000</span>
+                    </span>
+                </div>
+                <div class="flex items-center gap-2 flex-shrink-0">
+                    <a href="#cursos" onclick="document.getElementById('tab-pro')?.click();" class="inline-flex items-center gap-1.5 text-xs font-bold text-brand-dark bg-brand-accent px-3 py-1.5 rounded hover:bg-white transition-all shadow-sm whitespace-nowrap">
+                        <i data-lucide="zap" class="w-3.5 h-3.5"></i>
+                        Inscribirme
+                    </a>
+                    <button onclick="dismissAnnouncementBar()" aria-label="Cerrar" class="text-white/70 hover:text-white text-xl leading-none px-1 -my-1">&times;</button>
+                </div>
+            </div>
+        </div>
+
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-20">
                 <div class="flex-shrink-0 flex items-center gap-2 cursor-pointer">
@@ -1450,7 +1478,7 @@
                 <div class="hidden md:flex items-center space-x-8">
                     <a href="#inicio" class="nav-link text-sm font-medium hover:text-brand-accent transition-colors">Inicio</a>
                     <a href="#cursos" class="nav-link text-sm font-medium hover:text-brand-accent transition-colors">Academia</a>
-                    <a href="#consultoria" class="nav-link text-sm font-medium hover:text-brand-accent transition-colors">Consultoría</a>
+                    <a href="#impacto" class="nav-link text-sm font-medium hover:text-brand-accent transition-colors">Impacto</a>
                     <a href="#sobre-nosotros" class="nav-link text-sm font-medium hover:text-brand-accent transition-colors">Expertos</a>
                     <a href="#experiencias" class="nav-link text-sm font-medium hover:text-brand-accent transition-colors">Experiencias</a>
                     <a href="#contacto" class="nav-link text-sm font-medium hover:text-brand-accent transition-colors">Contacto</a>
@@ -1476,7 +1504,7 @@
             <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
                 <a href="#inicio" class="nav-link-mobile block px-3 py-2 rounded-md text-base font-medium hover:bg-white/10 hover:text-brand-accent">Inicio</a>
                 <a href="#cursos" class="nav-link-mobile block px-3 py-2 rounded-md text-base font-medium hover:bg-white/10 hover:text-brand-accent">Academia</a>
-                <a href="#consultoria" class="nav-link-mobile block px-3 py-2 rounded-md text-base font-medium hover:bg-white/10 hover:text-brand-accent">Consultoría</a>
+                <a href="#impacto" class="nav-link-mobile block px-3 py-2 rounded-md text-base font-medium hover:bg-white/10 hover:text-brand-accent">Impacto</a>
                 <a href="#sobre-nosotros" class="nav-link-mobile block px-3 py-2 rounded-md text-base font-medium hover:bg-white/10 hover:text-brand-accent">Expertos</a>
                 <a href="#experiencias" class="nav-link-mobile block px-3 py-2 rounded-md text-base font-medium hover:bg-white/10 hover:text-brand-accent">Experiencias</a>
                 <a href="#contacto" class="nav-link-mobile block px-3 py-2 rounded-md text-base font-medium hover:bg-white/10 hover:text-brand-accent">Contacto</a>
@@ -1487,7 +1515,7 @@
     <!-- ============================================
          HERO SECTION - ESTÉTICA EJECUTIVA
          ============================================ -->
-    <section id="inicio" class="relative min-h-screen flex items-center hero-bg pt-20">
+    <section id="inicio" class="relative min-h-screen flex items-center hero-bg pt-[120px]">
 
         <!-- Red neuronal sutil de fondo -->
         <canvas id="neural-canvas"></canvas>
@@ -1512,7 +1540,7 @@
                     </p>
 
                     <div class="flex flex-col sm:flex-row gap-4">
-                        <a href="#consultoria" class="inline-flex justify-center items-center px-8 py-4 text-base font-bold rounded-lg text-brand-dark bg-brand-accent hover:bg-white transition-all shadow-lg">
+                        <a href="https://wa.me/573184280112?text=Hola,%20me%20interesa%20una%20solución%20corporativa%20o%20capacitación%20In-Company" target="_blank" rel="noopener noreferrer" class="inline-flex justify-center items-center px-8 py-4 text-base font-bold rounded-lg text-brand-dark bg-brand-accent hover:bg-white transition-all shadow-lg">
                             Soluciones Corporativas
                             <i data-lucide="arrow-right" class="ml-2 w-5 h-5"></i>
                         </a>
@@ -1776,183 +1804,353 @@
             </div>
 
             <!-- ============== PROGRAMAS PROFESIONALES ============== -->
-            <div id="academy-pro" class="hidden grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div id="academy-pro" class="hidden grid-cols-1 gap-12">
 
-                <!-- Excel para la Vida -->
-                <a href="https://trabajocientifico.github.io/cursos/" target="_blank" rel="noopener noreferrer" class="academy-card group bg-white border border-slate-200 rounded-xl p-7 hover:border-brand-primary hover:shadow-xl transition-all block">
-                    <div class="flex items-start justify-between mb-5">
-                        <div class="w-12 h-12 rounded-lg bg-slate-50 border border-slate-100 flex items-center justify-center group-hover:bg-brand-dark group-hover:border-brand-dark transition-all">
-                            <i data-lucide="table-2" class="w-6 h-6 text-brand-primary group-hover:text-brand-accent transition-colors"></i>
-                        </div>
-                        <span class="text-[10px] font-bold uppercase tracking-wider text-brand-dark bg-brand-accent/20 border border-brand-accent/30 px-2.5 py-1 rounded">Profesional · 12h</span>
-                    </div>
-                    <h4 class="font-heading font-bold text-lg text-brand-dark mb-2 group-hover:text-brand-primary transition-colors">Excel para la Vida</h4>
-                    <p class="text-slate-600 text-sm leading-relaxed mb-6">Domina Excel desde lo básico hasta nivel avanzado con aplicaciones reales para cualquier profesión.</p>
-                    <div class="flex items-center justify-between pt-4 border-t border-slate-100">
-                        <span class="text-[10px] uppercase tracking-[0.15em] text-slate-400 font-semibold">Con certificado</span>
-                        <span class="card-enter-btn">
-                            <span class="cta-spark"></span>
-                            <span class="cta-spark"></span>
-                            <span class="cta-spark"></span>
-                            Ingresar al curso
-                            <i data-lucide="arrow-right" class="w-4 h-4 cta-arrow"></i>
+                <!-- ============== Sub-sección: Cohorte Julio 2026 EN VIVO (PAGA) ============== -->
+                <div>
+                    <div class="flex items-center flex-wrap gap-3 mb-6">
+                        <div class="w-1.5 h-8 bg-red-600 rounded-full"></div>
+                        <span class="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-white bg-red-600 px-3 py-1.5 rounded shadow-md">
+                            <span class="relative flex w-2 h-2">
+                                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
+                                <span class="relative inline-flex rounded-full h-2 w-2 bg-white"></span>
+                            </span>
+                            EN VIVO
                         </span>
+                        <h3 class="font-heading font-extrabold text-lg md:text-xl text-brand-dark uppercase tracking-wider">Próxima cohorte · Julio 2026</h3>
+                        <div class="flex-1 h-px bg-slate-200 min-w-[20px]"></div>
+                        <span class="text-xs text-slate-500 font-medium hidden md:inline">3 cursos · Cupos pagos</span>
                     </div>
-                </a>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 
-                <!-- Dashboard con Power BI -->
-                <a href="https://trabajocientifico.github.io/cursos/" target="_blank" rel="noopener noreferrer" class="academy-card group bg-white border border-slate-200 rounded-xl p-7 hover:border-brand-primary hover:shadow-xl transition-all block">
-                    <div class="flex items-start justify-between mb-5">
-                        <div class="w-12 h-12 rounded-lg bg-slate-50 border border-slate-100 flex items-center justify-center group-hover:bg-brand-dark group-hover:border-brand-dark transition-all">
-                            <i data-lucide="bar-chart-2" class="w-6 h-6 text-brand-primary group-hover:text-brand-accent transition-colors"></i>
+                        <!-- Visualización Inteligente con Python · #8b5cf6 -->
+                        <div class="academy-card group bg-gradient-to-br from-[#8b5cf6]/10 via-white to-[#8b5cf6]/15 border-t-4 border-t-[#8b5cf6] border-x border-b border-[#8b5cf6]/25 rounded-2xl p-8 shadow-lg hover:shadow-2xl hover:-translate-y-1 transition-all flex flex-col">
+                            <div class="flex items-start justify-between mb-5">
+                                <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-[#8b5cf6]/25 to-[#8b5cf6]/10 border border-[#8b5cf6]/30 flex items-center justify-center transition-all shadow-sm">
+                                    <i data-lucide="pie-chart" class="w-7 h-7 text-[#8b5cf6]"></i>
+                                </div>
+                                <div class="flex flex-col items-end gap-1.5">
+                                    <span class="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider text-white bg-red-600 px-2.5 py-1 rounded shadow-sm">
+                                        <span class="relative flex w-2 h-2">
+                                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
+                                            <span class="relative inline-flex rounded-full h-2 w-2 bg-white"></span>
+                                        </span>
+                                        EN VIVO
+                                    </span>
+                                    <span class="text-[10px] font-bold uppercase tracking-wider text-brand-dark bg-brand-accent/20 border border-brand-accent/30 px-2.5 py-1 rounded">Profesional · 12h</span>
+                                </div>
+                            </div>
+                            <h4 class="font-heading font-extrabold text-2xl text-brand-dark mb-3 leading-tight">Visualización Inteligente con Python</h4>
+                            <p class="text-slate-600 text-sm leading-relaxed mb-5 flex-grow">Crea visualizaciones impactantes y dashboards combinando Python con Inteligencia Artificial.</p>
+                            <div class="pt-4 border-t border-[#8b5cf6]/20">
+                                <div class="flex items-center gap-2 mb-4 px-3 py-2.5 rounded-lg bg-gradient-to-r from-red-50 to-orange-50 border border-red-200">
+                                    <i data-lucide="flame" class="w-4 h-4 text-red-600 flex-shrink-0"></i>
+                                    <div class="text-xs leading-tight flex-1 min-w-0">
+                                        <div class="font-bold text-red-700 uppercase tracking-wider text-[10px]">Inicia 14 Julio · En vivo</div>
+                                        <div class="text-red-600/80 font-semibold" data-countdown="2026-07-14">Calculando...</div>
+                                    </div>
+                                </div>
+                                <div class="mb-4">
+                                    <div class="flex items-baseline gap-2">
+                                        <span class="text-3xl font-extrabold text-brand-dark tracking-tight">USD $25</span>
+                                        <span class="text-[10px] uppercase tracking-[0.15em] text-slate-400 font-semibold">internacional</span>
+                                    </div>
+                                    <div class="flex items-baseline gap-2 mt-1">
+                                        <span class="text-lg font-bold text-slate-600 tracking-tight">COP $90.000</span>
+                                        <span class="text-[10px] uppercase tracking-[0.15em] text-slate-400 font-semibold">Colombia</span>
+                                    </div>
+                                </div>
+                                <div class="grid grid-cols-2 gap-2">
+                                    <a href="https://wa.me/573184280112?text=Hola,%20tengo%20una%20pregunta%20sobre%20el%20curso%20Visualización%20Inteligente%20con%20Python" target="_blank" rel="noopener noreferrer" class="text-center text-xs font-semibold text-[#128C7E] border border-[#25D366]/30 bg-[#25D366]/5 rounded-lg py-2.5 hover:bg-[#25D366] hover:text-white hover:border-[#25D366] transition-all inline-flex items-center justify-center gap-1.5">
+                                        <i data-lucide="message-circle" class="w-3.5 h-3.5"></i>
+                                        Preguntar
+                                    </a>
+                                    <a href="#REEMPLAZAR-LINK-PAGO-VISUALIZACION" target="_blank" rel="noopener noreferrer" class="text-center text-xs font-bold text-white bg-brand-primary rounded-lg py-2.5 hover:bg-brand-dark transition-all inline-flex items-center justify-center gap-1.5 shadow-sm hover:shadow-md">
+                                        <i data-lucide="shopping-cart" class="w-3.5 h-3.5"></i>
+                                        Comprar cupo
+                                    </a>
+                                </div>
+                            </div>
                         </div>
-                        <span class="text-[10px] font-bold uppercase tracking-wider text-brand-dark bg-brand-accent/20 border border-brand-accent/30 px-2.5 py-1 rounded">Profesional · 12h</span>
-                    </div>
-                    <h4 class="font-heading font-bold text-lg text-brand-dark mb-2 group-hover:text-brand-primary transition-colors">Dashboard con Power BI</h4>
-                    <p class="text-slate-600 text-sm leading-relaxed mb-6">Construye dashboards ejecutivos interactivos para la toma de decisiones estratégicas.</p>
-                    <div class="flex items-center justify-between pt-4 border-t border-slate-100">
-                        <span class="text-[10px] uppercase tracking-[0.15em] text-slate-400 font-semibold">Con certificado</span>
-                        <span class="card-enter-btn">
-                            <span class="cta-spark"></span>
-                            <span class="cta-spark"></span>
-                            <span class="cta-spark"></span>
-                            Ingresar al curso
-                            <i data-lucide="arrow-right" class="w-4 h-4 cta-arrow"></i>
-                        </span>
-                    </div>
-                </a>
 
-                <!-- Analizando con ArcGIS PRO -->
-                <a href="https://trabajocientifico.github.io/cursos/" target="_blank" rel="noopener noreferrer" class="academy-card group bg-white border border-slate-200 rounded-xl p-7 hover:border-brand-primary hover:shadow-xl transition-all block">
-                    <div class="flex items-start justify-between mb-5">
-                        <div class="w-12 h-12 rounded-lg bg-slate-50 border border-slate-100 flex items-center justify-center group-hover:bg-brand-dark group-hover:border-brand-dark transition-all">
-                            <i data-lucide="globe-2" class="w-6 h-6 text-brand-primary group-hover:text-brand-accent transition-colors"></i>
+                        <!-- GeoProcesamiento con Python + IA · #10b981 -->
+                        <div class="academy-card group bg-gradient-to-br from-[#10b981]/10 via-white to-[#10b981]/15 border-t-4 border-t-[#10b981] border-x border-b border-[#10b981]/25 rounded-2xl p-8 shadow-lg hover:shadow-2xl hover:-translate-y-1 transition-all flex flex-col">
+                            <div class="flex items-start justify-between mb-5">
+                                <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-[#10b981]/25 to-[#10b981]/10 border border-[#10b981]/30 flex items-center justify-center transition-all shadow-sm">
+                                    <i data-lucide="map" class="w-7 h-7 text-[#10b981]"></i>
+                                </div>
+                                <div class="flex flex-col items-end gap-1.5">
+                                    <span class="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider text-white bg-red-600 px-2.5 py-1 rounded shadow-sm">
+                                        <span class="relative flex w-2 h-2">
+                                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
+                                            <span class="relative inline-flex rounded-full h-2 w-2 bg-white"></span>
+                                        </span>
+                                        EN VIVO
+                                    </span>
+                                    <span class="text-[10px] font-bold uppercase tracking-wider text-brand-dark bg-brand-accent/20 border border-brand-accent/30 px-2.5 py-1 rounded">Profesional · 12h</span>
+                                </div>
+                            </div>
+                            <h4 class="font-heading font-extrabold text-2xl text-brand-dark mb-3 leading-tight">GeoProcesamiento con Python + IA</h4>
+                            <p class="text-slate-600 text-sm leading-relaxed mb-5 flex-grow">Procesa y analiza datos geoespaciales con Python e IA para decisiones territoriales informadas.</p>
+                            <div class="pt-4 border-t border-[#10b981]/20">
+                                <div class="flex items-center gap-2 mb-4 px-3 py-2.5 rounded-lg bg-gradient-to-r from-red-50 to-orange-50 border border-red-200">
+                                    <i data-lucide="flame" class="w-4 h-4 text-red-600 flex-shrink-0"></i>
+                                    <div class="text-xs leading-tight flex-1 min-w-0">
+                                        <div class="font-bold text-red-700 uppercase tracking-wider text-[10px]">Inicia 14 Julio · En vivo</div>
+                                        <div class="text-red-600/80 font-semibold" data-countdown="2026-07-14">Calculando...</div>
+                                    </div>
+                                </div>
+                                <div class="mb-4">
+                                    <div class="flex items-baseline gap-2">
+                                        <span class="text-3xl font-extrabold text-brand-dark tracking-tight">USD $25</span>
+                                        <span class="text-[10px] uppercase tracking-[0.15em] text-slate-400 font-semibold">internacional</span>
+                                    </div>
+                                    <div class="flex items-baseline gap-2 mt-1">
+                                        <span class="text-lg font-bold text-slate-600 tracking-tight">COP $90.000</span>
+                                        <span class="text-[10px] uppercase tracking-[0.15em] text-slate-400 font-semibold">Colombia</span>
+                                    </div>
+                                </div>
+                                <div class="grid grid-cols-2 gap-2">
+                                    <a href="https://wa.me/573184280112?text=Hola,%20tengo%20una%20pregunta%20sobre%20el%20curso%20GeoProcesamiento%20con%20Python%20%2B%20IA" target="_blank" rel="noopener noreferrer" class="text-center text-xs font-semibold text-[#128C7E] border border-[#25D366]/30 bg-[#25D366]/5 rounded-lg py-2.5 hover:bg-[#25D366] hover:text-white hover:border-[#25D366] transition-all inline-flex items-center justify-center gap-1.5">
+                                        <i data-lucide="message-circle" class="w-3.5 h-3.5"></i>
+                                        Preguntar
+                                    </a>
+                                    <a href="#REEMPLAZAR-LINK-PAGO-GEOPROCESAMIENTO" target="_blank" rel="noopener noreferrer" class="text-center text-xs font-bold text-white bg-brand-primary rounded-lg py-2.5 hover:bg-brand-dark transition-all inline-flex items-center justify-center gap-1.5 shadow-sm hover:shadow-md">
+                                        <i data-lucide="shopping-cart" class="w-3.5 h-3.5"></i>
+                                        Comprar cupo
+                                    </a>
+                                </div>
+                            </div>
                         </div>
-                        <span class="text-[10px] font-bold uppercase tracking-wider text-brand-dark bg-brand-accent/20 border border-brand-accent/30 px-2.5 py-1 rounded">Profesional · 12h</span>
-                    </div>
-                    <h4 class="font-heading font-bold text-lg text-brand-dark mb-2 group-hover:text-brand-primary transition-colors">Analizando con ArcGIS PRO</h4>
-                    <p class="text-slate-600 text-sm leading-relaxed mb-6">Análisis geoespacial profesional para decisiones territoriales y ambientales.</p>
-                    <div class="flex items-center justify-between pt-4 border-t border-slate-100">
-                        <span class="text-[10px] uppercase tracking-[0.15em] text-slate-400 font-semibold">Con certificado</span>
-                        <span class="card-enter-btn">
-                            <span class="cta-spark"></span>
-                            <span class="cta-spark"></span>
-                            <span class="cta-spark"></span>
-                            Ingresar al curso
-                            <i data-lucide="arrow-right" class="w-4 h-4 cta-arrow"></i>
-                        </span>
-                    </div>
-                </a>
 
-                <!-- Python + IA Visualización Inteligente -->
-                <a href="https://trabajocientifico.github.io/cursos/" target="_blank" rel="noopener noreferrer" class="academy-card group bg-white border border-slate-200 rounded-xl p-7 hover:border-brand-primary hover:shadow-xl transition-all block">
-                    <div class="flex items-start justify-between mb-5">
-                        <div class="w-12 h-12 rounded-lg bg-slate-50 border border-slate-100 flex items-center justify-center group-hover:bg-brand-dark group-hover:border-brand-dark transition-all">
-                            <i data-lucide="pie-chart" class="w-6 h-6 text-brand-primary group-hover:text-brand-accent transition-colors"></i>
+                        <!-- Ciencia de Datos con Python + IA · #3b82f6 -->
+                        <div class="academy-card group bg-gradient-to-br from-[#3b82f6]/10 via-white to-[#3b82f6]/15 border-t-4 border-t-[#3b82f6] border-x border-b border-[#3b82f6]/25 rounded-2xl p-8 shadow-lg hover:shadow-2xl hover:-translate-y-1 transition-all flex flex-col">
+                            <div class="flex items-start justify-between mb-5">
+                                <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-[#3b82f6]/25 to-[#3b82f6]/10 border border-[#3b82f6]/30 flex items-center justify-center transition-all shadow-sm">
+                                    <i data-lucide="database" class="w-7 h-7 text-[#3b82f6]"></i>
+                                </div>
+                                <div class="flex flex-col items-end gap-1.5">
+                                    <span class="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider text-white bg-red-600 px-2.5 py-1 rounded shadow-sm">
+                                        <span class="relative flex w-2 h-2">
+                                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
+                                            <span class="relative inline-flex rounded-full h-2 w-2 bg-white"></span>
+                                        </span>
+                                        EN VIVO
+                                    </span>
+                                    <span class="text-[10px] font-bold uppercase tracking-wider text-brand-dark bg-brand-accent/20 border border-brand-accent/30 px-2.5 py-1 rounded">Profesional · 12h</span>
+                                </div>
+                            </div>
+                            <h4 class="font-heading font-extrabold text-2xl text-brand-dark mb-3 leading-tight">Ciencia de Datos con Python + IA</h4>
+                            <p class="text-slate-600 text-sm leading-relaxed mb-5 flex-grow">Domina el flujo completo de ciencia de datos: limpieza, análisis y modelado con Python potenciado por IA.</p>
+                            <div class="pt-4 border-t border-[#3b82f6]/20">
+                                <div class="flex items-center gap-2 mb-4 px-3 py-2.5 rounded-lg bg-gradient-to-r from-red-50 to-orange-50 border border-red-200">
+                                    <i data-lucide="flame" class="w-4 h-4 text-red-600 flex-shrink-0"></i>
+                                    <div class="text-xs leading-tight flex-1 min-w-0">
+                                        <div class="font-bold text-red-700 uppercase tracking-wider text-[10px]">Inicia 14 Julio · En vivo</div>
+                                        <div class="text-red-600/80 font-semibold" data-countdown="2026-07-14">Calculando...</div>
+                                    </div>
+                                </div>
+                                <div class="mb-4">
+                                    <div class="flex items-baseline gap-2">
+                                        <span class="text-3xl font-extrabold text-brand-dark tracking-tight">USD $25</span>
+                                        <span class="text-[10px] uppercase tracking-[0.15em] text-slate-400 font-semibold">internacional</span>
+                                    </div>
+                                    <div class="flex items-baseline gap-2 mt-1">
+                                        <span class="text-lg font-bold text-slate-600 tracking-tight">COP $90.000</span>
+                                        <span class="text-[10px] uppercase tracking-[0.15em] text-slate-400 font-semibold">Colombia</span>
+                                    </div>
+                                </div>
+                                <div class="grid grid-cols-2 gap-2">
+                                    <a href="https://wa.me/573184280112?text=Hola,%20tengo%20una%20pregunta%20sobre%20el%20curso%20Ciencia%20de%20Datos%20con%20Python%20%2B%20IA" target="_blank" rel="noopener noreferrer" class="text-center text-xs font-semibold text-[#128C7E] border border-[#25D366]/30 bg-[#25D366]/5 rounded-lg py-2.5 hover:bg-[#25D366] hover:text-white hover:border-[#25D366] transition-all inline-flex items-center justify-center gap-1.5">
+                                        <i data-lucide="message-circle" class="w-3.5 h-3.5"></i>
+                                        Preguntar
+                                    </a>
+                                    <a href="#REEMPLAZAR-LINK-PAGO-CIENCIA-DATOS" target="_blank" rel="noopener noreferrer" class="text-center text-xs font-bold text-white bg-brand-primary rounded-lg py-2.5 hover:bg-brand-dark transition-all inline-flex items-center justify-center gap-1.5 shadow-sm hover:shadow-md">
+                                        <i data-lucide="shopping-cart" class="w-3.5 h-3.5"></i>
+                                        Comprar cupo
+                                    </a>
+                                </div>
+                            </div>
                         </div>
-                        <span class="text-[10px] font-bold uppercase tracking-wider text-brand-dark bg-brand-accent/20 border border-brand-accent/30 px-2.5 py-1 rounded">Profesional · 12h</span>
-                    </div>
-                    <h4 class="font-heading font-bold text-lg text-brand-dark mb-2 group-hover:text-brand-primary transition-colors">Python + IA Visualización Inteligente</h4>
-                    <p class="text-slate-600 text-sm leading-relaxed mb-6">Crea visualizaciones impactantes combinando Python con Inteligencia Artificial.</p>
-                    <div class="flex items-center justify-between pt-4 border-t border-slate-100">
-                        <span class="text-[10px] uppercase tracking-[0.15em] text-slate-400 font-semibold">Con certificado</span>
-                        <span class="card-enter-btn">
-                            <span class="cta-spark"></span>
-                            <span class="cta-spark"></span>
-                            <span class="cta-spark"></span>
-                            Ingresar al curso
-                            <i data-lucide="arrow-right" class="w-4 h-4 cta-arrow"></i>
-                        </span>
-                    </div>
-                </a>
 
-                <!-- GeoEstadística con Python -->
-                <a href="https://trabajocientifico.github.io/cursos/" target="_blank" rel="noopener noreferrer" class="academy-card group bg-white border border-slate-200 rounded-xl p-7 hover:border-brand-primary hover:shadow-xl transition-all block">
-                    <div class="flex items-start justify-between mb-5">
-                        <div class="w-12 h-12 rounded-lg bg-slate-50 border border-slate-100 flex items-center justify-center group-hover:bg-brand-dark group-hover:border-brand-dark transition-all">
-                            <i data-lucide="layers" class="w-6 h-6 text-brand-primary group-hover:text-brand-accent transition-colors"></i>
-                        </div>
-                        <span class="text-[10px] font-bold uppercase tracking-wider text-brand-dark bg-brand-accent/20 border border-brand-accent/30 px-2.5 py-1 rounded">Profesional · 12h</span>
                     </div>
-                    <h4 class="font-heading font-bold text-lg text-brand-dark mb-2 group-hover:text-brand-primary transition-colors">GeoEstadística con Python</h4>
-                    <p class="text-slate-600 text-sm leading-relaxed mb-6">Métodos estadísticos avanzados aplicados al análisis de datos espaciales.</p>
-                    <div class="flex items-center justify-between pt-4 border-t border-slate-100">
-                        <span class="text-[10px] uppercase tracking-[0.15em] text-slate-400 font-semibold">Con certificado</span>
-                        <span class="card-enter-btn">
-                            <span class="cta-spark"></span>
-                            <span class="cta-spark"></span>
-                            <span class="cta-spark"></span>
-                            Ingresar al curso
-                            <i data-lucide="arrow-right" class="w-4 h-4 cta-arrow"></i>
-                        </span>
-                    </div>
-                </a>
+                </div>
 
-                <!-- Automatización de Tareas con Python -->
-                <a href="https://trabajocientifico.github.io/cursos/" target="_blank" rel="noopener noreferrer" class="academy-card group bg-white border border-slate-200 rounded-xl p-7 hover:border-brand-primary hover:shadow-xl transition-all block">
-                    <div class="flex items-start justify-between mb-5">
-                        <div class="w-12 h-12 rounded-lg bg-slate-50 border border-slate-100 flex items-center justify-center group-hover:bg-brand-dark group-hover:border-brand-dark transition-all">
-                            <i data-lucide="bot" class="w-6 h-6 text-brand-primary group-hover:text-brand-accent transition-colors"></i>
+                <!-- ============== Sub-sección: Próximas convocatorias ============== -->
+                <div>
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-1 h-7 bg-slate-400 rounded-full"></div>
+                        <div class="flex items-center gap-2">
+                            <i data-lucide="calendar" class="w-5 h-5 text-slate-500"></i>
+                            <h3 class="font-heading font-bold text-base md:text-lg text-slate-700 uppercase tracking-wider">Próximas convocatorias</h3>
                         </div>
-                        <span class="text-[10px] font-bold uppercase tracking-wider text-brand-dark bg-brand-accent/20 border border-brand-accent/30 px-2.5 py-1 rounded">Profesional · 12h</span>
+                        <div class="flex-1 h-px bg-slate-200"></div>
+                        <span class="text-xs text-slate-500 font-medium hidden md:inline">Con tutoriales gratuitos</span>
                     </div>
-                    <h4 class="font-heading font-bold text-lg text-brand-dark mb-2 group-hover:text-brand-primary transition-colors">Automatización de Tareas con Python</h4>
-                    <p class="text-slate-600 text-sm leading-relaxed mb-6">Elimina trabajo repetitivo y libera tiempo estratégico automatizando con Python.</p>
-                    <div class="flex items-center justify-between pt-4 border-t border-slate-100">
-                        <span class="text-[10px] uppercase tracking-[0.15em] text-slate-400 font-semibold">Con certificado</span>
-                        <span class="card-enter-btn">
-                            <span class="cta-spark"></span>
-                            <span class="cta-spark"></span>
-                            <span class="cta-spark"></span>
-                            Ingresar al curso
-                            <i data-lucide="arrow-right" class="w-4 h-4 cta-arrow"></i>
-                        </span>
-                    </div>
-                </a>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 
-                <!-- IA para la Vida -->
-                <a href="https://trabajocientifico.github.io/cursos/" target="_blank" rel="noopener noreferrer" class="academy-card group bg-white border border-slate-200 rounded-xl p-7 hover:border-brand-primary hover:shadow-xl transition-all block">
-                    <div class="flex items-start justify-between mb-5">
-                        <div class="w-12 h-12 rounded-lg bg-slate-50 border border-slate-100 flex items-center justify-center group-hover:bg-brand-dark group-hover:border-brand-dark transition-all">
-                            <i data-lucide="brain" class="w-6 h-6 text-brand-primary group-hover:text-brand-accent transition-colors"></i>
+                        <!-- Excel para la Vida · #16a34a -->
+                        <div class="academy-card group bg-white border-t-4 border-t-[#16a34a] border-x border-b border-slate-200 rounded-xl p-7 hover:shadow-xl hover:-translate-y-1 transition-all flex flex-col">
+                            <div class="flex items-start justify-between mb-5">
+                                <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-[#16a34a]/15 to-[#16a34a]/5 border border-[#16a34a]/20 flex items-center justify-center transition-all">
+                                    <i data-lucide="table-2" class="w-6 h-6 text-[#16a34a]"></i>
+                                </div>
+                                <span class="text-[10px] font-bold uppercase tracking-wider text-brand-dark bg-brand-accent/20 border border-brand-accent/30 px-2.5 py-1 rounded">Profesional · 12h</span>
+                            </div>
+                            <h4 class="font-heading font-bold text-lg text-brand-dark mb-2 group-hover:text-brand-primary transition-colors">Excel para la Vida</h4>
+                            <p class="text-slate-600 text-sm leading-relaxed mb-5 flex-grow">Domina Excel desde lo básico hasta nivel avanzado con aplicaciones reales para cualquier profesión.</p>
+                            <div class="pt-4 border-t border-slate-100">
+                                <div class="inline-flex items-center gap-1.5 mb-3 px-2.5 py-1 rounded-full bg-slate-100 border border-slate-200">
+                                    <i data-lucide="clock" class="w-3 h-3 text-slate-500"></i>
+                                    <span class="text-[10px] font-bold uppercase tracking-wider text-slate-600">Próximas fechas</span>
+                                </div>
+                                <div class="flex items-start gap-2 mb-4 text-xs text-slate-600 leading-relaxed">
+                                    <i data-lucide="play-circle" class="w-4 h-4 mt-0.5 text-brand-primary flex-shrink-0"></i>
+                                    <span>Tutoriales introductorios gratuitos disponibles en YouTube.</span>
+                                </div>
+                                <div class="grid grid-cols-2 gap-2">
+                                    <a href="https://wa.me/573184280112?text=Hola,%20tengo%20una%20pregunta%20sobre%20el%20curso%20Excel%20para%20la%20Vida" target="_blank" rel="noopener noreferrer" class="text-center text-xs font-semibold text-[#128C7E] border border-[#25D366]/30 bg-[#25D366]/5 rounded-lg py-2.5 hover:bg-[#25D366] hover:text-white hover:border-[#25D366] transition-all inline-flex items-center justify-center gap-1.5">
+                                        <i data-lucide="message-circle" class="w-3.5 h-3.5"></i>
+                                        Preguntar
+                                    </a>
+                                    <a href="https://www.youtube.com/@TCientifico" target="_blank" rel="noopener noreferrer" class="text-center text-xs font-bold text-white bg-brand-dark rounded-lg py-2.5 hover:bg-brand-primary transition-all inline-flex items-center justify-center gap-1.5 shadow-sm hover:shadow-md">
+                                        <i data-lucide="youtube" class="w-3.5 h-3.5"></i>
+                                        Ver tutoriales
+                                    </a>
+                                </div>
+                            </div>
                         </div>
-                        <span class="text-[10px] font-bold uppercase tracking-wider text-brand-dark bg-brand-accent/20 border border-brand-accent/30 px-2.5 py-1 rounded">Profesional · 12h</span>
-                    </div>
-                    <h4 class="font-heading font-bold text-lg text-brand-dark mb-2 group-hover:text-brand-primary transition-colors">IA para la Vida</h4>
-                    <p class="text-slate-600 text-sm leading-relaxed mb-6">Integra la IA en tu vida personal y profesional para potenciar tu productividad.</p>
-                    <div class="flex items-center justify-between pt-4 border-t border-slate-100">
-                        <span class="text-[10px] uppercase tracking-[0.15em] text-slate-400 font-semibold">Con certificado</span>
-                        <span class="card-enter-btn">
-                            <span class="cta-spark"></span>
-                            <span class="cta-spark"></span>
-                            <span class="cta-spark"></span>
-                            Ingresar al curso
-                            <i data-lucide="arrow-right" class="w-4 h-4 cta-arrow"></i>
-                        </span>
-                    </div>
-                </a>
 
-                <!-- Optimización Científica con IA -->
-                <a href="https://trabajocientifico.github.io/cursos/" target="_blank" rel="noopener noreferrer" class="academy-card group bg-white border border-slate-200 rounded-xl p-7 hover:border-brand-primary hover:shadow-xl transition-all block">
-                    <div class="flex items-start justify-between mb-5">
-                        <div class="w-12 h-12 rounded-lg bg-slate-50 border border-slate-100 flex items-center justify-center group-hover:bg-brand-dark group-hover:border-brand-dark transition-all">
-                            <i data-lucide="microscope" class="w-6 h-6 text-brand-primary group-hover:text-brand-accent transition-colors"></i>
+                        <!-- Dashboard con Power BI · #ca8a04 -->
+                        <div class="academy-card group bg-white border-t-4 border-t-[#ca8a04] border-x border-b border-slate-200 rounded-xl p-7 hover:shadow-xl hover:-translate-y-1 transition-all flex flex-col">
+                            <div class="flex items-start justify-between mb-5">
+                                <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-[#ca8a04]/15 to-[#ca8a04]/5 border border-[#ca8a04]/20 flex items-center justify-center transition-all">
+                                    <i data-lucide="bar-chart-2" class="w-6 h-6 text-[#ca8a04]"></i>
+                                </div>
+                                <span class="text-[10px] font-bold uppercase tracking-wider text-brand-dark bg-brand-accent/20 border border-brand-accent/30 px-2.5 py-1 rounded">Profesional · 12h</span>
+                            </div>
+                            <h4 class="font-heading font-bold text-lg text-brand-dark mb-2 group-hover:text-brand-primary transition-colors">Dashboard con Power BI</h4>
+                            <p class="text-slate-600 text-sm leading-relaxed mb-5 flex-grow">Construye dashboards ejecutivos interactivos para la toma de decisiones estratégicas.</p>
+                            <div class="pt-4 border-t border-slate-100">
+                                <div class="inline-flex items-center gap-1.5 mb-3 px-2.5 py-1 rounded-full bg-slate-100 border border-slate-200">
+                                    <i data-lucide="clock" class="w-3 h-3 text-slate-500"></i>
+                                    <span class="text-[10px] font-bold uppercase tracking-wider text-slate-600">Próximas fechas</span>
+                                </div>
+                                <div class="flex items-start gap-2 mb-4 text-xs text-slate-600 leading-relaxed">
+                                    <i data-lucide="play-circle" class="w-4 h-4 mt-0.5 text-brand-primary flex-shrink-0"></i>
+                                    <span>Tutoriales introductorios gratuitos disponibles en YouTube.</span>
+                                </div>
+                                <div class="grid grid-cols-2 gap-2">
+                                    <a href="https://wa.me/573184280112?text=Hola,%20tengo%20una%20pregunta%20sobre%20el%20curso%20Dashboard%20con%20Power%20BI" target="_blank" rel="noopener noreferrer" class="text-center text-xs font-semibold text-[#128C7E] border border-[#25D366]/30 bg-[#25D366]/5 rounded-lg py-2.5 hover:bg-[#25D366] hover:text-white hover:border-[#25D366] transition-all inline-flex items-center justify-center gap-1.5">
+                                        <i data-lucide="message-circle" class="w-3.5 h-3.5"></i>
+                                        Preguntar
+                                    </a>
+                                    <a href="https://www.youtube.com/@TCientifico" target="_blank" rel="noopener noreferrer" class="text-center text-xs font-bold text-white bg-brand-dark rounded-lg py-2.5 hover:bg-brand-primary transition-all inline-flex items-center justify-center gap-1.5 shadow-sm hover:shadow-md">
+                                        <i data-lucide="youtube" class="w-3.5 h-3.5"></i>
+                                        Ver tutoriales
+                                    </a>
+                                </div>
+                            </div>
                         </div>
-                        <span class="text-[10px] font-bold uppercase tracking-wider text-brand-dark bg-brand-accent/20 border border-brand-accent/30 px-2.5 py-1 rounded">Profesional · 12h</span>
+
+                        <!-- Analizando con ArcGIS PRO · #0891b2 -->
+                        <div class="academy-card group bg-white border-t-4 border-t-[#0891b2] border-x border-b border-slate-200 rounded-xl p-7 hover:shadow-xl hover:-translate-y-1 transition-all flex flex-col">
+                            <div class="flex items-start justify-between mb-5">
+                                <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-[#0891b2]/15 to-[#0891b2]/5 border border-[#0891b2]/20 flex items-center justify-center transition-all">
+                                    <i data-lucide="globe-2" class="w-6 h-6 text-[#0891b2]"></i>
+                                </div>
+                                <span class="text-[10px] font-bold uppercase tracking-wider text-brand-dark bg-brand-accent/20 border border-brand-accent/30 px-2.5 py-1 rounded">Profesional · 12h</span>
+                            </div>
+                            <h4 class="font-heading font-bold text-lg text-brand-dark mb-2 group-hover:text-brand-primary transition-colors">Analizando con ArcGIS PRO</h4>
+                            <p class="text-slate-600 text-sm leading-relaxed mb-5 flex-grow">Análisis geoespacial profesional para decisiones territoriales y ambientales.</p>
+                            <div class="pt-4 border-t border-slate-100">
+                                <div class="inline-flex items-center gap-1.5 mb-3 px-2.5 py-1 rounded-full bg-slate-100 border border-slate-200">
+                                    <i data-lucide="clock" class="w-3 h-3 text-slate-500"></i>
+                                    <span class="text-[10px] font-bold uppercase tracking-wider text-slate-600">Próximas fechas</span>
+                                </div>
+                                <div class="flex items-start gap-2 mb-4 text-xs text-slate-600 leading-relaxed">
+                                    <i data-lucide="play-circle" class="w-4 h-4 mt-0.5 text-brand-primary flex-shrink-0"></i>
+                                    <span>Tutoriales introductorios gratuitos disponibles en YouTube.</span>
+                                </div>
+                                <div class="grid grid-cols-2 gap-2">
+                                    <a href="https://wa.me/573184280112?text=Hola,%20tengo%20una%20pregunta%20sobre%20el%20curso%20Analizando%20con%20ArcGIS%20PRO" target="_blank" rel="noopener noreferrer" class="text-center text-xs font-semibold text-[#128C7E] border border-[#25D366]/30 bg-[#25D366]/5 rounded-lg py-2.5 hover:bg-[#25D366] hover:text-white hover:border-[#25D366] transition-all inline-flex items-center justify-center gap-1.5">
+                                        <i data-lucide="message-circle" class="w-3.5 h-3.5"></i>
+                                        Preguntar
+                                    </a>
+                                    <a href="https://www.youtube.com/@TCientifico" target="_blank" rel="noopener noreferrer" class="text-center text-xs font-bold text-white bg-brand-dark rounded-lg py-2.5 hover:bg-brand-primary transition-all inline-flex items-center justify-center gap-1.5 shadow-sm hover:shadow-md">
+                                        <i data-lucide="youtube" class="w-3.5 h-3.5"></i>
+                                        Ver tutoriales
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- IA para la Vida · #ec4899 -->
+                        <div class="academy-card group bg-white border-t-4 border-t-[#ec4899] border-x border-b border-slate-200 rounded-xl p-7 hover:shadow-xl hover:-translate-y-1 transition-all flex flex-col">
+                            <div class="flex items-start justify-between mb-5">
+                                <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-[#ec4899]/15 to-[#ec4899]/5 border border-[#ec4899]/20 flex items-center justify-center transition-all">
+                                    <i data-lucide="brain" class="w-6 h-6 text-[#ec4899]"></i>
+                                </div>
+                                <span class="text-[10px] font-bold uppercase tracking-wider text-brand-dark bg-brand-accent/20 border border-brand-accent/30 px-2.5 py-1 rounded">Profesional · 12h</span>
+                            </div>
+                            <h4 class="font-heading font-bold text-lg text-brand-dark mb-2 group-hover:text-brand-primary transition-colors">IA para la Vida</h4>
+                            <p class="text-slate-600 text-sm leading-relaxed mb-5 flex-grow">Integra la IA en tu vida personal y profesional para potenciar tu productividad.</p>
+                            <div class="pt-4 border-t border-slate-100">
+                                <div class="inline-flex items-center gap-1.5 mb-3 px-2.5 py-1 rounded-full bg-slate-100 border border-slate-200">
+                                    <i data-lucide="clock" class="w-3 h-3 text-slate-500"></i>
+                                    <span class="text-[10px] font-bold uppercase tracking-wider text-slate-600">Próximas fechas</span>
+                                </div>
+                                <div class="flex items-start gap-2 mb-4 text-xs text-slate-600 leading-relaxed">
+                                    <i data-lucide="play-circle" class="w-4 h-4 mt-0.5 text-brand-primary flex-shrink-0"></i>
+                                    <span>Tutoriales introductorios gratuitos disponibles en YouTube.</span>
+                                </div>
+                                <div class="grid grid-cols-2 gap-2">
+                                    <a href="https://wa.me/573184280112?text=Hola,%20tengo%20una%20pregunta%20sobre%20el%20curso%20IA%20para%20la%20Vida" target="_blank" rel="noopener noreferrer" class="text-center text-xs font-semibold text-[#128C7E] border border-[#25D366]/30 bg-[#25D366]/5 rounded-lg py-2.5 hover:bg-[#25D366] hover:text-white hover:border-[#25D366] transition-all inline-flex items-center justify-center gap-1.5">
+                                        <i data-lucide="message-circle" class="w-3.5 h-3.5"></i>
+                                        Preguntar
+                                    </a>
+                                    <a href="https://www.youtube.com/@TCientifico" target="_blank" rel="noopener noreferrer" class="text-center text-xs font-bold text-white bg-brand-dark rounded-lg py-2.5 hover:bg-brand-primary transition-all inline-flex items-center justify-center gap-1.5 shadow-sm hover:shadow-md">
+                                        <i data-lucide="youtube" class="w-3.5 h-3.5"></i>
+                                        Ver tutoriales
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Optimización Científica con IA · #f97316 -->
+                        <div class="academy-card group bg-white border-t-4 border-t-[#f97316] border-x border-b border-slate-200 rounded-xl p-7 hover:shadow-xl hover:-translate-y-1 transition-all flex flex-col">
+                            <div class="flex items-start justify-between mb-5">
+                                <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-[#f97316]/15 to-[#f97316]/5 border border-[#f97316]/20 flex items-center justify-center transition-all">
+                                    <i data-lucide="microscope" class="w-6 h-6 text-[#f97316]"></i>
+                                </div>
+                                <span class="text-[10px] font-bold uppercase tracking-wider text-brand-dark bg-brand-accent/20 border border-brand-accent/30 px-2.5 py-1 rounded">Profesional · 12h</span>
+                            </div>
+                            <h4 class="font-heading font-bold text-lg text-brand-dark mb-2 group-hover:text-brand-primary transition-colors">Optimización Científica con IA</h4>
+                            <p class="text-slate-600 text-sm leading-relaxed mb-5 flex-grow">Potencia tu investigación científica con IA para análisis, redacción y publicación.</p>
+                            <div class="pt-4 border-t border-slate-100">
+                                <div class="inline-flex items-center gap-1.5 mb-3 px-2.5 py-1 rounded-full bg-slate-100 border border-slate-200">
+                                    <i data-lucide="clock" class="w-3 h-3 text-slate-500"></i>
+                                    <span class="text-[10px] font-bold uppercase tracking-wider text-slate-600">Próximas fechas</span>
+                                </div>
+                                <div class="flex items-start gap-2 mb-4 text-xs text-slate-600 leading-relaxed">
+                                    <i data-lucide="play-circle" class="w-4 h-4 mt-0.5 text-brand-primary flex-shrink-0"></i>
+                                    <span>Tutoriales introductorios gratuitos disponibles en YouTube.</span>
+                                </div>
+                                <div class="grid grid-cols-2 gap-2">
+                                    <a href="https://wa.me/573184280112?text=Hola,%20tengo%20una%20pregunta%20sobre%20el%20curso%20Optimización%20Científica%20con%20IA" target="_blank" rel="noopener noreferrer" class="text-center text-xs font-semibold text-[#128C7E] border border-[#25D366]/30 bg-[#25D366]/5 rounded-lg py-2.5 hover:bg-[#25D366] hover:text-white hover:border-[#25D366] transition-all inline-flex items-center justify-center gap-1.5">
+                                        <i data-lucide="message-circle" class="w-3.5 h-3.5"></i>
+                                        Preguntar
+                                    </a>
+                                    <a href="https://www.youtube.com/@TCientifico" target="_blank" rel="noopener noreferrer" class="text-center text-xs font-bold text-white bg-brand-dark rounded-lg py-2.5 hover:bg-brand-primary transition-all inline-flex items-center justify-center gap-1.5 shadow-sm hover:shadow-md">
+                                        <i data-lucide="youtube" class="w-3.5 h-3.5"></i>
+                                        Ver tutoriales
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
-                    <h4 class="font-heading font-bold text-lg text-brand-dark mb-2 group-hover:text-brand-primary transition-colors">Optimización Científica con IA</h4>
-                    <p class="text-slate-600 text-sm leading-relaxed mb-6">Potencia tu investigación científica con IA para análisis, redacción y publicación.</p>
-                    <div class="flex items-center justify-between pt-4 border-t border-slate-100">
-                        <span class="text-[10px] uppercase tracking-[0.15em] text-slate-400 font-semibold">Con certificado</span>
-                        <span class="card-enter-btn">
-                            <span class="cta-spark"></span>
-                            <span class="cta-spark"></span>
-                            <span class="cta-spark"></span>
-                            Ingresar al curso
-                            <i data-lucide="arrow-right" class="w-4 h-4 cta-arrow"></i>
-                        </span>
-                    </div>
-                </a>
+                </div>
 
             </div>
 
@@ -1986,80 +2184,60 @@
         </div>
     </section>
 
-    <!-- STATS SECTION - Métricas de Impacto -->
-    <section class="py-16 bg-gradient-to-br from-brand-dark via-brand-navy to-brand-dark relative overflow-hidden">
+    <!-- IMPACTO EN CIFRAS - KPIs como sustituto de las 3 tarjetas consultivas -->
+    <section id="impacto" class="py-20 bg-gradient-to-br from-brand-dark via-brand-navy to-brand-dark relative overflow-hidden">
+        <!-- Acentos decorativos -->
+        <div class="absolute top-0 right-0 w-96 h-96 bg-brand-primary/10 rounded-full -translate-y-1/2 translate-x-1/3 pointer-events-none blur-3xl"></div>
+        <div class="absolute bottom-0 left-0 w-80 h-80 bg-brand-accent/10 rounded-full translate-y-1/2 -translate-x-1/3 pointer-events-none blur-3xl"></div>
+
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="grid grid-cols-2 md:grid-cols-5 gap-6 text-center">
-                <div class="tech-card p-6 rounded-lg bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 transition-all cursor-pointer" onclick="showKpi('kpi-proyectos', this, event)">
+            <div class="text-center max-w-3xl mx-auto mb-14">
+                <span class="text-brand-accent font-semibold tracking-[0.25em] uppercase text-xs">Trayectoria comprobada</span>
+                <h2 class="font-heading text-3xl md:text-4xl font-bold text-white mt-3">Nuestro impacto en cifras</h2>
+                <div class="w-24 h-1 bg-brand-accent mx-auto mt-6 rounded-full"></div>
+                <p class="mt-5 text-slate-300 text-base md:text-lg">Resultados medibles construidos con clientes, estudiantes y aliados en cinco países.</p>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-5 md:gap-6 text-center">
+                <div class="tech-card group p-6 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 hover:border-brand-accent/40 transition-all cursor-pointer" onclick="showKpi('kpi-proyectos', this, event)">
+                    <div class="w-10 h-10 mx-auto mb-3 rounded-lg bg-brand-accent/15 border border-brand-accent/30 flex items-center justify-center group-hover:bg-brand-accent/25 transition-colors">
+                        <i data-lucide="rocket" class="w-5 h-5 text-brand-accent"></i>
+                    </div>
                     <div class="text-4xl md:text-5xl font-bold text-brand-accent mb-2 font-heading kpi-number">20</div>
                     <div class="text-slate-300 text-xs uppercase tracking-wider">Proyectos Desarrollados</div>
                     <div class="text-brand-accent/60 text-[10px] mt-2 flex items-center justify-center gap-1"><i data-lucide="info" class="w-3 h-3"></i> ver detalle</div>
                 </div>
-                <div class="tech-card p-6 rounded-lg bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 transition-all cursor-pointer" onclick="showKpi('kpi-paises', this, event)">
+                <div class="tech-card group p-6 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 hover:border-brand-accent/40 transition-all cursor-pointer" onclick="showKpi('kpi-paises', this, event)">
+                    <div class="w-10 h-10 mx-auto mb-3 rounded-lg bg-brand-accent/15 border border-brand-accent/30 flex items-center justify-center group-hover:bg-brand-accent/25 transition-colors">
+                        <i data-lucide="globe-2" class="w-5 h-5 text-brand-accent"></i>
+                    </div>
                     <div class="text-4xl md:text-5xl font-bold text-brand-accent mb-2 font-heading kpi-number" style="animation-delay: 0.3s;">5</div>
                     <div class="text-slate-300 text-xs uppercase tracking-wider">Países</div>
                     <div class="text-brand-accent/60 text-[10px] mt-2 flex items-center justify-center gap-1"><i data-lucide="info" class="w-3 h-3"></i> ver detalle</div>
                 </div>
-                <div class="tech-card p-6 rounded-lg bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 transition-all cursor-pointer" onclick="showKpi('kpi-estudiantes', this, event)">
+                <div class="tech-card group p-6 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 hover:border-brand-accent/40 transition-all cursor-pointer" onclick="showKpi('kpi-estudiantes', this, event)">
+                    <div class="w-10 h-10 mx-auto mb-3 rounded-lg bg-brand-accent/15 border border-brand-accent/30 flex items-center justify-center group-hover:bg-brand-accent/25 transition-colors">
+                        <i data-lucide="graduation-cap" class="w-5 h-5 text-brand-accent"></i>
+                    </div>
                     <div class="text-4xl md:text-5xl font-bold text-brand-accent mb-2 font-heading kpi-number" style="animation-delay: 0.6s;">300</div>
                     <div class="text-slate-300 text-xs uppercase tracking-wider">Estudiantes Formados</div>
                     <div class="text-brand-accent/60 text-[10px] mt-2 flex items-center justify-center gap-1"><i data-lucide="info" class="w-3 h-3"></i> ver detalle</div>
                 </div>
-                <div class="tech-card p-6 rounded-lg bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 transition-all cursor-pointer" onclick="showKpi('kpi-herramientas', this, event)">
+                <div class="tech-card group p-6 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 hover:border-brand-accent/40 transition-all cursor-pointer" onclick="showKpi('kpi-herramientas', this, event)">
+                    <div class="w-10 h-10 mx-auto mb-3 rounded-lg bg-brand-accent/15 border border-brand-accent/30 flex items-center justify-center group-hover:bg-brand-accent/25 transition-colors">
+                        <i data-lucide="wrench" class="w-5 h-5 text-brand-accent"></i>
+                    </div>
                     <div class="text-4xl md:text-5xl font-bold text-brand-accent mb-2 font-heading kpi-number" style="animation-delay: 0.9s;">10</div>
                     <div class="text-slate-300 text-xs uppercase tracking-wider">Herramientas</div>
                     <div class="text-brand-accent/60 text-[10px] mt-2 flex items-center justify-center gap-1"><i data-lucide="info" class="w-3 h-3"></i> ver detalle</div>
                 </div>
-                <div class="tech-card p-6 rounded-lg bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 transition-all cursor-pointer" onclick="showKpi('kpi-publicaciones', this, event)">
+                <div class="tech-card group p-6 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 hover:border-brand-accent/40 transition-all cursor-pointer col-span-2 md:col-span-1" onclick="showKpi('kpi-publicaciones', this, event)">
+                    <div class="w-10 h-10 mx-auto mb-3 rounded-lg bg-brand-accent/15 border border-brand-accent/30 flex items-center justify-center group-hover:bg-brand-accent/25 transition-colors">
+                        <i data-lucide="book-open" class="w-5 h-5 text-brand-accent"></i>
+                    </div>
                     <div class="text-4xl md:text-5xl font-bold text-brand-accent mb-2 font-heading kpi-number" style="animation-delay: 1.2s;">9</div>
                     <div class="text-slate-300 text-xs uppercase tracking-wider">Publicaciones Científicas</div>
                     <div class="text-brand-accent/60 text-[10px] mt-2 flex items-center justify-center gap-1"><i data-lucide="info" class="w-3 h-3"></i> ver detalle</div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- CONSULTING SECTION (B2B) -->
-    <section id="consultoria" class="py-20 bg-slate-50 relative">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center max-w-3xl mx-auto mb-16">
-                <span class="text-brand-primary font-semibold tracking-wider uppercase text-sm">Consultoría Corporativa</span>
-                <h2 class="font-heading text-3xl md:text-4xl font-bold text-brand-dark mt-2">Transformamos Datos Complejos en Decisiones Inteligentes</h2>
-                <div class="w-24 h-1 bg-brand-accent mx-auto mt-6 rounded-full"></div>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Card 1 -->
-                <div class="tech-card bg-white p-8 rounded-xl shadow-sm border border-slate-100 hover:shadow-xl hover:border-brand-primary/20 hover:bg-brand-dark transition-all duration-500 group">
-                    <div class="w-14 h-14 bg-blue-50 rounded-lg flex items-center justify-center mb-6 group-hover:bg-brand-accent group-hover:text-brand-dark transition-colors relative z-10">
-                        <i data-lucide="bot" class="w-8 h-8 text-brand-primary group-hover:text-brand-dark"></i>
-                    </div>
-                    <h3 class="text-xl font-bold text-brand-dark mb-3 relative z-10 group-hover:text-white transition-colors">Automatización de Procesos</h3>
-                    <p class="text-slate-600 leading-relaxed relative z-10 group-hover:text-slate-300 transition-colors">
-                        De 2 días a 2 segundos. Automatizamos reportes técnicos y administrativos utilizando scripts de Python, eliminando el error humano.
-                    </p>
-                </div>
-
-                <!-- Card 2 -->
-                <div class="tech-card bg-white p-8 rounded-xl shadow-sm border border-slate-100 hover:shadow-xl hover:border-brand-primary/20 hover:bg-brand-dark transition-all duration-500 group">
-                    <div class="w-14 h-14 bg-blue-50 rounded-lg flex items-center justify-center mb-6 group-hover:bg-brand-accent group-hover:text-brand-dark transition-colors relative z-10">
-                        <i data-lucide="bar-chart-2" class="w-8 h-8 text-brand-primary group-hover:text-brand-dark"></i>
-                    </div>
-                    <h3 class="text-xl font-bold text-brand-dark mb-3 relative z-10 group-hover:text-white transition-colors">Dashboards Interactivos</h3>
-                    <p class="text-slate-600 leading-relaxed relative z-10 group-hover:text-slate-300 transition-colors">
-                        Visualización en tiempo real. Diseñamos tableros de control en Power BI y Tableau que cuentan la historia detrás de sus KPIs.
-                    </p>
-                </div>
-
-                <!-- Card 3 -->
-                <div class="tech-card bg-white p-8 rounded-xl shadow-sm border border-slate-100 hover:shadow-xl hover:border-brand-primary/20 hover:bg-brand-dark transition-all duration-500 group">
-                    <div class="w-14 h-14 bg-blue-50 rounded-lg flex items-center justify-center mb-6 group-hover:bg-brand-accent group-hover:text-brand-dark transition-colors relative z-10">
-                        <i data-lucide="globe-2" class="w-8 h-8 text-brand-primary group-hover:text-brand-dark"></i>
-                    </div>
-                    <h3 class="text-xl font-bold text-brand-dark mb-3 relative z-10 group-hover:text-white transition-colors">Modelado de Datos</h3>
-                    <p class="text-slate-600 leading-relaxed relative z-10 group-hover:text-slate-300 transition-colors">
-                        Desarrollo de ciencia de datos y machine learning aplicado a información espacial y temporal con herramientas GIS.
-                    </p>
                 </div>
             </div>
         </div>
@@ -3075,6 +3253,58 @@
 
             lucide.createIcons();
         }
+
+        // ============================================
+        // STICKY ANNOUNCEMENT BAR + COUNTDOWN URGENCIA
+        // ============================================
+        function dismissAnnouncementBar() {
+            const bar = document.getElementById('announcement-bar');
+            if (!bar) return;
+            bar.style.display = 'none';
+            try { sessionStorage.setItem('tc-announcement-dismissed', '1'); } catch (e) {}
+            const hero = document.getElementById('inicio');
+            if (hero) hero.classList.replace('pt-[120px]', 'pt-20');
+        }
+
+        (function initAnnouncementBar() {
+            try {
+                if (sessionStorage.getItem('tc-announcement-dismissed') === '1') {
+                    const bar = document.getElementById('announcement-bar');
+                    if (bar) bar.style.display = 'none';
+                    const hero = document.getElementById('inicio');
+                    if (hero) hero.classList.replace('pt-[120px]', 'pt-20');
+                }
+            } catch (e) {}
+        })();
+
+        (function initCountdown() {
+            const targets = document.querySelectorAll('[data-countdown]');
+            if (!targets.length) return;
+
+            function update() {
+                targets.forEach((el) => {
+                    const dateStr = el.getAttribute('data-countdown');
+                    const target = new Date(dateStr + 'T00:00:00');
+                    const now = new Date();
+                    const diff = target - now;
+                    if (diff <= 0) {
+                        el.textContent = '¡Inicia hoy!';
+                        return;
+                    }
+                    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                    if (days > 0) {
+                        el.textContent = `Faltan ${days}d ${hours}h ${minutes}m`;
+                    } else {
+                        el.textContent = `¡Últimas horas! ${hours}h ${minutes}m`;
+                    }
+                });
+            }
+
+            update();
+            setInterval(update, 60000);
+        })();
 
         // ============================================
         // PERSONALIZACIÓN DE TARJETAS DE CURSOS
