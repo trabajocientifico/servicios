@@ -49,7 +49,7 @@ body::before{
 
 /* ---- Cabecera ---- */
 header{
-  display:flex; align-items:center; justify-content:space-between;
+  display:flex; align-items:center; justify-content:flex-end;
   gap:16px; margin-bottom:44px;
 }
 .back{
@@ -70,10 +70,23 @@ header{
 /* ---- Hero ---- */
 .hero{ text-align:center; margin-bottom:48px; }
 .hero .kicker{
-  display:inline-block; margin-bottom:16px;
+  display:inline-block; margin-bottom:12px;
   font-size:12px; font-weight:700; letter-spacing:.24em; text-transform:uppercase;
   color:var(--accent);
 }
+.org-name{
+  font-family:var(--font-display);
+  font-size:clamp(20px, 3vw, 28px); font-weight:700;
+  color:var(--text); margin-bottom:6px; line-height:1.2;
+}
+.org-meta{
+  font-size:13px; color:var(--muted);
+  margin-bottom:20px;
+  display:flex; align-items:center; justify-content:center; gap:8px; flex-wrap:wrap;
+}
+.org-meta a{ color:var(--muted); text-decoration:none; transition:color .2s; }
+.org-meta a:hover{ color:var(--accent); }
+.org-sep{ opacity:.4; }
 .hero h1{
   font-family:var(--font-display);
   font-size:clamp(32px, 5vw, 52px); font-weight:900; line-height:1.1;
@@ -219,12 +232,17 @@ footer a:hover{ text-decoration:underline; }
 <div class="wrap">
 
   <header>
-    <a class="back" href="../index.html" aria-label="Volver al curso"><span>←</span> Volver al curso</a>
     <span class="zona">Horarios en hora de Colombia (GMT-5)</span>
   </header>
 
   <section class="hero">
     <span class="kicker">Agenda · Julio–Agosto 2026</span>
+    <p class="org-name">Trabajo Científico</p>
+    <p class="org-meta">
+      <a href="https://www.trabajocientifico.org" target="_blank" rel="noopener">www.trabajocientifico.org</a>
+      <span class="org-sep">·</span>
+      <a href="mailto:info@trabajocientifico.org">info@trabajocientifico.org</a>
+    </p>
     <h1>Próximos eventos en vivo</h1>
     <p class="subtitle">Inscríbete con anticipación y guarda el enlace de la reunión para conectarte el día del evento.</p>
 
@@ -269,6 +287,25 @@ footer a:hover{ text-decoration:underline; }
           <a class="btn btn-inscripcion" href="https://luma.com/swom13ax" target="_blank" rel="noopener">Inscríbete aquí</a>
           <a class="btn btn-meet" href="https://meet.google.com/fye-tzeb-mzq" target="_blank" rel="noopener">Enlace de la reunión</a>
         </div>
+      </div>
+    </article>
+
+    <!-- Evento: Miércoles 30 de julio -->
+    <article class="evento">
+      <div class="media">
+        <img src="images/eventos/masterclass30dejulio.png" alt="Afiche del evento Agentes de IA para Ciencia de Datos">
+      </div>
+      <div class="info">
+        <div class="fecha">
+          <span class="dia">Miércoles 30 de julio</span>
+          <span class="hora">6:30 p.&nbsp;m. Colombia</span>
+        </div>
+        <h2>Agentes de IA para Ciencia de Datos</h2>
+        <p class="desc">Sesión en vivo sobre cómo usar agentes de IA para acelerar el análisis, la automatización y la exploración de datos.</p>
+        <div class="acciones">
+          <a class="btn btn-inscripcion" href="https://luma.com/bzopqf0w" target="_blank" rel="noopener">Inscríbete aquí</a>
+        </div>
+        <span class="nota-meet">El enlace de conexión se comparte con las personas inscritas.</span>
       </div>
     </article>
 
