@@ -3,13 +3,72 @@
    Lógica JavaScript (CSV Fetch, Search, Canvas, PDF)
    ============================================ */
 
-const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSM1aQLOgJsvQ8KvTkG3bgbGDeUyS5zl2RdPeSs1GslsAZojdDac_EEO7_tqk5mbO67E13fmKORXUQ5/pub?output=csv';
+/* ================================================================
+   CATÁLOGO DE EVENTOS  ← ⭐ ESTO ES LO ÚNICO QUE DEBES EDITAR
+   ----------------------------------------------------------------
+   Para agregar un curso/evento nuevo, copia un bloque y complétalo:
+
+     'identificador-corto': {
+       titulo:     'Nombre del curso tal como saldrá en el certificado',
+       tipo:       'curso',        // 'curso' | 'taller' | 'masterclass'
+       intensidad: '6 horas',      // texto que aparece en la insignia
+       fecha:      '15 de agosto de 2026',
+       csvUrl:     'PEGAR-AQUI-EL-ENLACE-CSV-PUBLICADO-DE-GOOGLE-SHEETS'
+     },
+
+   - 'tipo' ajusta automáticamente el texto del certificado.
+   - 'csvUrl' es el enlace CSV publicado de la hoja de asistentes de ESE evento
+     (Google Sheets → Archivo → Compartir → Publicar en la web → CSV).
+   - El primero de la lista es el que se selecciona por defecto.
+   - Enlace directo a un evento:  certificados/index.html?evento=identificador-corto
+   ================================================================ */
+const EVENTS = {
+  'ia-investigacion': {
+    titulo: 'AI para la Investigación Científica',
+    tipo: 'taller',
+    intensidad: '1 hora',
+    fecha: '28 de julio de 2026',
+    csvUrl: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSM1aQLOgJsvQ8KvTkG3bgbGDeUyS5zl2RdPeSs1GslsAZojdDac_EEO7_tqk5mbO67E13fmKORXUQ5/pub?output=csv'
+  },
+  'masterclass-agentes-ia': {
+    titulo: 'Agentes de Inteligencia Artificial para Ciencia de Datos',
+    tipo: 'masterclass',
+    intensidad: '1 hora',
+    fecha: 'PENDIENTE',
+    csvUrl: 'PENDIENTE'
+  },
+  'ciencia-datos-python': {
+    titulo: 'Ciencia de Datos con Python + IA',
+    tipo: 'curso',
+    intensidad: '6 horas',
+    fecha: 'PENDIENTE',
+    csvUrl: 'PENDIENTE'
+  },
+  'geoinformacion-python': {
+    titulo: 'Geoinformación con Python + IA',
+    tipo: 'curso',
+    intensidad: '6 horas',
+    fecha: 'PENDIENTE',
+    csvUrl: 'PENDIENTE'
+  },
+  'bibliometrix-rstudio': {
+    titulo: 'Bibliometrix con RStudio',
+    tipo: 'curso',
+    intensidad: '6 horas',
+    fecha: 'PENDIENTE',
+    csvUrl: 'PENDIENTE'
+  }
+};
 
 class CertificateApp {
   constructor() {
     this.attendees = [];
     this.currentAttendee = null;
     this.logoImg = null;
+
+    // Evento actualmente seleccionado
+    this.eventKey = null;
+    this.event = null;
 
     // Elementos DOM
     this.nameInput = document.getElementById('name-input');
@@ -20,13 +79,52 @@ class CertificateApp {
     this.certSection = document.getElementById('certificate-section');
     this.canvas = document.getElementById('cert-canvas');
     this.downloadPdfBtn = document.getElementById('btn-download-pdf');
+    this.eventSelect = document.getElementById('event-select');
+    this.eventBadgeText = document.getElementById('event-badge-text');
 
     this.init();
   }
 
   async init() {
+    this.populateEventSelector();
     this.bindEvents();
     await this.loadLogo();
+
+    // Evento inicial: el indicado en la URL (?evento=...) o el primero del catálogo
+    const params = new URLSearchParams(window.location.search);
+    const requested = params.get('evento');
+    const initialKey = (requested && EVENTS[requested]) ? requested : Object.keys(EVENTS)[0];
+
+    await this.selectEvent(initialKey);
+  }
+
+  // --- Rellena el desplegable con todos los eventos del catálogo ---
+  populateEventSelector() {
+    if (!this.eventSelect) return;
+    this.eventSelect.innerHTML = Object.entries(EVENTS)
+      .map(([key, ev]) => `<option value="${key}">${ev.titulo} — ${ev.intensidad}</option>`)
+      .join('');
+  }
+
+  // --- Cambia el evento activo y recarga su base de datos ---
+  async selectEvent(key) {
+    if (!EVENTS[key]) return;
+    this.eventKey = key;
+    this.event = EVENTS[key];
+
+    // Sincronizar el desplegable y la insignia superior
+    if (this.eventSelect) this.eventSelect.value = key;
+    if (this.eventBadgeText) {
+      this.eventBadgeText.textContent = `${this.capitalize(this.event.tipo)} · ${this.event.intensidad}`;
+    }
+
+    // Limpiar estado anterior
+    this.attendees = [];
+    this.currentAttendee = null;
+    this.nameInput.value = '';
+    this.certSection.classList.remove('active');
+    this.closeAutocomplete();
+
     await this.fetchDatabase();
   }
 
@@ -48,16 +146,22 @@ class CertificateApp {
 
   // --- Descarga y parseo del CSV de Google Sheets ---
   async fetchDatabase() {
+    // Evento aún sin base de datos configurada
+    if (!this.event.csvUrl || !this.event.csvUrl.startsWith('http')) {
+      this.showStatus('error', `La lista de asistentes de "${this.event.titulo}" aún no está disponible. Vuelve a intentarlo más tarde.`);
+      return;
+    }
+
     this.showStatus('loading', 'Conectando con la base de datos de asistentes...');
     try {
-      const response = await fetch(CSV_URL);
+      const response = await fetch(this.event.csvUrl);
       if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-      
+
       const csvText = await response.text();
       this.attendees = this.parseCSV(csvText);
 
       if (this.attendees.length === 0) {
-        this.showStatus('error', 'No se encontraron registros en la base de datos.');
+        this.showStatus('error', 'No se encontraron registros en la base de datos de este evento.');
       } else {
         this.showStatus('success', `✓ Base de datos cargada correctamente (${this.attendees.length} asistentes registrados). Lista para buscar.`);
         setTimeout(() => this.hideStatus(), 4000);
@@ -130,13 +234,41 @@ class CertificateApp {
     if (!str) return '';
     return str
       .normalize('NFD')
-      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/[̀-ͯ]/g, '')
       .toLowerCase()
       .trim();
   }
 
+  capitalize(str) {
+    if (!str) return '';
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  }
+
+  // --- Frase introductoria y línea de fecha según el tipo de evento ---
+  introPhrase() {
+    switch (this.event.tipo) {
+      case 'curso':       return 'por su participación y aprobación del curso de';
+      case 'masterclass': return 'por su asistencia a la masterclass de';
+      case 'taller':      return 'por su asistencia al taller gratuito de';
+      default:            return 'por su participación en';
+    }
+  }
+
+  dateLine() {
+    if (!this.event.fecha || this.event.fecha === 'PENDIENTE') return '';
+    const realizado = (this.event.tipo === 'masterclass') ? 'realizada' : 'realizado';
+    return `${this.capitalize(this.event.tipo)} ${realizado} el ${this.event.fecha}`;
+  }
+
   // --- Event Listeners ---
   bindEvents() {
+    // Cambiar de evento
+    if (this.eventSelect) {
+      this.eventSelect.addEventListener('change', (e) => {
+        this.selectEvent(e.target.value);
+      });
+    }
+
     // Buscar al presionar Submit o Enter
     this.searchForm.addEventListener('submit', (e) => {
       e.preventDefault();
@@ -201,7 +333,7 @@ class CertificateApp {
     const normName = this.normalize(name);
     const startIdx = normName.indexOf(query);
     if (startIdx === -1) return name;
-    
+
     // Extraer texto original preservando mayúsculas y tildes
     const matchedPart = name.substring(startIdx, startIdx + query.length);
     return name.replace(matchedPart, `<strong>${matchedPart}</strong>`);
@@ -394,13 +526,13 @@ class CertificateApp {
     ctx.lineTo(w / 2 + nameW / 2 + 25, nameY + 12);
     ctx.stroke();
 
-    // 10. Texto: por su participación activa en
+    // 10. Texto: frase introductoria (según el tipo de evento)
     ctx.fillStyle = '#a0a4b8';
     ctx.font = 'italic 17px ' + FONT;
-    ctx.fillText('por su asistencia al taller gratuito de', w / 2, 408);
+    ctx.fillText(this.introPhrase(), w / 2, 408);
 
-    // 11. TÍTULO DEL TALLER
-    const eventTitle = "AI para la Investigación Científica";
+    // 11. TÍTULO DEL EVENTO
+    const eventTitle = this.event.titulo;
     let titleSize = 36;
     ctx.font = 'bold ' + titleSize + 'px ' + FONT;
     while (ctx.measureText(eventTitle).width > w - 220 && titleSize > 24) {
@@ -410,8 +542,8 @@ class CertificateApp {
     ctx.fillStyle = '#ffffff';
     ctx.fillText(eventTitle, w / 2, 465);
 
-    // 12. Insignia de Horas (Pill Container)
-    const badgeText = '1 hora';
+    // 12. Insignia de Intensidad Horaria (Pill Container)
+    const badgeText = this.event.intensidad;
     ctx.font = '600 15px ' + FONT;
     const badgeTextW = ctx.measureText(badgeText).width;
     const badgeW = badgeTextW + 65;
@@ -444,11 +576,14 @@ class CertificateApp {
     ctx.fillText(badgeText, badgeX + 38, badgeY + 1);
     ctx.textBaseline = 'alphabetic';
 
-    // 12b. Fecha de realización del taller
-    ctx.fillStyle = '#a0a4b8';
-    ctx.font = 'italic 15px ' + FONT;
-    ctx.textAlign = 'center';
-    ctx.fillText('Taller realizado el 28 de julio de 2026', w / 2, 575);
+    // 12b. Fecha de realización del evento (si está definida)
+    const dateText = this.dateLine();
+    if (dateText) {
+      ctx.fillStyle = '#a0a4b8';
+      ctx.font = 'italic 15px ' + FONT;
+      ctx.textAlign = 'center';
+      ctx.fillText(dateText, w / 2, 575);
+    }
 
     // 13. Firmas digitales al pie (Izquierda y Derecha)
     const sigY = 665;
@@ -547,7 +682,7 @@ class CertificateApp {
       pdf.addImage(imgData, 'JPEG', 0, 0, 1200, 800, undefined, 'FAST');
 
       const safeName = this.currentAttendee.replace(/\s+/g, '_');
-      pdf.save(`Certificado_Asistencia_${safeName}_AI_Investigacion.pdf`);
+      pdf.save(`Certificado_${safeName}_${this.eventKey}.pdf`);
     } catch (err) {
       console.error('Error al generar PDF:', err);
       alert('Ocurrió un error al generar el archivo PDF: ' + err.message);

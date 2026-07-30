@@ -15,7 +15,9 @@
       "Bash(curl *)",
       "Bash(node -e ' *)",
       "Bash(cmd *)",
-      "Bash(xxd logo.png)"
+      "Bash(xxd logo.png)",
+      "Bash(perl -i -pe 's/\\\\.replace\\\\\\(\\\\/\\\\[\\\\x{0300}-\\\\x{036f}\\\\]\\\\/g, /.replace\\(\\\\/[\\\\\\\\u0300-\\\\\\\\u036f]\\\\/g, /' app.js)",
+      "Bash(node -c app.js)"
     ]
   }
 }

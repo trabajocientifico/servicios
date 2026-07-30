@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Certificado de Asistencia - AI para la Investigación Científica | Trabajo Científico</title>
-  <meta name="description" content="Generador y validador de certificados de asistencia para el Taller Gratuito de AI para la Investigación Científica organizado por Trabajo Científico.">
+  <meta name="description" content="Generador y validador de certificados de asistencia para los cursos, talleres y eventos de Trabajo Científico.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -41,19 +41,24 @@
       <section class="hero-section">
         <div class="event-badge">
           <span class="icon">✨</span>
-          <span>Taller Gratuito de 1 Hora</span>
+          <span id="event-badge-text">Certificados oficiales</span>
         </div>
         <h1 class="hero-title">
           Obtén tu <span class="gradient-text">Certificado de Asistencia</span>
         </h1>
         <p class="hero-subtitle">
-          AI para la Investigación Científica — Organizado por Trabajo Científico.<br>
-          Ingresa tu nombre tal como te registraste en el taller para generar tu certificado en formato PDF.
+          Cursos, talleres y eventos de Trabajo Científico.<br>
+          Selecciona el evento e ingresa tu nombre tal como te registraste para generar tu certificado en formato PDF.
         </p>
       </section>
 
       <!-- Tarjeta de Búsqueda -->
       <section class="search-card">
+        <div class="event-selector">
+          <label for="event-select">🎓 Selecciona tu evento o curso</label>
+          <select id="event-select" class="event-select"></select>
+        </div>
+
         <form id="search-form" onsubmit="event.preventDefault();">
           <div class="search-box">
             <div class="input-wrapper">
@@ -113,7 +118,7 @@
         </div>
         <div class="info-card">
           <h3>🔒 Verificación Oficial</h3>
-          <p>Cada certificado cuenta con una firma digital e identificador único alfanumérico que certifica tu asistencia al taller de Trabajo Científico.</p>
+          <p>Cada certificado cuenta con una firma digital e identificador único alfanumérico que certifica tu asistencia al evento de Trabajo Científico.</p>
         </div>
         <div class="info-card">
           <h3>💡 ¿No encuentras tu nombre?</h3>
