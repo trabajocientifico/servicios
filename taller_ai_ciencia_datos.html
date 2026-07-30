@@ -472,6 +472,37 @@ h2{ font-size:clamp(28px,4vw,52px); font-weight:700; line-height:1.08; letter-sp
 .btn-wa-lg:hover{ transform:translateY(-3px);}
 .btn-wa-lg svg{ width:20px; height:20px;}
 
+/* ====== DOCENTE / PERFIL ====== */
+.doc{ width:100%; max-width:1120px;}
+.doc-wrap{ display:grid; grid-template-columns:380px 1fr; gap:30px; margin-top:28px; align-items:start;}
+.doc-photo{ background:var(--surface); border:1px solid var(--line); border-radius:22px; padding:14px; position:relative; overflow:hidden;}
+.doc-photo::before{ content:""; position:absolute; right:-70px; top:-70px; width:200px; height:200px; border-radius:50%; background:radial-gradient(circle,rgba(0,245,212,.14),transparent 70%); pointer-events:none;}
+.doc-photo img{ width:100%; border-radius:16px; display:block; aspect-ratio:4/5; object-fit:cover; background:#0d1322;}
+.doc-photo .cap{ text-align:center; margin-top:14px; padding-bottom:4px;}
+.doc-photo .cap .r1{ font-family:var(--font-display); font-weight:700; font-size:20px; color:var(--text);}
+.doc-photo .cap .r2{ font-size:13px; color:var(--muted); margin-top:5px;}
+.doc-block-label{ display:flex; align-items:center; gap:9px; font-size:11px; letter-spacing:.2em; text-transform:uppercase; color:var(--accent); font-weight:800; margin-bottom:14px;}
+.doc-block-label::before{ content:""; width:8px; height:8px; border-radius:50%; background:var(--accent);}
+.doc-edu{ display:flex; flex-direction:column; gap:9px;}
+.doc-edu-item{ display:flex; align-items:center; gap:13px; background:var(--surface); border:1px solid var(--line); border-radius:13px; padding:12px 16px; transition:transform .2s, border-color .2s;}
+.doc-edu-item:hover{ border-color:rgba(0,245,212,.4); transform:translateX(4px);}
+.doc-edu-item .en{ font-family:var(--font-mono); font-size:13px; color:var(--accent); font-weight:700; min-width:24px;}
+.doc-edu-item .el{ font-family:var(--font-mono); font-size:9.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); border:1px solid var(--line); border-radius:99px; padding:4px 9px; white-space:nowrap;}
+.doc-edu-item .ed{ font-size:15px; color:var(--text); flex:1;}
+.doc-edu-item .etag{ font-family:var(--font-mono); font-size:9.5px; letter-spacing:.08em; text-transform:uppercase; font-weight:700; padding:4px 10px; border-radius:99px; white-space:nowrap;}
+.doc-edu-item .etag.on{ background:var(--accent); color:#041210;}
+.doc-edu-item .etag.cur{ border:1px solid var(--accent); color:var(--accent);}
+.doc-stats{ display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-top:20px;}
+.doc-stat{ background:var(--surface); border:1px solid var(--line); border-radius:15px; padding:16px 16px; position:relative; overflow:hidden;}
+.doc-stat::before{ content:""; position:absolute; left:0; top:0; bottom:0; width:3px; background:var(--accent);}
+.doc-stat .sn{ font-family:var(--font-display); font-weight:900; font-size:30px; color:var(--text); line-height:1;}
+.doc-stat .sl{ font-size:11px; color:var(--muted); margin-top:6px; line-height:1.35;}
+.doc-social{ margin-top:22px; display:flex; align-items:center; gap:16px; flex-wrap:wrap;}
+.doc-social .sfollow{ font-family:var(--font-mono); font-size:10.5px; letter-spacing:.2em; text-transform:uppercase; color:var(--gold); font-weight:700;}
+.doc-social a{ display:grid; place-items:center; width:40px; height:40px; border-radius:11px; background:var(--surface); border:1px solid var(--line); color:var(--muted); transition:all .2s;}
+.doc-social a:hover{ border-color:var(--accent); color:var(--accent); transform:translateY(-2px);}
+.doc-social a svg{ width:19px; height:19px;}
+
 /* ====== RESPONSIVE INTERMEDIO ====== */
 @media (max-width:1100px){
   .ag-grid{ grid-template-columns:repeat(2,1fr);}
@@ -490,6 +521,9 @@ h2{ font-size:clamp(28px,4vw,52px); font-weight:700; line-height:1.08; letter-sp
   .ci-stats{ gap:20px;} .ci-stat .n{ font-size:30px;}
   .practical{ grid-template-columns:1fr; gap:12px;}
   .conjure{ transform:rotate(90deg);}
+  .doc-wrap{ grid-template-columns:1fr; gap:22px;}
+  .doc-photo{ max-width:400px; margin:0 auto;}
+  .doc-stats{ grid-template-columns:repeat(2,1fr);}
 }
 
 /* ====== MÓVIL ====== */
@@ -1105,8 +1139,58 @@ h2{ font-size:clamp(28px,4vw,52px); font-weight:700; line-height:1.08; letter-sp
     </div>
   </section>
 
-  <!-- ============== SLIDE 14 — CIERRE ============== -->
+  <!-- ============== SLIDE 14 — EL DOCENTE ============== -->
   <section class="slide" data-slide="13">
+    <div class="doc">
+      <div class="slide-head">
+        <span class="eyebrow">Quién te acompaña</span>
+        <h2>El <span class="hl">docente</span></h2>
+      </div>
+      <div class="doc-wrap">
+        <div class="doc-photo">
+          <img src="perfil.png" alt="Oscar Iván Vargas Pineda" loading="lazy">
+          <div class="cap">
+            <div class="r1">Oscar Iván Vargas Pineda</div>
+            <div class="r2">Científico de Datos · Docente Investigador</div>
+          </div>
+        </div>
+        <div>
+          <div class="doc-block-label">Formación académica</div>
+          <div class="doc-edu">
+            <div class="doc-edu-item"><span class="en">05</span><span class="el">Doctorado</span><span class="ed">Ciencias Agrarias</span><span class="etag on">PhD</span></div>
+            <div class="doc-edu-item"><span class="en">04</span><span class="el">Magíster</span><span class="ed">Inteligencia Artificial Aplicada</span><span class="etag cur">En curso</span></div>
+            <div class="doc-edu-item"><span class="en">03</span><span class="el">Magíster</span><span class="ed">Gestión Ambiental Sostenible</span></div>
+            <div class="doc-edu-item"><span class="en">02</span><span class="el">Especialista</span><span class="ed">Gestión del Agua</span></div>
+            <div class="doc-edu-item"><span class="en">01</span><span class="el">Pregrado</span><span class="ed">Ingeniero Agroindustrial</span></div>
+          </div>
+          <div class="doc-stats">
+            <div class="doc-stat"><div class="sn">11</div><div class="sl">Años experiencia profesional</div></div>
+            <div class="doc-stat"><div class="sn">6</div><div class="sl">Años docente universitario</div></div>
+            <div class="doc-stat"><div class="sn">4</div><div class="sl">Años consultor de datos</div></div>
+            <div class="doc-stat"><div class="sn">9</div><div class="sl">Publicaciones primer autor</div></div>
+          </div>
+          <div class="doc-social">
+            <span class="sfollow">Síguenos</span>
+            <a href="https://www.youtube.com/@TCientifico" target="_blank" rel="noopener" title="YouTube" aria-label="YouTube">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+            </a>
+            <a href="https://www.linkedin.com/in/oscar-ivan-vargas-pineda-2aa543240/" target="_blank" rel="noopener" title="LinkedIn" aria-label="LinkedIn">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.36V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43A2.06 2.06 0 113.27 5.37a2.06 2.06 0 012.07 2.06zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45C23.2 24 24 23.23 24 22.28V1.72C24 .77 23.2 0 22.22 0z"/></svg>
+            </a>
+            <a href="https://www.instagram.com/trabajocientifico/" target="_blank" rel="noopener" title="Instagram" aria-label="Instagram">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41a3.7 3.7 0 0 1-1.38-.9 3.7 3.7 0 0 1-.9-1.38c-.16-.42-.36-1.06-.41-2.23-.06-1.27-.07-1.65-.07-4.85s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41C8.42 2.17 8.8 2.16 12 2.16zm0 1.62c-3.15 0-3.52.01-4.76.07-1.15.05-1.77.24-2.19.4-.55.22-.94.47-1.35.88-.41.41-.66.8-.88 1.35-.16.42-.35 1.04-.4 2.19-.06 1.24-.07 1.61-.07 4.76s.01 3.52.07 4.76c.05 1.15.24 1.77.4 2.19.22.55.47.94.88 1.35.41.41.8.66 1.35.88.42.16 1.04.35 2.19.4 1.24.06 1.61.07 4.76.07s3.52-.01 4.76-.07c1.15-.05 1.77-.24 2.19-.4.55-.22.94-.47 1.35-.88.41-.41.66-.8.88-1.35.16-.42.35-1.04.4-2.19.06-1.24.07-1.61.07-4.76s-.01-3.52-.07-4.76c-.05-1.15-.24-1.77-.4-2.19a3.64 3.64 0 0 0-.88-1.35 3.64 3.64 0 0 0-1.35-.88c-.42-.16-1.04-.35-2.19-.4-1.24-.06-1.61-.07-4.76-.07zm0 2.76a5.3 5.3 0 1 1 0 10.6 5.3 5.3 0 0 1 0-10.6zm0 8.74a3.44 3.44 0 1 0 0-6.88 3.44 3.44 0 0 0 0 6.88zm6.75-8.96a1.24 1.24 0 1 1-2.48 0 1.24 1.24 0 0 1 2.48 0z"/></svg>
+            </a>
+            <a href="https://chat.whatsapp.com/GhF8Q1NkdP07CsZGwDAoJu" target="_blank" rel="noopener" title="WhatsApp" aria-label="WhatsApp">
+              <svg viewBox="0 0 32 32" fill="currentColor"><path d="M16 .4C7.4.4.4 7.4.4 16c0 2.8.7 5.5 2.1 7.9L.3 31.6l7.9-2.1c2.3 1.3 4.9 2 7.6 2h.1c8.6 0 15.6-7 15.6-15.6S24.6.4 16 .4zm7 18.7c-.4-.2-2.3-1.1-2.6-1.2-.4-.1-.6-.2-.9.2s-1 1.2-1.2 1.5c-.2.2-.4.3-.8.1-2.2-1.1-3.7-2-5.2-4.6-.4-.7.4-.6 1.1-2.1.1-.2.1-.4 0-.6s-.9-2.1-1.2-2.9c-.3-.7-.6-.6-.9-.7h-.7c-.2 0-.6.1-1 .5-.3.4-1.3 1.3-1.3 3.1s1.3 3.6 1.5 3.9c.2.3 2.6 4 6.4 5.7 2.4 1 3.3 1.1 4.5.9.7-.1 2.3-.9 2.6-1.9.3-.9.3-1.8.2-1.9-.1-.2-.3-.3-.7-.5z"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============== SLIDE 15 — CIERRE ============== -->
+  <section class="slide" data-slide="14">
     <div class="close-wrap">
       <span class="eyebrow">Recapitulemos</span>
       <h2>Ya sabes <span class="hl">dirigir agentes</span></h2>
@@ -1126,8 +1210,8 @@ h2{ font-size:clamp(28px,4vw,52px); font-weight:700; line-height:1.08; letter-sp
     </div>
   </section>
 
-  <!-- ============== SLIDE 15 — INVITACIÓN AL CURSO ============== -->
-  <section class="slide" data-slide="14">
+  <!-- ============== SLIDE 16 — INVITACIÓN AL CURSO ============== -->
+  <section class="slide" data-slide="15">
     <a class="course-invite" href="curso_ciencia_datos.html">
       <span class="ci-badge">🎓 El curso completo</span>
       <h2>Ciencia de Datos <span class="hl">Profesional</span><br><span class="grad">Python + IA</span></h2>
