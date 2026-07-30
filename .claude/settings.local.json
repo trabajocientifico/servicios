@@ -14,7 +14,8 @@
       "Bash(python -m http.server 8765)",
       "Bash(curl *)",
       "Bash(node -e ' *)",
-      "Bash(cmd *)"
+      "Bash(cmd *)",
+      "Bash(xxd logo.png)"
     ]
   }
 }
