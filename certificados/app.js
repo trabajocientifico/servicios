@@ -42,7 +42,7 @@ class CertificateApp {
         this.logoImg = null;
         resolve();
       };
-      img.src = '../imagenes/logo.png';
+      img.src = 'imagenes/logo.png';
     });
   }
 
