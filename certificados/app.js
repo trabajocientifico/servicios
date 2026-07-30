@@ -163,7 +163,7 @@ class CertificateApp {
       if (this.attendees.length === 0) {
         this.showStatus('error', 'No se encontraron registros en la base de datos de este evento.');
       } else {
-        this.showStatus('success', `✓ Base de datos cargada correctamente (${this.attendees.length} asistentes registrados). Lista para buscar.`);
+        this.showStatus('success', 'Datos Cargados');
         setTimeout(() => this.hideStatus(), 4000);
       }
     } catch (err) {
