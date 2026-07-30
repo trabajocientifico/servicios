@@ -322,8 +322,8 @@ class CertificateApp {
 
     // 5. Logotipo institucional
     if (this.logoImg) {
-      const maxLogoW = 380;
-      const maxLogoH = 100;
+      const maxLogoW = 450;
+      const maxLogoH = 135;
       const natW = this.logoImg.naturalWidth || maxLogoW;
       const natH = this.logoImg.naturalHeight || maxLogoH;
       const scale = Math.min(maxLogoW / natW, maxLogoH / natH);
@@ -337,12 +337,12 @@ class CertificateApp {
       ctx.fillStyle = '#ffffff';
       ctx.font = 'bold 30px ' + FONT;
       ctx.textAlign = 'center';
-      ctx.fillText('TRABAJO CIENTÍFICO', w / 2, 105);
+      ctx.fillText('TRABAJO CIENTÍFICO', w / 2, 120);
     }
 
     // 6. Línea divisora superior
     ctx.textBaseline = 'alphabetic';
-    const dY = 175;
+    const dY = 200;
     const lineGrad = ctx.createLinearGradient(w / 2 - 280, 0, w / 2 + 280, 0);
     lineGrad.addColorStop(0, 'transparent');
     lineGrad.addColorStop(0.5, '#00d4ff');
@@ -363,12 +363,12 @@ class CertificateApp {
     ctx.fillStyle = '#e4e4e7';
     ctx.font = '600 15px ' + FONT;
     ctx.textAlign = 'center';
-    ctx.fillText('C E R T I F I C A D O    D E    A S I S T E N C I A', w / 2, 215);
+    ctx.fillText('C E R T I F I C A D O    D E    A S I S T E N C I A', w / 2, 238);
 
     // 8. Texto: OTORGADO A
     ctx.fillStyle = '#8b8fa3';
     ctx.font = '600 13px ' + FONT;
-    ctx.fillText('O T O R G A D O   A', w / 2, 260);
+    ctx.fillText('O T O R G A D O   A', w / 2, 280);
 
     // 9. Nombre del participante (color sólido, sin degradado)
     const nameGrad = ctx.createLinearGradient(w / 2 - 260, 0, w / 2 + 260, 0);
@@ -381,7 +381,7 @@ class CertificateApp {
       nameSize -= 2;
       ctx.font = '800 ' + nameSize + 'px ' + FONT;
     }
-    const nameY = 325;
+    const nameY = 343;
     ctx.fillStyle = '#ffffff';
     ctx.fillText(name, w / 2, nameY);
 
@@ -397,7 +397,7 @@ class CertificateApp {
     // 10. Texto: por su participación activa en
     ctx.fillStyle = '#a0a4b8';
     ctx.font = 'italic 17px ' + FONT;
-    ctx.fillText('por su asistencia al taller gratuito de', w / 2, 395);
+    ctx.fillText('por su asistencia al taller gratuito de', w / 2, 408);
 
     // 11. TÍTULO DEL TALLER
     const eventTitle = "AI para la Investigación Científica";
@@ -408,7 +408,7 @@ class CertificateApp {
       ctx.font = 'bold ' + titleSize + 'px ' + FONT;
     }
     ctx.fillStyle = '#ffffff';
-    ctx.fillText(eventTitle, w / 2, 455);
+    ctx.fillText(eventTitle, w / 2, 465);
 
     // 12. Insignia de Horas (Pill Container)
     const badgeText = '1 hora';
