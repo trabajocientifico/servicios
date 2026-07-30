@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Certificado de Asistencia - AI para la Investigación Científica | Trabajo Científico</title>
+  <meta name="description" content="Generador y validador de certificados de asistencia para el Taller Gratuito de AI para la Investigación Científica organizado por Trabajo Científico.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <!-- jsPDF para generación de PDF de alta resolución -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body>
+  <!-- Fondos dinámicos -->
+  <div class="bg-animation">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+  <div class="bg-grid"></div>
+
+  <!-- Encabezado de Navegación -->
+  <header>
+    <div class="container nav-content">
+      <a href="../index.html" class="brand-link" title="Volver al portal principal">
+        <img src="../imagenes/logo.png" alt="Trabajo Científico" class="brand-logo" onerror="this.style.display='none'">
+        <span>TRABAJO CIENTÍFICO</span>
+        <span class="brand-badge">Certificados</span>
+      </a>
+      <a href="../index.html" class="back-link">
+        ← Volver a Cursos
+      </a>
+    </div>
+  </header>
+
+  <main>
+    <div class="container">
+      <!-- Sección Hero -->
+      <section class="hero-section">
+        <div class="event-badge">
+          <span class="icon">✨</span>
+          <span>Taller Gratuito de 1 Hora</span>
+        </div>
+        <h1 class="hero-title">
+          Obtén tu <span class="gradient-text">Certificado de Asistencia</span>
+        </h1>
+        <p class="hero-subtitle">
+          AI para la Investigación Científica — Organizado por Trabajo Científico.<br>
+          Ingresa tu nombre tal como te registraste en el taller para generar tu certificado en formato PDF.
+        </p>
+      </section>
+
+      <!-- Tarjeta de Búsqueda -->
+      <section class="search-card">
+        <form id="search-form" onsubmit="event.preventDefault();">
+          <div class="search-box">
+            <div class="input-wrapper">
+              <span class="search-icon">🔍</span>
+              <input 
+                type="text" 
+                id="name-input" 
+                class="search-input" 
+                placeholder="Escribe tu nombre completo (ej. Carmen Gallardo)..."
+                autocomplete="off"
+              >
+              <div id="autocomplete-list" class="autocomplete-list"></div>
+            </div>
+            <button type="submit" id="btn-search" class="btn btn-primary">
+              Generar Certificado
+            </button>
+          </div>
+        </form>
+
+        <div id="status-container" class="status-container">
+          <div class="status-msg status-loading">
+            <div class="spinner"></div>
+            <span>Conectando con la base de datos de asistentes...</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Sección de Resultado del Certificado -->
+      <section id="certificate-section" class="certificate-section">
+        <div class="cert-card">
+          <div class="cert-header">
+            <div>
+              <h2 class="cert-title">🎓 ¡Certificado listo!</h2>
+              <p style="color: var(--text-secondary); font-size: 0.95rem;">
+                Tu certificado ha sido generado exitosamente a partir de la base de datos oficial.
+              </p>
+            </div>
+            <div class="cert-actions">
+              <button id="btn-download-pdf" class="btn btn-primary">
+                📄 Descargar PDF
+              </button>
+            </div>
+          </div>
+
+          <!-- Lienzo Canvas -->
+          <div class="canvas-wrapper">
+            <canvas id="cert-canvas" width="1200" height="800"></canvas>
+          </div>
+        </div>
+      </section>
+
+      <!-- Información Complementaria -->
+      <section class="info-grid">
+        <div class="info-card">
+          <h3>⚡ Generación Inmediata</h3>
+          <p>El certificado se genera en tiempo real directamente en tu navegador con calidad vectorial de alta resolución lista para imprimir o compartir en LinkedIn.</p>
+        </div>
+        <div class="info-card">
+          <h3>🔒 Verificación Oficial</h3>
+          <p>Cada certificado cuenta con una firma digital e identificador único alfanumérico que certifica tu asistencia al taller de Trabajo Científico.</p>
+        </div>
+        <div class="info-card">
+          <h3>💡 ¿No encuentras tu nombre?</h3>
+          <p>Asegúrate de escribir tu nombre o apellido completo sin faltas tipográficas. Si persistes con inconvenientes, contáctanos a través de nuestros canales oficiales.</p>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>© 2026 Trabajo Científico. Todos los derechos reservados. | <a href="../index.html">Portal de Formación</a></p>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
