@@ -35,7 +35,7 @@ const EVENTS = {
     tipo: 'masterclass',
     intensidad: '1 hora',
     fecha: 'PENDIENTE',
-    csvUrl: 'PENDIENTE'
+    csvUrl: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRy1nwKVv4cj0p31qIKOEwOlLUUJagzpjYq29aAZvxN-EacNAtC2hewA0iHUlQaedV6wUpEuaZM2qet/pub?output=csv'
   },
   'ciencia-datos-python': {
     titulo: 'Ciencia de Datos con Python + IA',
