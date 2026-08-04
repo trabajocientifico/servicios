@@ -1,0 +1,1067 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trabajo Científico - Plataforma de Educación</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/portal.css">
+  <script src="js/config.js"></script>
+  <script src="js/prefs.js"></script>
+  <style>
+    /* Estilos adicionales para el modal de acceso */
+    .modal-access {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(8px);
+      z-index: 2000;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal-access.active {
+      display: flex;
+    }
+    .modal-content {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      padding: 2.25rem;
+      border-radius: var(--radius);
+      width: 90%;
+      max-width: 450px;
+      box-shadow: 0 24px 48px rgba(0,0,0,0.45);
+      position: relative;
+    }
+    .modal-close {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: none;
+      border: none;
+      color: var(--text-secondary);
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+    .modal-header h2 {
+      margin-top: 0;
+      color: var(--text-primary);
+      font-size: 1.8rem;
+    }
+    .modal-header p {
+      color: var(--text-secondary);
+      margin-bottom: 2rem;
+    }
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+    .form-group label {
+      display: block;
+      color: var(--text-primary);
+      margin-bottom: 0.5rem;
+      font-size: 0.9rem;
+    }
+    .form-group input {
+      width: 100%;
+      padding: 0.8rem;
+      background: var(--bg-surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      color: var(--text-primary);
+      font-family: inherit;
+      font-size: 1rem;
+      transition: border-color 0.2s;
+    }
+    .form-group input:focus {
+      outline: none;
+      border-color: var(--brand-500);
+    }
+    .btn-access {
+      width: 100%;
+      padding: 0.95rem;
+      background: var(--brand-600);
+      border: none;
+      border-radius: var(--radius-sm);
+      color: #fff;
+      font-family: inherit;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.2s, box-shadow 0.2s;
+    }
+    .btn-access:hover {
+      background: var(--brand-500);
+      box-shadow: var(--shadow-brand);
+    }
+    .field-hint {
+      color: var(--text-secondary);
+      font-size: 0.85rem;
+      margin-top: 0.45rem;
+      line-height: 1.5;
+    }
+    .error-msg {
+      color: var(--error, #ff4d4d);
+      font-size: 0.85rem;
+      margin-top: 0.5rem;
+      display: none;
+    }
+    /* Section divider: deja que portal.css lo controle */
+
+    /* Estilos Sección Instructor */
+    .instructor-section {
+      position: relative;
+      z-index: 1;
+      max-width: var(--content-max);
+      margin: 0 auto;
+      padding: 40px clamp(16px, 4vw, 40px) 72px;
+    }
+    .instructor-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2.5rem;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    .instructor-grid {
+      display: grid;
+      grid-template-columns: 300px 1fr;
+      gap: 3rem;
+    }
+    @media (max-width: 850px) {
+      .instructor-grid { grid-template-columns: 1fr; text-align: center; }
+      .instructor-highlights { text-align: left; }
+      .instructor-contact { justify-content: center; }
+    }
+    .instructor-placeholder-img {
+      display: block;
+      width: 250px;
+      height: 250px;
+      object-fit: cover;
+      background: var(--bg-surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      margin: 0 auto 1.5rem;
+    }
+    .instructor-socials {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+    }
+    .social-link {
+      width: 40px;
+      height: 40px;
+      background: var(--bg-surface-2);
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-weight: bold;
+      transition: all 0.2s;
+      border: 1px solid var(--border);
+    }
+    .social-link:hover {
+      background: var(--brand-600);
+      border-color: var(--brand-600);
+      color: #fff;
+      transform: translateY(-2px);
+    }
+    .instructor-header-info h3 {
+      font-size: 2.2rem;
+      margin: 0 0 0.5rem;
+      color: var(--text-primary);
+    }
+    .instructor-titles {
+      color: var(--brand-text);
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+    .instructor-degrees {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      margin-bottom: 2rem;
+    }
+    .instructor-current-study {
+      color: var(--brand-text);
+      font-weight: 600;
+      background: var(--brand-tint);
+      padding: 2px 10px;
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--brand-ring);
+      white-space: nowrap;
+      display: inline-block;
+      margin-top: 4px;
+    }
+    .instructor-cv-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 1.25rem;
+      padding: 10px 18px;
+      color: var(--text-primary);
+      text-decoration: none;
+      font-size: 0.88rem;
+      font-weight: 600;
+      border-radius: var(--radius-sm);
+      background: var(--bg-surface-2);
+      border: 1px solid var(--border);
+      transition: all 0.2s ease;
+    }
+    .instructor-cv-link:hover {
+      transform: translateY(-2px);
+      border-color: var(--brand-ring);
+      background: var(--brand-tint);
+      color: var(--brand-text);
+    }
+    .instructor-cv-link svg {
+      transition: transform 0.25s ease;
+    }
+    .instructor-cv-link:hover svg {
+      transform: translateY(-1px);
+    }
+    .instructor-bio {
+      color: var(--text-primary);
+      line-height: 1.7;
+      margin-bottom: 2rem;
+    }
+    .instructor-highlights {
+      list-style: none;
+      padding: 0;
+      margin: 1.5rem 0;
+    }
+    .instructor-highlights li {
+      margin-bottom: 0.8rem;
+      padding-left: 1.5rem;
+      position: relative;
+    }
+    .instructor-highlights li::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      color: var(--brand-text);
+      font-weight: bold;
+    }
+    .instructor-contact {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+    }
+    .contact-item {
+      color: var(--text-primary);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.95rem;
+      transition: color 0.3s;
+    }
+    .contact-item:hover {
+      color: var(--brand-text);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Fondo: lavado rojo estático detrás del hero -->
+  <div class="portal-bg"></div>
+
+  <!-- Navbar -->
+  <nav class="portal-nav" id="portal-nav">
+    <a href="#" class="nav-brand">
+      <img src="imagenes/logo-nav.png" alt="Trabajo Científico" class="nav-logo" width="128" height="63">
+      <div class="nav-title">Trabajo<span>Científico</span></div>
+      <span class="nav-brand-tag">Cursos</span>
+    </a>
+    <div class="nav-links">
+      <a href="#en-vivo" class="nav-link nav-link--live"><span class="live-dot"></span> En vivo</a>
+      <a href="#cursos" class="nav-link">Cursos</a>
+      <a href="certificados/" class="nav-link" style="color: var(--brand-text);">🎓 Certificados</a>
+      <a href="#features" class="nav-link">Plataforma</a>
+      <a href="#instructor" class="nav-link">Instructor</a>
+      <div class="nav-socials">
+        <a href="https://www.youtube.com/@TCientifico" target="_blank" rel="noopener" class="nav-social nav-social--yt" title="Canal de YouTube" aria-label="YouTube">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+        </a>
+        <a href="https://chat.whatsapp.com/GhF8Q1NkdP07CsZGwDAoJu" target="_blank" rel="noopener" class="nav-social nav-social--wa" title="Comunidad de WhatsApp" aria-label="WhatsApp">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.946C.16 5.335 5.495 0 12.05 0a11.817 11.817 0 018.413 3.488 11.824 11.824 0 013.48 8.414c-.003 6.555-5.338 11.89-11.893 11.89a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 001.595 5.39l-.999 3.648 3.893-1.737zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/></svg>
+        </a>
+      </div>
+      <a href="https://trabajocientifico.org/" class="nav-back" title="Volver al sitio principal">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+        <span>trabajocientifico.org</span>
+      </a>
+      <div class="prefs-controls">
+        <div class="prefs-group" role="group" aria-label="Tamaño del texto">
+          <button type="button" class="prefs-btn" data-pref-font="normal" aria-pressed="true" title="Texto normal">A</button>
+          <button type="button" class="prefs-btn" data-pref-font="grande" aria-pressed="false" title="Texto grande">A</button>
+          <button type="button" class="prefs-btn" data-pref-font="extra" aria-pressed="false" title="Texto muy grande">A</button>
+        </div>
+        <button type="button" class="prefs-btn prefs-btn--theme" data-pref-theme>
+          <span data-pref-theme-icon>🌙</span>
+        </button>
+      </div>
+      <a href="#en-vivo" class="nav-cta">Inscríbete ahora</a>
+    </div>
+    <div class="nav-socials nav-socials--mobile">
+      <div class="prefs-controls">
+        <div class="prefs-group" role="group" aria-label="Tamaño del texto">
+          <button type="button" class="prefs-btn" data-pref-font="normal" aria-pressed="true" title="Texto normal">A</button>
+          <button type="button" class="prefs-btn" data-pref-font="grande" aria-pressed="false" title="Texto grande">A</button>
+          <button type="button" class="prefs-btn" data-pref-font="extra" aria-pressed="false" title="Texto muy grande">A</button>
+        </div>
+        <button type="button" class="prefs-btn prefs-btn--theme" data-pref-theme>
+          <span data-pref-theme-icon>🌙</span>
+        </button>
+      </div>
+
+      <a href="https://www.youtube.com/@TCientifico" target="_blank" rel="noopener" class="nav-social nav-social--yt" title="YouTube" aria-label="YouTube">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+      </a>
+      <a href="https://chat.whatsapp.com/GhF8Q1NkdP07CsZGwDAoJu" target="_blank" rel="noopener" class="nav-social nav-social--wa" title="WhatsApp" aria-label="WhatsApp">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.946C.16 5.335 5.495 0 12.05 0a11.817 11.817 0 018.413 3.488 11.824 11.824 0 013.48 8.414c-.003 6.555-5.338 11.89-11.893 11.89a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 001.595 5.39l-.999 3.648 3.893-1.737zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/></svg>
+      </a>
+      <a href="https://trabajocientifico.org/" class="nav-back nav-back--mobile" title="Volver al sitio principal" aria-label="Volver a trabajocientifico.org">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+        <span>.org</span>
+      </a>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-badge">
+      <span class="pulse-dot"></span>
+      Plataforma de Alta Especialización
+    </div>
+    <h1>Ciencia, Datos e<br><span class="gradient-text">Inteligencia Artificial</span></h1>
+    <p class="hero-subtitle">Domina las herramientas tecnológicas que están transformando la investigación y la industria. De lo básico a lo avanzado con Trabajo Científico.</p>
+
+    <div class="hero-ctas">
+      <a href="#en-vivo" class="hero-cta hero-cta--primary">
+        <span class="hero-cta-icon"><span class="live-dot"></span></span>
+        <span class="hero-cta-text">
+          <strong>Cursos en vivo</strong>
+          <small>Inician en agosto</small>
+        </span>
+      </a>
+      <a href="#cursos" class="hero-cta hero-cta--free">
+        <span class="hero-cta-icon">🚀</span>
+        <span class="hero-cta-text">
+          <strong>Cursos gratuitos</strong>
+          <small>Acceso inmediato</small>
+        </span>
+      </a>
+      <a href="https://www.youtube.com/@TCientifico" target="_blank" rel="noopener" class="hero-cta hero-cta--yt">
+        <span class="hero-cta-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+        </span>
+        <span class="hero-cta-text">
+          <strong>YouTube</strong>
+          <small>Tutoriales y clases gratis</small>
+        </span>
+      </a>
+      <a href="https://chat.whatsapp.com/GhF8Q1NkdP07CsZGwDAoJu" target="_blank" rel="noopener" class="hero-cta hero-cta--wa">
+        <span class="hero-cta-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.946C.16 5.335 5.495 0 12.05 0a11.817 11.817 0 018.413 3.488 11.824 11.824 0 013.48 8.414c-.003 6.555-5.338 11.89-11.893 11.89a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 001.595 5.39l-.999 3.648 3.893-1.737zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/></svg>
+        </span>
+        <span class="hero-cta-text">
+          <strong>WhatsApp</strong>
+          <small>Únete a la comunidad</small>
+        </span>
+      </a>
+      <a href="https://trabajocientifico.org/" class="hero-cta hero-cta--site">
+        <span class="hero-cta-icon">🏠</span>
+        <span class="hero-cta-text">
+          <strong>trabajocientifico.org</strong>
+          <small>Servicios y proyectos</small>
+        </span>
+      </a>
+    </div>
+
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <span class="hero-stat-number count-up" data-target="2">0</span>
+        <span class="hero-stat-label">Cursos en vivo</span>
+      </div>
+      <div class="hero-stat">
+        <span class="hero-stat-number count-up" data-target="20">0</span>
+        <span class="hero-stat-label">Horas certificadas</span>
+      </div>
+      <div class="hero-stat">
+        <span class="hero-stat-number count-up" data-target="7">0</span>
+        <span class="hero-stat-label">Sesiones por curso</span>
+      </div>
+      <div class="hero-stat">
+        <span class="hero-stat-number count-up" data-target="6">0</span>
+        <span class="hero-stat-label">Cursos gratuitos</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Próximos inicios: los dos cursos en vivo, arriba de todo -->
+  <section class="upcoming-section" id="en-vivo">
+    <div class="upcoming-header reveal">
+      <span class="upcoming-eyebrow"><span class="live-dot"></span> En vivo · Inscripciones abiertas</span>
+      <h2>Próximos <span class="gradient-text">inicios</span></h2>
+      <p class="section-subtitle">20 horas certificadas en sesiones en vivo con el instructor. Las grabaciones quedan cargadas en la plataforma para verlas cuando quieras, con evaluación por módulo y certificado al finalizar.</p>
+    </div>
+
+    <div class="upcoming-list">
+      <!-- Curso en vivo 1: Ciencia de Datos Profesional con Python + IA -->
+      <a href="#" class="upcoming-card reveal" data-start="2026-08-07" data-lessons="7" onclick="openAccessModal(event, 'ciencia-datos-profesional-ia', 'Ciencia de Datos Profesional con Python + IA', 'ciencia07')">
+        <div class="upcoming-media">
+          <picture>
+            <source srcset="imagenes/cienciadedatos-card.webp" type="image/webp">
+            <img src="imagenes/cienciadedatos-card.jpg" alt="Escritorio con un portátil mostrando código Python y gráficos de datos" width="640" height="360" loading="lazy" decoding="async">
+          </picture>
+          <div class="upcoming-date">
+            <span class="upcoming-date-month">Ago</span>
+            <span class="upcoming-date-day">07</span>
+            <span class="upcoming-date-year">2026</span>
+          </div>
+        </div>
+        <div class="upcoming-body">
+          <span class="upcoming-badge"><span class="live-dot"></span> En vivo</span>
+          <h3 class="upcoming-title">Ciencia de Datos Profesional con Python + IA</h3>
+          <p class="upcoming-desc">7 sesiones en vivo (6 de 3 horas y 1 de 2 horas) con grabaciones en la plataforma, quiz por módulo y certificación.</p>
+          <div class="upcoming-facts">
+            <span>⏱ 20 horas certificadas</span>
+            <span>🎬 7 sesiones en vivo</span>
+            <span>🎓 Certificado</span>
+          </div>
+        </div>
+        <div class="upcoming-action">
+          <span class="upcoming-countdown" data-countdown></span>
+          <span class="upcoming-cta">Ingresar →</span>
+        </div>
+      </a>
+
+      <!-- Curso en vivo 2: Inteligencia Artificial para Investigación Científica -->
+      <a href="#" class="upcoming-card reveal" data-start="2026-08-20" data-lessons="7" onclick="openAccessModal(event, 'ia-investigacion-cientifica', 'Inteligencia Artificial para Investigación Científica', 'investigacion20')">
+        <div class="upcoming-media">
+          <picture>
+            <source srcset="imagenes/inteligenciaartificial-card.webp" type="image/webp">
+            <img src="imagenes/inteligenciaartificial-card.jpg" alt="Investigador en bata analizando datos sobre una interfaz holográfica de inteligencia artificial" width="640" height="360" loading="lazy" decoding="async">
+          </picture>
+          <div class="upcoming-date">
+            <span class="upcoming-date-month">Ago</span>
+            <span class="upcoming-date-day">20</span>
+            <span class="upcoming-date-year">2026</span>
+          </div>
+        </div>
+        <div class="upcoming-body">
+          <span class="upcoming-badge"><span class="live-dot"></span> En vivo</span>
+          <h3 class="upcoming-title">Inteligencia Artificial para Investigación Científica</h3>
+          <p class="upcoming-desc">7 sesiones en vivo (6 de 3 horas y 1 de 2 horas) con grabaciones en la plataforma, quiz por módulo y certificación.</p>
+          <div class="upcoming-facts">
+            <span>⏱ 20 horas certificadas</span>
+            <span>🎬 7 sesiones en vivo</span>
+            <span>🎓 Certificado</span>
+          </div>
+        </div>
+        <div class="upcoming-action">
+          <span class="upcoming-countdown" data-countdown></span>
+          <span class="upcoming-cta">Ingresar →</span>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- Courses Section -->
+  <section class="courses-section" id="cursos">
+    <!-- CURSOS GRATUITOS -->
+    <div class="section-divider reveal">
+      <div class="section-divider-text">
+        <span class="section-eyebrow">Empieza hoy</span>
+        <h2>Cursos <span class="gradient-text">Introductorios</span></h2>
+        <p class="section-subtitle">Aprende los fundamentos con contenido en abierto, video, recursos y quizzes interactivos.</p>
+      </div>
+      <span class="badge-free">🆓 Acceso Gratuito</span>
+    </div>
+
+    <div class="courses-grid">
+      <!-- Curso Gratis 1: Bibliometrix en Rstudio -->
+      <a href="#" class="course-card reveal" data-theme="purple" onclick="openAccessModal(event, 'bibliometrix-rstudio', 'Bibliometrix en Rstudio', 'bibliometrix21', true)">
+        <div class="card-thumbnail">
+          <span class="card-icon">📚</span>
+          <div class="card-gradient-bar"></div>
+        </div>
+        <div class="card-body">
+          <span class="card-category">Introductorio</span>
+          <h3 class="card-title">Bibliometrix en Rstudio</h3>
+          <p class="card-description">Analiza la producción científica con herramientas estadísticas avanzadas en R.</p>
+          <div class="card-meta">
+            <span class="card-meta-item">⏱ 9 horas</span>
+            <span class="card-meta-item">🆓 Gratis</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Curso Gratis 2: Python + IA GeoInformación -->
+      <a href="#" class="course-card reveal" data-theme="blue" onclick="openAccessModal(event, 'python-ia-geoinfo', 'Python + IA en GeoInformación', 'python24', true)">
+        <div class="card-thumbnail">
+          <span class="card-icon">🌍</span>
+          <div class="card-gradient-bar"></div>
+        </div>
+        <div class="card-body">
+          <span class="card-category">Introductorio</span>
+          <h3 class="card-title">Python + IA en GeoInformación</h3>
+          <p class="card-description">Aprende a procesar datos espaciales con herramientas de IA de vanguardia.</p>
+          <div class="card-meta">
+            <span class="card-meta-item">⏱ 9 horas</span>
+            <span class="card-meta-item">🆓 Gratis</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Curso Gratis 3: AgroClima con Python y RStudio -->
+      <a href="#" class="course-card reveal" data-theme="orange" onclick="openAccessModal(event, 'agroclima-python-r', 'AgroClima con Python y RStudio', 'agroclima25', true)">
+        <div class="card-thumbnail">
+          <span class="card-icon">🌦️</span>
+          <div class="card-gradient-bar"></div>
+        </div>
+        <div class="card-body">
+          <span class="card-category">Introductorio</span>
+          <h3 class="card-title">AgroClima con Python y RStudio</h3>
+          <p class="card-description">Analiza datos climáticos y agrícolas con Python y RStudio para la toma de decisiones.</p>
+          <div class="card-meta">
+            <span class="card-meta-item">⏱ 9 horas</span>
+            <span class="card-meta-item">🆓 Gratis</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Curso Gratis 4: Excel Inteligente -->
+      <a href="#" class="course-card reveal" data-theme="green" onclick="openAccessModal(event, 'excel-inteligente', 'Excel Inteligente', 'excel25', true)">
+        <div class="card-thumbnail">
+          <span class="card-icon">📊</span>
+          <div class="card-gradient-bar"></div>
+        </div>
+        <div class="card-body">
+          <span class="card-category">Introductorio</span>
+          <h3 class="card-title">Excel Inteligente</h3>
+          <p class="card-description">Domina las funciones avanzadas de Excel potenciadas con Inteligencia Artificial.</p>
+          <div class="card-meta">
+            <span class="card-meta-item">⏱ 9 horas</span>
+            <span class="card-meta-item">🆓 Gratis</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Curso Gratis 5: Python + IA en Ciencia de Datos -->
+      <a href="#" class="course-card reveal" data-theme="cyan" onclick="openAccessModal(event, 'python-ia-ciencia-datos', 'Python + IA en Ciencia de Datos', 'ciencia26', true)">
+        <div class="card-thumbnail">
+          <span class="card-icon">🐍</span>
+          <div class="card-gradient-bar"></div>
+        </div>
+        <div class="card-body">
+          <span class="card-category">Introductorio</span>
+          <h3 class="card-title">Python + IA en Ciencia de Datos</h3>
+          <p class="card-description">Domina la programación científica de datos potenciada por Inteligencia Artificial.</p>
+          <div class="card-meta">
+            <span class="card-meta-item">⏱ 9 horas</span>
+            <span class="card-meta-item">🆓 Gratis</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Curso Gratis 6: Visualización Gráfica con Python + IA (Próximamente — inicia en septiembre) -->
+      <a href="https://luma.com/o89tyagn" target="_blank" rel="noopener" class="course-card reveal upcoming" data-theme="pink">
+        <div class="card-thumbnail">
+          <span class="card-icon">🎨</span>
+          <span class="card-upcoming-badge">🚀 Próximamente</span>
+          <div class="card-gradient-bar"></div>
+        </div>
+        <div class="card-body">
+          <span class="card-category">🗓️ Inicia en septiembre de 2026</span>
+          <h3 class="card-title">Visualización Gráfica con Python + IA</h3>
+          <p class="card-description">Crea visualizaciones científicas potentes y dashboards inteligentes con Python e IA.</p>
+          <div class="card-meta">
+            <span class="card-meta-item">🆓 Gratis</span>
+            <span class="card-meta-item card-meta-cta">📝 Inscríbete →</span>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <!-- ============================================================
+         CURSOS PROFESIONALES — OCULTOS TEMPORALMENTE
+         Se ocultan para dar todo el protagonismo a los dos cursos
+         en vivo que inician el 7 y el 20 de agosto de 2026.
+         Para volver a mostrarlos: borrar esta línea de apertura y
+         la de cierre que dice "FIN CURSOS PROFESIONALES OCULTOS".
+         Los cursos siguen funcionando si se entra por su enlace.
+         ============================================================ -->
+    <!--
+    <!== CURSOS PROFESIONALES ==>
+    <div class="section-divider reveal section-divider--pro">
+      <div class="section-divider-text">
+        <span class="section-eyebrow">Da el siguiente paso</span>
+        <h2>Cursos <span class="gradient-text">Profesionales</span></h2>
+        <p class="section-subtitle">Programas avanzados con proyectos aplicados, certificación y mentoría.</p>
+      </div>
+      <span class="badge-pro">⭐ Avanzado</span>
+    </div>
+
+    <div class="courses-grid">
+      <!== Curso Pro 1: Excel ==>
+      <a href="#" class="course-card reveal" data-theme="green" onclick="openAccessModal(event, 'excel-vida', 'Excel para la Vida', 'excel15')">
+        <div class="card-thumbnail"><span class="card-icon">📗</span><div class="card-gradient-bar"></div></div>
+        <div class="card-body">
+          <span class="card-category">Productividad</span>
+          <h3 class="card-title">Excel para la Vida</h3>
+          <div class="card-meta"><span class="card-meta-item">⏱ 12 horas</span></div>
+        </div>
+      </a>
+
+      <!== Curso Pro 2: Power BI ==>
+      <a href="#" class="course-card reveal" data-theme="yellow" onclick="openAccessModal(event, 'dashboard-powerbi', 'Dashboard con Power BI', 'dashboard19')">
+        <div class="card-thumbnail"><span class="card-icon">📈</span><div class="card-gradient-bar"></div></div>
+        <div class="card-body">
+          <span class="card-category">BI</span>
+          <h3 class="card-title">Dashboard con Power BI</h3>
+          <div class="card-meta"><span class="card-meta-item">⏱ 12 horas</span></div>
+        </div>
+      </a>
+
+      <!== Curso Pro 3: ArcGIS Pro ==>
+      <a href="#" class="course-card reveal" data-theme="green" onclick="openAccessModal(event, 'arcgis-pro', 'ArcGIS PRO', 'arcgis9')">
+        <div class="card-thumbnail"><span class="card-icon">🗺️</span><div class="card-gradient-bar"></div></div>
+        <div class="card-body">
+          <span class="card-category">GIS</span>
+          <h3 class="card-title">Analizando con ArcGIS PRO</h3>
+          <div class="card-meta"><span class="card-meta-item">⏱ 12 horas</span></div>
+        </div>
+      </a>
+
+      <!== Curso Pro 4: Viz Inteligente ==>
+      <a href="#" class="course-card reveal" data-theme="purple" onclick="openAccessModal(event, 'python-ia-viz', 'Python + IA para Visualización Inteligente', 'python36')">
+        <div class="card-thumbnail"><span class="card-icon">🎨</span><div class="card-gradient-bar"></div></div>
+        <div class="card-body">
+          <span class="card-category">Viz</span>
+          <h3 class="card-title">Python + IA Visualización Inteligente</h3>
+          <div class="card-meta"><span class="card-meta-item">⏱ 12 horas</span></div>
+        </div>
+      </a>
+
+      <!== Curso Pro 5: GeoEstadistica ==>
+      <a href="#" class="course-card reveal" data-theme="blue" onclick="openAccessModal(event, 'geoestadistica-python', 'GeoEstadística con Python', 'geoestadistica23')">
+        <div class="card-thumbnail"><span class="card-icon">📊</span><div class="card-gradient-bar"></div></div>
+        <div class="card-body">
+          <span class="card-category">Análisis</span>
+          <h3 class="card-title">GeoEstadística con Python</h3>
+          <div class="card-meta"><span class="card-meta-item">⏱ 12 horas</span></div>
+        </div>
+      </a>
+
+      <!== Curso Pro 6: Automatizacion ==>
+      <a href="#" class="course-card reveal" data-theme="orange" onclick="openAccessModal(event, 'automatizacion-python', 'Automatización de Tareas con Python', 'automatizacion31')">
+        <div class="card-thumbnail"><span class="card-icon">⚡</span><div class="card-gradient-bar"></div></div>
+        <div class="card-body">
+          <span class="card-category">Automatización</span>
+          <h3 class="card-title">Automatización de Tareas con Python</h3>
+          <div class="card-meta"><span class="card-meta-item">⏱ 12 horas</span></div>
+        </div>
+      </a>
+
+      <!== Curso Pro 7: IA Vida ==>
+      <a href="#" class="course-card reveal" data-theme="cyan" onclick="openAccessModal(event, 'ia-vida', 'IA para la Vida', 'ia12')">
+        <div class="card-thumbnail"><span class="card-icon">🤖</span><div class="card-gradient-bar"></div></div>
+        <div class="card-body">
+          <span class="card-category">IA</span>
+          <h3 class="card-title">IA para la Vida</h3>
+          <div class="card-meta"><span class="card-meta-item">⏱ 12 horas</span></div>
+        </div>
+      </a>
+
+      <!== Curso Pro 8: Optimizacion ==>
+      <a href="#" class="course-card reveal" data-theme="pink" onclick="openAccessModal(event, 'optimizacion-ia', 'Optimización Científica con IA', 'optimizacion27')">
+        <div class="card-thumbnail"><span class="card-icon">🔬</span><div class="card-gradient-bar"></div></div>
+        <div class="card-body">
+          <span class="card-category">Ciencia</span>
+          <h3 class="card-title">Optimización Científica con IA</h3>
+          <div class="card-meta"><span class="card-meta-item">⏱ 12 horas</span></div>
+        </div>
+      </a>
+    </div>
+    FIN CURSOS PROFESIONALES OCULTOS -->
+
+  </section>
+
+  <!-- Access Modal -->
+  <div id="access-modal" class="modal-access">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeAccessModal()">&times;</button>
+      <div class="modal-header">
+        <h2 id="modal-course-title">Acceso al Curso</h2>
+        <p id="modal-subtitle">Ingresa tus datos para continuar</p>
+      </div>
+      <form id="access-form" onsubmit="handleAccess(event)">
+        <input type="hidden" id="target-course-id">
+        <input type="hidden" id="target-course-pass">
+        <input type="hidden" id="is-free-course">
+
+        <div class="form-group">
+          <label for="user-name">Nombre completo</label>
+          <input type="text" id="user-name" required maxlength="60" placeholder="Ej: María Fernanda Rodríguez Gómez">
+          <p class="field-hint">Escríbelo tal como quieres que aparezca en tu certificado.</p>
+        </div>
+        <div class="form-group">
+          <label>Correo Electrónico</label>
+          <input type="email" id="user-email" required placeholder="tu@correo.com">
+        </div>
+        <div class="form-group" id="pass-field-group">
+          <label>Clave de Acceso</label>
+          <input type="password" id="user-pass" placeholder="Clave del curso">
+          <p id="error-msg" class="error-msg">Clave incorrecta. Por favor verifica.</p>
+        </div>
+
+        <button type="submit" class="btn-access" id="btn-access-submit">Ingresar al Curso</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Features Section -->
+  <section class="features-section" id="features">
+    <div class="section-header reveal">
+      <h2>Una plataforma <span class="gradient-text">completa</span></h2>
+      <p>Todo lo que necesitas para aprender de manera efectiva</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card reveal">
+        <span class="feature-icon">🎮</span>
+        <h3 class="feature-title">Gamificación</h3>
+        <p class="feature-desc">Sistema de XP, niveles, logros y rachas que hacen el aprendizaje adictivo.</p>
+      </div>
+      <div class="feature-card reveal">
+        <span class="feature-icon">🤖</span>
+        <h3 class="feature-title">Asistente IA</h3>
+        <p class="feature-desc">Chat con IA integrado para resolver tus dudas en tiempo real.</p>
+      </div>
+      <div class="feature-card reveal">
+        <span class="feature-icon">📝</span>
+        <h3 class="feature-title">Quizzes Interactivos</h3>
+        <p class="feature-desc">Evalúa tu conocimiento con quizzes al final de cada módulo.</p>
+      </div>
+      <div class="feature-card reveal">
+        <span class="feature-icon">🎓</span>
+        <h3 class="feature-title">Certificados</h3>
+        <p class="feature-desc">Obtén un certificado personalizado al completar cada curso.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Instructor Section -->
+  <section class="instructor-section" id="instructor">
+    <div class="section-header reveal">
+      <h2>Conoce a tu <span class="gradient-text">Instructor</span></h2>
+    </div>
+    
+    <div class="instructor-card reveal">
+      <div class="instructor-grid">
+        <div class="instructor-image-area">
+          <div class="instructor-image-wrapper">
+            <picture>
+              <source srcset="imagenes/oscar-vargas-500.webp" type="image/webp">
+              <img src="imagenes/oscar-vargas-500.jpg" alt="Oscar Iván Vargas Pineda" class="instructor-placeholder-img" width="500" height="500" loading="lazy" decoding="async">
+            </picture>
+          </div>
+          <div class="instructor-socials">
+            <a href="https://www.linkedin.com/in/oscar-ivan-vargas-pineda-2aa543240/" target="_blank" class="social-link" title="LinkedIn">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            </a>
+            <a href="https://www.youtube.com/@TCientifico" target="_blank" class="social-link" title="YouTube">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+            </a>
+            <a href="https://www.instagram.com/trabajocientifico/" target="_blank" class="social-link" title="Instagram">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+            </a>
+            <a href="https://trabajocientifico.github.io/servicios/" target="_blank" class="social-link" title="Sitio Web">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm-.5 2.05V6.5H7.22A15.97 15.97 0 0111.5 2.05zm1 0A15.97 15.97 0 0116.78 6.5H12.5V2.05zM6.35 8.5h5.15v4H3.07a9.96 9.96 0 013.28-4zm6.15 0h5.15a9.96 9.96 0 013.28 4H12.5V8.5zm-9.43 6H11.5v4H6.35a9.96 9.96 0 01-3.28-4zm10.43 0h8.43a9.96 9.96 0 01-3.28 4H12.5v-4zm-1 6v-4.45A15.97 15.97 0 017.22 17.5h4.28v4.45zm1 0V17.5h4.28a15.97 15.97 0 01-4.28 4.45z"/></svg>
+            </a>
+          </div>
+          <a href="https://trabajocientifico.github.io/enlaces/index/perfil.html" target="_blank" rel="noopener" class="instructor-cv-link">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            <span>Ver currículo completo</span>
+          </a>
+        </div>
+        
+        <div class="instructor-info">
+          <div class="instructor-header-info">
+            <h3>Oscar Ivan Vargas Pineda</h3>
+            <p class="instructor-titles">Científico de Datos | Docente Universitario</p>
+            <p class="instructor-degrees">Ingeniero Agroindustrial · Especialista en Gestión Integral del Agua · Magíster en Gestión Ambiental Sostenible · PhD en Ciencias Agrarias · <span class="instructor-current-study">Estudiante de Maestría en Inteligencia Artificial Aplicada</span></p>
+          </div>
+          
+          <div class="instructor-bio">
+            <p>Cuenta con una amplia trayectoria como Científico de Datos, desarrollando modelos analíticos de flujo automáticos para el desarrollo regional a nivel de países (Colombia, Brasil, Ecuador, Bolivia, Perú) e instituciones educativas, desarrollando flujos de trabajo formativos más eficientes a nivel académico y administrativo.</p>
+            
+            <ul class="instructor-highlights">
+              <li><strong>Docencia:</strong> 8 años de docencia universitaria — Investigación, Estadística y Análisis de Datos (Unillanos, Santo Tomás).</li>
+              <li><strong>Consultoría:</strong> 5 años como consultor para el Banco Mundial, BID y Earth Innovation Institute.</li>
+              <li><strong>Investigación:</strong> 8 publicaciones científicas en revistas indexadas como primer autor.</li>
+              <li><strong>Conferencista:</strong> Experiencia internacional en Colombia, Argentina, Perú, México, Bolivia y España.</li>
+              <li><strong>CEO:</strong> 3 años liderando la marca Trabajo Científico.</li>
+            </ul>
+          </div>
+          
+          <div class="instructor-contact">
+            <a href="mailto:oscarvargas@trabajocientifico.org" class="contact-item">
+              <span>📧</span> oscarvargas@trabajocientifico.org
+            </a>
+            <a href="https://wa.me/573184280112" class="contact-item" target="_blank">
+              <span>📱</span> +57 318 4280 112
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="portal-footer">
+    <div class="footer-cta-row">
+      <a href="https://www.youtube.com/@TCientifico" target="_blank" rel="noopener" class="footer-cta footer-cta--yt">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+        <span>Suscríbete en YouTube</span>
+      </a>
+      <a href="https://chat.whatsapp.com/GhF8Q1NkdP07CsZGwDAoJu" target="_blank" rel="noopener" class="footer-cta footer-cta--wa">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.946C.16 5.335 5.495 0 12.05 0a11.817 11.817 0 018.413 3.488 11.824 11.824 0 013.48 8.414c-.003 6.555-5.338 11.89-11.893 11.89a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 001.595 5.39l-.999 3.648 3.893-1.737zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/></svg>
+        <span>Únete por WhatsApp</span>
+      </a>
+      <a href="https://trabajocientifico.org/" class="footer-cta footer-cta--site">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+        <span>trabajocientifico.org</span>
+      </a>
+    </div>
+    <p class="footer-copy">Trabajo Científico &copy; 2026 — Alta Especialización en Datos e IA</p>
+  </footer>
+
+  <script>
+    // ========== Cuenta regresiva de los cursos en vivo ==========
+    // Se calcula contra la fecha real del visitante, así que la
+    // urgencia no hay que editarla a mano cada semana.
+    (function initCountdowns() {
+      const hoy = new Date();
+      hoy.setHours(0, 0, 0, 0);
+
+      document.querySelectorAll('[data-start]').forEach(card => {
+        const salida = card.querySelector('[data-countdown]');
+        if (!salida) return;
+
+        // Se construye en horario local: usar Date('2026-08-07') lo
+        // interpreta como UTC y en Colombia adelantaría un día.
+        const [y, m, d] = card.dataset.start.split('-').map(Number);
+        const inicio = new Date(y, m - 1, d);
+        const dias = Math.round((inicio - hoy) / 86400000);
+
+        if (dias > 1) {
+          salida.textContent = `⏳ Faltan ${dias} días`;
+          if (dias <= 7) salida.classList.add('is-imminent');
+          else if (dias <= 21) salida.classList.add('is-urgent');
+        } else if (dias === 1) {
+          salida.textContent = '⏳ Empieza mañana';
+          salida.classList.add('is-imminent');
+        } else if (dias === 0) {
+          salida.textContent = '🔴 Empieza hoy';
+          salida.classList.add('is-imminent');
+        } else {
+          salida.textContent = '▶ Curso en marcha';
+          card.classList.add('is-started');
+        }
+      });
+    })();
+
+    // ========== Access Logic ==========
+    function openAccessModal(event, courseId, courseTitle, correctPass, isFree = false) {
+      event.preventDefault();
+      document.getElementById('modal-course-title').innerText = courseTitle;
+      document.getElementById('target-course-id').value = courseId;
+      document.getElementById('target-course-pass').value = correctPass;
+      document.getElementById('is-free-course').value = isFree ? "true" : "false";
+      document.getElementById('access-modal').classList.add('active');
+      document.getElementById('error-msg').style.display = 'none';
+      document.getElementById('access-form').reset();
+
+      const passGroup = document.getElementById('pass-field-group');
+      const passInput = document.getElementById('user-pass');
+      const subtitle = document.getElementById('modal-subtitle');
+      const submitBtn = document.getElementById('btn-access-submit');
+      if (isFree) {
+        passGroup.style.display = 'none';
+        passInput.required = false;
+        subtitle.innerText = 'Curso gratuito · solo necesitamos tus datos para registrarte';
+        submitBtn.innerText = 'Acceder gratis';
+      } else {
+        passGroup.style.display = '';
+        passInput.required = true;
+        subtitle.innerText = 'Ingresa tus datos para continuar';
+        submitBtn.innerText = 'Ingresar al Curso';
+      }
+
+      const savedName = localStorage.getItem('tc_user_name');
+      const savedEmail = localStorage.getItem('tc_user_email');
+      if (savedName) document.getElementById('user-name').value = savedName;
+      if (savedEmail) document.getElementById('user-email').value = savedEmail;
+    }
+
+    function closeAccessModal() {
+      document.getElementById('access-modal').classList.remove('active');
+    }
+
+    function checkExistingSessions() {
+      // Cubre las tarjetas de la rejilla y las de la banda de próximos inicios
+      const courseCards = document.querySelectorAll('.course-card, .upcoming-card');
+      const userName = localStorage.getItem('tc_user_name');
+      
+      courseCards.forEach(card => {
+        const onclickAttr = card.getAttribute('onclick');
+        if (!onclickAttr) return;
+        
+        const match = onclickAttr.match(/'([^']+)'/);
+        if (!match) return;
+        
+        const courseId = match[1];
+        const isFree = onclickAttr.includes('true');
+        const isUnlocked = localStorage.getItem(`tc_unlocked_${courseId}`);
+        const progressKey = isFree ? `tc_free_progress_${courseId}` : `tc_progress_${courseId}`;
+        const savedProgress = localStorage.getItem(progressKey);
+        
+        if (isUnlocked && userName) {
+          card.onclick = (e) => {
+            e.preventDefault();
+            const page = isFree ? 'curso-gratis.html' : 'curso.html';
+            window.location.href = `${page}?curso=${courseId}`;
+          };
+          const category = card.querySelector('.card-category');
+          if(category) {
+            category.innerHTML = '✅ Continuar curso';
+            category.style.color = 'var(--brand-text)';
+          }
+          // En la banda el botón se deja fijo en "Ingresar": el aviso
+          // de progreso ya lo da el porcentaje de la fila de datos.
+        }
+
+        if (savedProgress) {
+          try {
+            const progressData = JSON.parse(savedProgress);
+            let percent = 0;
+            if (isFree) {
+              const done = progressData.completedSessions ? progressData.completedSessions.length : 0;
+              percent = Math.round((done / 3) * 100);
+            } else {
+              const done = progressData.completedLessons ? progressData.completedLessons.length : 0;
+              const totalLessons = parseInt(card.dataset.lessons, 10) || 15;
+              percent = done > 0 ? Math.min(Math.round((done / totalLessons) * 100), 100) : 0;
+            }
+            if (percent > 0) {
+              const meta = card.querySelector('.card-meta') || card.querySelector('.upcoming-facts');
+              if(meta) {
+                const progSpan = document.createElement('span');
+                if (meta.classList.contains('card-meta')) progSpan.className = 'card-meta-item';
+                progSpan.style.color = 'var(--brand-text)';
+                progSpan.innerHTML = `📊 ${percent}%`;
+                meta.appendChild(progSpan);
+              }
+            }
+          } catch(e) {}
+        }
+      });
+    }
+
+    function handleAccess(event) {
+      event.preventDefault();
+      const courseId = document.getElementById('target-course-id').value;
+      const correctPass = document.getElementById('target-course-pass').value;
+      const userPass = document.getElementById('user-pass').value;
+      const isFree = document.getElementById('is-free-course').value === "true";
+      const userName = document.getElementById('user-name').value;
+      const userEmail = document.getElementById('user-email').value;
+
+      const passOK = isFree || userPass.toLowerCase().trim() === correctPass.toLowerCase().trim();
+
+      if (passOK) {
+        localStorage.setItem('tc_user_name', userName);
+        localStorage.setItem('tc_user_email', userEmail);
+        localStorage.setItem(`tc_unlocked_${courseId}`, 'true');
+
+        // --- Registro en Google Sheets ---
+        const APPS_SCRIPT_URL = (window.TC_CONFIG && window.TC_CONFIG.APPS_SCRIPT_URL) || '';
+        const registroData = {
+          nombre: userName,
+          correo: userEmail,
+          cursoId: courseId,
+          curso: courseId,
+          tipo: isFree ? 'Gratuito' : 'Profesional',
+          fecha: new Date().toLocaleString('es-CO', { timeZone: 'America/Bogota' })
+        };
+
+        fetch(APPS_SCRIPT_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(registroData)
+        }).catch(err => console.warn('No se pudo registrar en Google Sheets:', err));
+        // --- Fin registro ---
+
+        const page = isFree ? 'curso-gratis.html' : 'curso.html';
+        window.location.href = `${page}?curso=${courseId}`;
+      } else {
+        document.getElementById('error-msg').style.display = 'block';
+      }
+    }
+
+    function initCountUp() {
+      const counters = document.querySelectorAll('.count-up');
+      counters.forEach(counter => {
+        const target = +counter.getAttribute('data-target');
+        const speed = 200;
+        const animate = () => {
+          const count = +counter.innerText;
+          const inc = target / speed;
+          if (count < target) {
+            counter.innerText = Math.ceil(count + inc);
+            setTimeout(animate, 10);
+          } else {
+            counter.innerText = target;
+          }
+        };
+        const observer = new IntersectionObserver((entries) => {
+          if (entries[0].isIntersecting) {
+            animate();
+            observer.unobserve(counter);
+          }
+        });
+        observer.observe(counter);
+      });
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      checkExistingSessions();
+      initCountUp();
+    });
+
+    const nav = document.getElementById('portal-nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 50);
+    });
+
+    const revealElements = document.querySelectorAll('.reveal');
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.1 });
+    revealElements.forEach(el => revealObserver.observe(el));
+  </script>
+</body>
+</html>

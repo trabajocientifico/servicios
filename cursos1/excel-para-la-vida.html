@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Excel para la Vida — Trabajo Científico</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap');
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:'Inter',sans-serif;background:#f0f0f0;color:#1a1a1a;}
+
+  /* PÁGINAS */
+  .page{width:794px;min-height:1123px;margin:0 auto 40px;background:#fff;position:relative;overflow:hidden;page-break-after:always;}
+
+  /* COLORES PROGRAMA */
+  :root{--c1:#16a34a;--c2:#065f46;--c3:#bbf7d0;--c4:#f0fdf4;}
+
+  /* ─── PORTADA ─── */
+  .cover{background:linear-gradient(145deg,var(--c2) 0%,var(--c1) 60%,#4ade80 100%);min-height:1123px;display:flex;flex-direction:column;justify-content:space-between;padding:0;}
+  .cover-top{padding:48px 56px 0;}
+  .cover-logo{font-family:'Montserrat',sans-serif;font-weight:800;font-size:13px;letter-spacing:3px;color:rgba(255,255,255,0.7);text-transform:uppercase;}
+  .cover-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.3);border-radius:20px;padding:6px 16px;font-size:12px;color:#fff;margin-top:32px;font-weight:600;letter-spacing:1px;}
+  .cover-dot{width:8px;height:8px;background:#bbf7d0;border-radius:50%;animation:pulse 2s infinite;}
+  @keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.4;}}
+  .cover-main{padding:48px 56px;}
+  .cover-icon{font-size:72px;margin-bottom:24px;}
+  .cover-title{font-family:'Montserrat',sans-serif;font-weight:800;font-size:48px;color:#fff;line-height:1.1;margin-bottom:16px;}
+  .cover-sub{font-size:18px;color:rgba(255,255,255,0.85);font-weight:300;line-height:1.5;max-width:480px;margin-bottom:48px;}
+  .cover-stats{display:flex;gap:32px;}
+  .stat{background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);border-radius:12px;padding:20px 28px;text-align:center;}
+  .stat-num{font-family:'Montserrat',sans-serif;font-weight:800;font-size:32px;color:#bbf7d0;}
+  .stat-label{font-size:11px;color:rgba(255,255,255,0.75);text-transform:uppercase;letter-spacing:1px;margin-top:4px;}
+  .cover-bottom{padding:32px 56px;background:rgba(0,0,0,0.2);display:flex;justify-content:space-between;align-items:center;}
+  .cover-bottom-text{color:rgba(255,255,255,0.7);font-size:12px;}
+  .cover-url{color:#bbf7d0;font-weight:600;font-size:13px;}
+
+  /* ─── CONTENIDO ─── */
+  .content-page{padding:56px;}
+  .section-badge{display:inline-block;background:var(--c3);color:var(--c2);font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:5px 14px;border-radius:20px;margin-bottom:12px;}
+  .section-title{font-family:'Montserrat',sans-serif;font-weight:800;font-size:28px;color:#1a1a1a;margin-bottom:8px;}
+  .section-sub{color:#64748b;font-size:14px;margin-bottom:36px;line-height:1.5;}
+  .divider{width:60px;height:4px;background:var(--c1);border-radius:2px;margin-bottom:36px;}
+
+  .level-card{border:1px solid #e2e8f0;border-radius:16px;overflow:hidden;margin-bottom:24px;}
+  .level-header{background:var(--c4);border-bottom:1px solid var(--c3);padding:18px 24px;display:flex;align-items:center;gap:16px;}
+  .level-num{background:var(--c1);color:#fff;font-family:'Montserrat',sans-serif;font-weight:800;font-size:13px;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .level-title{font-family:'Montserrat',sans-serif;font-weight:700;font-size:16px;color:#1a1a1a;}
+  .level-hours{margin-left:auto;background:var(--c1);color:#fff;font-size:11px;font-weight:700;padding:4px 12px;border-radius:20px;}
+  .level-body{padding:20px 24px;}
+  .topic-list{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+  .topic-list li{font-size:13px;color:#374151;display:flex;align-items:flex-start;gap:8px;line-height:1.4;}
+  .topic-list li::before{content:'▸';color:var(--c1);font-size:12px;flex-shrink:0;margin-top:1px;}
+
+  /* ─── METODOLOGÍA ─── */
+  .method-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:32px;}
+  .method-card{background:var(--c4);border:1px solid var(--c3);border-radius:12px;padding:20px;text-align:center;}
+  .method-icon{font-size:28px;margin-bottom:10px;}
+  .method-title{font-family:'Montserrat',sans-serif;font-weight:700;font-size:13px;color:var(--c2);margin-bottom:6px;}
+  .method-text{font-size:12px;color:#64748b;line-height:1.4;}
+
+  .benefit-list{list-style:none;margin-bottom:32px;}
+  .benefit-list li{padding:10px 0;border-bottom:1px solid #f1f5f9;font-size:13px;color:#374151;display:flex;align-items:flex-start;gap:10px;line-height:1.4;}
+  .benefit-list li:last-child{border-bottom:none;}
+  .benefit-list li::before{content:'✓';color:var(--c1);font-weight:700;font-size:14px;flex-shrink:0;}
+
+  .cta-box{background:linear-gradient(135deg,var(--c2),var(--c1));border-radius:16px;padding:28px 32px;color:#fff;display:flex;justify-content:space-between;align-items:center;}
+  .cta-text h3{font-family:'Montserrat',sans-serif;font-weight:800;font-size:18px;margin-bottom:6px;}
+  .cta-text p{font-size:13px;opacity:0.85;line-height:1.4;}
+  .cta-btn{background:#fff;color:var(--c2);font-family:'Montserrat',sans-serif;font-weight:700;font-size:13px;padding:12px 24px;border-radius:10px;text-decoration:none;white-space:nowrap;display:flex;align-items:center;gap:8px;}
+  .contact-info{margin-top:24px;display:flex;gap:24px;font-size:12px;color:#64748b;}
+  .contact-info span{display:flex;align-items:center;gap:6px;}
+
+  @media print{
+    body{background:#fff;}
+    .page{margin:0;box-shadow:none;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════
+     PÁGINA 1 — PORTADA
+═══════════════════════════════════════ -->
+<div class="page">
+  <div class="cover">
+    <div class="cover-top">
+      <div class="cover-logo">Trabajo Científico · Academia Tecnológica</div>
+      <div class="cover-badge"><span class="cover-dot"></span> Programa Certificado</div>
+    </div>
+    <div class="cover-main">
+      <div class="cover-icon">📊</div>
+      <div class="cover-title">Excel<br>para la Vida</div>
+      <div class="cover-sub">Domina Microsoft Excel desde lo básico hasta automatización avanzada con macros y dashboards profesionales.</div>
+      <div class="cover-stats">
+        <div class="stat"><div class="stat-num">3</div><div class="stat-label">Niveles</div></div>
+        <div class="stat"><div class="stat-num">36h</div><div class="stat-label">Total</div></div>
+        <div class="stat"><div class="stat-num">100%</div><div class="stat-label">Online</div></div>
+      </div>
+    </div>
+    <div class="cover-bottom">
+      <div class="cover-bottom-text">Mediado por tecnología · Plataforma interactiva · Certificado al finalizar</div>
+      <div class="cover-url">trabajocientifico.org</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     PÁGINA 2 — CONTENIDO DEL PROGRAMA
+═══════════════════════════════════════ -->
+<div class="page">
+  <div class="content-page">
+    <div class="section-badge">Contenido del Programa</div>
+    <div class="section-title">Tres niveles · 12 horas cada uno</div>
+    <div class="section-sub">Progresa a tu ritmo con acceso a una plataforma interactiva, ejercicios prácticos con datos reales y soporte de tutores expertos.</div>
+    <div class="divider"></div>
+
+    <div class="level-card">
+      <div class="level-header">
+        <div class="level-num">1</div>
+        <div class="level-title">Excel Básico e Intermedio</div>
+        <div class="level-hours">12 horas</div>
+      </div>
+      <div class="level-body">
+        <ul class="topic-list">
+          <li>Interfaz y navegación eficiente en Excel</li>
+          <li>Tipos de datos y formato de celdas</li>
+          <li>Fórmulas esenciales: SUMA, PROMEDIO, SI</li>
+          <li>Funciones de texto y fecha</li>
+          <li>Filtros, ordenamiento y validación de datos</li>
+          <li>Gráficos básicos y formato profesional</li>
+          <li>Tablas de Excel y referencias estructuradas</li>
+          <li>Impresión y presentación de hojas</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="level-card">
+      <div class="level-header">
+        <div class="level-num">2</div>
+        <div class="level-title">Excel Avanzado y Tablas Dinámicas</div>
+        <div class="level-hours">12 horas</div>
+      </div>
+      <div class="level-body">
+        <ul class="topic-list">
+          <li>BUSCARV, BUSCARX y funciones de búsqueda</li>
+          <li>Funciones estadísticas y lógicas avanzadas</li>
+          <li>Tablas dinámicas: creación y diseño</li>
+          <li>Segmentadores y líneas de tiempo</li>
+          <li>Gráficos dinámicos y combinados</li>
+          <li>Formato condicional avanzado</li>
+          <li>Power Query: importar y transformar datos</li>
+          <li>Consolidación de datos de múltiples fuentes</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="level-card">
+      <div class="level-header">
+        <div class="level-num">3</div>
+        <div class="level-title">Macros, VBA y Dashboards</div>
+        <div class="level-hours">12 horas</div>
+      </div>
+      <div class="level-body">
+        <ul class="topic-list">
+          <li>Grabación y edición de macros</li>
+          <li>Introducción a VBA: variables y estructuras</li>
+          <li>Automatización de tareas repetitivas</li>
+          <li>Formularios y controles de usuario</li>
+          <li>Diseño de dashboards interactivos</li>
+          <li>KPIs y métricas de negocio en Excel</li>
+          <li>Conexión con bases de datos externas</li>
+          <li>Proyecto final: reporte automatizado completo</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     PÁGINA 3 — METODOLOGÍA Y CTA
+═══════════════════════════════════════ -->
+<div class="page">
+  <div class="content-page">
+    <div class="section-badge">Metodología</div>
+    <div class="section-title">Aprendizaje activo y basado en proyectos</div>
+    <div class="section-sub">Nuestra plataforma interactiva combina videos, ejercicios en vivo y proyectos con datos reales del mundo laboral.</div>
+    <div class="divider"></div>
+
+    <div class="method-grid">
+      <div class="method-card">
+        <div class="method-icon">🎬</div>
+        <div class="method-title">Video-clases HD</div>
+        <div class="method-text">Sesiones grabadas y en vivo con tutores expertos, disponibles 24/7 en la plataforma.</div>
+      </div>
+      <div class="method-card">
+        <div class="method-icon">🧪</div>
+        <div class="method-title">Laboratorios Prácticos</div>
+        <div class="method-text">Ejercicios interactivos con archivos reales para aplicar cada concepto inmediatamente.</div>
+      </div>
+      <div class="method-card">
+        <div class="method-icon">📁</div>
+        <div class="method-title">Proyecto Final</div>
+        <div class="method-text">Desarrollas un caso completo que puedes incluir directamente en tu portafolio profesional.</div>
+      </div>
+      <div class="method-card">
+        <div class="method-icon">🏆</div>
+        <div class="method-title">Certificado Digital</div>
+        <div class="method-text">Certificado verificable al completar cada nivel, respaldado por Trabajo Científico.</div>
+      </div>
+    </div>
+
+    <div class="section-badge">¿Qué lograrás?</div>
+    <ul class="benefit-list" style="margin-top:16px;">
+      <li>Manejar Excel con fluidez para cualquier rol profesional o académico</li>
+      <li>Analizar grandes volúmenes de datos con tablas dinámicas y Power Query</li>
+      <li>Automatizar reportes que antes tomaban horas con macros y VBA</li>
+      <li>Crear dashboards ejecutivos que comunican información con impacto visual</li>
+      <li>Aplicar Excel a proyectos reales de contabilidad, recursos humanos, ventas y más</li>
+    </ul>
+
+    <div class="cta-box">
+      <div class="cta-text">
+        <h3>¡Inscríbete hoy!</h3>
+        <p>Cupos limitados · Inicio inmediato<br>Acceso completo a la plataforma interactiva</p>
+      </div>
+      <a class="cta-btn" href="https://forms.gle/LTbJyNjncE4rocP9A">Inscríbete →</a>
+    </div>
+
+    <div class="contact-info">
+      <span>🌐 trabajocientifico.org</span>
+      <span>✉ info@trabajocientifico.org</span>
+      <span>📱 WhatsApp disponible</span>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

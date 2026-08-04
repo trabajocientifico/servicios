@@ -1,0 +1,1442 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Clase 2 — Python + IA para Geoinformación</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500;600&family=Fraunces:opsz,wght@9..144,400;9..144,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin=""/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+<style>
+:root{--bg:#0c1017;--bg-s:#141a24;--bg-s2:#1a2233;--bg-c:#0d1117;--a:#22d3a7;--a2:#6366f1;--a3:#f59e0b;--a4:#ef4444;--a5:#ec4899;--t:#e8edf5;--t2:#8b99b0;--t3:#5a6a80;--bdr:rgba(34,211,167,.1);--gl:rgba(20,26,36,.85);--r:14px;--code-bg:#0d1117;--code-t:#c9d1d9;--canvas-bg:#0d1117;--console-bg:#000;--topbar-bg:rgba(12,16,23,.92)}
+[data-theme="light"]{--bg:#f5f7fa;--bg-s:#ffffff;--bg-s2:#edf0f5;--bg-c:#ffffff;--a:#0d9373;--a2:#4f46e5;--a3:#d97706;--a4:#dc2626;--a5:#db2777;--t:#1a1a2e;--t2:#4a5568;--t3:#8895a7;--bdr:rgba(13,147,115,.15);--gl:rgba(245,247,250,.92);--code-bg:#1e1e2e;--code-t:#c9d1d9;--canvas-bg:#1e1e2e;--console-bg:#1a1a2e;--topbar-bg:rgba(255,255,255,.95)}
+[data-theme="light"] .topbar{background:var(--topbar-bg);border-bottom:1px solid rgba(0,0,0,.08)}
+[data-theme="light"] .topbar-brand{color:var(--a)}
+[data-theme="light"] .nc{background:var(--gl);border-color:rgba(0,0,0,.08)}
+[data-theme="light"] .nb{border-color:rgba(0,0,0,.1);color:var(--t2)}
+[data-theme="light"] .nb:hover{background:var(--a);color:#fff;border-color:var(--a)}
+[data-theme="light"] .pf{background:linear-gradient(90deg,var(--a),var(--a2),var(--a5))}
+[data-theme="light"] .bgg{opacity:.02;background-image:linear-gradient(var(--a) 1px,transparent 1px),linear-gradient(90deg,var(--a) 1px,transparent 1px)}
+[data-theme="light"] .cp{background:var(--code-bg);border-color:rgba(0,0,0,.1)}
+[data-theme="light"] .ce{color:var(--code-t)}
+[data-theme="light"] .ct{background:rgba(0,0,0,.4)}
+[data-theme="light"] .oa{background:rgba(13,147,115,.05);border-top-color:rgba(255,255,255,.05)}
+[data-theme="light"] .sim-console{background:var(--console-bg);color:#4ade80;border-color:rgba(0,0,0,.1)}
+[data-theme="light"] .cb{background:var(--bg-s);border-color:rgba(0,0,0,.06);box-shadow:0 1px 3px rgba(0,0,0,.04)}
+[data-theme="light"] .cb:hover{border-color:rgba(13,147,115,.25);box-shadow:0 6px 24px rgba(13,147,115,.08)}
+[data-theme="light"] .sc2{background:var(--bg-s);border-color:rgba(0,0,0,.06);box-shadow:0 1px 3px rgba(0,0,0,.04)}
+[data-theme="light"] .co.tip{background:rgba(13,147,115,.06);color:var(--t2)}
+[data-theme="light"] .co.wrn{background:rgba(217,119,6,.06);color:var(--t2)}
+[data-theme="light"] .vf{background:var(--bg-c);border-color:rgba(0,0,0,.08)}
+[data-theme="light"] .vf input,[data-theme="light"] .vf select{color:var(--t)}
+[data-theme="light"] .vm{background:var(--bg-c);border-color:rgba(0,0,0,.06)}
+[data-theme="light"] .dict-entry{background:var(--bg-c);border-color:rgba(0,0,0,.06)}
+[data-theme="light"] .flow-box{background:var(--bg-c);border-color:rgba(0,0,0,.08)}
+[data-theme="light"] .loop-item{background:var(--bg-c);border-color:rgba(0,0,0,.08)}
+[data-theme="light"] .loop-item .idx{background:var(--bg)}
+[data-theme="light"] .method-btn{background:var(--bg-s2);border-color:rgba(0,0,0,.08);color:var(--t2)}
+[data-theme="light"] .method-btn:hover{border-color:var(--a);color:var(--a)}
+[data-theme="light"] .gdf-table th{background:rgba(13,147,115,.08)}
+[data-theme="light"] .gdf-table td{border-bottom-color:rgba(0,0,0,.04);color:var(--t2)}
+[data-theme="light"] .gdf-table tr:hover td{background:rgba(13,147,115,.04)}
+[data-theme="light"] .gdf-table tr.hl td{background:rgba(217,119,6,.1);color:var(--t)}
+[data-theme="light"] .tab-btn{background:var(--bg-s);color:var(--t2);border-color:rgba(0,0,0,.06)}
+[data-theme="light"] .tab-btn.on{background:var(--a);color:#fff}
+[data-theme="light"] .tab-btn:hover:not(.on){background:var(--bg-s2)}
+[data-theme="light"] .qa{background:var(--bg-s);border-color:rgba(0,0,0,.06)}
+[data-theme="light"] .qp{background:var(--bg-c);border-color:rgba(0,0,0,.08)}
+[data-theme="light"] .qp:hover{border-color:rgba(13,147,115,.3)}
+[data-theme="light"] .instructor-card{background:var(--bg-s);border-color:rgba(0,0,0,.06);box-shadow:0 1px 3px rgba(0,0,0,.04)}
+[data-theme="light"] .instructor-avatar{color:#fff}
+[data-theme="light"] .clb{background:linear-gradient(135deg,rgba(251,146,60,.06),rgba(251,146,60,.02));border-color:rgba(251,146,60,.2)}
+[data-theme="light"] .map-container{border-color:rgba(0,0,0,.1)}
+[data-theme="light"] .sb{background:var(--bg-s);border-color:rgba(0,0,0,.06)}
+[data-theme="light"] .li{background:var(--bg-s);border-color:rgba(0,0,0,.06)}
+[data-theme="light"] .es{background:var(--bg-c);border-left-color:var(--t3)}
+[data-theme="light"] .fn.n1{background:rgba(13,147,115,.1);border-color:rgba(13,147,115,.25)}
+[data-theme="light"] .fn.n2{background:rgba(79,70,229,.1);border-color:rgba(79,70,229,.25)}
+[data-theme="light"] .fn.n3{background:rgba(217,119,6,.1);border-color:rgba(217,119,6,.25)}
+[data-theme="light"] .fn.n4{background:rgba(219,39,119,.1);border-color:rgba(219,39,119,.25)}
+[data-theme="light"] .fn.n5{background:rgba(220,38,38,.1);border-color:rgba(220,38,38,.25)}
+/* Theme toggle */
+.theme-toggle{display:flex;align-items:center;gap:6px;cursor:pointer;padding:4px 10px;border-radius:20px;border:1px solid var(--bdr);background:rgba(255,255,255,.04);transition:all .3s;font-size:12px;color:var(--t2);user-select:none}
+.theme-toggle:hover{border-color:var(--a);color:var(--a)}
+.theme-toggle .toggle-track{width:32px;height:18px;border-radius:9px;background:var(--t3);position:relative;transition:background .3s}
+.theme-toggle .toggle-thumb{position:absolute;top:2px;left:2px;width:14px;height:14px;border-radius:50%;background:#fff;transition:all .3s;box-shadow:0 1px 3px rgba(0,0,0,.2)}
+.theme-toggle.light .toggle-track{background:var(--a)}
+.theme-toggle.light .toggle-thumb{left:16px}
+[data-theme="light"] .theme-toggle{border-color:rgba(0,0,0,.1);background:rgba(0,0,0,.03)}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--t);overflow-x:hidden;line-height:1.6}
+.slide{min-height:100vh;display:none;flex-direction:column;justify-content:center;padding:58px 56px 72px;position:relative;animation:fi .55s cubic-bezier(.16,1,.3,1)}
+.slide.active{display:flex}
+@keyframes fi{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:translateY(0)}}
+.topbar{position:fixed;top:0;left:0;right:0;height:48px;background:rgba(12,16,23,.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--bdr);display:flex;align-items:center;justify-content:space-between;padding:0 22px;z-index:100}
+.topbar-brand{font-family:'Fira Code',monospace;font-size:11px;color:var(--a);letter-spacing:1px;display:flex;align-items:center;gap:8px}
+.topbar-brand .logo{width:26px;height:26px;background:linear-gradient(135deg,var(--a),var(--a2));border-radius:6px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:10px;color:var(--bg)}
+.topbar-center{font-size:12px;color:var(--t2)}.topbar-center strong{color:var(--t)}
+.sc{font-family:'Fira Code',monospace;font-size:11px;color:var(--t3)}
+.pt{position:fixed;top:48px;left:0;right:0;height:3px;background:rgba(255,255,255,.03);z-index:101}
+.pf{height:100%;background:linear-gradient(90deg,var(--a),var(--a2),var(--a5));transition:width .4s;width:0%}
+.nc{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:12px;z-index:100;background:var(--gl);backdrop-filter:blur(20px);border:1px solid var(--bdr);padding:7px 16px;border-radius:100px}
+.nb{width:36px;height:36px;border-radius:50%;border:1px solid var(--bdr);background:0;color:var(--t2);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .3s}
+.nb:hover{background:var(--a);color:var(--bg);border-color:var(--a)}.nb:disabled{opacity:.2;pointer-events:none}
+.nd{display:flex;gap:5px}.nm{width:7px;height:7px;border-radius:50%;background:var(--t3);cursor:pointer;transition:all .3s;opacity:.25}
+.nm.on{background:var(--a);opacity:1;transform:scale(1.5)}.nm:hover{opacity:.6}
+.sl{font-family:'Fira Code',monospace;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--a);margin-bottom:12px;opacity:.8}
+.st{font-family:'Fraunces',serif;font-size:clamp(1.85rem,4.5vw,3rem);font-weight:700;line-height:1.15;margin-bottom:16px;letter-spacing:-.5px}
+.ss{font-size:1.05rem;color:var(--t2);max-width:680px;font-weight:300;line-height:1.7;margin-bottom:30px}
+.hi{color:var(--a);font-weight:600}.hb{color:var(--a2);font-weight:600}.hy{color:var(--a3);font-weight:600}.hr{color:var(--a4);font-weight:600}.hp{color:var(--a5);font-weight:600}
+.cg{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;margin-top:8px}
+.cb{background:var(--bg-s);border:1px solid var(--bdr);border-radius:var(--r);padding:22px 20px;transition:all .4s cubic-bezier(.16,1,.3,1);cursor:default}
+.cb:hover{transform:translateY(-3px);border-color:rgba(34,211,167,.3);box-shadow:0 6px 24px rgba(34,211,167,.06)}
+.cb .ic{font-size:1.8rem;margin-bottom:10px;display:block}.cb h3{font-size:.98rem;font-weight:600;margin-bottom:5px}.cb p{font-size:.82rem;color:var(--t2);line-height:1.6}
+.co{padding:16px 20px;border-radius:11px;margin-top:16px;font-size:.88rem;line-height:1.7}
+.co.tip{background:rgba(34,211,167,.06);border-left:3px solid var(--a);color:var(--t2)}.co.wrn{background:rgba(245,158,11,.06);border-left:3px solid var(--a3);color:var(--t2)}
+.co strong{color:var(--t)}
+.tc{display:grid;grid-template-columns:1fr 1fr;gap:22px;align-items:start}
+@media(max-width:900px){.tc{grid-template-columns:1fr}.slide{padding:54px 18px 72px}}
+.cp{background:var(--bg-c);border:1px solid var(--bdr);border-radius:var(--r);overflow:hidden;margin-top:12px}
+.ct{display:flex;align-items:center;justify-content:space-between;padding:8px 13px;background:rgba(0,0,0,.3);border-bottom:1px solid rgba(255,255,255,.04)}
+.cd{display:flex;gap:5px}.cd span{width:9px;height:9px;border-radius:50%}.cd span:nth-child(1){background:#ff5f57}.cd span:nth-child(2){background:#ffbd2e}.cd span:nth-child(3){background:#28c840}
+.cf{font-family:'Fira Code',monospace;font-size:10px;color:var(--t3)}
+.rb{display:flex;align-items:center;gap:5px;padding:5px 12px;background:rgba(34,211,167,.12);border:1px solid rgba(34,211,167,.25);border-radius:7px;color:var(--a);font-family:'Fira Code',monospace;font-size:10px;cursor:pointer;transition:all .3s}
+.rb:hover{background:var(--a);color:var(--bg)}
+.ce{padding:16px;font-family:'Fira Code',monospace;font-size:12.5px;line-height:1.85;color:#c9d1d9;white-space:pre-wrap}
+.oa{border-top:1px solid rgba(255,255,255,.04);padding:12px 16px;font-family:'Fira Code',monospace;font-size:11px;color:var(--a);background:rgba(34,211,167,.03);display:none}
+.oa.vi{display:block}
+.ol{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--t3);margin-bottom:5px}
+.ck{color:#ff7b72}.cs{color:#a5d6ff}.cff{color:#d2a8ff}.cn{color:#79c0ff}.ccm{color:#8b949e;font-style:italic}.cbu{color:#ffa657}.cv{color:#ffa198}
+.sc2{background:var(--bg-s);border:1px solid var(--bdr);border-radius:var(--r);padding:22px;margin-top:12px}
+.sit{font-family:'Fira Code',monospace;font-size:10px;color:var(--a);letter-spacing:2px;text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:7px}
+.sit::before{content:'';width:7px;height:7px;background:var(--a);border-radius:50%;animation:bl 2s infinite}
+@keyframes bl{0%,100%{opacity:1}50%{opacity:.3}}
+.vs{display:grid;grid-template-columns:1fr 1fr;gap:16px}@media(max-width:800px){.vs{grid-template-columns:1fr}}
+.vf{display:flex;align-items:center;gap:9px;padding:9px 12px;background:var(--bg-c);border:1px solid var(--bdr);border-radius:8px;margin-bottom:7px}
+.vf label{font-family:'Fira Code',monospace;font-size:11px;color:var(--a2);min-width:80px}
+.vf input,.vf select{flex:1;background:0;border:0;color:var(--t);font-family:'Fira Code',monospace;font-size:12px;outline:0}
+.vf select option{background:var(--bg-s)}
+.vm{background:var(--bg-c);border:1px solid var(--bdr);border-radius:9px;padding:16px}
+.vmt{font-family:'Fira Code',monospace;font-size:10px;color:var(--t3);letter-spacing:2px;margin-bottom:10px;text-transform:uppercase}
+.es{padding:11px 14px;background:var(--bg-c);border-radius:8px;border-left:3px solid var(--t3);opacity:.3;transition:all .4s;margin-bottom:6px}
+.esl{font-family:'Fira Code',monospace;font-size:10px;color:var(--t3);margin-bottom:2px}.est{font-size:.85rem}
+.bgg{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;opacity:.03;background-image:linear-gradient(var(--a) 1px,transparent 1px),linear-gradient(90deg,var(--a) 1px,transparent 1px);background-size:60px 60px}
+.sr{display:flex;gap:12px;flex-wrap:wrap;margin:18px 0}
+.sb{flex:1;min-width:110px;text-align:center;padding:18px 12px;background:var(--bg-s);border:1px solid var(--bdr);border-radius:11px}
+.sn{font-family:'Fira Code',monospace;font-size:2rem;font-weight:700;background:linear-gradient(135deg,var(--a),var(--a2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.sla{color:var(--t2);font-size:.75rem;margin-top:3px}
+.fd{display:flex;align-items:center;justify-content:center;gap:0;margin:24px 0;flex-wrap:wrap}
+.fs{display:flex;flex-direction:column;align-items:center;gap:7px;padding:14px}
+.fn{width:76px;height:76px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.7rem;transition:all .4s;cursor:pointer}
+.fn:hover{transform:scale(1.1)}
+.fn.n1{background:rgba(34,211,167,.12);border:2px solid rgba(34,211,167,.3)}.fn.n2{background:rgba(99,102,241,.12);border:2px solid rgba(99,102,241,.3)}.fn.n3{background:rgba(245,158,11,.12);border:2px solid rgba(245,158,11,.3)}.fn.n4{background:rgba(236,72,153,.12);border:2px solid rgba(236,72,153,.3)}.fn.n5{background:rgba(239,68,68,.12);border:2px solid rgba(239,68,68,.3)}
+.fl{font-size:.72rem;color:var(--t2);text-align:center;max-width:88px;font-weight:500}
+.fa{font-size:1.3rem;color:var(--t3);margin:0 -5px;align-self:center;margin-bottom:20px}
+.qa{background:var(--bg-s);border:1px solid var(--bdr);border-radius:var(--r);padding:24px;margin-top:14px}
+.qq{font-size:1.05rem;font-weight:600;margin-bottom:16px}
+.qo{display:flex;flex-direction:column;gap:7px}
+.qp{display:flex;align-items:center;gap:11px;padding:11px 16px;background:var(--bg-c);border:2px solid var(--bdr);border-radius:10px;cursor:pointer;transition:all .3s;font-size:.9rem}
+.qp:hover{border-color:rgba(34,211,167,.3)}
+.qp .lt{font-family:'Fira Code',monospace;font-size:11px;width:24px;height:24px;border-radius:6px;background:rgba(255,255,255,.05);display:flex;align-items:center;justify-content:center;color:var(--t2);font-weight:600;flex-shrink:0}
+.qp.ok{border-color:var(--a)!important;background:rgba(34,211,167,.08)}.qp.ok .lt{background:var(--a);color:var(--bg)}
+.qp.no{border-color:var(--a4)!important;background:rgba(239,68,68,.05);opacity:.6}
+.qf{margin-top:12px;padding:11px 14px;border-radius:9px;font-size:.85rem;display:none}
+.qf.sh{display:block;animation:fi .4s}
+.qf.gd{background:rgba(34,211,167,.08);border:1px solid rgba(34,211,167,.2);color:var(--a)}
+.qf.bd{background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);color:var(--a4)}
+.clb{background:linear-gradient(135deg,rgba(251,146,60,.08),rgba(251,146,60,.02));border:1px solid rgba(251,146,60,.2);border-radius:var(--r);padding:18px 22px;display:flex;align-items:center;gap:16px;margin-top:18px;transition:all .3s}
+.clb:hover{border-color:rgba(251,146,60,.4)}
+.cli{width:46px;height:46px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.cli2{font-size:1.6rem}
+.clif h4{font-size:.92rem;margin-bottom:2px}.clif p{font-size:.8rem;color:var(--t2)}
+.clbt{margin-left:auto;padding:8px 18px;background:#f9ab00;color:#1a1a1a;border:0;border-radius:8px;font-family:'Outfit',sans-serif;font-weight:600;font-size:12px;cursor:pointer;transition:all .3s;white-space:nowrap;text-decoration:none}
+.clbt:hover{transform:translateY(-2px);box-shadow:0 4px 18px rgba(249,171,0,.3)}
+.lp{display:flex;align-items:center;gap:22px;margin:16px 0;flex-wrap:wrap}
+.li{display:flex;align-items:center;gap:10px;padding:14px 18px;background:var(--bg-s);border:1px solid var(--bdr);border-radius:11px}
+.lt2{font-size:.85rem;color:var(--t2)}.lt2 strong{color:var(--t);display:block;font-size:1rem;margin-bottom:1px}
+.instructor-card{background:var(--bg-s);border:1px solid var(--bdr);border-radius:var(--r);padding:22px 24px;margin-top:22px;max-width:800px;display:flex;align-items:center;gap:20px}
+.instructor-avatar{width:68px;height:68px;border-radius:50%;background:linear-gradient(135deg,var(--a),var(--a2));display:flex;align-items:center;justify-content:center;font-size:1.8rem;flex-shrink:0;color:var(--bg);font-weight:700}
+.instructor-info h4{font-size:1.05rem;font-weight:700;margin-bottom:3px;color:var(--t)}
+.instructor-info p{font-size:.82rem;color:var(--t2);line-height:1.5;margin:0}
+.instructor-info .inst-role{color:var(--a);font-weight:500;font-size:.85rem}
+.instructor-info .inst-role2{color:var(--a2);font-weight:500;font-size:.82rem}
+.instructor-info .inst-formation{font-size:.75rem;color:var(--t3);margin-top:4px;font-style:italic}
+::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:0}::-webkit-scrollbar-thumb{background:var(--t3);border-radius:10px}
+@media(max-width:768px){.fn{width:54px;height:54px;font-size:1.2rem}.fa{font-size:.9rem}.fl{font-size:.62rem;max-width:60px}.sr{gap:6px}.sn{font-size:1.4rem}.lp{gap:10px}.li{padding:10px 12px}}
+
+/* ===== SESSION 2 SPECIFIC STYLES ===== */
+/* Flow chart (if/elif/else) */
+.flow-box{background:var(--bg-c);border:1px solid var(--bdr);border-radius:10px;padding:14px 18px;text-align:center;font-family:'Fira Code',monospace;font-size:.82rem;transition:all .5s;position:relative}
+.flow-box.active{border-color:var(--a);box-shadow:0 0 20px rgba(34,211,167,.15)}
+.flow-box.true-path{border-color:var(--a);background:rgba(34,211,167,.08)}
+.flow-box.false-path{border-color:var(--a4);background:rgba(239,68,68,.05)}
+.flow-arrow{text-align:center;color:var(--t3);font-size:1.2rem;padding:4px 0;transition:color .3s}
+.flow-arrow.active{color:var(--a)}
+
+/* Simulator console */
+.sim-console{background:#000;color:#4ade80;font-family:'Fira Code',monospace;padding:14px;border-radius:10px;border:1px solid var(--bdr);max-height:200px;overflow-y:auto;font-size:.75rem;line-height:1.6}
+.sim-console .cmd{color:#facc15}.sim-console .err{color:#ef4444}.sim-console .out{color:#4ade80}
+
+/* For loop visualizer */
+.loop-track{display:flex;gap:6px;flex-wrap:wrap;margin:12px 0}
+.loop-item{padding:10px 16px;background:var(--bg-c);border:2px solid var(--bdr);border-radius:9px;font-family:'Fira Code',monospace;font-size:.82rem;transition:all .4s;position:relative}
+.loop-item.current{border-color:var(--a3);background:rgba(245,158,11,.1);transform:translateY(-4px);box-shadow:0 4px 16px rgba(245,158,11,.15)}
+.loop-item.done{border-color:var(--a);background:rgba(34,211,167,.06);opacity:.7}
+.loop-item .idx{position:absolute;top:-8px;left:50%;transform:translateX(-50%);font-size:9px;color:var(--t3);background:var(--bg);padding:0 4px}
+
+/* Slider controls */
+.sim-slider{width:100%;-webkit-appearance:none;height:6px;border-radius:3px;background:var(--bg-c);outline:none;margin:8px 0}
+.sim-slider::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:var(--a);cursor:pointer;border:2px solid var(--bg)}
+
+/* Dict simulator */
+.dict-entry{display:flex;align-items:center;gap:8px;padding:8px 12px;background:var(--bg-c);border:1px solid var(--bdr);border-radius:8px;margin-bottom:5px;transition:all .3s}
+.dict-entry:hover{border-color:rgba(99,102,241,.3)}
+.dict-key{font-family:'Fira Code',monospace;font-size:.82rem;color:var(--a3);min-width:90px;font-weight:600}
+.dict-val{font-family:'Fira Code',monospace;font-size:.82rem;color:var(--a);flex:1}
+.dict-type{font-family:'Fira Code',monospace;font-size:9px;padding:2px 6px;border-radius:4px;background:rgba(99,102,241,.15);color:var(--a2)}
+
+/* GeoDataFrame table simulator */
+.gdf-table{width:100%;border-collapse:collapse;font-family:'Fira Code',monospace;font-size:.72rem;margin-top:8px}
+.gdf-table th{padding:8px 10px;background:rgba(34,211,167,.08);color:var(--a);text-align:left;border-bottom:2px solid var(--bdr);font-weight:600;white-space:nowrap}
+.gdf-table td{padding:7px 10px;border-bottom:1px solid rgba(255,255,255,.03);color:var(--t2);white-space:nowrap}
+.gdf-table tr:hover td{background:rgba(34,211,167,.03)}
+.gdf-table tr.hl td{background:rgba(245,158,11,.08);color:var(--t)}
+.gdf-geom{color:var(--a5);font-size:.68rem}
+
+/* Method buttons */
+.method-btn{padding:7px 14px;background:var(--bg-s2);border:1px solid var(--bdr);border-radius:7px;color:var(--t2);font-family:'Fira Code',monospace;font-size:10px;cursor:pointer;transition:all .3s}
+.method-btn:hover{border-color:var(--a);color:var(--a)}
+.method-btn.active{background:rgba(34,211,167,.1);border-color:var(--a);color:var(--a)}
+
+/* Leaflet map container */
+.map-container{border-radius:var(--r);overflow:hidden;border:1px solid var(--bdr);height:400px;position:relative}
+.map-container .leaflet-container{height:100%;width:100%;background:var(--bg-c)}
+
+/* Step indicator */
+.step-dots{display:flex;gap:6px;margin:12px 0}
+.step-dot{width:28px;height:28px;border-radius:50%;border:2px solid var(--bdr);display:flex;align-items:center;justify-content:center;font-family:'Fira Code',monospace;font-size:10px;color:var(--t3);transition:all .3s}
+.step-dot.active{border-color:var(--a);color:var(--a);background:rgba(34,211,167,.1)}
+.step-dot.done{border-color:var(--a);color:var(--bg);background:var(--a)}
+
+/* Tabs */
+.tabs{display:flex;gap:0;border-radius:9px;overflow:hidden;border:1px solid var(--bdr);margin-bottom:12px}
+.tab-btn{flex:1;padding:10px 14px;background:var(--bg-s);border:0;color:var(--t2);font-family:'Outfit',sans-serif;font-size:.85rem;font-weight:500;cursor:pointer;transition:all .3s}
+.tab-btn.on{background:var(--a);color:var(--bg);font-weight:600}
+.tab-btn:hover:not(.on){background:var(--bg-s2)}
+</style>
+</head>
+<body>
+<div class="bgg"></div>
+<div class="topbar"><div class="topbar-brand"><div class="logo">TC</div>TRABAJO CIENTÍFICO</div><div class="topbar-center">Clase 2 — <strong>Python + IA para Geoinformación</strong></div><div style="display:flex;align-items:center;gap:12px"><div class="theme-toggle" id="themeToggle" onclick="toggleTheme()"><span id="themeIcon">🌙</span><div class="toggle-track"><div class="toggle-thumb"></div></div><span id="themeLabel">Oscuro</span></div><div class="sc" id="sc">1/17</div></div></div>
+<div class="pt"><div class="pf" id="pf"></div></div>
+
+<div id="P">
+
+<!-- ============================================================ -->
+<!-- SLIDE 1: BIENVENIDA -->
+<!-- ============================================================ -->
+<div class="slide active" data-t="Bienvenida">
+<div class="sl">clase 02 · bienvenida</div>
+<h1 class="st">Sesión 2:<br><span class="hi">Control de Flujo</span> +<br><span class="hb">GeoPandas</span></h1>
+<p class="ss">Hoy Python aprende a <strong>tomar decisiones</strong>, <strong>repetir tareas</strong> y trabajar con <strong>datos geoespaciales reales</strong> de Colombia.</p>
+<div class="sr">
+  <div class="sb"><div class="sn">if</div><div class="sla">Condicionales</div></div>
+  <div class="sb"><div class="sn">for</div><div class="sla">Bucles</div></div>
+  <div class="sb"><div class="sn">def</div><div class="sla">Funciones</div></div>
+  <div class="sb"><div class="sn">gpd</div><div class="sla">GeoPandas</div></div>
+</div>
+<div class="cg" style="max-width:800px;margin-top:16px">
+  <div class="cb"><span class="ic">🔄</span><h3>Repaso rápido</h3><p>Variables, tipos, listas, operaciones — todo lo de la Clase 1.</p></div>
+  <div class="cb"><span class="ic">🎯</span><h3>Hoy aprenderás</h3><p>Condicionales, bucles, funciones, diccionarios + cargar tu primer shapefile real.</p></div>
+</div>
+<div class="instructor-card">
+  <div class="instructor-avatar">OV</div>
+  <div class="instructor-info">
+    <h4>Oscar Ivan Vargas Pineda</h4>
+    <p class="inst-role">Científico de Datos de Earth Innovation Institute - EEUU</p>
+    <p class="inst-role2">Docente Investigador de la Universidad de los Llanos - Colombia</p>
+    <p class="inst-formation">Ing. Agroindustrial | Esp. Gestión del Agua | Mgs. Gestión Ambiental Sostenible | PhD Ciencias Agrarias</p>
+  </div>
+</div>
+</div>
+
+<!-- ============================================================ -->
+<!-- SLIDE 2: REPASO CLASE 1 -->
+<!-- ============================================================ -->
+<div class="slide" data-t="Repaso Clase 1">
+<div class="sl">recordemos</div>
+<h1 class="st">Lo que ya sabes de <span class="hi">Python</span></h1>
+<p class="ss">Un repaso de los conceptos clave. Haz clic en cada concepto:</p>
+<div class="cg" style="max-width:920px">
+  <div class="cb" onclick="showRecap(0)" style="cursor:pointer"><span class="ic">📦</span><h3>Variables</h3><p>Cajas con nombre: <code style="color:var(--a)">ciudad = "Villavicencio"</code></p></div>
+  <div class="cb" onclick="showRecap(1)" style="cursor:pointer"><span class="ic">🔢</span><h3>Tipos</h3><p>int, float, str, bool, list</p></div>
+  <div class="cb" onclick="showRecap(2)" style="cursor:pointer"><span class="ic">📋</span><h3>Listas</h3><p>Colecciones ordenadas desde [0]</p></div>
+  <div class="cb" onclick="showRecap(3)" style="cursor:pointer"><span class="ic">🗺️</span><h3>Geoinformación</h3><p>SIG, vector vs ráster, capas, CRS</p></div>
+</div>
+<div class="cp" style="max-width:920px;margin-top:14px"><div class="ct"><div class="cd"><span></span><span></span><span></span></div><div class="cf">repaso.py</div></div>
+<div class="ce" id="recapCode"><span class="ccm"># 👆 Haz clic en un concepto para ver su código</span>
+<span class="ccm"># Todo esto ya lo dominas de la Clase 1</span></div></div>
+<div class="co tip" style="max-width:920px"><strong>Hoy →</strong> Construiremos sobre estas bases. Cada concepto nuevo se conecta con lo anterior.</div>
+</div>
+
+<!-- ============================================================ -->
+<!-- SLIDE 3: CONDICIONALES IF -->
+<!-- ============================================================ -->
+<div class="slide" data-t="Condicionales">
+<div class="sl">control de flujo</div>
+<h1 class="st">Condicionales: <span class="hi">if</span> / <span class="hb">elif</span> / <span class="hy">else</span></h1>
+<p class="ss">Python toma decisiones. <strong>Evalúa una condición</strong> → ejecuta el bloque correspondiente.</p>
+<div class="tc">
+<div>
+  <div class="cp"><div class="ct"><div class="cd"><span></span><span></span><span></span></div><div class="cf">condicional.py</div></div>
+  <div class="ce"><span class="ccm"># Clasificar un municipio por población</span>
+<span class="cv">poblacion</span> = <span class="cn" id="ifPopVal">531275</span>
+
+<span class="ck">if</span> <span class="cv">poblacion</span> > <span class="cn">500000</span>:
+    <span class="cv">categoria</span> = <span class="cs">"Ciudad grande"</span>
+<span class="ck">elif</span> <span class="cv">poblacion</span> > <span class="cn">100000</span>:
+    <span class="cv">categoria</span> = <span class="cs">"Ciudad intermedia"</span>
+<span class="ck">elif</span> <span class="cv">poblacion</span> > <span class="cn">20000</span>:
+    <span class="cv">categoria</span> = <span class="cs">"Municipio mediano"</span>
+<span class="ck">else</span>:
+    <span class="cv">categoria</span> = <span class="cs">"Municipio pequeño"</span>
+
+<span class="cbu">print</span>(<span class="cs">f"</span><span class="cv">{categoria}</span><span class="cs">"</span>)</div></div>
+  <div class="co tip"><strong>Indentación:</strong> Los 4 espacios antes de cada línea dentro del if son <span class="hi">obligatorios</span>. Python usa la indentación para saber qué pertenece a cada bloque.</div>
+</div>
+<div>
+  <div class="sc2" style="margin-top:0">
+    <div class="sit">Simulador interactivo</div>
+    <div class="vf"><label style="min-width:100px">población =</label><input type="range" class="sim-slider" id="ifSlider" min="1000" max="800000" value="531275" oninput="updateIf()"><span id="ifSliderVal" style="font-family:'Fira Code',monospace;font-size:12px;color:var(--a);min-width:70px;text-align:right">531,275</span></div>
+    <div id="ifFlow" style="margin-top:14px"></div>
+    <div style="margin-top:14px;padding:14px;background:var(--bg-c);border-radius:9px;text-align:center">
+      <div style="font-size:.7rem;color:var(--t3);text-transform:uppercase;letter-spacing:2px">Resultado</div>
+      <div id="ifResult" style="font-family:'Fira Code',monospace;font-size:1.4rem;color:var(--a);margin-top:4px">Ciudad grande</div>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+
+<!-- ============================================================ -->
+<!-- SLIDE 4: SIMULADOR DE CONDICIONALES GEO -->
+<!-- ============================================================ -->
+<div class="slide" data-t="Clasificador Geo">
+<div class="sl">simulador interactivo</div>
+<h1 class="st">Clasificador de <span class="hb">municipios</span></h1>
+<p class="ss">Ingresa datos de un municipio y Python lo clasifica automáticamente:</p>
+<div class="tc">
+<div>
+  <div class="sc2" style="margin-top:0">
+    <div class="sit">Panel de datos</div>
+    <div class="vf"><label style="min-width:100px">Municipio</label><select id="geoMun" onchange="updateGeoClassifier()"><option value="villavicencio">Villavicencio</option><option value="acacias">Acacías</option><option value="granada">Granada</option><option value="cumaral">Cumaral</option><option value="restrepo">Restrepo</option><option value="custom">✏️ Personalizado</option></select></div>
+    <div class="vf"><label style="min-width:100px">Población</label><input type="number" id="geoPob" value="531275" oninput="updateGeoClassifier()"></div>
+    <div class="vf"><label style="min-width:100px">Altitud (m)</label><input type="number" id="geoAlt" value="467" oninput="updateGeoClassifier()"></div>
+    <div class="vf"><label style="min-width:100px">Temp. °C</label><input type="number" id="geoTemp" value="27" step="0.1" oninput="updateGeoClassifier()"></div>
+    <div class="vf"><label style="min-width:100px">Área (km²)</label><input type="number" id="geoArea" value="1328" oninput="updateGeoClassifier()"></div>
+  </div>
+</div>
+<div>
+  <div class="sc2" style="margin-top:0">
+    <div class="sit">Clasificación automática</div>
+    <div id="geoResults"></div>
+    <div class="cp" style="margin-top:12px"><div class="ct"><div class="cd"><span></span><span></span><span></span></div><div class="cf">clasificar.py</div></div>
+    <div class="ce" id="geoCode" style="font-size:11px;line-height:1.7"></div></div>
+  </div>
+</div>
+</div>
+</div>
+
+<!-- ============================================================ -->
+<!-- SLIDE 5: BUCLES FOR -->
+<!-- ============================================================ -->
+<div class="slide" data-t="Bucle for">
+<div class="sl">iteración</div>
+<h1 class="st">Bucle <span class="hy">for</span>: recorrer sin repetir</h1>
+<p class="ss">En vez de escribir 10 líneas iguales, un <code style="color:var(--a3)">for</code> recorre una lista automáticamente:</p>
+<div class="tc">
+<div>
+  <div class="cp"><div class="ct"><div class="cd"><span></span><span></span><span></span></div><div class="cf">bucle_for.py</div><button class="rb" onclick="runForLoop()">▶ Ejecutar paso a paso</button></div>
+  <div class="ce"><span class="ccm"># Recorrer municipios del Meta</span>
+<span class="cv">municipios</span> = [<span class="cs">"Villavicencio"</span>, <span class="cs">"Acacías"</span>,
+              <span class="cs">"Granada"</span>, <span class="cs">"Cumaral"</span>, <span class="cs">"Restrepo"</span>]
+
+<span class="ck">for</span> <span class="cv">mun</span> <span class="ck">in</span> <span class="cv">municipios</span>:
+    <span class="cbu">print</span>(<span class="cs">f"📍 Procesando: </span><span class="cv">{mun}</span><span class="cs">"</span>)
+    <span class="cbu">print</span>(<span class="cs">f"   Letras: </span><span class="cv">{</span><span class="cbu">len</span>(<span class="cv">mun</span>)<span class="cv">}</span><span class="cs">"</span>)</div>
+  <div class="oa" id="forOutput"><div class="ol">Salida</div><div id="forOutputText"></div></div></div>
+</div>
+<div>
+  <div class="sc2" style="margin-top:0">
+    <div class="sit">Visualización del bucle</div>
+    <div class="loop-track" id="forTrack"></div>
+    <div style="margin-top:12px;padding:12px;background:var(--bg-c);border-radius:9px">
+      <div style="font-size:.7rem;color:var(--t3);text-transform:uppercase;letter-spacing:2px;margin-bottom:4px">Variable actual: <span style="color:var(--a3)">mun</span></div>
+      <div id="forCurrent" style="font-family:'Fira Code',monospace;font-size:1.1rem;color:var(--a3)">— esperando —</div>
+    </div>
+    <div id="forSteps" style="margin-top:12px"></div>
+  </div>
+</div>
+</div>
+</div>
+
+<!-- ============================================================ -->
+<!-- SLIDE 6: BUCLE FOR CON ENUMERATE Y RANGE -->
+<!-- ============================================================ -->
+<div class="slide" data-t="for + enumerate">
+<div class="sl">más poder con for</div>
+<h1 class="st"><span class="hy">enumerate()</span> y <span class="hi">range()</span></h1>
+<p class="ss">Dos superpoderes del bucle for. Haz clic para alternar:</p>
+<div class="tabs" id="forTabs"><button class="tab-btn on" onclick="switchForTab('enum')">enumerate()</button><button class="tab-btn" onclick="switchForTab('range')">range()</button><button class="tab-btn" onclick="switchForTab('comp')">Comprensión de listas</button></div>
+<div class="tc">
+<div>
+  <div class="cp"><div class="ct"><div class="cd"><span></span><span></span><span></span></div><div class="cf" id="forTabFile">enumerate.py</div><button class="rb" onclick="runForTab()">▶ Ejecutar</button></div>
+  <div class="ce" id="forTabCode"></div>
+  <div class="oa" id="forTabOut"><div class="ol">Salida</div><div id="forTabOutText"></div></div></div>
+</div>
+<div>
+  <div class="sc2" style="margin-top:0">
+    <div class="sit" id="forTabTitle">enumerate() — índice + valor</div>
+    <div id="forTabExplain"></div>
+  </div>
+</div>
+</div>
+</div>
+
+<!-- ============================================================ -->
+<!-- SLIDE 7: WHILE -->
+<!-- ============================================================ -->
+<div class="slide" data-t="Bucle while">
+<div class="sl">iteración condicional</div>
+<h1 class="st">Bucle <span class="hr">while</span>: repetir hasta cumplir</h1>
+<p class="ss">A diferencia de <code style="color:var(--a3)">for</code>, el <code style="color:var(--a4)">while</code> repite <strong>mientras una condición sea True</strong>:</p>
+<div class="tc">
+<div>
+  <div class="cp"><div class="ct"><div class="cd"><span></span><span></span><span></span></div><div class="cf">monitoreo.py</div><button class="rb" onclick="runWhile()">▶ Simular</button></div>
+  <div class="ce"><span class="ccm"># Monitoreo de temperatura del río</span>
+<span class="cv">temp</span> = <span class="cn">32.0</span>  <span class="ccm"># grados Celsius</span>
+<span class="cv">umbral</span> = <span class="cn">25.0</span>
+<span class="cv">hora</span> = <span class="cn">0</span>
+
+<span class="ck">while</span> <span class="cv">temp</span> > <span class="cv">umbral</span>:
+    <span class="cbu">print</span>(<span class="cs">f"⏰ Hora {</span><span class="cv">hora</span><span class="cs">}: {</span><span class="cv">temp</span><span class="cs">:.1f}°C 🔴"</span>)
+    <span class="cv">temp</span> -= <span class="cn">1.5</span>  <span class="ccm"># baja 1.5° por hora</span>
+    <span class="cv">hora</span> += <span class="cn">1</span>
+
+<span class="cbu">print</span>(<span class="cs">f"✅ Hora {</span><span class="cv">hora</span><span class="cs">}: {</span><span class="cv">temp</span><span class="cs">:.1f}°C — Bajo umbral"</span>)</div>
+  <div class="oa" id="whileOut"><div class="ol">Salida</div><div id="whileOutText"></div></div></div>
+</div>
+<div>
+  <div class="sc2" style="margin-top:0">
+    <div class="sit">Monitor de temperatura</div>
+    <div style="position:relative;height:200px;background:var(--bg-c);border-radius:9px;padding:12px;overflow:hidden" id="whileChart"></div>
+    <div style="display:flex;gap:8px;margin-top:10px;align-items:center">
+      <div style="font-family:'Fira Code',monospace;font-size:.8rem;color:var(--t3)">Umbral:</div>
+      <div style="flex:1;height:2px;background:var(--a);opacity:.3"></div>
+      <div style="font-family:'Fira Code',monospace;font-size:.8rem;color:var(--a)">25.0°C</div>
+    </div>
+    <div class="co tip"><strong>for vs while:</strong> Usa <span class="hy">for</span> cuando sabes cuántas veces. Usa <span class="hr">while</span> cuando depende de una condición.</div>
+  </div>
+</div>
+</div>
+</div>
+
+<!-- ============================================================ -->
+<!-- SLIDE 8: FUNCIONES -->
+<!-- ============================================================ -->
+<div class="slide" data-t="Funciones">
+<div class="sl">reutilizar código</div>
+<h1 class="st">Funciones: <span class="hp">empaquetar</span> lógica</h1>
+<p class="ss">Una función = código reutilizable con nombre. La llamas cuantas veces quieras:</p>
+<div class="tc">
+<div>
+  <div class="cp"><div class="ct"><div class="cd"><span></span><span></span><span></span></div><div class="cf">funciones.py</div><button class="rb" onclick="runFunc()">▶ Ejecutar</button></div>
+  <div class="ce"><span class="ccm"># Definir una función</span>
+<span class="ck">def</span> <span class="cff">clasificar</span>(<span class="cv">poblacion</span>):
+    <span class="cs">"""Clasifica municipio por población"""</span>
+    <span class="ck">if</span> <span class="cv">poblacion</span> > <span class="cn">500000</span>:
+        <span class="ck">return</span> <span class="cs">"🏙️ Ciudad grande"</span>
+    <span class="ck">elif</span> <span class="cv">poblacion</span> > <span class="cn">100000</span>:
+        <span class="ck">return</span> <span class="cs">"🏘️ Ciudad intermedia"</span>
+    <span class="ck">else</span>:
+        <span class="ck">return</span> <span class="cs">"🏡 Municipio pequeño"</span>
+
+<span class="ccm"># Usar la función</span>
+<span class="cbu">print</span>(<span class="cff">clasificar</span>(<span class="cn">531275</span>))
+<span class="cbu">print</span>(<span class="cff">clasificar</span>(<span class="cn">78000</span>))
+<span class="cbu">print</span>(<span class="cff">clasificar</span>(<span class="cn">150000</span>))</div>
+  <div class="oa" id="funcOut"><div class="ol">Salida</div><div id="funcOutText"></div></div></div>
+</div>
+<div>
+  <div class="sc2" style="margin-top:0">
+    <div class="sit">Prueba la función</div>
+    <div class="vf"><label style="min-width:100px">población =</label><input type="number" id="funcInput" value="531275" oninput="testFunc()"></div>
+    <div id="funcResult" style="margin-top:10px;padding:14px;background:var(--bg-c);border-radius:9px;text-align:center;font-family:'Fira Code',monospace;font-size:1.2rem;color:var(--a)">🏙️ Ciudad grande</div>
+    <div style="margin-top:14px">
+      <div style="font-size:.7rem;color:var(--t3);text-transform:uppercase;letter-spacing:2px;margin-bottom:8px">Anatomía de una función</div>
+      <div class="dict-entry"><div class="dict-key">def</div><div class="dict-val">Palabra clave para definir</div></div>
+      <div class="dict-entry"><div class="dict-key">nombre()</div><div class="dict-val">Nombre + parámetros</div></div>
+      <div class="dict-entry"><div class="dict-key">:</div><div class="dict-val">Dos puntos al final</div></div>
+      <div class="dict-entry"><div class="dict-key">    cuerpo</div><div class="dict-val">Indentado 4 espacios</div></div>
+      <div class="dict-entry"><div class="dict-key">return</div><div class="dict-val">Devuelve el resultado</div></div>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+
+<!-- ============================================================ -->
+<!-- SLIDE 9: FUNCIÓN HAVERSINE -->
+<!-- ============================================================ -->
+<div class="slide" data-t="Haversine">
+<div class="sl">función geoespacial</div>
+<h1 class="st">Función <span class="hi">Haversine</span>: distancia real</h1>
+<p class="ss">La distancia "en línea recta" sobre la superficie terrestre. Selecciona dos ciudades:</p>
+<div class="tc">
+<div>
+  <div class="sc2" style="margin-top:0">
+    <div class="sit">Calculadora Haversine</div>
+    <div class="vf"><label style="min-width:60px">Desde</label><select id="havFrom" onchange="updateHav()"><option value="0">Villavicencio</option><option value="1">Acacías</option><option value="2">Granada</option><option value="3">Bogotá</option><option value="4">Yopal</option></select></div>
+    <div class="vf"><label style="min-width:60px">Hasta</label><select id="havTo" onchange="updateHav()"><option value="3">Bogotá</option><option value="0">Villavicencio</option><option value="1">Acacías</option><option value="2">Granada</option><option value="4">Yopal</option></select></div>
+    <div style="text-align:center;margin-top:14px;padding:18px;background:var(--bg-c);border-radius:9px">
+      <div style="font-size:.7rem;color:var(--t3);text-transform:uppercase;letter-spacing:2px">Distancia Haversine</div>
+      <div id="havDist" style="font-family:'Fira Code',monospace;font-size:2rem;color:var(--a);margin-top:4px">78.2 km</div>
+    </div>
+    <div id="havMap" class="map-container" style="height:220px;margin-top:12px"></div>
+  </div>
+</div>
+<div>
+  <div class="cp"><div class="ct"><div class="cd"><span></span><span></span><span></span></div><div class="cf">haversine.py</div></div>
+  <div class="ce" style="font-size:11.5px"><span class="ck">import</span> math
+
+<span class="ck">def</span> <span class="cff">haversine</span>(<span class="cv">lat1</span>, <span class="cv">lon1</span>, <span class="cv">lat2</span>, <span class="cv">lon2</span>):
+    <span class="cs">"""Distancia en km entre dos puntos"""</span>
+    <span class="cv">R</span> = <span class="cn">6371</span>  <span class="ccm"># Radio de la Tierra</span>
+    <span class="cv">dlat</span> = math.<span class="cff">radians</span>(<span class="cv">lat2</span> - <span class="cv">lat1</span>)
+    <span class="cv">dlon</span> = math.<span class="cff">radians</span>(<span class="cv">lon2</span> - <span class="cv">lon1</span>)
+    <span class="cv">a</span> = (math.<span class="cff">sin</span>(<span class="cv">dlat</span>/<span class="cn">2</span>)**<span class="cn">2</span> +
+         math.<span class="cff">cos</span>(math.<span class="cff">radians</span>(<span class="cv">lat1</span>)) *
+         math.<span class="cff">cos</span>(math.<span class="cff">radians</span>(<span class="cv">lat2</span>)) *
+         math.<span class="cff">sin</span>(<span class="cv">dlon</span>/<span class="cn">2</span>)**<span class="cn">2</span>)
+    <span class="ck">return</span> <span class="cv">R</span> * <span class="cn">2</span> * math.<span class="cff">asin</span>(math.<span class="cff">sqrt</span>(<span class="cv">a</span>))
+
+<span class="ccm"># Villavicencio → Bogotá</span>
+<span class="cv">d</span> = <span class="cff">haversine</span>(<span class="cn" id="havC1">4.142</span>, <span class="cn" id="havC2">-73.626</span>,
+              <span class="cn" id="havC3">4.711</span>, <span class="cn" id="havC4">-74.072</span>)
+<span class="cbu">print</span>(<span class="cs">f"📏 {</span><span class="cv">d</span><span class="cs">:.1f} km"</span>)</div></div>
+  <div class="co tip"><strong>¿Por qué Haversine?</strong> La Tierra es esférica. La distancia euclidiana (√) que vimos en la Clase 1 es una aproximación. Haversine calcula la distancia <em>sobre la curva</em> terrestre.</div>
+</div>
+</div>
+</div>
+
+<!-- ============================================================ -->
+<!-- SLIDE 10: DICCIONARIOS -->
+<!-- ============================================================ -->
+<div class="slide" data-t="Diccionarios">
+<div class="sl">estructuras de datos</div>
+<h1 class="st">Diccionarios: <span class="hb">clave : valor</span></h1>
+<p class="ss">Perfectos para datos geoespaciales. Cada dato tiene un <strong>nombre</strong> (clave) y un <strong>valor</strong>:</p>
+<div class="tc">
+<div>
+  <div class="cp"><div class="ct"><div class="cd"><span></span><span></span><span></span></div><div class="cf">diccionario.py</div><button class="rb" onclick="runDict()">▶ Ejecutar</button></div>
+  <div class="ce"><span class="ccm"># Un municipio como diccionario</span>
+<span class="cv">municipio</span> = {
+    <span class="cs">"nombre"</span>: <span class="cs">"Villavicencio"</span>,
+    <span class="cs">"departamento"</span>: <span class="cs">"Meta"</span>,
+    <span class="cs">"lat"</span>: <span class="cn">4.142</span>,
+    <span class="cs">"lon"</span>: <span class="cn">-73.626</span>,
+    <span class="cs">"poblacion"</span>: <span class="cn">531275</span>,
+    <span class="cs">"es_capital"</span>: <span class="cn">True</span>
+}
+
+<span class="ccm"># Acceder a valores</span>
+<span class="cbu">print</span>(<span class="cv">municipio</span>[<span class="cs">"nombre"</span>])
+<span class="cbu">print</span>(<span class="cv">municipio</span>[<span class="cs">"lat"</span>])</div>
+  <div class="oa" id="dictOut"><div class="ol">Salida</div><div id="dictOutText"></div></div></div>
+</div>
+<div>
+  <div class="sc2" style="margin-top:0">
+    <div class="sit">Explorador de diccionario</div>
+    <div id="dictVis"></div>
+    <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:12px">
+      <button class="method-btn" onclick="dictAction('keys')">🔑 .keys()</button>
+      <button class="method-btn" onclick="dictAction('values')">📋 .values()</button>
+      <button class="method-btn" onclick="dictAction('items')">🔄 .items()</button>
+      <button class="method-btn" onclick="dictAction('add')">➕ Agregar</button>
+      <button class="method-btn" onclick="dictAction('get')">🔍 .get()</button>
+    </div>
+    <div class="oa vi" id="dictActionOut"><div class="ol">Resultado</div><div id="dictActionText">Haz clic en un método</div></div>
+  </div>
+</div>
+</div>
+</div>
+
+<!-- ============================================================ -->
+<!-- SLIDE 11: QUÉ ES GEOPANDAS -->
+<!-- ============================================================ -->
+<div class="slide" data-t="¿Qué es GeoPandas?">
+<div class="sl">datos geoespaciales reales</div>
+<h1 class="st">¿Qué es <span class="hi">GeoPandas</span>? 🌍</h1>
+<p class="ss"><strong>Pandas</strong> (tablas) + <strong>Shapely</strong> (geometría) = <span class="hi">GeoPandas</span>. La herramienta #1 para datos vectoriales en Python.</p>
+<div class="fd">
+  <div class="fs"><div class="fn n1">📊</div><div class="fl">Pandas<br><small style="color:var(--a)">Tablas</small></div></div><div class="fa">+</div>
+  <div class="fs"><div class="fn n2">📐</div><div class="fl">Shapely<br><small style="color:var(--a2)">Geometría</small></div></div><div class="fa">=</div>
+  <div class="fs"><div class="fn n3">🗺️</div><div class="fl">GeoPandas<br><small style="color:var(--a3)">Geodatos</small></div></div>
+</div>
+<div class="cg" style="max-width:920px">
+  <div class="cb"><span class="ic">📋</span><h3>DataFrame + geometría</h3><p>Cada fila tiene columnas normales (nombre, población) <strong>+ una columna geometry</strong> con la forma del objeto.</p></div>
+  <div class="cb"><span class="ic">📂</span><h3>Lee cualquier formato</h3><p>.shp, .geojson, .gpkg, .kml — una sola línea de código para cargar.</p></div>
+  <div class="cb"><span class="ic">🗺️</span><h3>Mapas con .plot()</h3><p>Visualiza geometrías directamente. Sin configuración compleja.</p></div>
+  <div class="cb"><span class="ic">🔗</span><h3>Análisis espacial</h3><p>Buffers, intersecciones, joins espaciales, reproyección — todo integrado.</p></div>
+</div>
+<div class="clb" style="max-width:620px"><div class="cli" style="background:rgba(249,171,0,.12)"><span class="cli2">📒</span></div><div class="clif"><h4>Instalar en Colab</h4><p><code>!pip install geopandas -q</code></p></div><a href="https://colab.research.google.com/#create=true" target="_blank" class="clbt">Abrir Colab ↗</a></div>
+</div>
+
+<!-- ============================================================ -->
+<!-- SLIDE 12: CARGAR SHAPEFILE -->
+<!-- ============================================================ -->
+<div class="slide" data-t="Cargar Shapefile">
+<div class="sl">primer geodataframe</div>
+<h1 class="st">Cargar un <span class="hy">shapefile</span> real</h1>
+<p class="ss">Departamentos de Colombia — archivo oficial del IGAC. Una línea de código:</p>
+<div class="tc">
+<div>
+  <div class="cp"><div class="ct"><div class="cd"><span></span><span></span><span></span></div><div class="cf">cargar_shp.py — Colab</div><button class="rb" onclick="runLoadShp()">▶ Ejecutar</button></div>
+  <div class="ce"><span class="ccm"># Instalar y cargar datos</span>
+!pip install geopandas -q
+
+<span class="ck">import</span> geopandas <span class="ck">as</span> gpd
+
+<span class="ccm"># Cargar shapefile de departamentos</span>
+<span class="cv">gdf</span> = gpd.<span class="cff">read_file</span>(<span class="cs">"MGN_ANM_DPTOS.shp"</span>)
+
+<span class="ccm"># Ver las primeras filas</span>
+<span class="cbu">print</span>(<span class="cv">gdf</span>.<span class="cff">head</span>())
+<span class="cbu">print</span>(<span class="cs">f"Filas: {</span><span class="cbu">len</span>(<span class="cv">gdf</span>)<span class="cs">}"</span>)
+<span class="cbu">print</span>(<span class="cs">f"CRS: {</span><span class="cv">gdf</span>.crs<span class="cs">}"</span>)</div>
+  <div class="oa" id="shpOut"><div class="ol">Salida</div><div id="shpOutText"></div></div></div>
+  <div class="co wrn"><strong>Archivos del shapefile:</strong> .shp (geometría) + .dbf (atributos) + .shx (índice) + .prj (CRS). Todos deben estar en la misma carpeta.</div>
+</div>
+<div>
+  <div class="sc2" style="margin-top:0">
+    <div class="sit">Vista previa del GeoDataFrame</div>
+    <div style="overflow-x:auto" id="shpTable"></div>
+  </div>
+</div>
+</div>
+</div>
+
+<!-- ============================================================ -->
+<!-- SLIDE 13: EXPLORAR GEODATAFRAME -->
+<!-- ============================================================ -->
+<div class="slide" data-t="Explorar GeoDataFrame">
+<div class="sl">métodos esenciales</div>
+<h1 class="st">Explorar el <span class="hb">GeoDataFrame</span></h1>
+<p class="ss">Haz clic en cada método para ver qué devuelve:</p>
+<div class="tc">
+<div>
+  <div class="sc2" style="margin-top:0">
+    <div class="sit">Terminal interactiva</div>
+    <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px">
+      <button class="method-btn" onclick="gdfMethod('head')">.head()</button>
+      <button class="method-btn" onclick="gdfMethod('shape')">.shape</button>
+      <button class="method-btn" onclick="gdfMethod('columns')">.columns</button>
+      <button class="method-btn" onclick="gdfMethod('dtypes')">.dtypes</button>
+      <button class="method-btn" onclick="gdfMethod('crs')">.crs</button>
+      <button class="method-btn" onclick="gdfMethod('geom_type')">.geom_type</button>
+      <button class="method-btn" onclick="gdfMethod('describe')">.describe()</button>
+      <button class="method-btn" onclick="gdfMethod('bounds')">.total_bounds</button>
+    </div>
+    <div class="sim-console" id="gdfConsole" style="max-height:320px">
+      <div>> gdf = gpd.read_file("MGN_ANM_DPTOS.shp")</div>
+      <div class="out">GeoDataFrame cargado. 33 filas × 5 columnas</div>
+      <div>> <span style="color:var(--a3)">Escribe un método haciendo clic arriba ↑</span></div>
+    </div>
+  </div>
+</div>
+<div>
+  <div class="sc2" style="margin-top:0">
+    <div class="sit">Referencia rápida</div>
+    <div class="dict-entry"><div class="dict-key">.head(n)</div><div class="dict-val">Primeras n filas</div><div class="dict-type">DataFrame</div></div>
+    <div class="dict-entry"><div class="dict-key">.shape</div><div class="dict-val">(filas, columnas)</div><div class="dict-type">tuple</div></div>
+    <div class="dict-entry"><div class="dict-key">.columns</div><div class="dict-val">Nombres de columnas</div><div class="dict-type">Index</div></div>
+    <div class="dict-entry"><div class="dict-key">.dtypes</div><div class="dict-val">Tipos de cada columna</div><div class="dict-type">Series</div></div>
+    <div class="dict-entry"><div class="dict-key">.crs</div><div class="dict-val">Sistema de referencia</div><div class="dict-type">CRS</div></div>
+    <div class="dict-entry"><div class="dict-key">.geom_type</div><div class="dict-val">Tipo de geometría</div><div class="dict-type">Series</div></div>
+    <div class="dict-entry"><div class="dict-key">.describe()</div><div class="dict-val">Estadísticas resumen</div><div class="dict-type">DataFrame</div></div>
+    <div class="dict-entry"><div class="dict-key">.total_bounds</div><div class="dict-val">Extensión [W,S,E,N]</div><div class="dict-type">array</div></div>
+    <div class="co tip"><strong>Tip:</strong> Siempre explora el GDF antes de procesarlo. <code style="color:var(--a)">.head()</code> + <code style="color:var(--a)">.crs</code> + <code style="color:var(--a)">.shape</code> es la rutina mínima.</div>
+  </div>
+</div>
+</div>
+</div>
+
+<!-- ============================================================ -->
+<!-- SLIDE 14: PRIMER MAPA .plot() -->
+<!-- ============================================================ -->
+<div class="slide" data-t="Primer mapa .plot()">
+<div class="sl">visualización</div>
+<h1 class="st">Tu primer <span class="hi">mapa</span> con <code style="font-family:'Fira Code',monospace;color:var(--a)">.plot()</code></h1>
+<p class="ss">Una sola línea para visualizar todos los departamentos de Colombia:</p>
+<div class="tc">
+<div>
+  <div class="cp"><div class="ct"><div class="cd"><span></span><span></span><span></span></div><div class="cf">mapa_plot.py</div><button class="rb" onclick="runPlot()">▶ Ejecutar</button></div>
+  <div class="ce"><span class="ck">import</span> matplotlib.pyplot <span class="ck">as</span> plt
+
+<span class="ccm"># Mapa básico</span>
+<span class="cv">gdf</span>.<span class="cff">plot</span>(<span class="cv">figsize</span>=(<span class="cn">10</span>,<span class="cn">8</span>))
+plt.<span class="cff">title</span>(<span class="cs">"Departamentos de Colombia"</span>)
+plt.<span class="cff">show</span>()
+
+<span class="ccm"># Mapa con colores</span>
+<span class="cv">gdf</span>.<span class="cff">plot</span>(
+    <span class="cv">column</span>=<span class="cs">"DPTO_CNMBR"</span>,
+    <span class="cv">cmap</span>=<span class="cs">"Set3"</span>,
+    <span class="cv">edgecolor</span>=<span class="cs">"white"</span>,
+    <span class="cv">linewidth</span>=<span class="cn">0.5</span>,
+    <span class="cv">figsize</span>=(<span class="cn">10</span>,<span class="cn">8</span>)
+)</div></div>
+</div>
+<div>
+  <div class="sc2" style="margin-top:0">
+    <div class="sit">Vista previa del mapa</div>
+    <canvas id="plotCanvas" width="600" height="500" style="width:100%;border-radius:9px;background:var(--bg-c)"></canvas>
+    <div style="display:flex;gap:6px;margin-top:10px;flex-wrap:wrap">
+      <button class="method-btn" onclick="changePlotStyle('basic')">Básico</button>
+      <button class="method-btn" onclick="changePlotStyle('color')">Por depto</button>
+      <button class="method-btn" onclick="changePlotStyle('highlight')">Resaltar Meta</button>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+
+<!-- ============================================================ -->
+<!-- SLIDE 15: FILTRAR GEODATOS -->
+<!-- ============================================================ -->
+<div class="slide" data-t="Filtrar GeoData">
+<div class="sl">condicionales + geopandas</div>
+<h1 class="st">Filtrar con <span class="hy">condicionales</span></h1>
+<p class="ss">Aquí se conectan los dos mundos: el <code style="color:var(--a3)">if</code> de Python + GeoPandas:</p>
+<div class="tc">
+<div>
+  <div class="cp"><div class="ct"><div class="cd"><span></span><span></span><span></span></div><div class="cf">filtrar.py</div><button class="rb" onclick="runFilter()">▶ Ejecutar</button></div>
+  <div class="ce"><span class="ccm"># Filtrar un departamento</span>
+<span class="cv">meta</span> = <span class="cv">gdf</span>[<span class="cv">gdf</span>[<span class="cs">"DPTO_CNMBR"</span>] == <span class="cs" id="filterDeptVal">"META"</span>]
+<span class="cbu">print</span>(<span class="cv">meta</span>)
+
+<span class="ccm"># Filtrar región Orinoquía</span>
+<span class="cv">orinoquia</span> = [<span class="cs">"META"</span>, <span class="cs">"CASANARE"</span>,
+              <span class="cs">"ARAUCA"</span>, <span class="cs">"VICHADA"</span>]
+<span class="cv">region</span> = <span class="cv">gdf</span>[<span class="cv">gdf</span>[<span class="cs">"DPTO_CNMBR"</span>].<span class="cff">isin</span>(<span class="cv">orinoquia</span>)]
+
+<span class="ccm"># Mapear solo la Orinoquía</span>
+<span class="cv">region</span>.<span class="cff">plot</span>(<span class="cv">column</span>=<span class="cs">"DPTO_CNMBR"</span>,
+           <span class="cv">legend</span>=<span class="cn">True</span>)</div>
+  <div class="oa" id="filterOut"><div class="ol">Salida</div><div id="filterOutText"></div></div></div>
+</div>
+<div>
+  <div class="sc2" style="margin-top:0">
+    <div class="sit">Filtro interactivo</div>
+    <div class="vf"><label style="min-width:80px">Filtrar:</label><select id="filterDept" onchange="updateFilter()"><option value="META">Meta</option><option value="CASANARE">Casanare</option><option value="ARAUCA">Arauca</option><option value="VICHADA">Vichada</option><option value="ORINOQUIA">🌎 Orinoquía (4 dptos)</option><option value="ALL">📍 Todos</option></select></div>
+    <canvas id="filterCanvas" width="500" height="380" style="width:100%;border-radius:9px;background:var(--bg-c);margin-top:8px"></canvas>
+    <div id="filterInfo" style="margin-top:8px;font-family:'Fira Code',monospace;font-size:.78rem;color:var(--t2)"></div>
+  </div>
+</div>
+</div>
+</div>
+
+<!-- ============================================================ -->
+<!-- SLIDE 16: SIMULADOR INTEGRADO -->
+<!-- ============================================================ -->
+<div class="slide" data-t="Simulador Integrado" style="padding-top:52px;padding-bottom:10px;">
+<div class="sl">práctica completa</div>
+<h1 class="st">Simulador: <span class="hi">Python</span> + <span class="hb">GeoPandas</span></h1>
+<p class="ss" style="margin-bottom:14px">Combina todo lo aprendido. Escribe comandos y ve los resultados en el mapa:</p>
+<div style="display:flex;gap:14px;height:calc(100vh - 220px);min-height:400px">
+  <div style="flex:1;display:flex;flex-direction:column;gap:10px">
+    <div class="sc2" style="margin-top:0;flex:0 0 auto">
+      <div class="sit">Comandos disponibles</div>
+      <div style="display:flex;gap:5px;flex-wrap:wrap">
+        <button class="method-btn" onclick="simCmd('load')">📂 Cargar shapefile</button>
+        <button class="method-btn" onclick="simCmd('head')">📋 Ver .head()</button>
+        <button class="method-btn" onclick="simCmd('plot')">🗺️ Mapear todos</button>
+        <button class="method-btn" onclick="simCmd('filter_meta')">🔍 Filtrar Meta</button>
+        <button class="method-btn" onclick="simCmd('filter_orinoquia')">🌎 Filtrar Orinoquía</button>
+        <button class="method-btn" onclick="simCmd('loop')">🔄 for + print</button>
+        <button class="method-btn" onclick="simCmd('func')">⚡ Función classify</button>
+        <button class="method-btn" onclick="simCmd('clear')">🗑️ Limpiar</button>
+      </div>
+    </div>
+    <div class="sim-console" id="simConsole" style="flex:1;max-height:none"></div>
+  </div>
+  <div style="flex:1">
+    <div id="simMap" style="height:100%;border-radius:var(--r);border:1px solid var(--bdr)"></div>
+  </div>
+</div>
+</div>
+
+<!-- ============================================================ -->
+<!-- SLIDE 17: QUIZ -->
+<!-- ============================================================ -->
+<div class="slide" data-t="Quiz">
+<div class="sl">comprueba tu aprendizaje</div>
+<h1 class="st">Mini <span class="hy">Quiz</span> — Sesión 2</h1>
+<p class="ss">5 preguntas rápidas sobre lo que aprendimos hoy:</p>
+<div style="max-width:700px">
+  <div class="qa" id="q1"><div class="qq">1. ¿Qué imprime <code style="color:var(--a)">print("Hola") if False else print("Adiós")</code>?</div><div class="qo"><div class="qp" onclick="cq('q1',this,0)"><span class="lt">A</span>Hola</div><div class="qp" onclick="cq('q1',this,1)"><span class="lt">B</span>Adiós</div><div class="qp" onclick="cq('q1',this,0)"><span class="lt">C</span>Error</div></div><div class="qf" id="q1f"></div></div>
+
+  <div class="qa" id="q2"><div class="qq">2. ¿Cuántas veces se ejecuta <code style="color:var(--a3)">for i in range(5)</code>?</div><div class="qo"><div class="qp" onclick="cq('q2',this,0)"><span class="lt">A</span>4 veces</div><div class="qp" onclick="cq('q2',this,1)"><span class="lt">B</span>5 veces (0,1,2,3,4)</div><div class="qp" onclick="cq('q2',this,0)"><span class="lt">C</span>6 veces</div></div><div class="qf" id="q2f"></div></div>
+
+  <div class="qa" id="q3"><div class="qq">3. ¿Qué palabra clave devuelve un valor desde una función?</div><div class="qo"><div class="qp" onclick="cq('q3',this,0)"><span class="lt">A</span>print</div><div class="qp" onclick="cq('q3',this,1)"><span class="lt">B</span>return</div><div class="qp" onclick="cq('q3',this,0)"><span class="lt">C</span>give</div></div><div class="qf" id="q3f"></div></div>
+
+  <div class="qa" id="q4"><div class="qq">4. ¿Cómo se accede al valor "Meta" en <code style="color:var(--a)">d = {"depto": "Meta"}</code>?</div><div class="qo"><div class="qp" onclick="cq('q4',this,0)"><span class="lt">A</span>d[0]</div><div class="qp" onclick="cq('q4',this,1)"><span class="lt">B</span>d["depto"]</div><div class="qp" onclick="cq('q4',this,0)"><span class="lt">C</span>d.depto</div></div><div class="qf" id="q4f"></div></div>
+
+  <div class="qa" id="q5"><div class="qq">5. ¿Qué método carga un shapefile en GeoPandas?</div><div class="qo"><div class="qp" onclick="cq('q5',this,0)"><span class="lt">A</span>gpd.open()</div><div class="qp" onclick="cq('q5',this,1)"><span class="lt">B</span>gpd.read_file()</div><div class="qp" onclick="cq('q5',this,0)"><span class="lt">C</span>gpd.load()</div></div><div class="qf" id="q5f"></div></div>
+</div>
+</div>
+
+<!-- ============================================================ -->
+<!-- SLIDE 18: CIERRE -->
+<!-- ============================================================ -->
+<div class="slide" data-t="Cierre">
+<div class="sl">resumen y tarea</div>
+<h1 class="st">Lo que lograste <span class="hi">hoy</span></h1>
+<p class="ss">Ahora Python piensa, repite, y trabaja con geodatos reales.</p>
+<div class="cg" style="max-width:920px">
+  <div class="cb"><span class="ic">✅</span><h3>Condicionales</h3><p>if / elif / else — Python toma decisiones</p></div>
+  <div class="cb"><span class="ic">✅</span><h3>Bucles for</h3><p>Recorrer listas, enumerate(), range()</p></div>
+  <div class="cb"><span class="ic">✅</span><h3>Bucle while</h3><p>Repetir hasta cumplir una condición</p></div>
+  <div class="cb"><span class="ic">✅</span><h3>Funciones</h3><p>def, return, reutilizar código (Haversine)</p></div>
+  <div class="cb"><span class="ic">✅</span><h3>Diccionarios</h3><p>Clave:valor — datos estructurados</p></div>
+  <div class="cb"><span class="ic">✅</span><h3>GeoPandas</h3><p>read_file(), .plot(), filtrar, explorar</p></div>
+</div>
+<div class="clb" style="max-width:680px;background:linear-gradient(135deg,rgba(34,211,167,.08),rgba(99,102,241,.05));border-color:rgba(34,211,167,.2)">
+  <div class="cli" style="background:rgba(34,211,167,.12)"><span class="cli2">📝</span></div>
+  <div class="clif"><h4>📋 Tarea — Próxima clase</h4><p>Notebook en Colab: 1) Cargar shapefile de departamentos 2) Filtrar Orinoquía con .isin() 3) Crear función haversine() 4) Calcular distancia entre cada capital y Bogotá con un for</p></div>
+</div>
+<div class="co tip" style="max-width:680px"><strong>Próxima clase:</strong> Manipulación avanzada de GeoDataFrames, reproyección CRS, joins espaciales, y <span class="hi">mapas coropléticos</span> profesionales.</div>
+<div class="instructor-card" style="margin-top:28px;margin-left:auto;margin-right:auto;">
+  <div class="instructor-avatar">OV</div>
+  <div class="instructor-info">
+    <h4>Oscar Ivan Vargas Pineda</h4>
+    <p class="inst-role">Científico de Datos de Earth Innovation Institute - EEUU</p>
+    <p class="inst-role2">Docente Investigador de la Universidad de los Llanos - Colombia</p>
+    <p class="inst-formation">Ing. Agroindustrial | Esp. Gestión del Agua | Mgs. Gestión Ambiental Sostenible | PhD Ciencias Agrarias</p>
+  </div>
+</div>
+</div>
+
+</div><!-- end #P -->
+
+<div class="nc"><button class="nb" id="pB" onclick="ch(-1)">←</button><div class="nd" id="nD"></div><button class="nb" id="nB" onclick="ch(1)">→</button></div>
+
+<script>
+// ===== THEME TOGGLE =====
+let currentTheme='dark';
+function toggleTheme(){
+  currentTheme=currentTheme==='dark'?'light':'dark';
+  document.documentElement.setAttribute('data-theme',currentTheme==='dark'?'':'light');
+  const tog=document.getElementById('themeToggle');
+  tog.classList.toggle('light',currentTheme==='light');
+  document.getElementById('themeIcon').textContent=currentTheme==='dark'?'🌙':'☀️';
+  document.getElementById('themeLabel').textContent=currentTheme==='dark'?'Oscuro':'Claro';
+  // Swap Leaflet tile layers
+  const url=getTileUrl();
+  if(havMap&&havTileLayer){havMap.removeLayer(havTileLayer);havTileLayer=L.tileLayer(url,{attribution:'© OSM © CARTO'}).addTo(havMap);}
+  if(simMap2&&simTileLayer){simMap2.removeLayer(simTileLayer);simTileLayer=L.tileLayer(url,{attribution:'© OSM © CARTO'}).addTo(simMap2);}
+  // Redraw canvases
+  try{
+    if(c===13)drawPlotCanvas(lastPlotStyle||'basic');
+    if(c===14)updateFilter();
+  }catch(e){}
+}
+function getCanvasBg(){return currentTheme==='light'?'#1e1e2e':'#0d1117';}
+function getCanvasText(){return currentTheme==='light'?'rgba(255,255,255,.5)':'rgba(255,255,255,.25)';}
+function getTileUrl(){return currentTheme==='light'?'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png':'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png';}
+// ===== NAVIGATION =====
+let c=0;const S=document.querySelectorAll('.slide'),T=S.length,D=document.getElementById('nD');
+S.forEach((_,i)=>{const d=document.createElement('div');d.className='nm'+(i===0?' on':'');d.onclick=()=>go(i);D.appendChild(d);});
+function go(n){S[c].classList.remove('active');c=Math.max(0,Math.min(n,T-1));S[c].classList.add('active');ui();
+if(c===2) updateIf();
+if(c===3) updateGeoClassifier();
+if(c===4) initForLoop();
+if(c===5) switchForTab('enum');
+if(c===8) initHavMap();
+if(c===9) initDict();
+if(c===13) drawPlotCanvas('basic');
+if(c===14) updateFilter();
+if(c===15) initSimMap();
+}
+function ch(d){go(c+d)}
+function ui(){document.getElementById('sc').textContent=`${c+1} / ${T}`;document.getElementById('pf').style.width=((c+1)/T*100)+'%';document.querySelectorAll('.nm').forEach((d,i)=>d.classList.toggle('on',i===c));document.getElementById('pB').disabled=c===0;document.getElementById('nB').disabled=c===T-1;}
+document.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key==='ArrowDown'||e.key===' '){e.preventDefault();ch(1)}if(e.key==='ArrowLeft'||e.key==='ArrowUp'){e.preventDefault();ch(-1)}});
+ui();
+
+// ===== SLIDE 2: RECAP =====
+const recapCodes = [
+`<span class="ccm"># Variables — cajas con nombre</span>
+<span class="cv">ciudad</span> = <span class="cs">"Villavicencio"</span>
+<span class="cv">lat</span> = <span class="cn">4.142</span>
+<span class="cv">poblacion</span> = <span class="cn">531275</span>
+<span class="cv">es_capital</span> = <span class="cn">True</span>`,
+`<span class="ccm"># Tipos de datos</span>
+<span class="cbu">type</span>(<span class="cn">531275</span>)     <span class="ccm"># int</span>
+<span class="cbu">type</span>(<span class="cn">4.142</span>)      <span class="ccm"># float</span>
+<span class="cbu">type</span>(<span class="cs">"Meta"</span>)      <span class="ccm"># str</span>
+<span class="cbu">type</span>(<span class="cn">True</span>)        <span class="ccm"># bool</span>
+<span class="cbu">type</span>([<span class="cn">1</span>,<span class="cn">2</span>,<span class="cn">3</span>])     <span class="ccm"># list</span>`,
+`<span class="ccm"># Listas — colecciones desde [0]</span>
+<span class="cv">deptos</span> = [<span class="cs">"Meta"</span>, <span class="cs">"Casanare"</span>, <span class="cs">"Arauca"</span>]
+<span class="cbu">print</span>(<span class="cv">deptos</span>[<span class="cn">0</span>])    <span class="ccm"># "Meta"</span>
+<span class="cv">deptos</span>.<span class="cff">append</span>(<span class="cs">"Vichada"</span>)
+<span class="cbu">print</span>(<span class="cbu">len</span>(<span class="cv">deptos</span>)) <span class="ccm"># 4</span>`,
+`<span class="ccm"># Geoinformación</span>
+<span class="ccm"># SIG = Sistema de Información Geográfica</span>
+<span class="ccm"># Vector: puntos, líneas, polígonos</span>
+<span class="ccm"># Ráster: cuadrícula de píxeles</span>
+<span class="ccm"># CRS: WGS84 (EPSG:4326), MAGNA-SIRGAS</span>
+<span class="cv">lat</span>, <span class="cv">lon</span> = <span class="cn">4.142</span>, <span class="cn">-73.626</span> <span class="ccm"># Villavicencio</span>`
+];
+function showRecap(i){document.getElementById('recapCode').innerHTML=recapCodes[i];}
+
+// ===== SLIDE 3: IF SIMULATOR =====
+function updateIf(){
+  const v=parseInt(document.getElementById('ifSlider').value);
+  document.getElementById('ifSliderVal').textContent=v.toLocaleString();
+  document.getElementById('ifPopVal').textContent=v;
+  let cat,path;
+  if(v>500000){cat='🏙️ Ciudad grande';path=0;}
+  else if(v>100000){cat='🏘️ Ciudad intermedia';path=1;}
+  else if(v>20000){cat='🏠 Municipio mediano';path=2;}
+  else{cat='🏡 Municipio pequeño';path=3;}
+  document.getElementById('ifResult').textContent=cat;
+  const conditions=['poblacion > 500,000','poblacion > 100,000','poblacion > 20,000','else (≤ 20,000)'];
+  const labels=['if','elif','elif','else'];
+  const colors=['var(--a)','var(--a2)','var(--a3)','var(--a4)'];
+  let html='';
+  conditions.forEach((cond,i)=>{
+    const isActive=i===path;
+    const isPassed=i<path;
+    html+=`<div class="flow-box ${isActive?'true-path':isPassed?'false-path':''}" style="border-color:${isActive?colors[i]:'var(--bdr)'};${isActive?'box-shadow:0 0 15px '+colors[i].replace('var(--','rgba(').replace(')',',.2)')+';':''}">
+      <span style="font-size:.7rem;color:${colors[i]};font-weight:600">${labels[i]}</span><br>
+      <span style="color:var(--t)">${cond}</span>
+      ${isActive?'<br><span style="color:'+colors[i]+';font-size:.75rem">✓ TRUE</span>':isPassed?'<br><span style="color:var(--a4);font-size:.75rem">✗ FALSE</span>':''}
+    </div>`;
+    if(i<3)html+=`<div class="flow-arrow ${isPassed?'active':''}">${isPassed?'↓ False':'↓'}</div>`;
+  });
+  document.getElementById('ifFlow').innerHTML=html;
+}
+
+// ===== SLIDE 4: GEO CLASSIFIER =====
+const munData={
+  villavicencio:{nombre:'Villavicencio',pob:531275,alt:467,temp:27,area:1328},
+  acacias:{nombre:'Acacías',pob:78890,alt:498,temp:26,area:1169},
+  granada:{nombre:'Granada',pob:73120,alt:372,temp:28,area:590},
+  cumaral:{nombre:'Cumaral',pob:22500,alt:452,temp:27,area:581},
+  restrepo:{nombre:'Restrepo',pob:12600,alt:560,temp:25,area:430}
+};
+function updateGeoClassifier(){
+  const sel=document.getElementById('geoMun').value;
+  if(sel!=='custom'&&munData[sel]){
+    const d=munData[sel];
+    document.getElementById('geoPob').value=d.pob;
+    document.getElementById('geoAlt').value=d.alt;
+    document.getElementById('geoTemp').value=d.temp;
+    document.getElementById('geoArea').value=d.area;
+  }
+  const pob=parseInt(document.getElementById('geoPob').value)||0;
+  const alt=parseInt(document.getElementById('geoAlt').value)||0;
+  const temp=parseFloat(document.getElementById('geoTemp').value)||0;
+  const area=parseInt(document.getElementById('geoArea').value)||0;
+  let catPob=pob>500000?'🏙️ Grande':pob>100000?'🏘️ Intermedio':pob>20000?'🏠 Mediano':'🏡 Pequeño';
+  let catClima=temp>28?'🔥 Cálido extremo':temp>24?'☀️ Cálido':temp>18?'🌤️ Templado':'❄️ Frío';
+  let catAlt=alt>2500?'🏔️ Alta montaña':alt>1000?'⛰️ Media montaña':'🌴 Tierras bajas';
+  let dens=(pob/area).toFixed(1);
+  let catDens=dens>200?'🔴 Alta densidad':dens>50?'🟡 Media densidad':'🟢 Baja densidad';
+  document.getElementById('geoResults').innerHTML=`
+    <div class="dict-entry"><div class="dict-key">Tamaño</div><div class="dict-val">${catPob}</div></div>
+    <div class="dict-entry"><div class="dict-key">Clima</div><div class="dict-val">${catClima}</div></div>
+    <div class="dict-entry"><div class="dict-key">Altitud</div><div class="dict-val">${catAlt}</div></div>
+    <div class="dict-entry"><div class="dict-key">Densidad</div><div class="dict-val">${catDens} (${dens} hab/km²)</div></div>`;
+  document.getElementById('geoCode').innerHTML=`<span class="ck">def</span> <span class="cff">clasificar</span>(<span class="cv">pob</span>, <span class="cv">temp</span>, <span class="cv">alt</span>, <span class="cv">area</span>):
+    <span class="ck">if</span> <span class="cv">pob</span> > <span class="cn">500000</span>: <span class="cv">tam</span> = <span class="cs">"Grande"</span>
+    <span class="ck">elif</span> <span class="cv">pob</span> > <span class="cn">100000</span>: <span class="cv">tam</span> = <span class="cs">"Intermedio"</span>
+    <span class="ck">elif</span> <span class="cv">pob</span> > <span class="cn">20000</span>: <span class="cv">tam</span> = <span class="cs">"Mediano"</span>
+    <span class="ck">else</span>: <span class="cv">tam</span> = <span class="cs">"Pequeño"</span>
+    <span class="ck">if</span> <span class="cv">temp</span> > <span class="cn">24</span>: <span class="cv">clima</span> = <span class="cs">"Cálido"</span>
+    <span class="ck">else</span>: <span class="cv">clima</span> = <span class="cs">"Templado/Frío"</span>
+    <span class="ck">return</span> <span class="cv">tam</span>, <span class="cv">clima</span>, <span class="cv">pob</span>/<span class="cv">area</span>
+
+<span class="cbu">print</span>(<span class="cff">clasificar</span>(<span class="cn">${pob}</span>, <span class="cn">${temp}</span>, <span class="cn">${alt}</span>, <span class="cn">${area}</span>))`;
+}
+
+// ===== SLIDE 5: FOR LOOP =====
+const forMuns=['Villavicencio','Acacías','Granada','Cumaral','Restrepo'];
+let forIdx=-1,forTimer=null;
+function initForLoop(){
+  forIdx=-1;
+  document.getElementById('forTrack').innerHTML=forMuns.map((m,i)=>`<div class="loop-item" id="fi${i}"><div class="idx">[${i}]</div>"${m}"</div>`).join('');
+  document.getElementById('forCurrent').textContent='— esperando —';
+  document.getElementById('forSteps').innerHTML='';
+  document.getElementById('forOutput').classList.remove('vi');
+}
+function runForLoop(){
+  initForLoop();
+  document.getElementById('forOutput').classList.add('vi');
+  document.getElementById('forOutputText').textContent='';
+  forIdx=0;
+  stepFor();
+}
+function stepFor(){
+  if(forIdx>=forMuns.length){
+    document.getElementById('forCurrent').innerHTML='<span style="color:var(--a)">✅ Bucle terminado</span>';
+    return;
+  }
+  forMuns.forEach((_,i)=>{
+    const el=document.getElementById('fi'+i);
+    el.classList.remove('current','done');
+    if(i<forIdx)el.classList.add('done');
+    if(i===forIdx)el.classList.add('current');
+  });
+  const m=forMuns[forIdx];
+  document.getElementById('forCurrent').textContent=`"${m}"`;
+  document.getElementById('forOutputText').textContent+=(forIdx>0?'\n':'')+`📍 Procesando: ${m}\n   Letras: ${m.length}`;
+  forIdx++;
+  forTimer=setTimeout(stepFor,800);
+}
+
+// ===== SLIDE 6: FOR TABS =====
+let currentForTab='enum';
+function switchForTab(tab){
+  currentForTab=tab;
+  document.querySelectorAll('#forTabs .tab-btn').forEach((b,i)=>b.classList.toggle('on',['enum','range','comp'][i]===tab));
+  document.getElementById('forTabOut').classList.remove('vi');
+  const codeEl=document.getElementById('forTabCode');
+  const titleEl=document.getElementById('forTabTitle');
+  const explEl=document.getElementById('forTabExplain');
+  const fileEl=document.getElementById('forTabFile');
+  if(tab==='enum'){
+    fileEl.textContent='enumerate.py';
+    titleEl.textContent='enumerate() — índice + valor';
+    codeEl.innerHTML=`<span class="ccm"># enumerate() da el índice automáticamente</span>
+<span class="cv">deptos</span> = [<span class="cs">"Meta"</span>, <span class="cs">"Casanare"</span>, <span class="cs">"Arauca"</span>]
+
+<span class="ck">for</span> <span class="cv">i</span>, <span class="cv">depto</span> <span class="ck">in</span> <span class="cbu">enumerate</span>(<span class="cv">deptos</span>):
+    <span class="cbu">print</span>(<span class="cs">f"{</span><span class="cv">i</span><span class="cs">}: {</span><span class="cv">depto</span><span class="cs">}"</span>)`;
+    explEl.innerHTML=`<p style="color:var(--t2);font-size:.85rem;margin-bottom:12px"><code style="color:var(--a)">enumerate()</code> devuelve <strong>dos valores</strong> por cada iteración: el <span class="hb">índice</span> (posición) y el <span class="hi">valor</span> del elemento.</p>
+    <div class="dict-entry"><div class="dict-key">i = 0</div><div class="dict-val">depto = "Meta"</div></div>
+    <div class="dict-entry"><div class="dict-key">i = 1</div><div class="dict-val">depto = "Casanare"</div></div>
+    <div class="dict-entry"><div class="dict-key">i = 2</div><div class="dict-val">depto = "Arauca"</div></div>
+    <div class="co tip"><strong>Útil en GIS:</strong> Numerar capas, asignar colores por posición, indexar estaciones.</div>`;
+  } else if(tab==='range'){
+    fileEl.textContent='range.py';
+    titleEl.textContent='range() — secuencias numéricas';
+    codeEl.innerHTML=`<span class="ccm"># range(inicio, fin, paso)</span>
+<span class="ck">for</span> <span class="cv">year</span> <span class="ck">in</span> <span class="cbu">range</span>(<span class="cn">2020</span>, <span class="cn">2026</span>):
+    <span class="cbu">print</span>(<span class="cs">f"📅 Analizando {</span><span class="cv">year</span><span class="cs">}"</span>)
+
+<span class="ccm"># Con paso de 2</span>
+<span class="ck">for</span> <span class="cv">km</span> <span class="ck">in</span> <span class="cbu">range</span>(<span class="cn">0</span>, <span class="cn">50</span>, <span class="cn">10</span>):
+    <span class="cbu">print</span>(<span class="cs">f"📍 Buffer: {</span><span class="cv">km</span><span class="cs">} km"</span>)`;
+    explEl.innerHTML=`<p style="color:var(--t2);font-size:.85rem;margin-bottom:12px"><code style="color:var(--a)">range()</code> genera una secuencia de números sin crear una lista en memoria.</p>
+    <div class="dict-entry"><div class="dict-key">range(5)</div><div class="dict-val">0, 1, 2, 3, 4</div></div>
+    <div class="dict-entry"><div class="dict-key">range(2,7)</div><div class="dict-val">2, 3, 4, 5, 6</div></div>
+    <div class="dict-entry"><div class="dict-key">range(0,50,10)</div><div class="dict-val">0, 10, 20, 30, 40</div></div>
+    <div class="co tip"><strong>Útil en GIS:</strong> Iterar sobre años de análisis, generar grillas, crear buffers incrementales.</div>`;
+  } else {
+    fileEl.textContent='comprension.py';
+    titleEl.textContent='Comprensión de listas — crear en 1 línea';
+    codeEl.innerHTML=`<span class="ccm"># Forma larga</span>
+<span class="cv">areas_km2</span> = []
+<span class="ck">for</span> <span class="cv">a</span> <span class="ck">in</span> <span class="cv">areas_m2</span>:
+    <span class="cv">areas_km2</span>.<span class="cff">append</span>(<span class="cv">a</span> / <span class="cn">1_000_000</span>)
+
+<span class="ccm"># ¡Comprensión de lista! (1 línea)</span>
+<span class="cv">areas_km2</span> = [<span class="cv">a</span>/<span class="cn">1_000_000</span> <span class="ck">for</span> <span class="cv">a</span> <span class="ck">in</span> <span class="cv">areas_m2</span>]
+
+<span class="ccm"># Con filtro (if)</span>
+<span class="cv">grandes</span> = [<span class="cv">m</span> <span class="ck">for</span> <span class="cv">m</span> <span class="ck">in</span> <span class="cv">municipios</span>
+           <span class="ck">if</span> <span class="cv">m</span>[<span class="cs">"poblacion"</span>] > <span class="cn">100000</span>]`;
+    explEl.innerHTML=`<p style="color:var(--t2);font-size:.85rem;margin-bottom:12px">Crea listas en <strong>una línea</strong>. Más Pythónico y más rápido:</p>
+    <div class="dict-entry"><div class="dict-key">[x for x in L]</div><div class="dict-val">Transformar</div></div>
+    <div class="dict-entry"><div class="dict-key">[x for x in L if ...]</div><div class="dict-val">Filtrar</div></div>
+    <div class="dict-entry"><div class="dict-key">[f(x) for x in L]</div><div class="dict-val">Aplicar función</div></div>
+    <div class="co tip"><strong>Muy usado en GIS:</strong> <code style="color:var(--a)">[g.area for g in gdf.geometry]</code> calcula el área de todos los polígonos.</div>`;
+  }
+}
+function runForTab(){
+  const o=document.getElementById('forTabOut');
+  o.classList.add('vi');
+  const t=document.getElementById('forTabOutText');
+  if(currentForTab==='enum')t.textContent='0: Meta\n1: Casanare\n2: Arauca';
+  else if(currentForTab==='range')t.textContent='📅 Analizando 2020\n📅 Analizando 2021\n📅 Analizando 2022\n📅 Analizando 2023\n📅 Analizando 2024\n📅 Analizando 2025\n📍 Buffer: 0 km\n📍 Buffer: 10 km\n📍 Buffer: 20 km\n📍 Buffer: 30 km\n📍 Buffer: 40 km';
+  else t.textContent='areas_km2 = [1.328, 1.169, 0.590, ...]\ngrandes = [{"nombre": "Villavicencio", ...}]';
+}
+
+// ===== SLIDE 7: WHILE =====
+function runWhile(){
+  document.getElementById('whileOut').classList.add('vi');
+  const chart=document.getElementById('whileChart');
+  const out=document.getElementById('whileOutText');
+  out.textContent='';
+  let temp=32,hora=0,lines=[];
+  const points=[];
+  while(temp>25){
+    lines.push(`⏰ Hora ${hora}: ${temp.toFixed(1)}°C 🔴`);
+    points.push({h:hora,t:temp});
+    temp-=1.5;hora++;
+  }
+  lines.push(`✅ Hora ${hora}: ${temp.toFixed(1)}°C — Bajo umbral`);
+  points.push({h:hora,t:temp});
+  // Animate output
+  let i=0;
+  function step(){
+    if(i<lines.length){out.textContent+=(i>0?'\n':'')+lines[i];i++;setTimeout(step,300);}
+  }
+  step();
+  // Draw chart
+  const w=chart.clientWidth,h=200;
+  chart.innerHTML=`<canvas id="whileCanvas" width="${w*2}" height="${h*2}" style="width:${w}px;height:${h}px"></canvas>`;
+  const cv=document.getElementById('whileCanvas'),x=cv.getContext('2d');
+  const maxH=hora+1,minT=20,maxT=34;
+  x.fillStyle='rgba(34,211,167,.05)';
+  x.fillRect(0,0,w*2,((25-minT)/(maxT-minT))*h*2);// below threshold
+  // Threshold line
+  x.strokeStyle='rgba(34,211,167,.3)';x.lineWidth=1;x.setLineDash([6,4]);
+  const ty=h*2-(25-minT)/(maxT-minT)*h*2;
+  x.beginPath();x.moveTo(0,ty);x.lineTo(w*2,ty);x.stroke();x.setLineDash([]);
+  // Line
+  x.beginPath();x.strokeStyle='#ef4444';x.lineWidth=3;
+  points.forEach((p,idx)=>{
+    const px=p.h/maxH*w*1.8+40;
+    const py=h*2-(p.t-minT)/(maxT-minT)*h*2+20;
+    if(idx===0)x.moveTo(px,py);else x.lineTo(px,py);
+  });
+  x.stroke();
+  // Points
+  points.forEach((p,idx)=>{
+    const px=p.h/maxH*w*1.8+40;
+    const py=h*2-(p.t-minT)/(maxT-minT)*h*2+20;
+    x.beginPath();x.arc(px,py,6,0,Math.PI*2);
+    x.fillStyle=p.t>25?'#ef4444':'#22d3a7';x.fill();
+    x.fillStyle='rgba(255,255,255,.5)';x.font='16px Fira Code';
+    x.fillText(`${p.t.toFixed(1)}°`,px-20,py-14);
+  });
+}
+
+// ===== SLIDE 8: FUNCTIONS =====
+function runFunc(){
+  document.getElementById('funcOut').classList.add('vi');
+  document.getElementById('funcOutText').textContent='🏙️ Ciudad grande\n🏡 Municipio pequeño\n🏘️ Ciudad intermedia';
+}
+function testFunc(){
+  const v=parseInt(document.getElementById('funcInput').value)||0;
+  let r;
+  if(v>500000)r='🏙️ Ciudad grande';
+  else if(v>100000)r='🏘️ Ciudad intermedia';
+  else r='🏡 Municipio pequeño';
+  document.getElementById('funcResult').textContent=r;
+}
+
+// ===== SLIDE 9: HAVERSINE MAP =====
+const havCities=[
+  {name:'Villavicencio',lat:4.142,lon:-73.626},
+  {name:'Acacías',lat:3.987,lon:-73.758},
+  {name:'Granada',lat:3.545,lon:-73.714},
+  {name:'Bogotá',lat:4.711,lon:-74.072},
+  {name:'Yopal',lat:5.338,lon:-72.393}
+];
+let havMap=null,havLine=null,havMarkers=[],havTileLayer=null;
+function initHavMap(){
+  if(havMap){havMap.invalidateSize();return;}
+  if(typeof L==='undefined'){setTimeout(initHavMap,500);return;}
+  setTimeout(()=>{
+    try{
+      havMap=L.map('havMap').setView([4.4,-73.5],7);
+      havTileLayer=L.tileLayer(getTileUrl(),{attribution:'© OSM © CARTO'}).addTo(havMap);
+      updateHav();
+      setTimeout(()=>havMap.invalidateSize(),200);
+    }catch(e){console.warn('Leaflet init error:',e);}
+  },200);
+}
+function haversine(lat1,lon1,lat2,lon2){
+  const R=6371,dLat=(lat2-lat1)*Math.PI/180,dLon=(lon2-lon1)*Math.PI/180;
+  const a=Math.sin(dLat/2)**2+Math.cos(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180)*Math.sin(dLon/2)**2;
+  return R*2*Math.asin(Math.sqrt(a));
+}
+function updateHav(){
+  const f=havCities[parseInt(document.getElementById('havFrom').value)];
+  const t=havCities[parseInt(document.getElementById('havTo').value)];
+  const d=haversine(f.lat,f.lon,t.lat,t.lon);
+  document.getElementById('havDist').textContent=d.toFixed(1)+' km';
+  document.getElementById('havC1').textContent=f.lat;
+  document.getElementById('havC2').textContent=f.lon;
+  document.getElementById('havC3').textContent=t.lat;
+  document.getElementById('havC4').textContent=t.lon;
+  if(!havMap||typeof L==='undefined')return;
+  havMarkers.forEach(m=>havMap.removeLayer(m));
+  if(havLine)havMap.removeLayer(havLine);
+  havMarkers=[];
+  try{
+    havMarkers.push(L.circleMarker([f.lat,f.lon],{radius:7,color:'#22d3a7',fillColor:'#22d3a7',fillOpacity:1}).bindPopup(f.name).addTo(havMap));
+    havMarkers.push(L.circleMarker([t.lat,t.lon],{radius:7,color:'#6366f1',fillColor:'#6366f1',fillOpacity:1}).bindPopup(t.name).addTo(havMap));
+    havLine=L.polyline([[f.lat,f.lon],[t.lat,t.lon]],{color:'#f59e0b',weight:2,dashArray:'8,6'}).addTo(havMap);
+    havMap.fitBounds([[f.lat,f.lon],[t.lat,t.lon]],{padding:[30,30]});
+  }catch(e){console.warn('Leaflet updateHav error:',e);}
+}
+
+// ===== SLIDE 10: DICTIONARIES =====
+let dictData={nombre:'Villavicencio',departamento:'Meta',lat:4.142,lon:-73.626,poblacion:531275,es_capital:true};
+function initDict(){
+  const vis=document.getElementById('dictVis');
+  vis.innerHTML=Object.entries(dictData).map(([k,v])=>{
+    let t=typeof v==='number'?(Number.isInteger(v)?'int':'float'):typeof v==='boolean'?'bool':'str';
+    let vStr=typeof v==='string'?`"${v}"`:v;
+    return `<div class="dict-entry"><div class="dict-key">"${k}"</div><div class="dict-val">${vStr}</div><div class="dict-type">${t}</div></div>`;
+  }).join('');
+}
+function dictAction(act){
+  const out=document.getElementById('dictActionText');
+  if(act==='keys')out.textContent='.keys() → '+Object.keys(dictData).map(k=>`"${k}"`).join(', ');
+  else if(act==='values')out.textContent='.values() → '+Object.values(dictData).map(v=>typeof v==='string'?`"${v}"`:v).join(', ');
+  else if(act==='items')out.textContent='.items() → '+Object.entries(dictData).map(([k,v])=>`("${k}", ${typeof v==='string'?'"'+v+'"':v})`).join(', ');
+  else if(act==='add'){
+    dictData.rio_principal='Guatiquía';
+    initDict();
+    out.innerHTML='<span style="color:var(--a)">➕ municipio["rio_principal"] = "Guatiquía"</span>';
+  }
+  else if(act==='get')out.textContent='.get("poblacion") → 531275\n.get("alcalde", "No definido") → "No definido"';
+}
+function runDict(){
+  document.getElementById('dictOut').classList.add('vi');
+  document.getElementById('dictOutText').textContent='Villavicencio\n4.142';
+}
+
+// ===== SLIDE 12: LOAD SHAPEFILE =====
+function runLoadShp(){
+  document.getElementById('shpOut').classList.add('vi');
+  const t=document.getElementById('shpOutText');
+  t.textContent='';
+  const lines=['Instalando geopandas... ✓','Cargando MGN_ANM_DPTOS.shp...','','  DPTO_CCDGO DPTO_CNMBR  ... geometry','0      05    ANTIOQUIA  ... MULTIPOLYGON(...)','1      08    ATLÁNTICO  ... MULTIPOLYGON(...)','2      11    BOGOTÁ D.C ... MULTIPOLYGON(...)','3      13    BOLÍVAR    ... MULTIPOLYGON(...)','4      15    BOYACÁ     ... MULTIPOLYGON(...)','','Filas: 33','CRS: EPSG:4326'];
+  let i=0;(function f(){if(i<lines.length){t.textContent+=(i?'\n':'')+lines[i];i++;setTimeout(f,150);}})();
+  // Show table
+  const table=document.getElementById('shpTable');
+  const rows=[
+    ['05','ANTIOQUIA','MULTIPOLYGON(...)'],
+    ['08','ATLÁNTICO','MULTIPOLYGON(...)'],
+    ['11','BOGOTÁ D.C.','MULTIPOLYGON(...)'],
+    ['13','BOLÍVAR','MULTIPOLYGON(...)'],
+    ['15','BOYACÁ','MULTIPOLYGON(...)'],
+    ['50','META','MULTIPOLYGON(...)'],
+  ];
+  table.innerHTML=`<table class="gdf-table"><tr><th></th><th>DPTO_CCDGO</th><th>DPTO_CNMBR</th><th>geometry</th></tr>${rows.map((r,i)=>`<tr${r[1]==='META'?' class="hl"':''}><td style="color:var(--t3)">${i}</td><td>${r[0]}</td><td>${r[1]}</td><td class="gdf-geom">${r[2]}</td></tr>`).join('')}</table>`;
+}
+
+// ===== SLIDE 13: GDF METHODS =====
+function gdfMethod(m){
+  const c=document.getElementById('gdfConsole');
+  const responses={
+    head:'> gdf.head()\n  DPTO_CCDGO DPTO_CNMBR   geometry\n0      05    ANTIOQUIA    MULTIPOLYGON(...)\n1      08    ATLÁNTICO    MULTIPOLYGON(...)\n2      11    BOGOTÁ D.C.  MULTIPOLYGON(...)\n3      13    BOLÍVAR      MULTIPOLYGON(...)\n4      15    BOYACÁ       MULTIPOLYGON(...)',
+    shape:'> gdf.shape\n(33, 5)',
+    columns:'> gdf.columns\nIndex([\'DPTO_CCDGO\', \'DPTO_CNMBR\', \'DPTO_ACT_AD\',\n       \'DPTO_NANO_A\', \'geometry\'])',
+    dtypes:'> gdf.dtypes\nDPTO_CCDGO     object\nDPTO_CNMBR     object\nDPTO_ACT_AD    int64\nDPTO_NANO_A    object\ngeometry       geometry',
+    crs:'> gdf.crs\nEPSG:4326  (WGS 84 — Geográfico, grados)',
+    geom_type:'> gdf.geom_type.unique()\narray([\'MultiPolygon\'], dtype=object)',
+    describe:'> gdf.describe()\n       DPTO_ACT_AD\ncount   33.000\nmean     1.000\nstd      0.000\nmin      1.000\nmax      1.000',
+    bounds:'> gdf.total_bounds\narray([-81.73, -4.23, -66.85, 13.39])\n# [W, S, E, N] — extensión de Colombia'
+  };
+  c.innerHTML+=`\n<div class="cmd">${responses[m].split('\n')[0]}</div>`;
+  responses[m].split('\n').slice(1).forEach(l=>{c.innerHTML+=`\n<div class="out">${l}</div>`;});
+  c.scrollTop=c.scrollHeight;
+}
+
+// ===== SLIDE 14: PLOT CANVAS =====
+// Simplified Colombia departments as paths
+const colDepts=[
+  {name:'Amazonas',path:[[.35,.85],[.45,.88],[.52,.82],[.48,.75],[.38,.78]],color:'#2d8a56'},
+  {name:'Antioquia',path:[[.22,.28],[.28,.25],[.32,.30],[.30,.38],[.24,.36]],color:'#e8710a'},
+  {name:'Meta',path:[[.38,.42],[.48,.38],[.55,.45],[.52,.55],[.40,.52]],color:'#22d3a7'},
+  {name:'Boyacá',path:[[.32,.30],[.38,.28],[.40,.35],[.38,.42],[.32,.38]],color:'#6366f1'},
+  {name:'Casanare',path:[[.40,.30],[.50,.28],[.52,.35],[.48,.38],[.42,.35]],color:'#f59e0b'},
+  {name:'Arauca',path:[[.42,.22],[.52,.20],[.55,.28],[.50,.28],[.42,.25]],color:'#ec4899'},
+  {name:'Vichada',path:[[.52,.28],[.62,.22],[.68,.32],[.62,.40],[.55,.35]],color:'#ef4444'},
+  {name:'Guainía',path:[[.62,.40],[.70,.38],[.72,.50],[.65,.52],[.58,.48]],color:'#8b5cf6'},
+  {name:'Cundinamarca',path:[[.30,.38],[.38,.38],[.38,.42],[.35,.45],[.28,.42]],color:'#14b8a6'},
+  {name:'Tolima',path:[[.24,.42],[.30,.40],[.32,.48],[.28,.52],[.22,.48]],color:'#f97316'},
+  {name:'Cauca',path:[[.18,.52],[.24,.50],[.26,.58],[.22,.62],[.16,.58]],color:'#06b6d4'},
+  {name:'Nariño',path:[[.14,.60],[.22,.58],[.22,.65],[.18,.68],[.12,.65]],color:'#d946ef'},
+  {name:'Valle',path:[[.16,.48],[.22,.45],[.24,.52],[.20,.55],[.14,.52]],color:'#fbbf24'},
+  {name:'Chocó',path:[[.12,.32],[.18,.28],[.22,.38],[.18,.45],[.12,.42]],color:'#34d399'},
+  {name:'Santander',path:[[.28,.22],[.35,.20],[.38,.28],[.34,.32],[.28,.28]],color:'#a78bfa'},
+  {name:'Bolívar',path:[[.22,.15],[.28,.12],[.30,.20],[.28,.25],[.22,.22]],color:'#fb923c'},
+  {name:'Cesar',path:[[.30,.12],[.36,.10],[.38,.18],[.35,.20],[.30,.16]],color:'#4ade80'},
+  {name:'La Guajira',path:[[.30,.05],[.38,.02],[.40,.10],[.36,.10],[.32,.08]],color:'#f472b6'},
+  {name:'Putumayo',path:[[.24,.62],[.32,.60],[.35,.68],[.30,.72],[.22,.68]],color:'#38bdf8'},
+  {name:'Caquetá',path:[[.30,.55],[.40,.52],[.45,.62],[.38,.68],[.28,.62]],color:'#a3e635'},
+  {name:'Vaupés',path:[[.52,.55],[.60,.52],[.65,.60],[.58,.65],[.50,.60]],color:'#c084fc'},
+  {name:'Guaviare',path:[[.42,.52],[.52,.50],[.55,.58],[.48,.62],[.40,.58]],color:'#22d3ee'},
+];
+let lastPlotStyle='basic';
+function drawPlotCanvas(style){
+  lastPlotStyle=style;
+  const cv=document.getElementById('plotCanvas'),x=cv.getContext('2d'),w=cv.width,h=cv.height;
+  x.fillStyle=getCanvasBg();x.fillRect(0,0,w,h);
+  colDepts.forEach(d=>{
+    x.beginPath();
+    d.path.forEach((p,i)=>{i===0?x.moveTo(p[0]*w,p[1]*h):x.lineTo(p[0]*w,p[1]*h);});
+    x.closePath();
+    if(style==='basic'){x.fillStyle='rgba(99,102,241,.2)';x.strokeStyle='rgba(99,102,241,.5)';}
+    else if(style==='color'){x.fillStyle=d.color+'33';x.strokeStyle=d.color+'99';}
+    else if(style==='highlight'){
+      const isMeta=d.name==='Meta';
+      x.fillStyle=isMeta?'rgba(34,211,167,.35)':'rgba(255,255,255,.03)';
+      x.strokeStyle=isMeta?'#22d3a7':'rgba(255,255,255,.1)';
+    }
+    x.lineWidth=style==='highlight'&&d.name==='Meta'?3:1.5;
+    x.fill();x.stroke();
+    if(style==='color'||style==='highlight'){
+      const cx=d.path.reduce((s,p)=>s+p[0],0)/d.path.length*w;
+      const cy=d.path.reduce((s,p)=>s+p[1],0)/d.path.length*h;
+      x.fillStyle=style==='highlight'&&d.name!=='Meta'?'rgba(255,255,255,.15)':'rgba(255,255,255,.45)';
+      x.font='10px Fira Code';
+      x.fillText(d.name,cx-20,cy);
+    }
+  });
+  x.fillStyle='rgba(255,255,255,.25)';x.font='bold 14px Outfit';
+  x.fillText(style==='basic'?'gdf.plot()':style==='color'?'gdf.plot(column="DPTO_CNMBR")':'Orinoquía resaltada',12,22);
+}
+function changePlotStyle(s){drawPlotCanvas(s);}
+function runPlot(){drawPlotCanvas('color');}
+
+// ===== SLIDE 15: FILTER =====
+const orinoquia=['META','CASANARE','ARAUCA','VICHADA'];
+const deptColors={META:'#22d3a7',CASANARE:'#f59e0b',ARAUCA:'#ec4899',VICHADA:'#ef4444'};
+function updateFilter(){
+  const sel=document.getElementById('filterDept').value;
+  const cv=document.getElementById('filterCanvas'),x=cv.getContext('2d'),w=cv.width,h=cv.height;
+  x.fillStyle=getCanvasBg();x.fillRect(0,0,w,h);
+  document.getElementById('filterDeptVal').textContent=`"${sel}"`;
+  const nameMap={META:'Meta',CASANARE:'Casanare',ARAUCA:'Arauca',VICHADA:'Vichada'};
+  const deptPaths={
+    META:[[.38,.42],[.48,.38],[.55,.45],[.52,.55],[.40,.52]],
+    CASANARE:[[.40,.30],[.50,.28],[.52,.35],[.48,.38],[.42,.35]],
+    ARAUCA:[[.42,.22],[.52,.20],[.55,.28],[.50,.28],[.42,.25]],
+    VICHADA:[[.52,.28],[.62,.22],[.68,.32],[.62,.40],[.55,.35]]
+  };
+  let show;
+  if(sel==='ALL')show=Object.keys(deptPaths);
+  else if(sel==='ORINOQUIA')show=orinoquia;
+  else show=[sel];
+  // Draw faded background of all
+  Object.entries(deptPaths).forEach(([name,path])=>{
+    const active=show.includes(name);
+    x.beginPath();path.forEach((p,i)=>{i===0?x.moveTo(p[0]*w,p[1]*h):x.lineTo(p[0]*w,p[1]*h)});x.closePath();
+    x.fillStyle=active?(deptColors[name]||'#22d3a7')+'44':'rgba(255,255,255,.02)';
+    x.strokeStyle=active?(deptColors[name]||'#22d3a7')+'99':'rgba(255,255,255,.06)';
+    x.lineWidth=active?2.5:1;x.fill();x.stroke();
+    if(active){
+      const cx=path.reduce((s,p)=>s+p[0],0)/path.length*w;
+      const cy=path.reduce((s,p)=>s+p[1],0)/path.length*h;
+      x.fillStyle='rgba(255,255,255,.6)';x.font='bold 12px Outfit';
+      x.fillText(nameMap[name]||name,cx-18,cy+4);
+    }
+  });
+  document.getElementById('filterInfo').textContent=`Departamentos mostrados: ${show.length} | Filtro: gdf[gdf["DPTO_CNMBR"] == "${sel}"]`;
+}
+function runFilter(){
+  document.getElementById('filterOut').classList.add('vi');
+  document.getElementById('filterOutText').textContent='   DPTO_CCDGO DPTO_CNMBR  geometry\n5      50       META       MULTIPOLYGON(...)';
+}
+
+// ===== SLIDE 16: INTEGRATED SIMULATOR =====
+let simMap2=null,simTileLayer=null;
+let simLayers=[];
+function initSimMap(){
+  if(simMap2){simMap2.invalidateSize();return;}
+  if(typeof L==='undefined'){setTimeout(initSimMap,500);return;}
+  setTimeout(()=>{
+    try{
+      simMap2=L.map('simMap').setView([4.5,-73.0],6);
+      simTileLayer=L.tileLayer(getTileUrl(),{attribution:'© OSM © CARTO'}).addTo(simMap2);
+      setTimeout(()=>simMap2.invalidateSize(),300);
+    }catch(e){console.warn('Leaflet simMap error:',e);}
+  },200);
+}
+function simLog(cmd,out,isErr){
+  const c=document.getElementById('simConsole');
+  c.innerHTML+=`\n<div class="cmd">>>> ${cmd}</div>`;
+  if(out)c.innerHTML+=`\n<div class="${isErr?'err':'out'}">${out}</div>`;
+  c.scrollTop=c.scrollHeight;
+}
+function simClearLayers(){if(!simMap2)return;simLayers.forEach(l=>{try{simMap2.removeLayer(l)}catch(e){}});simLayers=[];}
+function simCmd(cmd){
+  if(!simMap2&&typeof L!=='undefined')initSimMap();
+  if(cmd==='clear'){document.getElementById('simConsole').innerHTML='<div>> Sistema listo.</div>';if(simMap2){simClearLayers();simMap2.setView([4.5,-73.0],6);}return;}
+  if(cmd==='load'){
+    simLog('gdf = gpd.read_file("MGN_ANM_DPTOS.shp")','GeoDataFrame cargado: 33 departamentos');
+    simLog('print(gdf.crs)','EPSG:4326');
+  } else if(cmd==='head'){
+    simLog('gdf.head()','  DPTO_CCDGO DPTO_CNMBR\n  05         ANTIOQUIA\n  08         ATLÁNTICO\n  11         BOGOTÁ D.C.\n  13         BOLÍVAR\n  15         BOYACÁ');
+  } else if(cmd==='plot'){
+    simLog('gdf.plot(figsize=(10,8))','🗺️ Mapa renderizado con 33 departamentos');
+    if(simMap2&&typeof L!=='undefined'){try{
+    simClearLayers();
+    const depts=[
+      {name:'Meta',coords:[[4.9,-74.2],[4.9,-72.0],[2.8,-72.0],[2.8,-74.2]],color:'#22d3a7'},
+      {name:'Casanare',coords:[[6.3,-73.5],[6.3,-71.5],[4.9,-71.5],[4.9,-73.5]],color:'#f59e0b'},
+      {name:'Arauca',coords:[[7.1,-72.5],[7.1,-70.0],[6.3,-70.0],[6.3,-72.5]],color:'#ec4899'},
+      {name:'Vichada',coords:[[6.3,-71.5],[6.3,-67.5],[4.0,-67.5],[4.0,-71.5]],color:'#ef4444'}
+    ];
+    depts.forEach(d=>{
+      const l=L.polygon(d.coords,{color:d.color,weight:2,fillColor:d.color,fillOpacity:.2}).bindPopup(d.name).addTo(simMap2);
+      simLayers.push(l);
+    });
+    simMap2.setView([5,-71],6);
+    }catch(e){}}
+  } else if(cmd==='filter_meta'){
+    simLog('meta = gdf[gdf["DPTO_CNMBR"] == "META"]','Filtrado: 1 departamento');
+    simLog('meta.plot()','🗺️ Mapa del Meta renderizado');
+    if(simMap2&&typeof L!=='undefined'){try{
+    simClearLayers();
+    const l=L.polygon([[4.9,-74.2],[4.9,-72.0],[2.8,-72.0],[2.8,-74.2]],{color:'#22d3a7',weight:3,fillColor:'#22d3a7',fillOpacity:.3}).bindPopup('META').addTo(simMap2);
+    simLayers.push(l);
+    const mk=L.marker([4.142,-73.626]).bindPopup('Villavicencio').addTo(simMap2);
+    simLayers.push(mk);
+    simMap2.setView([3.8,-73.1],7);
+    }catch(e){}}
+  } else if(cmd==='filter_orinoquia'){
+    simLog('orinoquia = ["META","CASANARE","ARAUCA","VICHADA"]','');
+    simLog('region = gdf[gdf["DPTO_CNMBR"].isin(orinoquia)]','Filtrado: 4 departamentos');
+    if(simMap2&&typeof L!=='undefined'){try{
+    simClearLayers();
+    const depts=[
+      {name:'Meta',coords:[[4.9,-74.2],[4.9,-72.0],[2.8,-72.0],[2.8,-74.2]],color:'#22d3a7'},
+      {name:'Casanare',coords:[[6.3,-73.5],[6.3,-71.5],[4.9,-71.5],[4.9,-73.5]],color:'#f59e0b'},
+      {name:'Arauca',coords:[[7.1,-72.5],[7.1,-70.0],[6.3,-70.0],[6.3,-72.5]],color:'#ec4899'},
+      {name:'Vichada',coords:[[6.3,-71.5],[6.3,-67.5],[4.0,-67.5],[4.0,-71.5]],color:'#ef4444'}
+    ];
+    depts.forEach(d=>{
+      const l=L.polygon(d.coords,{color:d.color,weight:2,fillColor:d.color,fillOpacity:.25}).bindPopup(d.name).addTo(simMap2);
+      simLayers.push(l);
+    });
+    simMap2.setView([5.3,-71],6);
+    }catch(e){}}
+  } else if(cmd==='loop'){
+    simLog('for depto in gdf["DPTO_CNMBR"][:5]:','');
+    const names=['ANTIOQUIA','ATLÁNTICO','BOGOTÁ D.C.','BOLÍVAR','BOYACÁ'];
+    names.forEach((n,i)=>{setTimeout(()=>simLog(`    print(depto)`,n),i*200);});
+  } else if(cmd==='func'){
+    simLog('def clasificar(pob):\n    if pob > 500000: return "Grande"\n    elif pob > 100000: return "Intermedio"\n    else: return "Pequeño"','Función definida');
+    simLog('clasificar(531275)','"Grande"');
+    simLog('clasificar(78890)','"Pequeño"');
+  }
+}
+
+// ===== QUIZ =====
+const qm={q1:{g:'¡Correcto! La condición es False, así que se ejecuta el else → "Adiós".',b:'Con False, se ejecuta la rama else → "Adiós".'},q2:{g:'¡Exacto! range(5) genera: 0, 1, 2, 3, 4 → 5 iteraciones.',b:'range(5) = [0,1,2,3,4] → son 5 iteraciones.'},q3:{g:'¡Correcto! return devuelve un valor al llamar la función.',b:'return es la palabra clave para devolver valores.'},q4:{g:'¡Exacto! En diccionarios se accede con la clave entre corchetes.',b:'Los diccionarios usan claves: d["depto"] no d[0].'},q5:{g:'¡Perfecto! gpd.read_file() carga shapefiles, geojson, gpkg...',b:'El método correcto es gpd.read_file().'}};
+function cq(id,el,ok){const q=document.getElementById(id);if(q.dataset.a)return;q.dataset.a='1';q.querySelectorAll('.qp').forEach(o=>{o.style.pointerEvents='none';if(o!==el)o.classList.add('no');});el.classList.add(ok?'ok':'no');const f=document.getElementById(id+'f');f.classList.add('sh');f.className=`qf sh ${ok?'gd':'bd'}`;f.textContent=ok?qm[id].g:qm[id].b;}
+</script>
+</body>
+</html>

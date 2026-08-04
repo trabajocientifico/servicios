@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Python + IA + Datos — Trabajo Científico</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap');
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:'Inter',sans-serif;background:#f0f0f0;color:#1a1a1a;}
+  .page{width:794px;min-height:1123px;margin:0 auto 40px;background:#fff;position:relative;overflow:hidden;page-break-after:always;}
+  :root{--c1:#1d4ed8;--c2:#1e3a8a;--c3:#bfdbfe;--c4:#eff6ff;}
+  .cover{background:linear-gradient(145deg,var(--c2) 0%,var(--c1) 55%,#0ea5e9 100%);min-height:1123px;display:flex;flex-direction:column;justify-content:space-between;}
+  .cover-top{padding:48px 56px 0;}
+  .cover-logo{font-family:'Montserrat',sans-serif;font-weight:800;font-size:13px;letter-spacing:3px;color:rgba(255,255,255,0.7);text-transform:uppercase;}
+  .cover-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.3);border-radius:20px;padding:6px 16px;font-size:12px;color:#fff;margin-top:32px;font-weight:600;letter-spacing:1px;}
+  .cover-dot{width:8px;height:8px;background:#bfdbfe;border-radius:50%;}
+  .cover-main{padding:48px 56px;}
+  .cover-icon{font-size:72px;margin-bottom:24px;}
+  .cover-title{font-family:'Montserrat',sans-serif;font-weight:800;font-size:44px;color:#fff;line-height:1.1;margin-bottom:16px;}
+  .cover-sub{font-size:18px;color:rgba(255,255,255,0.85);font-weight:300;line-height:1.5;max-width:480px;margin-bottom:48px;}
+  .cover-stats{display:flex;gap:32px;}
+  .stat{background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);border-radius:12px;padding:20px 28px;text-align:center;}
+  .stat-num{font-family:'Montserrat',sans-serif;font-weight:800;font-size:32px;color:#bfdbfe;}
+  .stat-label{font-size:11px;color:rgba(255,255,255,0.75);text-transform:uppercase;letter-spacing:1px;margin-top:4px;}
+  .cover-bottom{padding:32px 56px;background:rgba(0,0,0,0.2);display:flex;justify-content:space-between;align-items:center;}
+  .cover-bottom-text{color:rgba(255,255,255,0.7);font-size:12px;}
+  .cover-url{color:#bfdbfe;font-weight:600;font-size:13px;}
+  .content-page{padding:56px;}
+  .section-badge{display:inline-block;background:var(--c3);color:var(--c2);font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:5px 14px;border-radius:20px;margin-bottom:12px;}
+  .section-title{font-family:'Montserrat',sans-serif;font-weight:800;font-size:28px;color:#1a1a1a;margin-bottom:8px;}
+  .section-sub{color:#64748b;font-size:14px;margin-bottom:36px;line-height:1.5;}
+  .divider{width:60px;height:4px;background:var(--c1);border-radius:2px;margin-bottom:36px;}
+  .level-card{border:1px solid #e2e8f0;border-radius:16px;overflow:hidden;margin-bottom:24px;}
+  .level-header{background:var(--c4);border-bottom:1px solid var(--c3);padding:18px 24px;display:flex;align-items:center;gap:16px;}
+  .level-num{background:var(--c1);color:#fff;font-family:'Montserrat',sans-serif;font-weight:800;font-size:13px;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .level-title{font-family:'Montserrat',sans-serif;font-weight:700;font-size:16px;color:#1a1a1a;}
+  .level-hours{margin-left:auto;background:var(--c1);color:#fff;font-size:11px;font-weight:700;padding:4px 12px;border-radius:20px;}
+  .level-body{padding:20px 24px;}
+  .topic-list{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+  .topic-list li{font-size:13px;color:#374151;display:flex;align-items:flex-start;gap:8px;line-height:1.4;}
+  .topic-list li::before{content:'▸';color:var(--c1);font-size:12px;flex-shrink:0;margin-top:1px;}
+  .method-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:32px;}
+  .method-card{background:var(--c4);border:1px solid var(--c3);border-radius:12px;padding:20px;text-align:center;}
+  .method-icon{font-size:28px;margin-bottom:10px;}
+  .method-title{font-family:'Montserrat',sans-serif;font-weight:700;font-size:13px;color:var(--c2);margin-bottom:6px;}
+  .method-text{font-size:12px;color:#64748b;line-height:1.4;}
+  .benefit-list{list-style:none;margin-bottom:32px;}
+  .benefit-list li{padding:10px 0;border-bottom:1px solid #f1f5f9;font-size:13px;color:#374151;display:flex;align-items:flex-start;gap:10px;line-height:1.4;}
+  .benefit-list li:last-child{border-bottom:none;}
+  .benefit-list li::before{content:'✓';color:var(--c1);font-weight:700;font-size:14px;flex-shrink:0;}
+  .cta-box{background:linear-gradient(135deg,var(--c2),var(--c1));border-radius:16px;padding:28px 32px;color:#fff;display:flex;justify-content:space-between;align-items:center;}
+  .cta-text h3{font-family:'Montserrat',sans-serif;font-weight:800;font-size:18px;margin-bottom:6px;}
+  .cta-text p{font-size:13px;opacity:0.85;line-height:1.4;}
+  .cta-btn{background:#fff;color:var(--c2);font-family:'Montserrat',sans-serif;font-weight:700;font-size:13px;padding:12px 24px;border-radius:10px;text-decoration:none;white-space:nowrap;}
+  .contact-info{margin-top:24px;display:flex;gap:24px;font-size:12px;color:#64748b;}
+  @media print{body{background:#fff;}.page{margin:0;box-shadow:none;}}
+</style>
+</head>
+<body>
+
+<div class="page">
+  <div class="cover">
+    <div class="cover-top">
+      <div class="cover-logo">Trabajo Científico · Academia Tecnológica</div>
+      <div class="cover-badge"><span class="cover-dot"></span> Programa Certificado</div>
+    </div>
+    <div class="cover-main">
+      <div class="cover-icon">🐍</div>
+      <div class="cover-title">Python +<br>IA + Datos</div>
+      <div class="cover-sub">Aprende Python desde cero y conéctalo con inteligencia artificial para análisis de datos, automatización y machine learning aplicado.</div>
+      <div class="cover-stats">
+        <div class="stat"><div class="stat-num">3</div><div class="stat-label">Niveles</div></div>
+        <div class="stat"><div class="stat-num">36h</div><div class="stat-label">Total</div></div>
+        <div class="stat"><div class="stat-num">100%</div><div class="stat-label">Online</div></div>
+      </div>
+    </div>
+    <div class="cover-bottom">
+      <div class="cover-bottom-text">Mediado por tecnología · Google Colab + GitHub · Certificado al finalizar</div>
+      <div class="cover-url">trabajocientifico.org</div>
+    </div>
+  </div>
+</div>
+
+<div class="page">
+  <div class="content-page">
+    <div class="section-badge">Contenido del Programa</div>
+    <div class="section-title">Tres niveles · 12 horas cada uno</div>
+    <div class="section-sub">Desde la sintaxis básica de Python hasta modelos de machine learning y conexión con APIs de IA. Todo en Google Colaboratory, sin instalaciones.</div>
+    <div class="divider"></div>
+
+    <div class="level-card">
+      <div class="level-header">
+        <div class="level-num">1</div>
+        <div class="level-title">Fundamentos de Python y Librerías</div>
+        <div class="level-hours">12 horas</div>
+      </div>
+      <div class="level-body">
+        <ul class="topic-list">
+          <li>Entorno Google Colab y Jupyter Notebooks</li>
+          <li>Variables, tipos de datos y estructuras</li>
+          <li>Condicionales, bucles y funciones</li>
+          <li>Manejo de archivos CSV, Excel y JSON</li>
+          <li>Introducción a NumPy: arrays y operaciones</li>
+          <li>Introducción a Pandas: Series y DataFrames</li>
+          <li>Lectura y escritura de datos desde la nube</li>
+          <li>Buenas prácticas de código con GitHub</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="level-card">
+      <div class="level-header">
+        <div class="level-num">2</div>
+        <div class="level-title">Análisis de Datos con Pandas y NumPy</div>
+        <div class="level-hours">12 horas</div>
+      </div>
+      <div class="level-body">
+        <ul class="topic-list">
+          <li>Limpieza y transformación de datos sucios</li>
+          <li>Análisis exploratorio (EDA) completo</li>
+          <li>Agrupaciones, pivotes y operaciones avanzadas</li>
+          <li>Visualización con Matplotlib y Seaborn</li>
+          <li>Estadística descriptiva e inferencial con Python</li>
+          <li>Manejo de series de tiempo y datos geográficos</li>
+          <li>Integración con hojas de cálculo y bases de datos</li>
+          <li>Reporte automático en PDF y HTML</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="level-card">
+      <div class="level-header">
+        <div class="level-num">3</div>
+        <div class="level-title">Machine Learning e IA Aplicada</div>
+        <div class="level-hours">12 horas</div>
+      </div>
+      <div class="level-body">
+        <ul class="topic-list">
+          <li>Introducción a Scikit-learn: flujo completo ML</li>
+          <li>Modelos de clasificación y regresión</li>
+          <li>Validación, métricas y ajuste de modelos</li>
+          <li>Árboles de decisión y Random Forest</li>
+          <li>Clustering: K-means y análisis de grupos</li>
+          <li>Conexión con APIs de IA (OpenAI, Anthropic)</li>
+          <li>Automatización de análisis con agentes de IA</li>
+          <li>Proyecto final: pipeline de datos completo con ML</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="page">
+  <div class="content-page">
+    <div class="section-badge">Metodología</div>
+    <div class="section-title">Código real desde la primera clase</div>
+    <div class="section-sub">No se enseña teoría sin práctica. Cada concepto se aplica inmediatamente en notebooks interactivos con datos reales.</div>
+    <div class="divider"></div>
+    <div class="method-grid">
+      <div class="method-card"><div class="method-icon">☁️</div><div class="method-title">Google Colaboratory</div><div class="method-text">Programas en la nube sin instalar nada. Solo necesitas un navegador y tu cuenta de Google.</div></div>
+      <div class="method-card"><div class="method-icon">🧪</div><div class="method-title">Proyectos con Datos Reales</div><div class="method-text">Trabajas con conjuntos de datos reales: ambientales, económicos, biomédicos y sociales.</div></div>
+      <div class="method-card"><div class="method-icon">🐙</div><div class="method-title">GitHub Integrado</div><div class="method-text">Guardas tu código en GitHub desde el primer día, construyendo tu portafolio profesional.</div></div>
+      <div class="method-card"><div class="method-icon">🏆</div><div class="method-title">Certificado Digital</div><div class="method-text">Certificado verificable al completar cada nivel, respaldado por Trabajo Científico.</div></div>
+    </div>
+    <div class="section-badge">¿Qué lograrás?</div>
+    <ul class="benefit-list" style="margin-top:16px;">
+      <li>Programar en Python con confianza para análisis de datos desde cero</li>
+      <li>Limpiar, explorar y visualizar cualquier conjunto de datos de forma profesional</li>
+      <li>Construir modelos de machine learning aplicados a problemas reales de tu área</li>
+      <li>Integrar herramientas de IA generativa en tus pipelines de análisis</li>
+      <li>Tener un portafolio de proyectos en GitHub que respalde tu perfil profesional</li>
+    </ul>
+    <div class="cta-box">
+      <div class="cta-text"><h3>¡Inscríbete hoy!</h3><p>Cupos limitados · Inicio inmediato<br>Sin conocimientos previos de programación requeridos</p></div>
+      <a class="cta-btn" href="https://forms.gle/LTbJyNjncE4rocP9A">Inscríbete →</a>
+    </div>
+    <div class="contact-info">
+      <span>🌐 trabajocientifico.org</span>
+      <span>✉ info@trabajocientifico.org</span>
+      <span>📱 WhatsApp disponible</span>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

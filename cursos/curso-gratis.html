@@ -1,0 +1,1186 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trabajo Científico - Cargando curso...</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <script src="js/config.js"></script>
+  <script src="js/prefs.js"></script>
+  <style>
+    /* ============================================
+       Free Course — UI overrides
+       ============================================ */
+
+    /* Hide gamification elements not used in free courses */
+    body.is-free-course .sidebar-modules,
+    body.is-free-course .user-role,
+    body.is-free-course .hero-stats,
+    body.is-free-course #skill-tree,
+    body.is-free-course .section-title { display: none !important; }
+
+    /* Hide stub elements used only to keep app.js happy */
+    .free-course-stubs { display: none !important; }
+
+    /* Slightly tighter hero in free courses */
+    body.is-free-course .dashboard-hero { padding: 16px 0 4px; margin-bottom: 14px; }
+    body.is-free-course .dashboard-hero h1 { font-size: 1.6rem; margin-bottom: 4px; }
+    body.is-free-course .hero-subtitle { font-size: 0.95rem; }
+
+    /* ====== Sidebar free-course stats ====== */
+    .sidebar-free-stats {
+      margin: 0 16px 14px;
+      padding: 12px 14px;
+      background: var(--bg-hover);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .free-stat { display: flex; align-items: center; gap: 10px; }
+    .free-stat-icon { font-size: 1.1rem; width: 28px; text-align: center; }
+    .free-stat-text { flex: 1; display: flex; flex-direction: column; line-height: 1.2; }
+    .free-stat-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      letter-spacing: 0.04em;
+    }
+    .free-stat-value {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    /* ====== Top tabs panel ====== */
+    .classes-tabs {
+      display: flex;
+      gap: 6px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 8px;
+      margin-bottom: 22px;
+      flex-wrap: wrap;
+    }
+    .class-tab {
+      flex: 1 1 auto;
+      min-width: 120px;
+      padding: 12px 18px;
+      background: transparent;
+      border: 1px solid transparent;
+      border-radius: var(--radius-sm);
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-family: inherit;
+    }
+    .class-tab:hover { background: var(--bg-hover); color: var(--text-primary); }
+    .class-tab.active {
+      background: var(--accent-gradient);
+      color: #fff;
+      box-shadow: 0 4px 12px rgba(196, 34, 50, 0.25);
+    }
+    .class-tab .tab-check {
+      width: 18px; height: 18px;
+      border-radius: 50%;
+      background: var(--success);
+      color: #fff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      font-weight: 700;
+    }
+    .class-tab.class-tab-cert.active {
+      background: linear-gradient(135deg, #ffd700, #ff8c00);
+      color: #1a1a1a;
+    }
+    .class-tab.class-tab-upcoming { opacity: 0.75; }
+    .class-tab .tab-soon-pill {
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--text-secondary);
+      border: 1px solid var(--border);
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 0.7rem;
+      font-weight: 600;
+    }
+    .class-tab.class-tab-upcoming.active .tab-soon-pill {
+      background: rgba(255, 255, 255, 0.18);
+      color: #fff;
+      border-color: rgba(255, 255, 255, 0.3);
+    }
+
+    /* ====== Upcoming class panel ====== */
+    .class-upcoming {
+      background: var(--bg-surface);
+      border: 1px dashed var(--border);
+      border-radius: var(--radius);
+      padding: 48px 32px;
+      text-align: center;
+      color: var(--text-secondary);
+      max-width: 720px;
+      margin: 16px auto;
+    }
+    .class-upcoming-icon { font-size: 3rem; margin-bottom: 12px; }
+    .class-upcoming h3 { color: var(--text-primary); font-size: 1.3rem; margin: 8px 0 10px; }
+    .class-upcoming p { font-size: 0.95rem; line-height: 1.6; max-width: 480px; margin: 0 auto; }
+
+    .cert-check-item.upcoming { opacity: 0.7; }
+    .cert-check-item.upcoming .cert-check-icon {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: var(--border);
+    }
+
+    /* ====== Class panels ====== */
+    .class-panel { display: none; animation: tcFadeIn 0.25s; }
+    .class-panel.active { display: block; }
+    @keyframes tcFadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .class-panel-header { margin-bottom: 18px; }
+    .class-panel-header h2 {
+      font-size: 1.5rem;
+      margin: 0 0 6px;
+      color: var(--text-primary);
+    }
+    .class-panel-header p { color: var(--text-secondary); margin: 0; font-size: 0.95rem; }
+
+    /* Free courses use full width on desktop for bigger video */
+    body.is-free-course .main-content {
+      max-width: none;
+      padding: 32px 40px;
+    }
+    body.is-free-course.theater-mode .sidebar { display: none; }
+    body.is-free-course.theater-mode .main-content { margin-left: 0; }
+
+    /* Class video toolbar */
+    .class-video-toolbar {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 8px;
+      max-width: 1600px;
+      margin: 0 auto 8px;
+    }
+    .video-expand-btn {
+      background: var(--bg-surface);
+      color: var(--text-primary);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 6px 12px;
+      font-size: 0.85rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.18s;
+    }
+    .video-expand-btn:hover {
+      border-color: rgba(196, 34, 50, 0.5);
+      background: rgba(196, 34, 50, 0.08);
+    }
+    body.theater-mode .video-expand-btn { border-color: rgba(196, 34, 50, 0.6); color: var(--brand-300); }
+
+    /* Large video container (desktop-first) */
+    .class-video-wrap {
+      position: relative;
+      width: 100%;
+      max-width: 1600px;
+      margin: 0 auto 22px;
+      background: #000;
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.35);
+    }
+    body.theater-mode .class-video-wrap { max-width: none; }
+    .class-video-wrap::before {
+      content: "";
+      display: block;
+      padding-top: 56.25%;
+    }
+    .class-video-wrap iframe {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      border: 0;
+    }
+    .class-video-placeholder {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 10px;
+      color: #b9bcd1;
+      text-align: center;
+      padding: 24px;
+    }
+    .class-video-placeholder .ph-emoji { font-size: 2.4rem; }
+    .class-video-placeholder .ph-text { font-size: 1rem; max-width: 480px; }
+
+    /* Info grid: concepts + resources */
+    .class-info-grid {
+      display: grid;
+      grid-template-columns: 1.6fr 1fr;
+      gap: 18px;
+      margin-bottom: 18px;
+    }
+    @media (max-width: 1000px) {
+      .class-info-grid { grid-template-columns: 1fr; }
+    }
+    .class-info-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px 20px;
+    }
+    .class-info-card h3 {
+      margin: 0 0 12px;
+      font-size: 1rem;
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .class-info-card .reading-content {
+      color: var(--text-secondary);
+      font-size: 0.92rem;
+      line-height: 1.65;
+      max-height: 360px;
+      overflow-y: auto;
+      padding-right: 6px;
+    }
+    .class-info-card .reading-content strong { color: var(--text-primary); }
+    .class-resources-list { display: flex; flex-direction: column; gap: 8px; }
+    .class-resource {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+      background: var(--bg-hover);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      color: var(--text-primary);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: all 0.2s;
+    }
+    .class-resource:hover {
+      border-color: var(--accent-cyan);
+      transform: translateX(2px);
+    }
+    .class-resource-icon { font-size: 1.1rem; }
+
+    /* Quiz action block inside each class panel */
+    .class-quiz-action {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 18px 22px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      flex-wrap: wrap;
+    }
+    .class-quiz-action-info h3 {
+      margin: 0 0 4px;
+      font-size: 1.05rem;
+      color: var(--text-primary);
+    }
+    .class-quiz-action-info p {
+      margin: 0;
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+    }
+    .class-quiz-action .quiz-status-done {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--success);
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    /* Mark-video-watched action */
+    .class-watched-btn {
+      margin-top: 4px;
+    }
+    .class-watched-btn.done {
+      background: rgba(34, 197, 94, 0.12);
+      border-color: var(--success);
+      color: var(--success);
+      cursor: default;
+    }
+
+    /* ====== Certificate panel ====== */
+    .cert-panel {
+      max-width: 720px;
+      margin: 0 auto;
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px 30px;
+    }
+    .cert-panel-header {
+      text-align: center;
+      margin-bottom: 22px;
+    }
+    .cert-panel-header h2 {
+      margin: 0 0 6px;
+      color: var(--text-primary);
+      font-size: 1.6rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .cert-panel-header p { color: var(--text-secondary); margin: 0; }
+    .cert-checklist {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 22px;
+    }
+    .cert-check-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 11px 14px;
+      background: var(--bg-hover);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+    }
+    .cert-check-icon {
+      width: 26px; height: 26px;
+      border-radius: 50%;
+      background: var(--bg-deep);
+      color: var(--text-muted);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      border: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+    .cert-check-item.done .cert-check-icon {
+      background: var(--success);
+      color: #fff;
+      border-color: var(--success);
+    }
+    .cert-check-text { flex: 1; color: var(--text-primary); font-size: 0.95rem; }
+    .cert-check-item.done .cert-check-text { opacity: 0.78; }
+    .cert-panel .cert-actions { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; margin-top: 16px; }
+    #cert-download-btn { min-width: 260px; }
+    #cert-download-btn:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+      filter: grayscale(0.5);
+    }
+
+    /* ====== Theme toggle ====== */
+    .theme-toggle {
+      position: fixed;
+      top: 14px;
+      right: 16px;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      color: var(--text-primary);
+      cursor: pointer;
+      font-size: 1.15rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 200;
+      transition: all 0.2s;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+    }
+    .theme-toggle:hover {
+      transform: scale(1.06);
+      border-color: var(--accent-cyan);
+    }
+    @media (max-width: 768px) {
+      .theme-toggle { top: 10px; right: 10px; width: 36px; height: 36px; font-size: 1rem; }
+    }
+
+    /* ====== Light theme ====== */
+    body[data-theme="light"] {
+      --bg-deep: #eef1f7;
+      --bg-surface: #ffffff;
+      --bg-hover: #f3f5fb;
+      --border: rgba(15, 23, 42, 0.08);
+      --border-hover: rgba(15, 23, 42, 0.18);
+      --text-primary: #111827;
+      --text-secondary: #475569;
+      --text-muted: #94a3b8;
+    }
+    body[data-theme="light"] .modal { color: var(--text-primary); background: #ffffff; }
+    body[data-theme="light"] .modal-title,
+    body[data-theme="light"] .modal-subtitle { color: var(--text-primary); }
+    body[data-theme="light"] .class-video-wrap { box-shadow: 0 6px 20px rgba(15, 23, 42, 0.12); }
+    body[data-theme="light"] .class-tab.active { color: #fff; }
+    body[data-theme="light"] .class-tab.class-tab-cert.active { color: #1a1a1a; }
+    body[data-theme="light"] .gradient-text { color: var(--brand-text); }
+  </style>
+</head>
+<body class="is-free-course" data-theme="dark">
+
+  <!-- Welcome Modal -->
+  <div id="welcome-modal" class="modal-overlay">
+    <div class="modal">
+      <div class="modal-glow"></div>
+      <h1 class="modal-title" id="welcome-title">Cargando<br><span class="gradient-text">curso...</span></h1>
+      <p class="modal-subtitle" id="welcome-subtitle">Preparando tu experiencia de aprendizaje.</p>
+      <div class="modal-input-group">
+        <label for="student-name">¿Cómo te llamas?</label>
+        <input type="text" id="student-name" placeholder="Ej: María Fernanda Rodríguez Gómez" maxlength="60" autocomplete="name">
+        <p class="input-hint">Escríbelo tal como quieres que aparezca en tu certificado.</p>
+      </div>
+      <div class="modal-input-group hidden" id="student-email-group">
+        <label for="student-email">Tu correo electrónico</label>
+        <input type="email" id="student-email" placeholder="tu@correo.com" autocomplete="email">
+        <p class="input-hint">Con tu correo guardamos tu avance para que puedas continuar desde otro equipo.</p>
+      </div>
+      <button id="start-btn" class="btn btn-primary" disabled>Comenzar el curso</button>
+    </div>
+  </div>
+
+  <!-- Certificate Modal -->
+  <div id="cert-modal" class="modal-overlay hidden">
+    <div class="modal modal-lg">
+      <button class="modal-close" id="cert-close">&times;</button>
+      <h2 class="modal-title">¡Felicidades! 🎓</h2>
+      <p class="modal-subtitle">Has completado el curso. Descarga tu certificado.</p>
+      <canvas id="cert-canvas" width="1200" height="800"></canvas>
+      <div class="cert-name-check">
+        <span class="cert-name-label">Se expedirá a nombre de:</span>
+        <strong class="cert-name-value" id="cert-name-value">—</strong>
+        <button type="button" class="btn btn-outline btn-sm" id="cert-name-edit">Corregir nombre</button>
+      </div>
+      <div class="cert-actions">
+        <button id="cert-download" class="btn btn-primary">⬇️ Descargar PNG (alta resolución)</button>
+        <button id="cert-download-pdf" class="btn btn-secondary">📄 Descargar PDF</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pro Course Promo Modal (shown on top of certificate) -->
+  <div id="promo-modal" class="modal-overlay hidden" style="z-index:1100;background:rgba(5,5,15,0.78);">
+    <div class="modal" style="max-width:520px;padding:40px 32px;background:linear-gradient(160deg,#0e1226 0%,#161a36 100%) !important;border:1px solid rgba(196, 34, 50,0.35);box-shadow:0 30px 80px rgba(196, 34, 50,0.15),0 0 0 1px rgba(107, 15, 24,0.2);color:#e4e4e7;">
+      <button class="modal-close" id="promo-close" aria-label="Cerrar" style="color:#cfd3e3;">&times;</button>
+      <div style="display:inline-block;padding:6px 14px;border-radius:999px;background:var(--brand-600);color:#fff;font-size:0.75rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:16px;">🚀 Da el siguiente paso</div>
+      <h2 class="modal-title" style="font-size:1.7rem;margin-bottom:8px;color:#ffffff !important;">Cursos en vivo<br><span style="color:var(--brand-300);">que inician en agosto</span></h2>
+      <p class="modal-subtitle" style="margin-bottom:20px;color:#cfd3e3 !important;">Llevamos lo que aprendiste al siguiente nivel: <strong style="color:#ffffff;">20 horas certificadas</strong> en sesiones en vivo con el instructor.</p>
+      <div style="display:grid;gap:10px;margin-bottom:22px;text-align:left;">
+        <div style="padding:12px 14px;border-radius:10px;background:rgba(196, 34, 50,0.08);border:1px solid rgba(196, 34, 50,0.25);">
+          <div style="color:#ffffff;font-weight:700;font-size:0.95rem;">🐍 Ciencia de Datos Profesional con Python + IA</div>
+          <div style="color:var(--brand-300);font-size:0.85rem;margin-top:3px;">Inicia el 7 de agosto de 2026</div>
+        </div>
+        <div style="padding:12px 14px;border-radius:10px;background:rgba(107, 15, 24,0.08);border:1px solid rgba(107, 15, 24,0.3);">
+          <div style="color:#ffffff;font-weight:700;font-size:0.95rem;">🔬 Inteligencia Artificial para Investigación Científica</div>
+          <div style="color:#a78bfa;font-size:0.85rem;margin-top:3px;">Inicia el 20 de agosto de 2026</div>
+        </div>
+      </div>
+      <ul style="list-style:none;padding:0;margin:0 0 24px;text-align:left;color:#cfd3e3;font-size:0.92rem;line-height:1.8;">
+        <li>✅ 7 sesiones en vivo con el instructor</li>
+        <li>✅ Grabaciones disponibles en la plataforma</li>
+        <li>✅ Evaluación por módulo y certificado de 20 horas</li>
+        <li>✅ Materiales y acompañamiento durante el curso</li>
+      </ul>
+      <a href="index.html#cursos" id="promo-cta" class="btn btn-primary" style="display:block;text-align:center;text-decoration:none;margin-bottom:10px;color:#ffffff;">Ver los cursos en vivo →</a>
+      <button id="promo-continue" class="btn btn-secondary" style="width:100%;color:#ffffff;">Continuar a mi certificado</button>
+    </div>
+  </div>
+
+  <!-- Theme toggle -->
+  <button id="theme-toggle" class="theme-toggle hidden" aria-label="Cambiar tema" title="Cambiar tema">🌙</button>
+
+  <!-- App Shell -->
+  <div id="app" class="app hidden">
+
+    <!-- Mobile Header -->
+    <header class="mobile-header">
+      <button class="hamburger" id="menu-toggle" aria-label="Abrir menú">
+        <span></span><span></span><span></span>
+      </button>
+      <span class="mobile-title" id="mobile-course-title">Curso</span>
+      <div class="header-progress-mini">
+        <span id="header-progress-text">0%</span>
+      </div>
+    </header>
+
+    <!-- Sidebar -->
+    <aside id="sidebar" class="sidebar">
+      <div class="sidebar-header">
+        <a href="index.html" class="sidebar-logo" title="Volver al portal" style="text-decoration:none;color:inherit;">
+          <img src="imagenes/logo-nav.png" alt="Trabajo Científico" class="logo-icon" style="height:28px;width:auto;">
+          <span>Trabajo Científico</span>
+        </a>
+        <button class="sidebar-close" id="sidebar-close" aria-label="Cerrar menú">&times;</button>
+      </div>
+      <a href="index.html" class="btn btn-outline btn-sm" style="margin:0 16px 12px;display:flex;align-items:center;gap:6px;justify-content:center;font-size:0.8rem;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+        Volver al portal
+      </a>
+
+      <div class="sidebar-prefs">
+        <div class="prefs-row">
+          <span class="prefs-label" id="prefs-font-label">Tamaño del texto</span>
+          <div class="prefs-group" role="group" aria-labelledby="prefs-font-label">
+            <button type="button" class="prefs-btn" data-pref-font="normal" aria-pressed="true" title="Texto normal">A</button>
+            <button type="button" class="prefs-btn" data-pref-font="grande" aria-pressed="false" title="Texto grande">A</button>
+            <button type="button" class="prefs-btn" data-pref-font="extra" aria-pressed="false" title="Texto muy grande">A</button>
+          </div>
+        </div>
+        <div class="prefs-row">
+          <span class="prefs-label">Apariencia</span>
+          <button type="button" class="prefs-btn prefs-btn--theme" data-pref-theme>
+            <span data-pref-theme-icon>🌙</span>
+            <span data-pref-theme-text>Tema oscuro</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="sidebar-user">
+        <div class="user-avatar" id="user-avatar">U</div>
+        <div class="user-info">
+          <span class="user-name" id="sidebar-username">Usuario</span>
+          <span class="user-role" id="sidebar-level-label">Estudiante</span>
+        </div>
+      </div>
+
+      <!-- Free course mini stats -->
+      <div class="sidebar-free-stats">
+        <div class="free-stat">
+          <span class="free-stat-icon">📺</span>
+          <div class="free-stat-text">
+            <span class="free-stat-label">Lecciones revisadas</span>
+            <span class="free-stat-value"><span id="stat-completed">0</span> / <span id="stat-total">3</span></span>
+          </div>
+        </div>
+        <div class="free-stat">
+          <span class="free-stat-icon">✅</span>
+          <div class="free-stat-text">
+            <span class="free-stat-label">Quizzes aprobados</span>
+            <span class="free-stat-value"><span id="stat-quizzes">0</span> / <span id="stat-quizzes-total">3</span></span>
+          </div>
+        </div>
+      </div>
+
+      <p class="sync-status" id="sync-status">Avance guardado solo en este equipo</p>
+
+      <!-- Hidden stubs kept so app.js doesn't crash on missing IDs -->
+      <div class="free-course-stubs">
+        <span id="modules-viewed-count"></span>
+        <span id="modules-viewed-label"></span>
+        <div id="modules-viewed-bar"></div>
+        <span id="stat-modules"></span>
+        <span id="stat-modules-total"></span>
+        <span id="stat-modules-label"></span>
+      </div>
+
+      <div class="sidebar-progress">
+        <div class="progress-label">
+          <span>Progreso general</span>
+          <span id="global-progress-pct">0%</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill" id="global-progress-bar"></div>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav" id="sidebar-nav">
+        <!-- Modules rendered by JS -->
+      </nav>
+
+    </aside>
+
+    <!-- Sidebar Overlay (mobile) -->
+    <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+    <!-- Main Content -->
+    <main class="main-content" id="main-content">
+
+      <!-- Dashboard View (now: hero + class tabs) -->
+      <section id="view-dashboard" class="view active">
+        <div class="dashboard-hero">
+          <div class="hero-content">
+            <h1>Bienvenido, <span class="gradient-text" id="dashboard-username">Usuario</span></h1>
+            <p class="hero-subtitle">Avanza a tu ritmo. Mira el video, revisa los materiales y aprueba el quiz de cada clase.</p>
+          </div>
+          <!-- hero-stats removed (now in sidebar) -->
+        </div>
+
+        <!-- Top tabs panel: Clase 1 | Clase 2 | Clase 3 | 🎓 Certificado -->
+        <div class="classes-tabs" id="classes-tabs">
+          <!-- Tabs rendered by inline JS -->
+        </div>
+        <div class="classes-content" id="classes-content">
+          <!-- Class panels rendered by inline JS -->
+        </div>
+
+        <!-- Hidden — kept so renderDashboard() still finds it -->
+        <h2 class="section-title">Tu ruta de aprendizaje</h2>
+        <div class="skill-tree" id="skill-tree"></div>
+      </section>
+
+      <!-- Lesson View (used from sidebar nav clicks) -->
+      <section id="view-lesson" class="view">
+        <button class="btn-back" id="btn-back-lesson">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+          Volver a la clase
+        </button>
+
+        <div class="lesson-header">
+          <span class="lesson-badge" id="lesson-badge">Clase 1 — Lección 1</span>
+          <h1 id="lesson-title">Título de la lección</h1>
+          <div class="lesson-meta">
+            <span class="meta-item" id="lesson-duration">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+              20 min
+            </span>
+            <span class="meta-item" id="lesson-type-badge">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+              Video
+            </span>
+          </div>
+        </div>
+
+        <div class="video-container" id="video-container">
+          <div class="video-wrapper">
+            <iframe id="video-iframe" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
+        </div>
+
+        <div class="lesson-body">
+          <div class="lesson-content-area">
+            <div class="lesson-tabs">
+              <button class="tab active" data-tab="reading">Conceptos</button>
+              <button class="tab" data-tab="resources">Recursos</button>
+            </div>
+
+            <div class="tab-content active" id="tab-reading">
+              <div class="reading-content" id="reading-content">
+                <!-- Reading content rendered by JS -->
+              </div>
+            </div>
+
+            <div class="tab-content" id="tab-resources">
+              <div class="resources-list" id="resources-list">
+                <!-- Resources rendered by JS -->
+              </div>
+            </div>
+          </div>
+
+          <div class="lesson-actions">
+            <button class="btn btn-primary btn-lg" id="btn-complete-lesson">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+              Marcar como completada
+            </button>
+            <button class="btn btn-outline btn-lg" id="btn-next-lesson">
+              Siguiente lección
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Quiz View -->
+      <section id="view-quiz" class="view">
+        <button class="btn-back" id="btn-back-quiz">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+          Volver a la clase
+        </button>
+
+        <div class="quiz-header">
+          <span class="lesson-badge" id="quiz-badge">Quiz</span>
+          <h1 id="quiz-title">Quiz de la Clase</h1>
+          <p class="quiz-instruction">Responde correctamente al menos el 70% de las preguntas para aprobar.</p>
+          <div class="quiz-timer hidden" id="quiz-timer">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2 2"/><path d="M9 2h6"/></svg>
+            <span class="quiz-timer-label">Tiempo restante</span>
+            <span class="quiz-timer-value" id="quiz-timer-value">20:00</span>
+          </div>
+        </div>
+
+        <!-- Pantalla previa: el cronómetro no arranca hasta pulsar Empezar -->
+        <div class="quiz-intro hidden" id="quiz-intro">
+          <h2 class="quiz-intro-title">Antes de empezar</h2>
+          <ul class="quiz-intro-rules" id="quiz-intro-rules"></ul>
+          <button class="btn btn-primary btn-lg" id="btn-start-quiz">Empezar el quiz</button>
+          <button class="btn btn-outline" id="btn-cancel-quiz">Ahora no, volver</button>
+        </div>
+
+        <div class="quiz-body" id="quiz-body">
+          <!-- Quiz questions rendered by JS -->
+        </div>
+
+        <div class="quiz-actions" id="quiz-actions">
+          <button class="btn btn-primary btn-lg" id="btn-submit-quiz">Enviar respuestas</button>
+        </div>
+
+        <div class="quiz-results hidden" id="quiz-results">
+          <div class="result-card" id="result-card">
+            <div class="result-icon" id="result-icon">✓</div>
+            <h2 id="result-title">¡Aprobado!</h2>
+            <p id="result-message">Has obtenido un 100%</p>
+            <div class="result-actions">
+              <button class="btn btn-primary" id="btn-next-module">Siguiente clase</button>
+              <button class="btn btn-outline" id="btn-retry-quiz">Reintentar</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+
+
+
+  <!-- AI Chat -->
+  <button id="ai-fab" class="fab" aria-label="Abrir chat de IA">
+    <span class="fab-icon">🤖</span>
+  </button>
+  <div id="ai-chat-modal" class="chat-modal hidden">
+    <div class="chat-resize-handle" id="chat-resize-handle"></div>
+    <div class="chat-header">
+      <h3>Asistente de IA <span class="gradient-text">Gemini</span></h3>
+      <div class="chat-toolbar">
+        <button id="ai-chat-theme" class="chat-toolbar-btn" aria-label="Cambiar tema" title="Cambiar tema">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        </button>
+        <button id="ai-chat-export" class="chat-toolbar-btn" aria-label="Exportar conversacion" title="Exportar conversacion">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        </button>
+        <button id="ai-chat-fullscreen" class="chat-toolbar-btn" aria-label="Pantalla completa" title="Pantalla completa">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
+        </button>
+        <button id="ai-chat-close" class="chat-close">&times;</button>
+      </div>
+    </div>
+    <div class="chat-messages" id="ai-chat-messages">
+      <!-- Messages will be injected here -->
+    </div>
+    <div id="chat-suggestions" class="chat-suggestions">
+      <!-- Quick suggestion buttons rendered by JS -->
+    </div>
+    <div class="chat-input-area">
+      <form id="ai-chat-form">
+        <input type="text" id="ai-chat-input" placeholder="Escribe tu duda aqui..." autocomplete="off" required>
+        <button type="submit" id="ai-chat-submit" aria-label="Enviar">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+        </button>
+      </form>
+    </div>
+  </div>
+  <div id="ai-chat-overlay" class="chat-overlay hidden"></div>
+
+
+  <!-- Toast Notifications Container -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <!-- Confetti Canvas Overlay -->
+  <canvas id="confetti-canvas" style="position:fixed;top:0;left:0;width:100%;height:100%;z-index:9999;pointer-events:none;display:none;"></canvas>
+
+  <script>
+    /* ============================================
+       Free course initializer
+       Renders the tabs panel + cert checklist
+       and wires the theme toggle.
+       ============================================ */
+    (function() {
+      const THEME_KEY = 'tc_theme';
+      const ACTIVE_TAB_KEY = 'tc_free_active_tab_' +
+        (new URLSearchParams(window.location.search).get('curso') || 'bibliometrix-rstudio');
+
+      // ----- Theme toggle -----
+      function applyTheme(theme) {
+        document.body.setAttribute('data-theme', theme);
+        const btn = document.getElementById('theme-toggle');
+        if (btn) btn.textContent = theme === 'light' ? '🌙' : '☀️';
+      }
+      function initTheme() {
+        const saved = localStorage.getItem(THEME_KEY) || 'dark';
+        applyTheme(saved);
+        const btn = document.getElementById('theme-toggle');
+        if (!btn) return;
+        btn.classList.remove('hidden');
+        btn.addEventListener('click', function() {
+          const current = document.body.getAttribute('data-theme') || 'dark';
+          const next = current === 'dark' ? 'light' : 'dark';
+          localStorage.setItem(THEME_KEY, next);
+          applyTheme(next);
+        });
+      }
+
+      // ----- Markdown-lite formatter for reading content -----
+      function fmtReading(md) {
+        if (!md) return '<em>Sin contenido teórico.</em>';
+        return md
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+          .replace(/\n/g, '<br>');
+      }
+
+      // ----- Resource icon -----
+      function resourceIcon(type) {
+        if (type === 'download') return '⬇️';
+        if (type === 'link') return '🔗';
+        return '📄';
+      }
+
+      // ----- Build tab buttons -----
+      function buildTabs() {
+        const tabsEl = document.getElementById('classes-tabs');
+        if (!tabsEl) return;
+        tabsEl.innerHTML = '';
+
+        const TOTAL_CLASSES = 3;
+        for (let i = 0; i < TOTAL_CLASSES; i++) {
+          const mod = COURSE_DATA.modules[i];
+          const btn = document.createElement('button');
+          btn.dataset.tabIndex = String(i);
+          if (!mod) {
+            btn.className = 'class-tab class-tab-upcoming' + (i === 0 ? ' active' : '');
+            btn.innerHTML = '<span>Clase ' + (i + 1) + '</span><span class="tab-soon-pill">Próximamente</span>';
+          } else {
+            const quizDone = App.isQuizCompleted(mod.quiz.id);
+            const lessonsDone = mod.lessons.every(function(l) { return App.isLessonCompleted(l.id); });
+            const isDone = quizDone && lessonsDone;
+            btn.className = 'class-tab' + (i === 0 ? ' active' : '');
+            btn.innerHTML = (isDone ? '<span class="tab-check">✓</span>' : '') +
+              '<span>Clase ' + (i + 1) + '</span>';
+          }
+          tabsEl.appendChild(btn);
+        }
+
+        // Certificate tab
+        const certBtn = document.createElement('button');
+        certBtn.className = 'class-tab class-tab-cert';
+        certBtn.dataset.tabIndex = 'cert';
+        certBtn.innerHTML = '<span>🎓</span><span>Certificado</span>';
+        tabsEl.appendChild(certBtn);
+
+        tabsEl.querySelectorAll('.class-tab').forEach(function(b) {
+          b.addEventListener('click', function() { activateTab(b.dataset.tabIndex); });
+        });
+      }
+
+      // ----- Build class content panels -----
+      function buildPanels() {
+        const wrap = document.getElementById('classes-content');
+        if (!wrap) return;
+        wrap.innerHTML = '';
+
+        const TOTAL_CLASSES = 3;
+        for (let i = 0; i < TOTAL_CLASSES; i++) {
+          const mod = COURSE_DATA.modules[i];
+          const panel = document.createElement('div');
+          panel.className = 'class-panel' + (i === 0 ? ' active' : '');
+          panel.dataset.tabIndex = String(i);
+
+          if (!mod) {
+            panel.innerHTML =
+              '<div class="class-panel-header">' +
+                '<h2>Clase ' + (i + 1) + ': Próximamente</h2>' +
+                '<p>Esta clase aún no está disponible. Pronto subiremos el video, los materiales y el quiz.</p>' +
+              '</div>' +
+              '<div class="class-upcoming">' +
+                '<div class="class-upcoming-icon">⏳</div>' +
+                '<h3>Estamos preparando esta clase</h3>' +
+                '<p>Vuelve pronto para completar tu certificado. Te recomendamos avanzar primero con la Clase 1 mientras tanto.</p>' +
+              '</div>';
+            wrap.appendChild(panel);
+            continue;
+          }
+
+          const lesson = mod.lessons[0] || {};
+          const quizDone = App.isQuizCompleted(mod.quiz.id);
+          const lessonDone = lesson.id ? App.isLessonCompleted(lesson.id) : false;
+          const driveId = App.parseDriveId(lesson.driveId || lesson.driveUrl);
+          const videoHtml = (lesson.videoId && lesson.videoId !== 'VIDEO_ID_PLACEHOLDER')
+            ? '<iframe src="https://www.youtube.com/embed/' + lesson.videoId +
+              '" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'
+            : driveId
+            ? '<iframe src="https://drive.google.com/file/d/' + driveId +
+              '/preview" allow="autoplay; encrypted-media; fullscreen" allowfullscreen></iframe>'
+            : '<div class="class-video-placeholder">' +
+              '<span class="ph-emoji">🎬</span>' +
+              '<span class="ph-text">El video de esta clase estará disponible próximamente.</span>' +
+              '</div>';
+
+          const resourcesHtml = (lesson.resources || []).map(function(r) {
+            return '<a class="class-resource" href="' + r.url + '" target="_blank" rel="noopener">' +
+              '<span class="class-resource-icon">' + resourceIcon(r.type) + '</span>' +
+              '<span>' + r.title + '</span></a>';
+          }).join('') || '<p style="color:var(--text-secondary);font-size:0.9rem;margin:0;">Sin materiales adicionales.</p>';
+
+          const isTheater = document.body.classList.contains('theater-mode');
+          panel.innerHTML =
+            '<div class="class-panel-header">' +
+              '<h2>Clase ' + (i + 1) + ': ' + (lesson.title || mod.title) + '</h2>' +
+              '<p>' + (mod.description || '') + '</p>' +
+            '</div>' +
+            '<div class="class-video-toolbar">' +
+              '<button class="video-expand-btn" id="theater-toggle-' + i + '" type="button" title="Expandir / contraer">' +
+                (isTheater ? '🗗 Contraer video' : '⛶ Expandir video') +
+              '</button>' +
+            '</div>' +
+            '<div class="class-video-wrap">' + videoHtml + '</div>' +
+            '<div class="class-info-grid">' +
+              '<div class="class-info-card">' +
+                '<h3>📘 Conceptos clave</h3>' +
+                '<div class="reading-content">' + fmtReading(lesson.reading) + '</div>' +
+                (lesson.id ? ('<button class="btn btn-outline btn-sm class-watched-btn' +
+                  (lessonDone ? ' done' : '') + '" data-lesson-id="' + lesson.id +
+                  '" data-module-index="' + i + '" data-lesson-index="0">' +
+                  (lessonDone ? '✓ Video revisado' : 'Marcar video como revisado') +
+                  '</button>') : '') +
+              '</div>' +
+              '<div class="class-info-card">' +
+                '<h3>📎 Materiales</h3>' +
+                '<div class="class-resources-list">' + resourcesHtml + '</div>' +
+              '</div>' +
+            '</div>' +
+            '<div class="class-quiz-action">' +
+              '<div class="class-quiz-action-info">' +
+                '<h3>' + (mod.quiz && mod.quiz.title ? mod.quiz.title : 'Quiz de la clase') + '</h3>' +
+                '<p>Aprueba con 70% o más para validar la clase.</p>' +
+              '</div>' +
+              (quizDone
+                ? '<span class="quiz-status-done">✓ Aprobado</span> ' +
+                  '<button class="btn btn-outline btn-sm" data-quiz-module="' + i + '">Repasar quiz</button>'
+                : '<button class="btn btn-primary" data-quiz-module="' + i + '">Hacer quiz</button>') +
+            '</div>';
+
+          wrap.appendChild(panel);
+        }
+
+        // Certificate panel
+        const certPanel = document.createElement('div');
+        certPanel.className = 'class-panel';
+        certPanel.dataset.tabIndex = 'cert';
+        certPanel.innerHTML = renderCertPanelHtml();
+        wrap.appendChild(certPanel);
+
+        // Bind quiz buttons
+        wrap.querySelectorAll('[data-quiz-module]').forEach(function(b) {
+          b.addEventListener('click', function() {
+            const idx = parseInt(b.dataset.quizModule, 10);
+            persistActiveTab(String(idx));
+            App.navigateTo('quiz', { moduleIndex: idx });
+          });
+        });
+        // Bind "video revisado"
+        wrap.querySelectorAll('.class-watched-btn').forEach(function(b) {
+          if (b.classList.contains('done')) return;
+          b.addEventListener('click', function() {
+            const mi = parseInt(b.dataset.moduleIndex, 10);
+            const li = parseInt(b.dataset.lessonIndex, 10);
+            App.state.currentModuleIndex = mi;
+            App.state.currentLessonIndex = li;
+            App.completeCurrentLesson();
+            // re-render to update checkmarks
+            renderFreeUI();
+          });
+        });
+        // Bind cert download
+        const certBtn = certPanel.querySelector('#cert-download-btn');
+        if (certBtn) certBtn.addEventListener('click', function() {
+          if (!certBtn.disabled) App.showCertificate();
+        });
+        // Bind theater-mode toggles
+        wrap.querySelectorAll('.video-expand-btn').forEach(function(b) {
+          b.addEventListener('click', function() {
+            document.body.classList.toggle('theater-mode');
+            const isTheater = document.body.classList.contains('theater-mode');
+            try { localStorage.setItem('tc_theater_mode', isTheater ? '1' : '0'); } catch (e) {}
+            renderFreeUI();
+          });
+        });
+      }
+
+      function renderCertPanelHtml() {
+        let html = '<div class="cert-panel">' +
+          '<div class="cert-panel-header">' +
+            '<h2>🎓 Tu certificado</h2>' +
+            '<p>Completa estos requisitos para descargar tu certificado:</p>' +
+          '</div>' +
+          '<div class="cert-checklist">';
+        let allDone = true;
+        const TOTAL_CLASSES = 3;
+        for (let i = 0; i < TOTAL_CLASSES; i++) {
+          const mod = COURSE_DATA.modules[i];
+          if (!mod) {
+            allDone = false;
+            html +=
+              '<div class="cert-check-item upcoming">' +
+                '<span class="cert-check-icon">⏳</span>' +
+                '<span class="cert-check-text">Clase ' + (i + 1) + ' — Próximamente</span>' +
+              '</div>';
+            continue;
+          }
+          const lesson = mod.lessons[0] || {};
+          const videoDone = lesson.id ? App.isLessonCompleted(lesson.id) : true;
+          const quizDone = App.isQuizCompleted(mod.quiz.id);
+          if (!videoDone) allDone = false;
+          if (!quizDone) allDone = false;
+          html +=
+            '<div class="cert-check-item' + (videoDone ? ' done' : '') + '">' +
+              '<span class="cert-check-icon">' + (videoDone ? '✓' : (i + 1)) + '</span>' +
+              '<span class="cert-check-text">Ver el video y materiales de la Clase ' + (i + 1) + '</span>' +
+            '</div>' +
+            '<div class="cert-check-item' + (quizDone ? ' done' : '') + '">' +
+              '<span class="cert-check-icon">' + (quizDone ? '✓' : '?') + '</span>' +
+              '<span class="cert-check-text">Aprobar el quiz de la Clase ' + (i + 1) + '</span>' +
+            '</div>';
+        }
+        html += '</div>' +
+          '<div class="cert-actions">' +
+            '<button class="btn btn-primary btn-lg" id="cert-download-btn"' + (allDone ? '' : ' disabled') + '>' +
+              (allDone ? '⬇️ Descargar certificado' : 'Completa los pasos para desbloquear') +
+            '</button>' +
+          '</div>' +
+        '</div>';
+        return html;
+      }
+
+      function activateTab(tabIndex) {
+        document.querySelectorAll('.class-tab').forEach(function(b) {
+          b.classList.toggle('active', b.dataset.tabIndex === tabIndex);
+        });
+        document.querySelectorAll('.class-panel').forEach(function(p) {
+          p.classList.toggle('active', p.dataset.tabIndex === tabIndex);
+        });
+        persistActiveTab(tabIndex);
+      }
+
+      function persistActiveTab(tabIndex) {
+        try { localStorage.setItem(ACTIVE_TAB_KEY, tabIndex); } catch (e) {}
+      }
+
+      function restoreActiveTab() {
+        let t;
+        try { t = localStorage.getItem(ACTIVE_TAB_KEY); } catch (e) {}
+        if (t && document.querySelector('[data-tab-index="' + t + '"]')) {
+          activateTab(t);
+        }
+      }
+
+      function renderFreeUI() {
+        if (typeof App === 'undefined' || typeof COURSE_DATA === 'undefined') return;
+        if (!App.IS_FREE_COURSE) return;
+        buildTabs();
+        buildPanels();
+        restoreActiveTab();
+      }
+
+      // Hook into App lifecycle so tabs refresh after lesson/quiz completion
+      function hookApp() {
+        if (typeof App === 'undefined') return;
+        const origRenderSidebar = App.renderSidebar.bind(App);
+        App.renderSidebar = function() {
+          origRenderSidebar();
+          // Force totals to 3 — every free course is presented as 3 classes
+          const totalQuizEl = document.getElementById('stat-quizzes-total');
+          if (totalQuizEl) totalQuizEl.textContent = '3';
+          const totalLessonEl = document.getElementById('stat-total');
+          if (totalLessonEl) totalLessonEl.textContent = '3';
+        };
+        const origRenderDashboard = App.renderDashboard.bind(App);
+        App.renderDashboard = function() {
+          origRenderDashboard();
+          renderFreeUI();
+        };
+      }
+
+      // Entry point: called by the loader after app.js loads
+      window.initFreeCourseUI = function() {
+        initTheme();
+        try {
+          if (localStorage.getItem('tc_theater_mode') === '1') {
+            document.body.classList.add('theater-mode');
+          }
+        } catch (e) {}
+        hookApp();
+        // Trigger initial render (App may already have rendered dashboard once)
+        renderFreeUI();
+      };
+    })();
+  </script>
+
+  <script>
+    /* ============================================
+       Course loader (loads course data + app scripts)
+       ============================================ */
+    (function() {
+      const params = new URLSearchParams(window.location.search);
+      const courseId = params.get('curso') || 'bibliometrix-rstudio';
+      const validCourses = [
+        'bibliometrix-rstudio', 'python-ia-geoinfo', 'agroclima-python-r',
+        'excel-inteligente', 'python-ia-ciencia-datos', 'visualizacion-python-ia'
+      ];
+      const safeCourse = validCourses.includes(courseId) ? courseId : 'bibliometrix-rstudio';
+      const script = document.createElement('script');
+      script.src = 'js/courses/' + safeCourse + '.js';
+      script.onload = function() {
+        document.title = COURSE_DATA.title + ' - Trabajo Científico';
+        var titleParts = COURSE_DATA.title.split(' ');
+        var half = Math.ceil(titleParts.length / 2);
+        var line1 = titleParts.slice(0, half).join(' ');
+        var line2 = titleParts.slice(half).join(' ');
+        document.getElementById('welcome-title').innerHTML = line1 + '<br><span class="gradient-text">' + line2 + '</span>';
+        document.getElementById('welcome-subtitle').textContent = COURSE_DATA.subtitle;
+        document.getElementById('mobile-course-title').textContent = COURSE_DATA.title;
+        // Auto-fill name from portal
+        var portalName = localStorage.getItem('tc_user_name');
+        if (portalName) {
+          document.getElementById('student-name').value = portalName;
+          document.getElementById('start-btn').disabled = false;
+        }
+        var scripts = ['js/confetti.js', 'js/quiz.js', 'js/ai.js', 'js/app.js'];
+        var i = 0;
+        function loadNext() {
+          if (i < scripts.length) {
+            var s = document.createElement('script');
+            s.src = scripts[i++];
+            s.onload = loadNext;
+            document.body.appendChild(s);
+          } else {
+            // All core scripts loaded — boot free-course UI
+            if (typeof window.initFreeCourseUI === 'function') {
+              window.initFreeCourseUI();
+            }
+          }
+        }
+        loadNext();
+      };
+      script.onerror = function() {
+        alert('No se pudo cargar el curso. Redirigiendo al portal...');
+        window.location.href = 'index.html';
+      };
+      document.body.appendChild(script);
+    })();
+  </script>
+</body>
+</html>
