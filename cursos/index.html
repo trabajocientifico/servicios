@@ -501,7 +501,7 @@
 
     <div class="upcoming-list">
       <!-- Curso en vivo 1: Ciencia de Datos Profesional con Python + IA -->
-      <a href="#" class="upcoming-card reveal" data-start="2026-08-07" data-lessons="7" onclick="openAccessModal(event, 'ciencia-datos-profesional-ia', 'Ciencia de Datos Profesional con Python + IA', 'ciencia07')">
+      <div class="upcoming-card reveal" data-start="2026-08-07" data-lessons="7">
         <div class="upcoming-media">
           <picture>
             <source srcset="imagenes/cienciadedatos-card.webp" type="image/webp">
@@ -525,12 +525,17 @@
         </div>
         <div class="upcoming-action">
           <span class="upcoming-countdown" data-countdown></span>
-          <span class="upcoming-cta">Ingresar →</span>
+          <a href="https://trabajocientifico.org/pagos.html" target="_blank" rel="noopener" class="upcoming-pay">
+            <span aria-hidden="true">💳</span> Inscribirme
+          </a>
+          <button type="button" class="upcoming-cta" onclick="openAccessModal(event, 'ciencia-datos-profesional-ia', 'Ciencia de Datos Profesional con Python + IA', 'ciencia07')">
+            Ya tengo clave · Ingresar →
+          </button>
         </div>
-      </a>
+      </div>
 
       <!-- Curso en vivo 2: Inteligencia Artificial para Investigación Científica -->
-      <a href="#" class="upcoming-card reveal" data-start="2026-08-20" data-lessons="7" onclick="openAccessModal(event, 'ia-investigacion-cientifica', 'Inteligencia Artificial para Investigación Científica', 'investigacion20')">
+      <div class="upcoming-card reveal" data-start="2026-08-20" data-lessons="7">
         <div class="upcoming-media">
           <picture>
             <source srcset="imagenes/inteligenciaartificial-card.webp" type="image/webp">
@@ -554,9 +559,14 @@
         </div>
         <div class="upcoming-action">
           <span class="upcoming-countdown" data-countdown></span>
-          <span class="upcoming-cta">Ingresar →</span>
+          <a href="https://trabajocientifico.org/pagos_ia_investigacion.html" target="_blank" rel="noopener" class="upcoming-pay">
+            <span aria-hidden="true">💳</span> Inscribirme
+          </a>
+          <button type="button" class="upcoming-cta" onclick="openAccessModal(event, 'ia-investigacion-cientifica', 'Inteligencia Artificial para Investigación Científica', 'investigacion20')">
+            Ya tengo clave · Ingresar →
+          </button>
         </div>
-      </a>
+      </div>
     </div>
   </section>
 
@@ -1025,9 +1035,13 @@
       const userName = localStorage.getItem('tc_user_name');
       
       courseCards.forEach(card => {
-        const onclickAttr = card.getAttribute('onclick');
+        // El disparador es la tarjeta entera en los cursos gratis, pero
+        // en los de pago es el botón de ingreso: esa tarjeta ya no puede
+        // ser un enlace porque lleva dentro el botón de inscripción.
+        const trigger = card.hasAttribute('onclick') ? card : card.querySelector('.upcoming-cta');
+        const onclickAttr = trigger && trigger.getAttribute('onclick');
         if (!onclickAttr) return;
-        
+
         const match = onclickAttr.match(/'([^']+)'/);
         if (!match) return;
         
@@ -1038,7 +1052,7 @@
         const savedProgress = localStorage.getItem(progressKey);
         
         if (isUnlocked && userName) {
-          card.onclick = (e) => {
+          trigger.onclick = (e) => {
             e.preventDefault();
             const page = isFree ? 'curso-gratis.html' : 'curso.html';
             window.location.href = `${page}?curso=${courseId}`;
