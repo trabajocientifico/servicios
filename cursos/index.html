@@ -282,7 +282,6 @@
       <span class="nav-brand-tag">Cursos</span>
     </a>
     <div class="nav-links">
-      <a href="#en-vivo" class="nav-link nav-link--live"><span class="live-dot"></span> En vivo</a>
       <a href="#cursos" class="nav-link">Cursos</a>
       <a href="certificados/" class="nav-link" style="color: var(--brand-text);">🎓 Certificados</a>
       <a href="#features" class="nav-link">Plataforma</a>
@@ -300,11 +299,6 @@
         <span>trabajocientifico.org</span>
       </a>
       <div class="prefs-controls">
-        <div class="prefs-group" role="group" aria-label="Tamaño del texto">
-          <button type="button" class="prefs-btn" data-pref-font="normal" aria-pressed="true" title="Texto normal">A</button>
-          <button type="button" class="prefs-btn" data-pref-font="grande" aria-pressed="false" title="Texto grande">A</button>
-          <button type="button" class="prefs-btn" data-pref-font="extra" aria-pressed="false" title="Texto muy grande">A</button>
-        </div>
         <button type="button" class="prefs-btn prefs-btn--theme" data-pref-theme>
           <span data-pref-theme-icon>🌙</span>
         </button>
@@ -313,11 +307,6 @@
     </div>
     <div class="nav-socials nav-socials--mobile">
       <div class="prefs-controls">
-        <div class="prefs-group" role="group" aria-label="Tamaño del texto">
-          <button type="button" class="prefs-btn" data-pref-font="normal" aria-pressed="true" title="Texto normal">A</button>
-          <button type="button" class="prefs-btn" data-pref-font="grande" aria-pressed="false" title="Texto grande">A</button>
-          <button type="button" class="prefs-btn" data-pref-font="extra" aria-pressed="false" title="Texto muy grande">A</button>
-        </div>
         <button type="button" class="prefs-btn prefs-btn--theme" data-pref-theme>
           <span data-pref-theme-icon>🌙</span>
         </button>
@@ -387,24 +376,6 @@
       </a>
     </div>
 
-    <div class="hero-stats">
-      <div class="hero-stat">
-        <span class="hero-stat-number count-up" data-target="2">0</span>
-        <span class="hero-stat-label">Cursos en vivo</span>
-      </div>
-      <div class="hero-stat">
-        <span class="hero-stat-number count-up" data-target="20">0</span>
-        <span class="hero-stat-label">Horas certificadas</span>
-      </div>
-      <div class="hero-stat">
-        <span class="hero-stat-number count-up" data-target="7">0</span>
-        <span class="hero-stat-label">Sesiones por curso</span>
-      </div>
-      <div class="hero-stat">
-        <span class="hero-stat-number count-up" data-target="6">0</span>
-        <span class="hero-stat-label">Cursos gratuitos</span>
-      </div>
-    </div>
   </section>
 
   <!-- Próximos inicios: los dos cursos en vivo, arriba de todo -->
@@ -421,7 +392,7 @@
         <div class="upcoming-media">
           <picture>
             <source srcset="imagenes/cienciadedatos-card.webp" type="image/webp">
-            <img src="imagenes/cienciadedatos-card.jpg" alt="Escritorio con un portátil mostrando código Python y gráficos de datos" width="640" height="360" loading="lazy" decoding="async">
+            <img src="imagenes/cienciadedatos-card.jpg" alt="Curso Ciencia de Datos Profesional con Python + IA: portátil con código Python y un panel de gráficos junto a libros de ciencia de datos" width="640" height="360" loading="lazy" decoding="async">
           </picture>
           <div class="upcoming-date">
             <span class="upcoming-date-month">Ago</span>
@@ -450,7 +421,7 @@
         <div class="upcoming-media">
           <picture>
             <source srcset="imagenes/inteligenciaartificial-card.webp" type="image/webp">
-            <img src="imagenes/inteligenciaartificial-card.jpg" alt="Investigador en bata analizando datos sobre una interfaz holográfica de inteligencia artificial" width="640" height="360" loading="lazy" decoding="async">
+            <img src="imagenes/inteligenciaartificial-card.jpg" alt="Curso Inteligencia Artificial para la Investigación Científica: investigador en bata frente a un portátil con una interfaz holográfica de IA en un laboratorio" width="640" height="360" loading="lazy" decoding="async">
           </picture>
           <div class="upcoming-date">
             <span class="upcoming-date-month">Ago</span>
@@ -492,7 +463,10 @@
       <!-- Curso Gratis 1: Bibliometrix en Rstudio -->
       <a href="#" class="course-card reveal" data-theme="purple" onclick="openAccessModal(event, 'bibliometrix-rstudio', 'Bibliometrix en Rstudio', 'bibliometrix21', true)">
         <div class="card-thumbnail">
-          <span class="card-icon">📚</span>
+          <picture>
+            <source srcset="imagenes/bibliometrix-rstudio-card.webp" type="image/webp">
+            <img src="imagenes/bibliometrix-rstudio-card.jpg" alt="Curso gratis Bibliometrix en RStudio: portátil con RStudio mostrando una red de coautoría y una nube de palabras" width="640" height="360" loading="lazy" decoding="async">
+          </picture>
           <div class="card-gradient-bar"></div>
         </div>
         <div class="card-body">
@@ -509,7 +483,10 @@
       <!-- Curso Gratis 2: Python + IA GeoInformación -->
       <a href="#" class="course-card reveal" data-theme="blue" onclick="openAccessModal(event, 'python-ia-geoinfo', 'Python + IA en GeoInformación', 'python24', true)">
         <div class="card-thumbnail">
-          <span class="card-icon">🌍</span>
+          <picture>
+            <source srcset="imagenes/python-ia-geoinfo-card.webp" type="image/webp">
+            <img src="imagenes/python-ia-geoinfo-card.jpg" alt="Curso gratis Python + IA en GeoInformación: globo terráqueo con Sudamérica y una red de puntos geoespaciales" width="640" height="360" loading="lazy" decoding="async">
+          </picture>
           <div class="card-gradient-bar"></div>
         </div>
         <div class="card-body">
@@ -526,7 +503,10 @@
       <!-- Curso Gratis 3: AgroClima con Python y RStudio -->
       <a href="#" class="course-card reveal" data-theme="orange" onclick="openAccessModal(event, 'agroclima-python-r', 'AgroClima con Python y RStudio', 'agroclima25', true)">
         <div class="card-thumbnail">
-          <span class="card-icon">🌦️</span>
+          <picture>
+            <source srcset="imagenes/agroclima-python-r-card.webp" type="image/webp">
+            <img src="imagenes/agroclima-python-r-card.jpg" alt="Curso gratis AgroClima con Python y RStudio: estación meteorológica en un cultivo junto a un portátil con mapas y series climáticas" width="640" height="360" loading="lazy" decoding="async">
+          </picture>
           <div class="card-gradient-bar"></div>
         </div>
         <div class="card-body">
@@ -543,7 +523,10 @@
       <!-- Curso Gratis 4: Excel Inteligente -->
       <a href="#" class="course-card reveal" data-theme="green" onclick="openAccessModal(event, 'excel-inteligente', 'Excel Inteligente', 'excel25', true)">
         <div class="card-thumbnail">
-          <span class="card-icon">📊</span>
+          <picture>
+            <source srcset="imagenes/excel-inteligente-card.webp" type="image/webp">
+            <img src="imagenes/excel-inteligente-card.jpg" alt="Curso gratis Excel Inteligente: portátil con una hoja de cálculo y gráficos de análisis de datos" width="640" height="360" loading="lazy" decoding="async">
+          </picture>
           <div class="card-gradient-bar"></div>
         </div>
         <div class="card-body">
@@ -560,7 +543,10 @@
       <!-- Curso Gratis 5: Python + IA en Ciencia de Datos -->
       <a href="#" class="course-card reveal" data-theme="cyan" onclick="openAccessModal(event, 'python-ia-ciencia-datos', 'Python + IA en Ciencia de Datos', 'ciencia26', true)">
         <div class="card-thumbnail">
-          <span class="card-icon">🐍</span>
+          <picture>
+            <source srcset="imagenes/python-ia-ciencia-datos-card.webp" type="image/webp">
+            <img src="imagenes/python-ia-ciencia-datos-card.jpg" alt="Curso gratis Python + IA en Ciencia de Datos: portátil con código Python y un panel de gráficos analíticos" width="640" height="360" loading="lazy" decoding="async">
+          </picture>
           <div class="card-gradient-bar"></div>
         </div>
         <div class="card-body">
@@ -1020,34 +1006,8 @@
       }
     }
 
-    function initCountUp() {
-      const counters = document.querySelectorAll('.count-up');
-      counters.forEach(counter => {
-        const target = +counter.getAttribute('data-target');
-        const speed = 200;
-        const animate = () => {
-          const count = +counter.innerText;
-          const inc = target / speed;
-          if (count < target) {
-            counter.innerText = Math.ceil(count + inc);
-            setTimeout(animate, 10);
-          } else {
-            counter.innerText = target;
-          }
-        };
-        const observer = new IntersectionObserver((entries) => {
-          if (entries[0].isIntersecting) {
-            animate();
-            observer.unobserve(counter);
-          }
-        });
-        observer.observe(counter);
-      });
-    }
-
     window.addEventListener('DOMContentLoaded', () => {
       checkExistingSessions();
-      initCountUp();
     });
 
     const nav = document.getElementById('portal-nav');

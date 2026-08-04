@@ -1,15 +1,13 @@
 /* ============================================
-   Preferencias de lectura — tema y tamaño de texto
-   Se carga en el <head> para aplicar las preferencias
+   Preferencias de lectura — tema claro u oscuro
+   Se carga en el <head> para aplicar la preferencia
    antes del primer pintado y evitar el parpadeo.
-   Las preferencias son globales a toda la plataforma.
+   La preferencia es global a toda la plataforma.
    ============================================ */
 
 (function () {
   const KEY_THEME = 'tc_theme';
-  const KEY_FONT = 'tc_font';
-  const FONTS = ['normal', 'grande', 'extra'];
-  const FONT_LABEL = { normal: 'Normal', grande: 'Grande', extra: 'Muy grande' };
+  const KEY_FONT_LEGACY = 'tc_font'; // el ajuste de tamaño de texto ya no existe
   const root = document.documentElement;
 
   function read(key, valid, fallback) {
@@ -25,18 +23,17 @@
     try { localStorage.setItem(key, value); } catch (e) { /* modo privado */ }
   }
 
+  // Limpia la preferencia antigua: sin botones, quien la tuviera guardada
+  // se quedaría con el texto ampliado y sin forma de volver atrás.
+  try { localStorage.removeItem(KEY_FONT_LEGACY); } catch (e) { /* modo privado */ }
+
   function getTheme() { return read(KEY_THEME, ['claro', 'oscuro'], 'oscuro'); }
-  function getFont() { return read(KEY_FONT, FONTS, 'normal'); }
 
   function applyToRoot() {
-    const theme = getTheme();
-    const font = getFont();
-
-    if (theme === 'claro') root.setAttribute('data-theme', 'light');
+    if (getTheme() === 'claro') root.setAttribute('data-theme', 'light');
     else root.removeAttribute('data-theme');
 
-    if (font === 'normal') root.removeAttribute('data-font');
-    else root.setAttribute('data-font', font);
+    root.removeAttribute('data-font');
   }
 
   // Se aplica de inmediato (el <html> ya existe mientras se procesa el <head>)
@@ -44,13 +41,6 @@
 
   function syncControls() {
     const theme = getTheme();
-    const font = getFont();
-
-    document.querySelectorAll('[data-pref-font]').forEach(btn => {
-      const active = btn.getAttribute('data-pref-font') === font;
-      btn.classList.toggle('is-active', active);
-      btn.setAttribute('aria-pressed', active ? 'true' : 'false');
-    });
 
     document.querySelectorAll('[data-pref-theme]').forEach(btn => {
       // El botón anuncia a qué tema cambia, no en cuál está
@@ -70,17 +60,7 @@
     syncControls();
   }
 
-  function setFont(value) {
-    if (!FONTS.includes(value)) return;
-    save(KEY_FONT, value);
-    applyToRoot();
-    syncControls();
-  }
-
   function bind() {
-    document.querySelectorAll('[data-pref-font]').forEach(btn => {
-      btn.addEventListener('click', () => setFont(btn.getAttribute('data-pref-font')));
-    });
     document.querySelectorAll('[data-pref-theme]').forEach(btn => {
       btn.addEventListener('click', () => setTheme(getTheme() === 'claro' ? 'oscuro' : 'claro'));
     });
@@ -93,5 +73,5 @@
     bind();
   }
 
-  window.Prefs = { getTheme, getFont, setTheme, setFont, FONT_LABEL };
+  window.Prefs = { getTheme, setTheme };
 })();

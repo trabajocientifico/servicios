@@ -103,9 +103,6 @@ html {
   scroll-behavior: smooth;
 }
 
-html[data-font="grande"] { font-size: 18px; }
-html[data-font="extra"] { font-size: 20px; }
-
 body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   background: var(--bg-deep);
@@ -2940,11 +2937,6 @@ h1, h2, h3 {
   color: var(--text-secondary);
 }
 
-.prefs-group {
-  display: flex;
-  gap: 4px;
-}
-
 .prefs-btn {
   min-width: 44px;
   min-height: 44px;
@@ -2967,16 +2959,6 @@ h1, h2, h3 {
   border-color: var(--accent-cyan);
   color: var(--accent-cyan);
 }
-
-.prefs-btn.is-active {
-  background: var(--accent-cyan);
-  border-color: var(--accent-cyan);
-  color: var(--bg-deep);
-}
-
-.prefs-btn[data-pref-font="normal"] { font-size: 0.85rem; }
-.prefs-btn[data-pref-font="grande"] { font-size: 1.05rem; }
-.prefs-btn[data-pref-font="extra"] { font-size: 1.3rem; }
 
 .prefs-btn--theme {
   font-size: 0.82rem;
