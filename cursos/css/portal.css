@@ -261,37 +261,6 @@ h1, h2, h3 {
   box-shadow: var(--shadow-brand);
 }
 
-/* --- Volver al sitio principal --- */
-.nav-back {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  padding: 8px 13px;
-  color: var(--text-secondary);
-  text-decoration: none;
-  font-size: 0.8rem;
-  font-weight: 600;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  background: var(--bg-surface);
-  transition: var(--transition);
-}
-
-.nav-back svg {
-  stroke: currentColor;
-  transition: transform var(--transition);
-}
-
-.nav-back:hover {
-  color: var(--text-primary);
-  border-color: var(--border-hover);
-  background: var(--bg-hover);
-}
-
-.nav-back:hover svg { transform: translateX(-3px); }
-
-.nav-back--mobile { display: none; }
-
 /* --- Redes en la barra --- */
 .nav-socials {
   display: inline-flex;
@@ -769,8 +738,7 @@ h1, h2, h3 {
 /* ============================================
    Secciones
    ============================================ */
-.courses-section,
-.features-section {
+.courses-section {
   position: relative;
   z-index: 1;
   max-width: var(--content-max);
@@ -816,7 +784,7 @@ h1, h2, h3 {
   color: var(--text-secondary);
 }
 
-/* Encabezado simple, centrado (features / instructor) */
+/* Encabezado simple, centrado (instructor) */
 .section-header {
   text-align: center;
   max-width: 60ch;
@@ -1061,53 +1029,6 @@ h1, h2, h3 {
 .course-card[data-theme="red"]    { --card-tint-a: #3d151b; --card-tint-b: #210b0e; }
 
 /* ============================================
-   Features
-   ============================================ */
-.features-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 20px;
-}
-
-.feature-card {
-  padding: 24px;
-  background: var(--bg-surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  transition: var(--transition);
-}
-
-.feature-card:hover {
-  border-color: var(--border-hover);
-  transform: translateY(-3px);
-}
-
-.feature-icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 44px;
-  height: 44px;
-  margin-bottom: 16px;
-  border-radius: var(--radius-sm);
-  background: var(--brand-tint);
-  border: 1px solid var(--brand-ring);
-  font-size: 1.4rem;
-}
-
-.feature-title {
-  font-size: 1.02rem;
-  font-weight: 700;
-  margin-bottom: 8px;
-}
-
-.feature-desc {
-  font-size: 0.88rem;
-  color: var(--text-secondary);
-  line-height: 1.6;
-}
-
-/* ============================================
    Footer
    ============================================ */
 .portal-footer {
@@ -1203,17 +1124,11 @@ h1, h2, h3 {
   /* Se ocultan los contenedores, no solo sus enlaces:
      un flex vacío seguiría ocupando el hueco del gap. */
   .nav-links .nav-socials,
-  .nav-links .nav-back,
   .nav-links .prefs-controls { display: none; }
   .nav-socials--mobile {
     display: inline-flex;
     align-items: center;
     gap: 6px;
-  }
-  .nav-back--mobile {
-    display: inline-flex;
-    padding: 7px 11px;
-    font-size: 0.76rem;
   }
 }
 
@@ -1242,6 +1157,5 @@ h1, h2, h3 {
 
 @media (max-width: 480px) {
   .courses-grid { grid-template-columns: 1fr; }
-  .features-grid { grid-template-columns: 1fr; }
   .hero-stat { padding: 18px 16px; }
 }
