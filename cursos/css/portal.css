@@ -566,7 +566,7 @@ h1, h2, h3 {
 .upcoming-date {
   position: absolute;
   top: 10px;
-  left: 10px;
+  right: 10px;
   z-index: 2;
   display: flex;
   flex-direction: column;
