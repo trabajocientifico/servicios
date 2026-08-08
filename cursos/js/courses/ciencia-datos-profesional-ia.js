@@ -42,8 +42,7 @@ const COURSE_DATA = {
           reading: "**Clase 1 — Fundamentos de programación en Python (3 horas)**\n\nSesión de apertura del curso. El curso inicia el **viernes 7 de agosto de 2026**.\n\n**Temas de la sesión:**\n- Entorno de trabajo: Anaconda, VS Code y Google Colab\n- Variables, tipos de datos y operadores\n- Estructuras de datos: listas, tuplas, diccionarios y conjuntos\n- Entrada y salida básica\n\n**Cómo funciona esta clase:**\n- La sesión se dicta en vivo en el horario acordado con el grupo\n- La grabación se carga en este mismo espacio al finalizar\n- Los materiales se publican en la pestaña Recursos\n\n**Antes de la sesión:**\n- Ten instalado Python y un entorno de trabajo\n- Verifica tu conexión y el audio de tu equipo",
           resources: [
             { title: "Presentación de la clase (web)", url: "https://trabajocientifico.github.io/curso-profesional-ciencia-de-datos/", type: "link" },
-            { title: "Archivos instaladores (Python, Anaconda, VS Code)", url: "https://drive.google.com/drive/folders/1JHDuCD5D26_dEHGY3Ib5fZaJ8-Vz-DJK?usp=sharing", type: "download" },
-            { title: "Notebook de la sesión", url: "#", type: "notebook" }
+            { title: "Archivos instaladores (Python, Anaconda, VS Code)", url: "https://drive.google.com/drive/folders/1JHDuCD5D26_dEHGY3Ib5fZaJ8-Vz-DJK?usp=sharing", type: "download" }
           ]
         },
         {

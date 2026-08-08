@@ -977,13 +977,21 @@ const App = {
         `;
         resourcesList.appendChild(el);
       });
+    } else {
+      // La tarjeta de Materiales siempre está visible, así que necesita un texto por defecto
+      resourcesList.innerHTML = '<p class="resources-empty">Sin materiales adicionales.</p>';
     }
 
-    // Reset tabs to reading
-    document.querySelectorAll('.lesson-tabs .tab').forEach(t => t.classList.remove('active'));
-    document.querySelectorAll('.tab-content').forEach(tc => tc.classList.remove('active'));
-    document.querySelector('.lesson-tabs .tab[data-tab="reading"]').classList.add('active');
-    document.getElementById('tab-reading').classList.add('active');
+    // Reset tabs to reading — solo si la vista usa pestañas.
+    // En curso.html los Conceptos y los Recursos se muestran juntos, sin pestañas.
+    const readingTab = document.querySelector('.lesson-tabs .tab[data-tab="reading"]');
+    if (readingTab) {
+      document.querySelectorAll('.lesson-tabs .tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(tc => tc.classList.remove('active'));
+      readingTab.classList.add('active');
+      const readingPane = document.getElementById('tab-reading');
+      if (readingPane) readingPane.classList.add('active');
+    }
 
     // Render actions
     this.renderLessonActions();
