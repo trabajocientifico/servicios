@@ -29,19 +29,20 @@ const COURSE_DATA = {
     {
       id: "mod-1",
       title: "Módulo 1 — Fundamentos de programación en Python",
-      description: "Dos sesiones en vivo: una de 2 horas y una de 3 horas.",
+      description: "Dos sesiones en vivo de 3 horas.",
       icon: "🐍",
       lessons: [
         {
           id: "les-1-1",
-          title: "Clase 1 — Sesión en vivo (2 horas)",
+          title: "Clase 1 — Sesión en vivo (3 horas)",
           type: "video",
-          duration: "2 horas",
-          videoId: "b9DnkYHwfpc",   // PRUEBA — reemplazar por la grabación real de la Clase 1
+          duration: "3 horas",
+          videoId: "-wzKTE-RvHg",
           description: "Primera sesión en vivo del curso. La grabación queda disponible en esta misma clase.",
-          reading: "**Clase 1 — Fundamentos de programación en Python (2 horas)**\n\nSesión de apertura del curso. El curso inicia el **viernes 7 de agosto de 2026**.\n\n**Temas de la sesión:**\n- Entorno de trabajo: Anaconda, VS Code y Google Colab\n- Variables, tipos de datos y operadores\n- Estructuras de datos: listas, tuplas, diccionarios y conjuntos\n- Entrada y salida básica\n\n**Cómo funciona esta clase:**\n- La sesión se dicta en vivo en el horario acordado con el grupo\n- La grabación se carga en este mismo espacio al finalizar\n- Los materiales se publican en la pestaña Recursos\n\n**Antes de la sesión:**\n- Ten instalado Python y un entorno de trabajo\n- Verifica tu conexión y el audio de tu equipo",
+          reading: "**Clase 1 — Fundamentos de programación en Python (3 horas)**\n\nSesión de apertura del curso. El curso inicia el **viernes 7 de agosto de 2026**.\n\n**Temas de la sesión:**\n- Entorno de trabajo: Anaconda, VS Code y Google Colab\n- Variables, tipos de datos y operadores\n- Estructuras de datos: listas, tuplas, diccionarios y conjuntos\n- Entrada y salida básica\n\n**Cómo funciona esta clase:**\n- La sesión se dicta en vivo en el horario acordado con el grupo\n- La grabación se carga en este mismo espacio al finalizar\n- Los materiales se publican en la pestaña Recursos\n\n**Antes de la sesión:**\n- Ten instalado Python y un entorno de trabajo\n- Verifica tu conexión y el audio de tu equipo",
           resources: [
-            { title: "Enlace a la sesión en vivo", url: "#", type: "link" },
+            { title: "Presentación de la clase (web)", url: "https://trabajocientifico.github.io/curso-profesional-ciencia-de-datos/", type: "link" },
+            { title: "Archivos instaladores (Python, Anaconda, VS Code)", url: "https://drive.google.com/drive/folders/1JHDuCD5D26_dEHGY3Ib5fZaJ8-Vz-DJK?usp=sharing", type: "download" },
             { title: "Notebook de la sesión", url: "#", type: "notebook" }
           ]
         },
