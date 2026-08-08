@@ -747,43 +747,14 @@
 
 
 
-  <!-- AI Chat -->
-  <button id="ai-fab" class="fab" aria-label="Abrir chat de IA">
-    <span class="fab-icon">🤖</span>
-  </button>
-  <div id="ai-chat-modal" class="chat-modal hidden">
-    <div class="chat-resize-handle" id="chat-resize-handle"></div>
-    <div class="chat-header">
-      <h3>Asistente de IA <span class="gradient-text">Gemini</span></h3>
-      <div class="chat-toolbar">
-        <button id="ai-chat-theme" class="chat-toolbar-btn" aria-label="Cambiar tema" title="Cambiar tema">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
-        </button>
-        <button id="ai-chat-export" class="chat-toolbar-btn" aria-label="Exportar conversacion" title="Exportar conversacion">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-        </button>
-        <button id="ai-chat-fullscreen" class="chat-toolbar-btn" aria-label="Pantalla completa" title="Pantalla completa">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
-        </button>
-        <button id="ai-chat-close" class="chat-close">&times;</button>
-      </div>
-    </div>
-    <div class="chat-messages" id="ai-chat-messages">
-      <!-- Messages will be injected here -->
-    </div>
-    <div id="chat-suggestions" class="chat-suggestions">
-      <!-- Quick suggestion buttons rendered by JS -->
-    </div>
-    <div class="chat-input-area">
-      <form id="ai-chat-form">
-        <input type="text" id="ai-chat-input" placeholder="Escribe tu duda aqui..." autocomplete="off" required>
-        <button type="submit" id="ai-chat-submit" aria-label="Enviar">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
-        </button>
-      </form>
-    </div>
-  </div>
-  <div id="ai-chat-overlay" class="chat-overlay hidden"></div>
+  <!-- Contacto directo por WhatsApp -->
+  <a id="wa-fab" class="fab fab-whatsapp" href="https://wa.me/573184280112" target="_blank" rel="noopener noreferrer"
+     aria-label="Escribirme por WhatsApp" title="Escríbeme por WhatsApp">
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" width="30" height="30">
+      <path d="M12 .6A11.4 11.4 0 0 0 2.16 17.8L.66 23.4l5.74-1.5A11.4 11.4 0 1 0 12 .6zm0 20.8a9.4 9.4 0 0 1-4.8-1.32l-.34-.2-3.4.89.9-3.32-.22-.35A9.4 9.4 0 1 1 12 21.4z"/>
+      <path d="M17.3 14.2c-.29-.15-1.7-.84-1.96-.94s-.45-.14-.64.15-.74.93-.9 1.12-.33.22-.62.07a7.7 7.7 0 0 1-2.27-1.4 8.5 8.5 0 0 1-1.57-1.95c-.16-.29 0-.44.13-.58s.29-.33.43-.5a1.9 1.9 0 0 0 .29-.48.53.53 0 0 0 0-.5c-.07-.15-.64-1.55-.88-2.12s-.47-.48-.64-.49h-.55a1.06 1.06 0 0 0-.77.36A3.2 3.2 0 0 0 6.35 9.2a5.6 5.6 0 0 0 1.17 2.95 12.7 12.7 0 0 0 4.87 4.3 16 16 0 0 0 1.63.6 3.9 3.9 0 0 0 1.8.11 2.95 2.95 0 0 0 1.93-1.36 2.4 2.4 0 0 0 .17-1.36c-.07-.12-.26-.19-.55-.34z"/>
+    </svg>
+  </a>
 
 
   <!-- Toast Notifications Container -->
@@ -1150,7 +1121,7 @@
           document.getElementById('student-name').value = portalName;
           document.getElementById('start-btn').disabled = false;
         }
-        var scripts = ['js/confetti.js', 'js/quiz.js', 'js/ai.js', 'js/app.js'];
+        var scripts = ['js/confetti.js', 'js/quiz.js', 'js/app.js'];
         var i = 0;
         function loadNext() {
           if (i < scripts.length) {
