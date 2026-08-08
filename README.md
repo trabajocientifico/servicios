@@ -8,22 +8,37 @@ Sitio web estático de **Trabajo Científico**, empresa colombiana de ciencia de
 
 ## Estructura del proyecto
 
+`index.html` es el **único** archivo HTML en la raíz. Todo lo demás vive en carpetas.
+
 ```
 servicios/
 ├── index.html              # Página principal (single-page)
-├── cursos/                 # Brochures HTML de cada programa
-│   ├── excel-para-la-vida.html
-│   ├── ia-productividad.html
-│   ├── ia-cientifica.html
-│   ├── python-ia-datos.html
-│   ├── geoanalisis-arcgis-pro.html
-│   └── dashboard-power-bi.html
+├── programas/              # Una carpeta por programa comercial
+│   ├── ia-investigacion/   # taller.html · curso.html · pago.html
+│   ├── ciencia-datos/      # taller.html · curso.html · pago.html
+│   └── geoinformacion/     # taller.html
+├── eventos/
+│   ├── index.html          # Cartelera de próximos eventos en vivo
+│   └── perfil.html         # Perfil del docente
+├── cursos/                 # Portal de cursos (app con JS, CSS y backend propios)
+├── clases/                 # Material de clase
+│   ├── index.html          # Hub del programa IA para la Investigación
+│   ├── sesiones/           # Presentaciones interactivas (Sesion1…Sesion10) y clases sueltas
+│   ├── instalacion/        # Masterclass y montaje del entorno
+│   ├── prisma/             # Taller PRISMA + datasets (wos_scopus)
+│   └── brochures/          # Brochures imprimibles de los 6 programas
+├── certificados/           # Verificador de certificados
 └── images/
     ├── logo-trabajo-cientifico.png
+    ├── perfil.png          # Retrato del docente (copia única del sitio)
     ├── equipo/             # Fotos del equipo (oscar-vargas.jpg, etc.)
     ├── experiencias/       # Galería de proyectos (experiencia-1.jpeg, ...)
-    └── instituciones/      # Logos de entidades aliadas
+    ├── instituciones/      # Logos de entidades aliadas
+    ├── eventos/            # Afiches de talleres y cursos
+    └── miniaturas-cursos/  # Miniaturas de clases (clase1.png…clase7.png)
 ```
+
+Los enlaces entre páginas son **relativos**, nunca absolutos a `trabajocientifico.org`, para que el sitio se pueda abrir igual en local y en producción.
 
 ---
 
@@ -60,14 +75,24 @@ Cada programa tiene 3 niveles de 12 horas cada uno (36 h en total), 100 % online
 
 | Programa | Brochure |
 |---|---|
-| Excel para la Vida | `cursos/excel-para-la-vida.html` |
-| IA + Productividad | `cursos/ia-productividad.html` |
-| IA Científica | `cursos/ia-cientifica.html` |
-| Python + IA + Datos | `cursos/python-ia-datos.html` |
-| GeoAnálisis con ArcGIS PRO | `cursos/geoanalisis-arcgis-pro.html` |
-| Dashboard con Power BI | `cursos/dashboard-power-bi.html` |
+| Excel para la Vida | `clases/brochures/excel-para-la-vida.html` |
+| IA + Productividad | `clases/brochures/ia-productividad.html` |
+| IA Científica | `clases/brochures/ia-cientifica.html` |
+| Python + IA + Datos | `clases/brochures/python-ia-datos.html` |
+| GeoAnálisis con ArcGIS PRO | `clases/brochures/geoanalisis-arcgis-pro.html` |
+| Dashboard con Power BI | `clases/brochures/dashboard-power-bi.html` |
 
 Los brochures están diseñados para imprimirse como PDF desde el navegador (`Ctrl+P`).
+
+### Landings comerciales
+
+Cada programa con inscripción abierta tiene su carpeta en `programas/` con hasta tres páginas:
+
+| Programa | Taller gratuito | Curso | Pago |
+|---|---|---|---|
+| IA para la Investigación Científica | `programas/ia-investigacion/taller.html` | `curso.html` | `pago.html` |
+| Ciencia de Datos con Python + IA | `programas/ciencia-datos/taller.html` | `curso.html` | `pago.html` |
+| IA + Python para Geoinformación | `programas/geoinformacion/taller.html` | — | — |
 
 ---
 
