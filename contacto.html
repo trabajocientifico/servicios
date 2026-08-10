@@ -35,16 +35,46 @@
     content: "";
     position: fixed;
     top: 0; left: 0; width: 100%; height: 100%;
-    background: 
+    background:
       radial-gradient(circle at 20% 30%, rgba(56,189,248,0.15), transparent 40%),
       radial-gradient(circle at 80% 70%, rgba(129,140,248,0.15), transparent 40%);
-    z-index: -1;
+    z-index: -2;
     animation: pulseBg 10s ease-in-out infinite alternate;
   }
   @keyframes pulseBg {
     0% { transform: scale(1); opacity: 0.8; }
     100% { transform: scale(1.1); opacity: 1; }
   }
+
+  /* Lineas de codigo de fondo: deliberadamente casi imperceptibles */
+  .code-bg{
+    position: fixed; inset: 0;
+    z-index: -1;
+    overflow: hidden;
+    pointer-events: none;
+    user-select: none;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, 'Courier New', monospace;
+    font-size: 11px; line-height: 2.1;
+    color: rgba(148,163,184,0.05);
+    white-space: pre;
+    -webkit-mask-image: linear-gradient(to bottom, transparent, #000 25%, #000 75%, transparent);
+    mask-image: linear-gradient(to bottom, transparent, #000 25%, #000 75%, transparent);
+  }
+  .code-col{
+    position: absolute; top: 0;
+    animation-name: codeDrift;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+  }
+  @keyframes codeDrift{
+    from{ transform: translateY(0); }
+    to{ transform: translateY(-50%); }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .code-col{ animation: none; }
+    body::before{ animation: none; }
+  }
+
   .page{
     max-width: 480px;
     margin: 0 auto;
@@ -82,7 +112,7 @@
   }
   .name{
     font-size: 24px; font-weight: 700;
-    margin: 6px 0 10px;
+    margin: 6px 0 8px;
     letter-spacing: -0.5px; line-height: 1.2;
   }
   .credentials{
@@ -90,6 +120,77 @@
     color: var(--text-soft);
     margin: 0 0 10px; line-height: 1.5;
   }
+
+  /* Boton sutil de formacion academica */
+  .edu-toggle{
+    display: inline-flex; align-items: center; gap: 6px;
+    font-family: inherit;
+    font-size: 12px; font-weight: 500;
+    color: var(--text-muted);
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 999px;
+    padding: 5px 12px;
+    cursor: pointer;
+    margin-bottom: 12px;
+    transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .edu-toggle:hover, .edu-toggle:focus-visible{
+    color: var(--accent);
+    border-color: rgba(56,189,248,0.35);
+    background: rgba(56,189,248,0.06);
+    outline: none;
+  }
+  .edu-toggle .chev{
+    width: 12px; height: 12px;
+    transition: transform 0.3s ease;
+  }
+  .edu-toggle[aria-expanded="true"] .chev{ transform: rotate(180deg); }
+
+  .edu-panel{
+    width: 100%;
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease, opacity 0.3s ease, margin-bottom 0.4s ease;
+  }
+  .edu-panel.open{
+    max-height: 360px;
+    opacity: 1;
+    margin-bottom: 14px;
+  }
+  .edu-list{
+    list-style: none;
+    margin: 0; padding: 14px 16px;
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: 14px;
+    text-align: left;
+  }
+  .edu-list li{
+    position: relative;
+    padding-left: 18px;
+    font-size: 13.5px; font-weight: 500;
+    color: var(--text-soft);
+    line-height: 1.5;
+  }
+  .edu-list li + li{ margin-top: 10px; }
+  .edu-list li::before{
+    content: "";
+    position: absolute; left: 0; top: 7px;
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  }
+  .edu-list li .edu-current{
+    display: block;
+    font-size: 11px; font-weight: 600;
+    color: var(--accent);
+    text-transform: uppercase; letter-spacing: 0.5px;
+    margin-top: 2px;
+  }
+
   .email-link{
     display: inline-block;
     font-size: 14px; font-weight: 500;
@@ -170,7 +271,6 @@
   .icon.scholar  { background: #4285F4; }
   .icon.email    { background: #EA4335; }
   .icon.courses  { background: var(--accent-2); }
-  .icon.cv       { background: linear-gradient(135deg, #38bdf8, #818cf8); }
   .arrow{ margin-left: auto; color: var(--text-muted); flex-shrink: 0; opacity: 0.7; }
   .footer{ margin-top: 48px; font-size: 12px; color: var(--text-muted); text-align: center; }
   .footer .brand{ color: var(--text-soft); font-weight: 600; }
@@ -190,6 +290,8 @@
 </style>
 </head>
 <body>
+  <div class="code-bg" id="codeBg" aria-hidden="true"></div>
+
   <main class="page">
 
     <div class="avatar-wrap">
@@ -201,49 +303,42 @@
 
     <p class="credentials">PhD Ciencias · Científico de Datos · Docente Investigador</p>
 
+    <button class="edu-toggle" id="eduToggle" type="button" aria-expanded="false" aria-controls="eduPanel">
+      Formación académica
+      <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
+    </button>
+
+    <div class="edu-panel" id="eduPanel">
+      <ul class="edu-list">
+        <li>Ingeniero</li>
+        <li>Especialista en Gestión del Agua</li>
+        <li>Magíster en Gestión Ambiental Sostenible</li>
+        <li>PhD en Ciencias Agrarias</li>
+        <li>Maestría en Inteligencia Artificial Aplicada
+          <span class="edu-current">En curso</span>
+        </li>
+      </ul>
+    </div>
+
     <a class="email-link" href="mailto:oscarvargas@trabajocientifico.org">oscarvargas@trabajocientifico.org</a>
 
     <div class="tools">
       <span class="tool">IA</span>
+      <span class="tool">Investigación Científica</span>
       <span class="tool">Python</span>
       <span class="tool">RStudio</span>
       <span class="tool">Power BI</span>
-      <span class="tool">ArcGIS Pro</span>
       <span class="tool">Claude Code</span>
-      <span class="tool">Gemini CLI</span>
+      <span class="tool">Codex</span>
     </div>
 
     <nav class="links" aria-label="Redes sociales">
 
-      <a class="link" href="index/perfil.html">
-        <span class="icon cv" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg"><path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm4 18H6V4h7v5h5v11zM8 12h8v2H8zm0 4h8v2H8z"/></svg>
+      <a class="link" href="https://www.youtube.com/@TCientifico" target="_blank" rel="noopener">
+        <span class="icon youtube" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
         </span>
-        <span>Curriculo</span>
-        <svg class="arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
-      </a>
-
-      <a class="link" href="https://trabajocientifico.github.io/cursos/" target="_blank" rel="noopener">
-        <span class="icon courses" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg"><path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3zM3.89 9.5l8.11 4.42 8.11-4.42-8.11-4.42L3.89 9.5zM12 15.5l-7-3.82v3.32l7 3.82 7-3.82v-3.32l-7 3.82z"/></svg>
-        </span>
-        <span>Cursos Gratuitos</span>
-        <svg class="arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
-      </a>
-
-      <a class="link" href="https://chat.whatsapp.com/GhF8Q1NkdP07CsZGwDAoJu" target="_blank" rel="noopener">
-        <span class="icon whatsapp" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg"><path d="M.057 24l1.687-6.163a11.867 11.867 0 0 1-1.587-5.946C.16 5.335 5.495 0 12.05 0a11.817 11.817 0 0 1 8.413 3.488 11.824 11.824 0 0 1 3.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 0 1-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 0 0 1.51 5.26l.354.562-1.001 3.648 3.736-.979.99.81zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/></svg>
-        </span>
-        <span>WhatsApp</span>
-        <svg class="arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
-      </a>
-
-      <a class="link" href="https://www.instagram.com/trabajocientifico/" target="_blank" rel="noopener">
-        <span class="icon instagram" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
-        </span>
-        <span>Instagram</span>
+        <span>YouTube</span>
         <svg class="arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
       </a>
 
@@ -255,11 +350,27 @@
         <svg class="arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
       </a>
 
-      <a class="link" href="https://www.youtube.com/@TCientifico" target="_blank" rel="noopener">
-        <span class="icon youtube" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+      <a class="link" href="https://www.instagram.com/trabajocientifico/" target="_blank" rel="noopener">
+        <span class="icon instagram" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
         </span>
-        <span>YouTube</span>
+        <span>Instagram</span>
+        <svg class="arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+      </a>
+
+      <a class="link" href="https://chat.whatsapp.com/GhF8Q1NkdP07CsZGwDAoJu" target="_blank" rel="noopener">
+        <span class="icon whatsapp" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg"><path d="M.057 24l1.687-6.163a11.867 11.867 0 0 1-1.587-5.946C.16 5.335 5.495 0 12.05 0a11.817 11.817 0 0 1 8.413 3.488 11.824 11.824 0 0 1 3.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 0 1-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 0 0 1.51 5.26l.354.562-1.001 3.648 3.736-.979.99.81zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/></svg>
+        </span>
+        <span>WhatsApp</span>
+        <svg class="arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+      </a>
+
+      <a class="link" href="https://scholar.google.com/citations?hl=es&user=z57El9wAAAAJ&view_op=list_works" target="_blank" rel="noopener">
+        <span class="icon scholar" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg"><path d="M5.242 13.769L0 9.5 12 0l12 9.5-5.242 4.269C17.548 11.249 14.978 9.5 12 9.5c-2.977 0-5.548 1.748-6.758 4.269zM12 10a7 7 0 1 0 0 14 7 7 0 0 0 0-14z"/></svg>
+        </span>
+        <span>Google Scholar</span>
         <svg class="arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
       </a>
 
@@ -271,11 +382,11 @@
         <svg class="arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
       </a>
 
-      <a class="link" href="https://scholar.google.com/citations?hl=es&user=z57El9wAAAAJ&view_op=list_works" target="_blank" rel="noopener">
-        <span class="icon scholar" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg"><path d="M5.242 13.769L0 9.5 12 0l12 9.5-5.242 4.269C17.548 11.249 14.978 9.5 12 9.5c-2.977 0-5.548 1.748-6.758 4.269zM12 10a7 7 0 1 0 0 14 7 7 0 0 0 0-14z"/></svg>
+      <a class="link" href="https://trabajocientifico.github.io/cursos/" target="_blank" rel="noopener">
+        <span class="icon courses" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg"><path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3zM3.89 9.5l8.11 4.42 8.11-4.42-8.11-4.42L3.89 9.5zM12 15.5l-7-3.82v3.32l7 3.82 7-3.82v-3.32l-7 3.82z"/></svg>
         </span>
-        <span>Google Scholar</span>
+        <span>Cursos Gratuitos</span>
         <svg class="arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
       </a>
 
@@ -291,6 +402,76 @@
 
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Panel de formacion academica
+    (function(){
+      var toggle = document.getElementById('eduToggle');
+      var panel = document.getElementById('eduPanel');
+      toggle.addEventListener('click', function(){
+        var isOpen = toggle.getAttribute('aria-expanded') === 'true';
+        toggle.setAttribute('aria-expanded', String(!isOpen));
+        panel.classList.toggle('open', !isOpen);
+      });
+    })();
+
+    // Fondo de lineas de codigo en deriva lenta
+    (function(){
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+      var snippets = [
+        'import pandas as pd',
+        'import numpy as np',
+        'df = pd.read_csv("datos.csv")',
+        'df.describe()',
+        'X_train, X_test = train_test_split(X, y)',
+        'model.fit(X_train, y_train)',
+        'print(model.score(X_test, y_test))',
+        'for i in range(n):',
+        '    resultado.append(f(i))',
+        'library(tidyverse)',
+        'datos %>% group_by(sitio) %>%',
+        '  summarise(media = mean(valor))',
+        'ggplot(datos, aes(x, y)) +',
+        '  geom_point(alpha = 0.6)',
+        'sns.heatmap(corr, annot=True)',
+        'plt.savefig("figura.png", dpi=300)',
+        'def normalizar(x):',
+        '    return (x - x.mean()) / x.std()',
+        'shapiro.test(residuos)',
+        'anova(modelo)',
+        'SELECT * FROM muestras',
+        'WHERE fecha > \'2026-01-01\';',
+        'git commit -m "analisis"',
+        'if p_value < 0.05:',
+        '    print("significativo")',
+        'np.random.seed(42)',
+        'arcpy.Buffer_analysis(capa, 500)',
+        'raster = rio.open("ndvi.tif")',
+        'cluster = KMeans(n_clusters=3)',
+        'return round(indice, 3)'
+      ];
+
+      var host = document.getElementById('codeBg');
+      var colWidth = 250;
+      var cols = Math.max(2, Math.ceil(window.innerWidth / colWidth));
+
+      for (var c = 0; c < cols; c++) {
+        var lines = [];
+        for (var l = 0; l < 34; l++) {
+          lines.push(snippets[Math.floor(Math.random() * snippets.length)]);
+        }
+        var block = lines.join('\n');
+
+        var col = document.createElement('div');
+        col.className = 'code-col';
+        // Se duplica el bloque para que el bucle de la animacion no tenga costura
+        col.textContent = block + '\n' + block;
+        col.style.left = (c * colWidth + Math.random() * 40) + 'px';
+        col.style.animationDuration = (110 + Math.random() * 70) + 's';
+        col.style.animationDelay = '-' + (Math.random() * 60) + 's';
+        host.appendChild(col);
+      }
+    })();
   </script>
 </body>
 </html>
