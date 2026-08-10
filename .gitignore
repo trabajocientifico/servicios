@@ -1,0 +1,3 @@
+# Clon local del repositorio trabajocientifico/enlaces.
+# No debe versionarse aqui: al quedar como submodulo rompe el build de GitHub Pages.
+perfil/
