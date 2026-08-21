@@ -50,12 +50,12 @@ const COURSE_DATA = {
           title: "Clase 2 — Sesión en vivo (3 horas)",
           type: "video",
           duration: "3 horas",
-          videoId: "VIDEO_ID_PLACEHOLDER",
+          videoId: "bFrl1qcmUF4",
           description: "Segunda sesión del Módulo 1: control de flujo, funciones y buenas prácticas.",
           reading: "**Clase 2 — Fundamentos de programación en Python (3 horas)**\n\n**Temas de la sesión:**\n- Condicionales y ciclos (`if`, `for`, `while`)\n- Funciones, argumentos y valores de retorno\n- Comprensiones de listas\n- Manejo de errores con `try / except`\n- Módulos, librerías y buenas prácticas de código\n\n**Recomendaciones:**\n- Sigue los ejercicios en tiempo real durante la sesión\n- Guarda tus notebooks y avances en tu propio repositorio\n- Al terminar el módulo presenta el quiz de 10 preguntas (20 minutos)",
           resources: [
-            { title: "Enlace a la sesión en vivo", url: "#", type: "link" },
-            { title: "Notebook de la sesión", url: "#", type: "notebook" }
+            { title: "Presentación de la clase (web)", url: "https://trabajocientifico.github.io/curso-profesional-ciencia-de-datos/", type: "link" },
+            { title: "Archivos instaladores (Python, Anaconda, VS Code)", url: "https://drive.google.com/drive/folders/1JHDuCD5D26_dEHGY3Ib5fZaJ8-Vz-DJK?usp=sharing", type: "download" }
           ]
         }
       ],
