@@ -24,12 +24,12 @@ const COURSE_DATA = {
   hidePromo: true,
   startDate: "2026-08-07",
   startLabel: "Inicia el viernes 7 de agosto de 2026",
-  sessionsInfo: "7 sesiones en vivo: 6 de 3 horas y 1 de 2 horas",
+  sessionsInfo: "7 sesiones en vivo de 3 horas cada una",
   modules: [
     {
       id: "mod-1",
       title: "Módulo 1 — Fundamentos de programación en Python",
-      description: "Dos sesiones en vivo de 3 horas.",
+      description: "Tres sesiones en vivo de 3 horas.",
       icon: "🐍",
       lessons: [
         {
@@ -55,6 +55,20 @@ const COURSE_DATA = {
           reading: "**Clase 2 — Fundamentos de programación en Python (3 horas)**\n\n**Temas de la sesión:**\n- Condicionales y ciclos (`if`, `for`, `while`)\n- Funciones, argumentos y valores de retorno\n- Comprensiones de listas\n- Manejo de errores con `try / except`\n- Módulos, librerías y buenas prácticas de código\n\n**Recomendaciones:**\n- Sigue los ejercicios en tiempo real durante la sesión\n- Guarda tus notebooks y avances en tu propio repositorio\n- Al terminar el módulo presenta el quiz de 10 preguntas (20 minutos)",
           resources: [
             { title: "Presentación de la clase (web)", url: "https://trabajocientifico.github.io/curso-profesional-ciencia-de-datos/", type: "link" },
+            { title: "Archivos instaladores (Python, Anaconda, VS Code)", url: "https://drive.google.com/drive/folders/1JHDuCD5D26_dEHGY3Ib5fZaJ8-Vz-DJK?usp=sharing", type: "download" }
+          ]
+        },
+        {
+          id: "les-1-3",
+          title: "Clase 3 — Sesión en vivo (3 horas)",
+          type: "video",
+          duration: "3 horas",
+          videoId: "Lp6gojXu0jI",
+          description: "Tercera sesión del Módulo 1: práctica y cierre de los fundamentos de programación en Python.",
+          reading: "**Clase 3 — Fundamentos de programación en Python (3 horas)**\n\nTercera y última sesión del Módulo 1. Se retoman los temas de la Clase 2 y se llevan a la práctica con ejercicios guiados.\n\n**Temas de la sesión:**\n- Condicionales y ciclos (`if`, `for`, `while`)\n- Funciones, argumentos y valores de retorno\n- Comprensiones de listas\n- Manejo de errores con `try / except`\n- Módulos, librerías y buenas prácticas de código\n\n**Recomendaciones:**\n- Sigue los ejercicios en tiempo real durante la sesión\n- Descarga el documento de trabajo de la pestaña Recursos antes de empezar\n- Guarda tus notebooks y avances en tu propio repositorio\n- Al terminar el módulo presenta el quiz de 10 preguntas (20 minutos)",
+          resources: [
+            { title: "Presentación de la clase (web)", url: "https://trabajocientifico.github.io/curso-profesional-ciencia-de-datos/", type: "link" },
+            { title: "Documento de trabajo de la clase (descargar)", url: "https://docs.google.com/spreadsheets/d/1D-rR5RVLnKIFmEYjvJxIuV12F0I7RSgt/edit?usp=sharing&ouid=101573209953602387656&rtpof=true&sd=true", type: "download" },
             { title: "Archivos instaladores (Python, Anaconda, VS Code)", url: "https://drive.google.com/drive/folders/1JHDuCD5D26_dEHGY3Ib5fZaJ8-Vz-DJK?usp=sharing", type: "download" }
           ]
         }
@@ -156,12 +170,12 @@ const COURSE_DATA = {
       lessons: [
         {
           id: "les-2-1",
-          title: "Clase 3 — Sesión en vivo (3 horas)",
+          title: "Clase 4 — Sesión en vivo (3 horas)",
           type: "video",
           duration: "3 horas",
           videoId: "VIDEO_ID_PLACEHOLDER",
           description: "Pandas, exploración y estadística descriptiva.",
-          reading: "**Clase 3 — Análisis descriptivo con Python (3 horas)**\n\n**Temas de la sesión:**\n- Introducción a pandas: Series y DataFrame\n- Exploración inicial: `head()`, `info()`, `describe()`\n- Medidas de tendencia central y de dispersión\n- Filtrado, selección y ordenamiento de datos\n- Agrupaciones con `groupby()` y tablas resumen\n\n**Recomendaciones:**\n- Trabaja con un conjunto de datos propio si lo tienes\n- Guarda cada paso del análisis en el notebook",
+          reading: "**Clase 4 — Análisis descriptivo con Python (3 horas)**\n\n**Temas de la sesión:**\n- Introducción a pandas: Series y DataFrame\n- Exploración inicial: `head()`, `info()`, `describe()`\n- Medidas de tendencia central y de dispersión\n- Filtrado, selección y ordenamiento de datos\n- Agrupaciones con `groupby()` y tablas resumen\n\n**Recomendaciones:**\n- Trabaja con un conjunto de datos propio si lo tienes\n- Guarda cada paso del análisis en el notebook",
           resources: [
             { title: "Enlace a la sesión en vivo", url: "#", type: "link" },
             { title: "Notebook de la sesión", url: "#", type: "notebook" }
@@ -169,12 +183,12 @@ const COURSE_DATA = {
         },
         {
           id: "les-2-2",
-          title: "Clase 4 — Sesión en vivo (3 horas)",
+          title: "Clase 5 — Sesión en vivo (3 horas)",
           type: "video",
           duration: "3 horas",
           videoId: "VIDEO_ID_PLACEHOLDER",
           description: "Manejo de diferentes tipos de datos: CSV, XLSX, JSON y shapefile.",
-          reading: "**Clase 4 — Manejo de distintos formatos de datos (3 horas)**\n\n**Temas de la sesión:**\n- Lectura y escritura de CSV y Excel (XLSX) con pandas\n- Datos anidados en JSON y su normalización\n- Datos espaciales: shapefile y GeoDataFrame con GeoPandas\n- Limpieza: valores faltantes, duplicados y tipos de dato\n- Unión de tablas (`merge`, `concat`)\n\n**Recomendaciones:**\n- Ten a mano archivos en varios formatos para practicar\n- Al terminar el módulo presenta el quiz de 10 preguntas (20 minutos)",
+          reading: "**Clase 5 — Manejo de distintos formatos de datos (3 horas)**\n\n**Temas de la sesión:**\n- Lectura y escritura de CSV y Excel (XLSX) con pandas\n- Datos anidados en JSON y su normalización\n- Datos espaciales: shapefile y GeoDataFrame con GeoPandas\n- Limpieza: valores faltantes, duplicados y tipos de dato\n- Unión de tablas (`merge`, `concat`)\n\n**Recomendaciones:**\n- Ten a mano archivos en varios formatos para practicar\n- Al terminar el módulo presenta el quiz de 10 preguntas (20 minutos)",
           resources: [
             { title: "Enlace a la sesión en vivo", url: "#", type: "link" },
             { title: "Datos de práctica (CSV, XLSX, JSON, SHP)", url: "#", type: "download" }
@@ -273,32 +287,20 @@ const COURSE_DATA = {
     {
       id: "mod-3",
       title: "Módulo 3 — Visualización gráfica y dashboards",
-      description: "Gráficos estadísticos, buenas prácticas visuales y tableros. Dos sesiones de 3 horas.",
+      description: "Gráficos estadísticos, buenas prácticas visuales y tableros. Una sesión de 3 horas.",
       icon: "📈",
       lessons: [
         {
           id: "les-3-1",
-          title: "Clase 5 — Sesión en vivo (3 horas)",
-          type: "video",
-          duration: "3 horas",
-          videoId: "VIDEO_ID_PLACEHOLDER",
-          description: "Visualización con Matplotlib, Seaborn y Plotly.",
-          reading: "**Clase 5 — Visualización gráfica (3 horas)**\n\n**Temas de la sesión:**\n- Anatomía de un gráfico: ejes, escalas, títulos y leyendas\n- Matplotlib y Seaborn para gráficos estadísticos\n- Elección del gráfico según el tipo de dato\n- Gráficos interactivos con Plotly\n- Buenas prácticas: color, contraste y escalas honestas",
-          resources: [
-            { title: "Enlace a la sesión en vivo", url: "#", type: "link" },
-            { title: "Notebook de la sesión", url: "#", type: "notebook" }
-          ]
-        },
-        {
-          id: "les-3-2",
           title: "Clase 6 — Sesión en vivo (3 horas)",
           type: "video",
           duration: "3 horas",
           videoId: "VIDEO_ID_PLACEHOLDER",
-          description: "Construcción de dashboards y diseño de tableros.",
-          reading: "**Clase 6 — Dashboards (3 horas)**\n\n**Temas de la sesión:**\n- Qué debe y qué no debe tener un dashboard\n- Definición de indicadores y KPI\n- Composición y jerarquía visual del tablero\n- Filtros e interactividad\n- Preparación del tablero para el proyecto final\n\n**Recomendaciones:**\n- Al terminar el módulo presenta el quiz de 10 preguntas (20 minutos)",
+          description: "Visualización con Matplotlib, Seaborn y Plotly, y construcción de dashboards.",
+          reading: "**Clase 6 — Visualización gráfica y dashboards (3 horas)**\n\n**Visualización gráfica:**\n- Anatomía de un gráfico: ejes, escalas, títulos y leyendas\n- Matplotlib y Seaborn para gráficos estadísticos\n- Elección del gráfico según el tipo de dato\n- Gráficos interactivos con Plotly\n- Buenas prácticas: color, contraste y escalas honestas\n\n**Dashboards:**\n- Qué debe y qué no debe tener un dashboard\n- Definición de indicadores y KPI\n- Composición y jerarquía visual del tablero\n- Filtros e interactividad\n- Preparación del tablero para el proyecto final\n\n**Recomendaciones:**\n- Al terminar el módulo presenta el quiz de 10 preguntas (20 minutos)",
           resources: [
             { title: "Enlace a la sesión en vivo", url: "#", type: "link" },
+            { title: "Notebook de la sesión", url: "#", type: "notebook" },
             { title: "Plantilla de dashboard", url: "#", type: "download" }
           ]
         }
