@@ -37,12 +37,11 @@ const COURSE_DATA = {
           title: "Clase 1 — Sesión en vivo (2 horas)",
           type: "video",
           duration: "2 horas",
-          videoId: "VIDEO_ID_PLACEHOLDER",
-          description: "Primera sesión en vivo del curso. La grabación queda disponible en esta misma clase.",
-          reading: "**Clase 1 — Sesión en vivo (2 horas)**\n\nSesión de apertura del curso. El curso inicia el **jueves 20 de agosto de 2026**.\n\n**Cómo funciona esta clase:**\n- La sesión se dicta en vivo en el horario acordado con el grupo\n- La grabación se carga en este mismo espacio al finalizar\n- Los materiales se publican en la pestaña Recursos\n\n**Antes de la sesión:**\n- Ten creadas tus cuentas en las herramientas de IA que usaremos\n- Ten a la mano un tema o proyecto de investigación propio para aplicar lo visto\n- Verifica tu conexión y el audio de tu equipo\n\n**Al terminar el módulo:**\n- Presenta el quiz de 10 preguntas (20 minutos) sobre lo visto",
+          videoId: "fE5GFWVBaqg",
+          description: "Fundamentos y ética de la IA, diferencia entre modelos y agentes, búsqueda profunda e ingeniería de prompts.",
+          reading: "**Clase 1 — Fundamentos, ética y agentes de IA (2 horas)**\n\n**Fundamentos y ética**\n\nLos modelos de lenguaje operan mediante cálculos de tokens y probabilidades, no mediante razonamiento real. Se enfatizó la importancia de mantener la responsabilidad humana y ética en la investigación, señalando que las herramientas antiplagio actuales no son fiables.\n\n**Diferencia entre modelos y agentes**\n\nMientras los modelos solo procesan información y entregan respuestas, los agentes poseen autonomía para planificar, ejecutar soluciones, verificar resultados y realizar procesos de retroalimentación.\n\n**Búsqueda profunda**\n\nSe destacó el uso de las funciones de búsqueda profunda (acceso a la web) como estrategia principal para automatizar la recopilación de información académica, congresos y eventos verificables, minimizando errores.\n\n**Ingeniería de prompts**\n\nPara optimizar las respuestas es necesario estructurar las solicitudes definiendo claramente el rol del experto, el contexto, la tarea, el formato de salida y los límites.\n\n**Gestión de proyectos**\n\nSe diferenciaron las capacidades entre plataformas: el uso de «Gems» en Gemini para agentes de tareas repetitivas y «Proyectos» en ChatGPT para consolidar archivos y contextos específicos de una investigación.\n\n**Selección de herramientas**\n\nNo existe una IA «mejor» universal: la elección entre Claude, GPT o Gemini debe basarse en un equilibrio técnico entre costos, complejidad de la tarea, velocidad y necesidades específicas de cada usuario.\n\n**Al terminar el módulo:**\n- Presenta el quiz de 10 preguntas (20 minutos) sobre lo visto",
           resources: [
-            { title: "Enlace a la sesión en vivo", url: "#", type: "link" },
-            { title: "Material de la sesión", url: "#", type: "download" }
+            { title: "Presentación de la clase (web)", url: "https://trabajocientifico.github.io/curso-ia-para-investigacion-cientifica/", type: "link" }
           ]
         },
         {
