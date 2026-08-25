@@ -49,12 +49,12 @@ const COURSE_DATA = {
           title: "Clase 2 — Sesión en vivo (3 horas)",
           type: "video",
           duration: "3 horas",
-          videoId: "VIDEO_ID_PLACEHOLDER",
-          description: "Segunda sesión en vivo del Módulo 1. La grabación queda disponible en esta misma clase.",
-          reading: "**Clase 2 — Sesión en vivo (3 horas)**\n\nSegunda sesión del Módulo 1.\n\n**Cómo funciona esta clase:**\n- Sesión en vivo de 3 horas con trabajo práctico guiado\n- La grabación se carga en este espacio al finalizar\n- Los recursos y plantillas se publican en la pestaña Recursos\n\n**Recomendaciones:**\n- Aplica los ejercicios sobre tu propio tema de investigación\n- Guarda tus prompts y resultados para comparar avances\n- Al terminar el módulo presenta el quiz de 10 preguntas (20 minutos)",
+          videoId: "ID1A6C_tws8",
+          description: "Instalación paso a paso del entorno de trabajo: Python, Node.js, Antigravity, Codex y Claude Code.",
+          reading: "**Clase 2 — Instalación del entorno de trabajo (3 horas)**\n\nSesión práctica dedicada a dejar el computador de cada participante listo para trabajar con agentes de IA. Se acompañó la descarga e instalación de cada herramienta, verificando en cada paso que quedara funcionando.\n\n**Python**\n\nDescarga e instalación del intérprete de Python, con la advertencia de marcar la opción para agregarlo al PATH durante la instalación. Se comprobó la instalación desde la terminal y se explicó para qué se usará dentro del curso.\n\n**Node.js**\n\nInstalación de Node.js y de su gestor de paquetes npm, requisito previo para varias de las herramientas de agentes que se usan más adelante. Se verificó la versión instalada desde la terminal.\n\n**Antigravity**\n\nDescarga e instalación del entorno de Google, creación de la cuenta y primer recorrido por la interfaz.\n\n**Codex**\n\nInstalación de Codex y vinculación con la cuenta de OpenAI, revisando cómo se lanza y cómo se le entregan tareas.\n\n**Claude Code**\n\nInstalación de Claude Code desde la terminal (apoyada en Node.js), inicio de sesión y primera ejecución para confirmar que responde correctamente.\n\n**Recomendaciones:**\n- Si una instalación falla, repite el paso con la grabación en pausa antes de continuar con la siguiente herramienta\n- Anota los usuarios y correos con los que creaste cada cuenta\n- Deja las herramientas instaladas antes de la Clase 3: a partir de allí se trabaja con ellas\n- Al terminar el módulo presenta el quiz de 10 preguntas (20 minutos)",
           resources: [
-            { title: "Enlace a la sesión en vivo", url: "#", type: "link" },
-            { title: "Plantillas de la sesión", url: "#", type: "download" }
+            { title: "Presentación de la clase (web)", url: "https://trabajocientifico.github.io/curso-ia-para-investigacion-cientifica/", type: "link" },
+            { title: "Materiales de la clase (Google Drive)", url: "https://drive.google.com/drive/folders/1dhXdHYZyBwwuqgnuvp9XEwdzmJH6QiOM?usp=sharing", type: "download" }
           ]
         }
       ],
