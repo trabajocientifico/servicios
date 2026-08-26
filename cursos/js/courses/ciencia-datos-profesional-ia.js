@@ -173,12 +173,13 @@ const COURSE_DATA = {
           title: "Clase 4 — Sesión en vivo (3 horas)",
           type: "video",
           duration: "3 horas",
-          videoId: "VIDEO_ID_PLACEHOLDER",
-          description: "Pandas, exploración y estadística descriptiva.",
-          reading: "**Clase 4 — Análisis descriptivo con Python (3 horas)**\n\n**Temas de la sesión:**\n- Introducción a pandas: Series y DataFrame\n- Exploración inicial: `head()`, `info()`, `describe()`\n- Medidas de tendencia central y de dispersión\n- Filtrado, selección y ordenamiento de datos\n- Agrupaciones con `groupby()` y tablas resumen\n\n**Recomendaciones:**\n- Trabaja con un conjunto de datos propio si lo tienes\n- Guarda cada paso del análisis en el notebook",
+          videoId: "pNoIT04txJ4",
+          description: "Fundamentos de procesamiento de datos: Pandas, gestión de librerías y entornos, GeoPandas y configuración de VS Code con agentes de IA.",
+          reading: "**Clase 4 — Fundamentos de procesamiento de datos (3 horas)**\n\n**Fundamentos de procesamiento de datos**\n\nUso de Pandas para gestionar datos mediante DataFrames, lo que facilita la carga y manipulación de archivos como Excel, CSV y SQL. Se insistió en la importancia de utilizar rutas relativas en lugar de absolutas para asegurar la portabilidad de los proyectos de desarrollo.\n\n**Gestión de librerías y entornos**\n\n- Instalación de librerías mediante `pip install` y su importación en los scripts con `import`.\n- Uso de Anaconda para la creación de entornos separados, que permiten gestionar dependencias y evitar conflictos entre versiones.\n- Revisión de librerías clave: NumPy (operaciones numéricas), Matplotlib y Seaborn (visualización), Plotly (gráficos interactivos), Streamlit (aplicaciones web) y Scikit-learn (aprendizaje automático).\n\n**Análisis y visualización geoespacial**\n\nIntroducción a los archivos Shapefile (`.shp`) para datos espaciales y uso de la librería GeoPandas para su procesamiento y el análisis de polígonos.\n\n**Configuración e integración de IA**\n\n- Adopción de Visual Studio Code como entorno profesional para ciencia de datos, integrando agentes de inteligencia artificial para optimizar la generación de código.\n- Verificación de la instalación de las herramientas base (Python, Node, npm y el propio VS Code), además de la configuración de agentes como Claude Code, Codex y Antigravity.\n- Discusión sobre privacidad y seguridad al utilizar modelos externos para el análisis de datos y la generación de dashboards interactivos.",
           resources: [
-            { title: "Enlace a la sesión en vivo", url: "#", type: "link" },
-            { title: "Notebook de la sesión", url: "#", type: "notebook" }
+            { title: "Presentación de la clase (web)", url: "https://trabajocientifico.github.io/curso-profesional-ciencia-de-datos/", type: "link" },
+            { title: "Materiales de la clase (descargar)", url: "https://drive.google.com/drive/folders/1HH4BF-Ho9vi_X-rj4r2jrltSH3ZsmdbR?usp=sharing", type: "download" },
+            { title: "Archivos instaladores (Python, Anaconda, VS Code)", url: "https://drive.google.com/drive/folders/1JHDuCD5D26_dEHGY3Ib5fZaJ8-Vz-DJK?usp=sharing", type: "download" }
           ]
         },
         {
