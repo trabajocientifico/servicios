@@ -187,12 +187,12 @@ const COURSE_DATA = {
           title: "Clase 5 — Sesión en vivo (3 horas)",
           type: "video",
           duration: "3 horas",
-          videoId: "VIDEO_ID_PLACEHOLDER",
-          description: "Manejo de diferentes tipos de datos: CSV, XLSX, JSON y shapefile.",
-          reading: "**Clase 5 — Manejo de distintos formatos de datos (3 horas)**\n\n**Temas de la sesión:**\n- Lectura y escritura de CSV y Excel (XLSX) con pandas\n- Datos anidados en JSON y su normalización\n- Datos espaciales: shapefile y GeoDataFrame con GeoPandas\n- Limpieza: valores faltantes, duplicados y tipos de dato\n- Unión de tablas (`merge`, `concat`)\n\n**Recomendaciones:**\n- Ten a mano archivos en varios formatos para practicar\n- Al terminar el módulo presenta el quiz de 10 preguntas (20 minutos)",
+          videoId: "QbWvtzodCYs",
+          description: "Gestión de datos inteligentes: automatización con agentes de IA, Pandas y GeoPandas, organización de archivos y scripts autónomos en Python.",
+          reading: "**Clase 5 — Gestión de datos inteligentes (3 horas)**\n\nEsta clase, centrada en el Módulo 2: Gestión de datos inteligentes, se enfoca en la automatización de procesos técnicos mediante la integración de Python e Inteligencia Artificial.\n\n**Automatización de flujos de trabajo**\n\nUso de agentes de Inteligencia Artificial para delegar tareas de codificación, permitiendo que la IA planifique y ejecute procesos sin intervención manual constante.\n\n**Gestión y manipulación de datos**\n\nImplementación de librerías como Pandas y GeoPandas para la carga, filtrado, limpieza y análisis estadístico de diversas estructuras de datos (Excel, CSV, texto y datos geoespaciales).\n\n**Organización y control de archivos**\n\nAutomatización de tareas de mantenimiento documental, incluyendo el renombrado masivo, la organización jerárquica de archivos por tipo y búsquedas avanzadas en grandes volúmenes de datos.\n\n**Programación autónoma**\n\nGeneración de scripts en Python reutilizables, permitiendo que los procesos automatizados funcionen de manera independiente, superando la dependencia de la interfaz interactiva de la IA y optimizando el consumo de recursos.\n\n**Seguridad y permisos**\n\nConfiguración de protocolos de acceso y seguridad (cifrado de documentos PDF) para controlar las modificaciones que la IA puede realizar sobre los archivos del proyecto.\n\n**Procesamiento técnico avanzado**\n\nAplicación práctica de estas herramientas en tareas complejas, tales como la consolidación de múltiples reportes mensuales en archivos únicos, transformación de coordenadas geográficas (UTM) y la generación automatizada de documentos técnicos o propuestas de inversión.",
           resources: [
-            { title: "Enlace a la sesión en vivo", url: "#", type: "link" },
-            { title: "Datos de práctica (CSV, XLSX, JSON, SHP)", url: "#", type: "download" }
+            { title: "Presentación de la clase (web)", url: "https://trabajocientifico.github.io/curso-profesional-ciencia-de-datos/", type: "link" },
+            { title: "Materiales de la clase (descargar)", url: "https://drive.google.com/drive/folders/1YUoB72eFmh53T4w3xdPaPJ2K-M6A5ywb?usp=sharing", type: "download" }
           ]
         }
       ],
