@@ -29,7 +29,7 @@ const COURSE_DATA = {
     {
       id: "mod-1",
       title: "Módulo 1",
-      description: "Dos sesiones en vivo: una de 2 horas y una de 3 horas.",
+      description: "Tres sesiones en vivo: una de 2 horas y dos de 3 horas.",
       icon: "1️⃣",
       lessons: [
         {
@@ -55,6 +55,18 @@ const COURSE_DATA = {
           resources: [
             { title: "Presentación de la clase (web)", url: "https://trabajocientifico.github.io/curso-ia-para-investigacion-cientifica/", type: "link" },
             { title: "Materiales de la clase (Google Drive)", url: "https://drive.google.com/drive/folders/1dhXdHYZyBwwuqgnuvp9XEwdzmJH6QiOM?usp=sharing", type: "download" }
+          ]
+        },
+        {
+          id: "les-1-3",
+          title: "Clase 3 — Sesión en vivo (3 horas)",
+          type: "video",
+          duration: "3 horas",
+          videoId: "rewgdZbG2Bk",
+          description: "Proceso lógico de la investigación, definición de problemas y objetivos, optimización de prompts y uso de Gemini Notebook con fuentes verificadas.",
+          reading: "**Clase 3 — Proceso lógico de la investigación y Gemini Notebook (3 horas)**\n\n**Proceso lógico**\n\nEs fundamental seguir una estructura paso a paso (línea de investigación, árbol de problemas, preguntas y objetivos) evitando delegar la autonomía investigativa completamente a la inteligencia artificial.\n\n**Definición de problemas**\n\nLa investigación científica busca generar conocimiento verificable; por ello, es necesario transformar temas generales en problemas de investigación concretos y relevantes.\n\n**Objetivos claros**\n\nLos objetivos de investigación responden al «por qué» (la finalidad del estudio) y deben distinguirse claramente de las actividades operativas o tareas metodológicas.\n\n**Gestión de sesiones**\n\nPara evitar bloqueos del sistema o pérdida de precisión, se recomienda crear chats independientes para cada consulta técnica o prompt específico dentro del proyecto.\n\n**Estructura de prompts**\n\nPara obtener resultados efectivos, los prompts deben seguir una estructura clara: definir el rol de la IA, proveer contexto específico, detallar la tarea a realizar y especificar el formato de salida deseado.\n\n**Naturaleza estocástica**\n\nSe debe tener presente que los modelos de IA son probabilísticos, no determinísticos; esto significa que los resultados variarán naturalmente entre diferentes usuarios aunque usen el mismo prompt.\n\n**Gemini Notebook: fuentes verificadas**\n\nGemini Notebook se establece como la herramienta principal para investigación, ya que reduce significativamente el riesgo de alucinaciones al limitar sus respuestas exclusivamente a las fuentes cargadas por el usuario.\n\n**Gemini Notebook: funcionalidades**\n\nLa herramienta permite integrar diversos formatos (PDF, enlaces, videos) y utilizar la «búsqueda profunda» para encontrar datos, métricas y estadísticas que soporten la investigación con información verificable.\n\n**Supervisión crítica**\n\nLa responsabilidad final reside en el investigador; se debe revisar de manera consciente el contenido generado por la IA para asegurar que sea coherente, ético y alineado con los intereses propios.\n\n**Verificación**\n\nEs esencial validar todas las referencias bibliográficas y cifras generadas automáticamente, evitando aceptar ciegamente la información proporcionada por el modelo.\n\n**Recomendaciones:**\n- Define tu línea de investigación y tu árbol de problemas antes de la siguiente sesión\n- Carga en Gemini Notebook solo fuentes que hayas revisado\n- Al terminar el módulo presenta el quiz de 10 preguntas (20 minutos)",
+          resources: [
+            { title: "Presentación de la clase (web)", url: "https://trabajocientifico.github.io/curso-ia-para-investigacion-cientifica/", type: "link" }
           ]
         }
       ],
@@ -180,29 +192,17 @@ const COURSE_DATA = {
     {
       id: "mod-2",
       title: "Módulo 2",
-      description: "Dos sesiones en vivo de 3 horas cada una.",
+      description: "Una sesión en vivo de 3 horas.",
       icon: "2️⃣",
       lessons: [
         {
           id: "les-2-1",
-          title: "Clase 3 — Sesión en vivo (3 horas)",
-          type: "video",
-          duration: "3 horas",
-          videoId: "rewgdZbG2Bk",
-          description: "Proceso lógico de la investigación, definición de problemas y objetivos, optimización de prompts y uso de Gemini Notebook con fuentes verificadas.",
-          reading: "**Clase 3 — Proceso lógico de la investigación y Gemini Notebook (3 horas)**\n\n**Proceso lógico**\n\nEs fundamental seguir una estructura paso a paso (línea de investigación, árbol de problemas, preguntas y objetivos) evitando delegar la autonomía investigativa completamente a la inteligencia artificial.\n\n**Definición de problemas**\n\nLa investigación científica busca generar conocimiento verificable; por ello, es necesario transformar temas generales en problemas de investigación concretos y relevantes.\n\n**Objetivos claros**\n\nLos objetivos de investigación responden al «por qué» (la finalidad del estudio) y deben distinguirse claramente de las actividades operativas o tareas metodológicas.\n\n**Gestión de sesiones**\n\nPara evitar bloqueos del sistema o pérdida de precisión, se recomienda crear chats independientes para cada consulta técnica o prompt específico dentro del proyecto.\n\n**Estructura de prompts**\n\nPara obtener resultados efectivos, los prompts deben seguir una estructura clara: definir el rol de la IA, proveer contexto específico, detallar la tarea a realizar y especificar el formato de salida deseado.\n\n**Naturaleza estocástica**\n\nSe debe tener presente que los modelos de IA son probabilísticos, no determinísticos; esto significa que los resultados variarán naturalmente entre diferentes usuarios aunque usen el mismo prompt.\n\n**Gemini Notebook: fuentes verificadas**\n\nGemini Notebook se establece como la herramienta principal para investigación, ya que reduce significativamente el riesgo de alucinaciones al limitar sus respuestas exclusivamente a las fuentes cargadas por el usuario.\n\n**Gemini Notebook: funcionalidades**\n\nLa herramienta permite integrar diversos formatos (PDF, enlaces, videos) y utilizar la «búsqueda profunda» para encontrar datos, métricas y estadísticas que soporten la investigación con información verificable.\n\n**Supervisión crítica**\n\nLa responsabilidad final reside en el investigador; se debe revisar de manera consciente el contenido generado por la IA para asegurar que sea coherente, ético y alineado con los intereses propios.\n\n**Verificación**\n\nEs esencial validar todas las referencias bibliográficas y cifras generadas automáticamente, evitando aceptar ciegamente la información proporcionada por el modelo.\n\n**Recomendaciones:**\n- Define tu línea de investigación y tu árbol de problemas antes de la siguiente sesión\n- Carga en Gemini Notebook solo fuentes que hayas revisado\n- Al terminar el módulo presenta el quiz de 10 preguntas (20 minutos)",
-          resources: [
-            { title: "Presentación de la clase (web)", url: "https://trabajocientifico.github.io/curso-ia-para-investigacion-cientifica/", type: "link" }
-          ]
-        },
-        {
-          id: "les-2-2",
           title: "Clase 4 — Sesión en vivo (3 horas)",
           type: "video",
           duration: "3 horas",
           videoId: "VIDEO_ID_PLACEHOLDER",
-          description: "Segunda sesión en vivo del Módulo 2. La grabación queda disponible en esta misma clase.",
-          reading: "**Clase 4 — Sesión en vivo (3 horas)**\n\nSegunda sesión del Módulo 2.\n\n**Cómo funciona esta clase:**\n- Sesión en vivo de 3 horas con trabajo práctico guiado\n- La grabación se carga en este espacio al finalizar\n- Los recursos y plantillas se publican en la pestaña Recursos\n\n**Recomendaciones:**\n- Ten listos los avances trabajados en la clase anterior\n- Al terminar el módulo presenta el quiz de 10 preguntas (20 minutos)",
+          description: "Sesión en vivo del Módulo 2. La grabación queda disponible en esta misma clase.",
+          reading: "**Clase 4 — Sesión en vivo (3 horas)**\n\nSesión única del Módulo 2.\n\n**Cómo funciona esta clase:**\n- Sesión en vivo de 3 horas con trabajo práctico guiado\n- La grabación se carga en este espacio al finalizar\n- Los recursos y plantillas se publican en la pestaña Recursos\n\n**Recomendaciones:**\n- Ten listos los avances trabajados en la clase anterior\n- Al terminar el módulo presenta el quiz de 10 preguntas (20 minutos)",
           resources: [
             { title: "Enlace a la sesión en vivo", url: "#", type: "link" },
             { title: "Plantillas de la sesión", url: "#", type: "download" }
