@@ -414,12 +414,11 @@ const COURSE_DATA = {
           title: "Clase 7 — Sesión en vivo (3 horas)",
           type: "video",
           duration: "3 horas",
-          videoId: "VIDEO_ID_PLACEHOLDER",
-          description: "Sesión de cierre: aplicación web con Streamlit y publicación con GitHub.",
-          reading: "**Clase 7 — Aplicaciones web de datos (3 horas)**\n\n**Temas de la sesión:**\n- Estructura de una aplicación en Streamlit\n- Componentes: entradas, gráficos, tablas y `sidebar`\n- Estado y caché para acelerar la app\n- Control de versiones con Git y GitHub\n- Publicación: Streamlit Community Cloud y GitHub Pages\n- Cierre del curso y proyecto final\n\n**Después de esta clase:**\n- Presenta el quiz del módulo (10 preguntas, 20 minutos)\n- Al aprobar los 4 quizzes se genera tu certificado de 20 horas",
+          videoId: "8HADJUmED_M",
+          description: "Sesión de cierre: publicación de aplicaciones web con GitHub Pages y Streamlit, planificación previa con IA y versionamiento profesional.",
+          reading: "**Clase 7 — Aplicaciones web de datos y cierre del curso (3 horas)**\n\n**Cierre del ciclo**\n\nSe concluyó el séptimo y último encuentro del curso, completando 21 horas de instrucción. La plataforma de aprendizaje permanecerá disponible hasta febrero del próximo año.\n\n**Rutas de despliegue web**\n\nSe presentaron dos metodologías para crear y publicar aplicaciones web: GitHub Pages, con HTML, JavaScript y CSS para interfaces gráficas; y Streamlit, framework basado en Python, ideal para crear aplicaciones de datos y cuadros de mando interactivos de forma rápida.\n\n**Proyectos desarrollados**\n\nConvertidor de unidades: aplicación para convertir grados Celsius, Fahrenheit y Kelvin, con un diseño enfocado en la intuición y la facilidad de uso.\n\nAnálisis de datos: herramienta para realizar regresiones lineales (simples o múltiples) cargando archivos CSV o Excel, capaz de mostrar métricas (RMSE, MAE), generar gráficos de residuos y exportar informes en PDF.\n\n**Estrategia de desarrollo**\n\nSe enfatizó la importancia de realizar una etapa de planificación previa a la ejecución del código con la IA; esto ayuda a optimizar el consumo de tokens, reducir costos y mejorar la estructura del proyecto.\n\n**Gestión y versionamiento**\n\nSe reforzó el uso de GitHub como repositorio profesional y gestor de versiones, explicando procesos como la configuración de «Pages» para hacer públicos los aplicativos y la iteración continua de archivos (como el README).\n\n**Próximos pasos**\n\nSe anunció un taller sobre fundamentos de Python programado para el 7 de octubre y la continuidad del grupo de WhatsApp para soporte y seguimiento.\n\n**Después de esta clase:**\n- Presenta el quiz del módulo (10 preguntas, 20 minutos)\n- Al aprobar los 4 quizzes se genera tu certificado de 20 horas",
           resources: [
-            { title: "Enlace a la sesión en vivo", url: "#", type: "link" },
-            { title: "Repositorio plantilla del proyecto", url: "#", type: "github" },
+            { title: "Presentación de la clase (web)", url: "https://trabajocientifico.github.io/curso-profesional-ciencia-de-datos/", type: "link" },
             { title: "Documentación de Streamlit", url: "https://docs.streamlit.io/", type: "link" }
           ]
         }
