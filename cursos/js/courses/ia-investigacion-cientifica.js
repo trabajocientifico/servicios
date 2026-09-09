@@ -192,7 +192,7 @@ const COURSE_DATA = {
     {
       id: "mod-2",
       title: "Módulo 2",
-      description: "Una sesión en vivo de 3 horas.",
+      description: "Dos sesiones en vivo de 3 horas cada una.",
       icon: "2️⃣",
       lessons: [
         {
@@ -203,6 +203,19 @@ const COURSE_DATA = {
           videoId: "sPIy2cvEErI",
           description: "Marco teórico y estado del arte, método Tree of Science, herramientas de búsqueda y mapeo de literatura, sistemas de indexación y preparación de metadatos en R y RStudio.",
           reading: "**Clase 4 — Marco teórico, estado del arte y mapeo de la literatura (3 horas)**\n\n**Marco teórico y estado del arte**\n\nEl marco teórico es el lente conceptual con el que se observa el problema, mientras que el estado del arte reúne los antecedentes que permiten identificar vacíos de conocimiento. La lectura crítica no se delega a la IA: el criterio y la responsabilidad ética son del investigador.\n\n**Construcción del marco teórico**\n\nSe estructura a partir de 3 a 5 categorías temáticas que ordenan la discusión conceptual del proyecto.\n\n**Tree of Science (ToS)**\n\nMétodo que aplica algoritmos sobre redes de citación para organizar la literatura en raíces (obras base), tronco (cuerpo estructural del campo) y hojas (temas emergentes y perspectivas actuales).\n\n**Herramientas de búsqueda y mapeo**\n\n- **ResearchGate:** red social académica para contactar autores y acceder a artículos.\n- **Google Scholar y Semantic Scholar:** motores para explorar literatura científica y bases de datos bibliográficas.\n- **Connected Papers y Litmaps:** visualización de redes de citación y de la evolución temporal de un tema de investigación.\n\n**Sistemas de indexación y métricas**\n\nSe diferencian Publindex (Colombia), JCR (Clarivate / Web of Science) y Scopus / SJR (Elsevier), y cómo cada sistema clasifica las revistas científicas y aporta al análisis bibliométrico.\n\n**Procesamiento técnico en R y RStudio**\n\nR y RStudio se usan para consolidar los metadatos exportados desde Scopus y Web of Science. Un corpus de 100 a 500 documentos es el rango adecuado para optimizar el análisis de redes de citación.\n\n**Estrategias de búsqueda**\n\nConstrucción de ecuaciones de búsqueda eficaces con operadores booleanos y exportación de registros completos (metadatos) en formatos compatibles con el análisis posterior.\n\n**Valor académico de la revisión**\n\nLos artículos de revisión tienen el mismo peso y valor académico que los experimentales, y son una opción prestigiosa para proyectos de investigación.\n\n**Recomendaciones:**\n- Instala R y RStudio con los instaladores compartidos antes de la práctica\n- Define tus 3 a 5 categorías temáticas y arma tu ecuación de búsqueda\n- Exporta registros completos desde Scopus y Web of Science (100 a 500 documentos)\n- Al terminar el módulo presenta el quiz de 10 preguntas (20 minutos)",
+          resources: [
+            { title: "Presentación de la clase (web)", url: "https://trabajocientifico.github.io/curso-ia-para-investigacion-cientifica/", type: "link" },
+            { title: "Instaladores R y RStudio (Google Drive)", url: "https://drive.google.com/drive/folders/1Cd-21wg1BKRfW50gL6t6NPmJHj-giou7?usp=sharing", type: "download" }
+          ]
+        },
+        {
+          id: "les-2-2",
+          title: "Clase 5 — Sesión en vivo (3 horas)",
+          type: "video",
+          duration: "3 horas",
+          videoId: "CPMdpkTbNH0",
+          description: "Análisis bibliométrico con R y RStudio, aplicativo Bibliometría Flow, tipos de artículos de revisión, Tree of Science y automatización del análisis con IA en Google Colab.",
+          reading: "**Clase 5 — Análisis bibliométrico con R y automatización con IA (3 horas)**\n\n**Configuración técnica**\n\nInstalación secuencial de R y RStudio y configuración del directorio de trabajo para ejecutar el aplicativo «Bibliometría Flow», diseñado para consolidar y procesar datos bibliográficos.\n\n**Gestión del corpus**\n\nOptimización de las ecuaciones de búsqueda para obtener conjuntos de datos manejables, entre 100 y 500 registros, y uso de inteligencia artificial para consolidar los metadatos exportados en archivos de texto plano (TXT).\n\n**Tipos de artículos de revisión**\n\n- **Revisión sistemática:** enfocada en la evidencia disponible sobre una pregunta concreta.\n- **Revisión bibliométrica:** análisis cuantitativo de la estructura y la dinámica de un campo.\n- **Metaanálisis:** síntesis estadística de los resultados de estudios previos.\n\n**Herramientas bibliométricas**\n\nFuncionamiento del algoritmo de «Bibliometría Flow» para eliminar duplicados, realizar limpiezas de datos y generar las figuras bibliométricas estándar: producción temporal, redes de colaboración, mapas temáticos y demás visualizaciones del campo.\n\n**Calidad y formatos de salida**\n\nLas figuras deben generarse en alta resolución (300 dpi) y en formatos vectoriales (PDF) para cumplir los requisitos de las revistas de alto impacto. Igual de importante es documentar rigurosamente el proceso de filtrado de artículos.\n\n**Tree of Science (ToS)**\n\nPlataforma con respaldo científico que selecciona los artículos relevantes mediante análisis de redes de citación, como alternativa validada a la búsqueda y el cribado manual.\n\n**Automatización con IA**\n\nGoogle Colab permite automatizar el análisis de datos con comandos en lenguaje natural, generando visualizaciones de forma iterativa y asegurando la trazabilidad de todo el proceso analítico.\n\n**Interpretación crítica**\n\nLas herramientas entregan métricas y visualizaciones, pero la interpretación conceptual y teórica de los resultados es responsabilidad indelegable del investigador.\n\n**Recomendaciones:**\n- Deja instalados R y RStudio y configura el directorio de trabajo antes de ejecutar Bibliometría Flow\n- Ajusta tu ecuación de búsqueda hasta obtener un corpus de 100 a 500 registros\n- Exporta las figuras a 300 dpi y en PDF desde el primer intento\n- Documenta cada paso del filtrado de artículos para poder reportarlo\n- Al terminar el módulo presenta el quiz de 10 preguntas (20 minutos)",
           resources: [
             { title: "Presentación de la clase (web)", url: "https://trabajocientifico.github.io/curso-ia-para-investigacion-cientifica/", type: "link" },
             { title: "Instaladores R y RStudio (Google Drive)", url: "https://drive.google.com/drive/folders/1Cd-21wg1BKRfW50gL6t6NPmJHj-giou7?usp=sharing", type: "download" }
@@ -326,30 +339,17 @@ const COURSE_DATA = {
     {
       id: "mod-3",
       title: "Módulo 3",
-      description: "Dos sesiones en vivo de 3 horas cada una.",
+      description: "Una sesión en vivo de 3 horas.",
       icon: "3️⃣",
       lessons: [
-        {
-          id: "les-3-1",
-          title: "Clase 5 — Sesión en vivo (3 horas)",
-          type: "video",
-          duration: "3 horas",
-          videoId: "VIDEO_ID_PLACEHOLDER",
-          description: "Primera sesión en vivo del Módulo 3. La grabación queda disponible en esta misma clase.",
-          reading: "**Clase 5 — Sesión en vivo (3 horas)**\n\nPrimera sesión del Módulo 3.\n\n**Cómo funciona esta clase:**\n- Sesión en vivo de 3 horas con trabajo práctico guiado\n- La grabación se carga en este espacio al finalizar\n- Los recursos y plantillas se publican en la pestaña Recursos\n\n**Recomendaciones:**\n- A partir de este módulo el trabajo se orienta a tu propio proyecto de investigación",
-          resources: [
-            { title: "Enlace a la sesión en vivo", url: "#", type: "link" },
-            { title: "Plantillas de la sesión", url: "#", type: "download" }
-          ]
-        },
         {
           id: "les-3-2",
           title: "Clase 6 — Sesión en vivo (3 horas)",
           type: "video",
           duration: "3 horas",
           videoId: "VIDEO_ID_PLACEHOLDER",
-          description: "Segunda sesión en vivo del Módulo 3. La grabación queda disponible en esta misma clase.",
-          reading: "**Clase 6 — Sesión en vivo (3 horas)**\n\nSegunda sesión del Módulo 3.\n\n**Cómo funciona esta clase:**\n- Sesión en vivo de 3 horas con trabajo práctico guiado\n- La grabación se carga en este espacio al finalizar\n- Los recursos y plantillas se publican en la pestaña Recursos\n\n**Recomendaciones:**\n- Avanza en tu proyecto entre sesiones\n- Al terminar el módulo presenta el quiz de 10 preguntas (20 minutos)",
+          description: "Sesión en vivo del Módulo 3. La grabación queda disponible en esta misma clase.",
+          reading: "**Clase 6 — Sesión en vivo (3 horas)**\n\nSesión única del Módulo 3.\n\n**Cómo funciona esta clase:**\n- Sesión en vivo de 3 horas con trabajo práctico guiado\n- La grabación se carga en este espacio al finalizar\n- Los recursos y plantillas se publican en la pestaña Recursos\n\n**Recomendaciones:**\n- A partir de este módulo el trabajo se orienta a tu propio proyecto de investigación\n- Al terminar el módulo presenta el quiz de 10 preguntas (20 minutos)",
           resources: [
             { title: "Enlace a la sesión en vivo", url: "#", type: "link" },
             { title: "Plantillas de la sesión", url: "#", type: "download" }
