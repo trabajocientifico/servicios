@@ -347,12 +347,11 @@ const COURSE_DATA = {
           title: "Clase 6 — Sesión en vivo (3 horas)",
           type: "video",
           duration: "3 horas",
-          videoId: "VIDEO_ID_PLACEHOLDER",
+          videoId: "Omj-tDX8ExM",
           description: "Sesión en vivo del Módulo 3. La grabación queda disponible en esta misma clase.",
           reading: "**Clase 6 — Sesión en vivo (3 horas)**\n\nSesión única del Módulo 3.\n\n**Cómo funciona esta clase:**\n- Sesión en vivo de 3 horas con trabajo práctico guiado\n- La grabación se carga en este espacio al finalizar\n- Los recursos y plantillas se publican en la pestaña Recursos\n\n**Recomendaciones:**\n- A partir de este módulo el trabajo se orienta a tu propio proyecto de investigación\n- Al terminar el módulo presenta el quiz de 10 preguntas (20 minutos)",
           resources: [
-            { title: "Enlace a la sesión en vivo", url: "#", type: "link" },
-            { title: "Plantillas de la sesión", url: "#", type: "download" }
+            { title: "Presentación de la clase (web)", url: "https://trabajocientifico.github.io/curso-ia-para-investigacion-cientifica/", type: "link" }
           ]
         }
       ],
