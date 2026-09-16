@@ -485,12 +485,11 @@ const COURSE_DATA = {
           title: "Clase 7 — Sesión en vivo (3 horas)",
           type: "video",
           duration: "3 horas",
-          videoId: "VIDEO_ID_PLACEHOLDER",
+          videoId: "C-V_iqDmD48",
           description: "Sesión de cierre del curso.",
           reading: "**Clase 7 — Sesión en vivo (3 horas)**\n\nSesión de cierre del curso.\n\n**Cómo funciona esta clase:**\n- Sesión en vivo de 3 horas con la integración de todo lo trabajado\n- La grabación se carga en este espacio al finalizar\n- Los recursos finales se publican en la pestaña Recursos\n\n**Después de esta clase:**\n- Presenta el quiz del módulo (10 preguntas, 20 minutos)\n- Al aprobar los 4 quizzes se genera tu certificado de 20 horas",
           resources: [
-            { title: "Enlace a la sesión en vivo", url: "#", type: "link" },
-            { title: "Material de cierre del curso", url: "#", type: "download" }
+            { title: "Presentación de la clase (web)", url: "https://trabajocientifico.github.io/curso-ia-para-investigacion-cientifica/", type: "link" }
           ]
         }
       ],
