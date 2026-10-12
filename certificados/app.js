@@ -19,6 +19,11 @@
    - 'tipo' ajusta automáticamente el texto del certificado.
    - 'csvUrl' es el enlace CSV publicado de la hoja de asistentes de ESE evento
      (Google Sheets → Archivo → Compartir → Publicar en la web → CSV).
+   - Cursos pagos: en lugar de 'csvUrl' usan 'asistentes: ALUMNOS[...]', la lista
+     de alumnos.js (se regenera con generar_alumnos.py desde alumnos_cursos.xlsx).
+   - 'certificado' (opcional) cambia el rótulo: 'asistencia' por defecto, o 'aprobación'.
+   - 'fecha' admite un periodo: 'del 31 de julio al 28 de agosto de 2026'.
+   - 'fechaVerbo' (opcional) cambia «realizado» en la línea de fecha, p. ej. 'finalizado'.
    - El primero de la lista es el que se selecciona por defecto.
    - Enlace directo a un evento:  certificados/index.html?evento=identificador-corto
    ================================================================ */
@@ -57,6 +62,24 @@ const EVENTS = {
     intensidad: '6 horas',
     fecha: 'PENDIENTE',
     csvUrl: 'PENDIENTE'
+  },
+  'curso-ciencia-datos': {
+    titulo: 'Ciencia de Datos Profesional con Python + IA',
+    tipo: 'curso',
+    certificado: 'aprobación',
+    intensidad: '21 horas',
+    fecha: '20 de septiembre de 2026',
+    fechaVerbo: 'finalizado',
+    asistentes: ALUMNOS['curso-ciencia-datos']
+  },
+  'curso-ia-investigacion': {
+    titulo: 'Inteligencia Artificial para la Investigación Científica',
+    tipo: 'curso',
+    certificado: 'aprobación',
+    intensidad: '21 horas',
+    fecha: '20 de septiembre de 2026',
+    fechaVerbo: 'finalizado',
+    asistentes: ALUMNOS['curso-ia-investigacion']
   }
 };
 
@@ -146,6 +169,14 @@ class CertificateApp {
 
   // --- Descarga y parseo del CSV de Google Sheets ---
   async fetchDatabase() {
+    // Curso con lista embebida (alumnos.js): no hay nada que descargar
+    if (Array.isArray(this.event.asistentes)) {
+      this.attendees = this.event.asistentes;
+      this.showStatus('success', 'Datos Cargados');
+      setTimeout(() => this.hideStatus(), 4000);
+      return;
+    }
+
     // Evento aún sin base de datos configurada
     if (!this.event.csvUrl || !this.event.csvUrl.startsWith('http')) {
       this.showStatus('error', `La lista de asistentes de "${this.event.titulo}" aún no está disponible. Vuelve a intentarlo más tarde.`);
@@ -256,8 +287,16 @@ class CertificateApp {
 
   dateLine() {
     if (!this.event.fecha || this.event.fecha === 'PENDIENTE') return '';
-    const realizado = (this.event.tipo === 'masterclass') ? 'realizada' : 'realizado';
-    return `${this.capitalize(this.event.tipo)} ${realizado} el ${this.event.fecha}`;
+    const realizado = this.event.fechaVerbo
+      || ((this.event.tipo === 'masterclass') ? 'realizada' : 'realizado');
+    // Un periodo ('del … al …') ya trae su preposición
+    const fecha = this.event.fecha.startsWith('del ') ? this.event.fecha : `el ${this.event.fecha}`;
+    return `${this.capitalize(this.event.tipo)} ${realizado} ${fecha}`;
+  }
+
+  // --- Clase de certificado: 'asistencia' (por defecto) o 'aprobación' ---
+  certKind() {
+    return this.event.certificado || 'asistencia';
   }
 
   // --- Event Listeners ---
@@ -385,7 +424,7 @@ class CertificateApp {
   // --- Generación del Certificado ---
   generateCertificate(name) {
     this.currentAttendee = name;
-    this.showStatus('success', `✓ ¡Asistencia verificada para ${name}!`);
+    this.showStatus('success', `✓ ¡${this.capitalize(this.certKind())} verificada para ${name}!`);
     this.certSection.classList.add('active');
 
     // Desplazar suavemente hasta el certificado
@@ -491,11 +530,12 @@ class CertificateApp {
     ctx.fillRect(-4, -4, 8, 8);
     ctx.restore();
 
-    // 7. Texto: CERTIFICADO DE ASISTENCIA
+    // 7. Texto: CERTIFICADO DE ASISTENCIA / APROBACIÓN
     ctx.fillStyle = '#e4e4e7';
     ctx.font = '600 15px ' + FONT;
     ctx.textAlign = 'center';
-    ctx.fillText('C E R T I F I C A D O    D E    A S I S T E N C I A', w / 2, 238);
+    const kindSpaced = this.certKind().toUpperCase().split('').join(' ');
+    ctx.fillText('C E R T I F I C A D O    D E    ' + kindSpaced, w / 2, 238);
 
     // 8. Texto: OTORGADO A
     ctx.fillStyle = '#8b8fa3';

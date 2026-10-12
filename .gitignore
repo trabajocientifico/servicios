@@ -1,3 +1,6 @@
 # Clon local del repositorio trabajocientifico/enlaces.
 # No debe versionarse aqui: al quedar como submodulo rompe el build de GitHub Pages.
 perfil/
+
+# Lista fuente de alumnos; lo que se publica es certificados/alumnos.js.
+alumnos_cursos.xlsx
