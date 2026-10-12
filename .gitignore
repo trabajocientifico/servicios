@@ -4,3 +4,6 @@ perfil/
 
 # Lista fuente de alumnos; lo que se publica es certificados/alumnos.js.
 alumnos_cursos.xlsx
+
+# Instaladores: GitHub rechaza archivos de más de 100 MB.
+*.exe
