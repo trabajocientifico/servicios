@@ -24,7 +24,7 @@ const ALUMNOS = {
     "José Antonio Pezuela Álvarez",
   ],
   'curso-ia-investigacion': [
-    "Claudia Patrcia Velez Garcia",
+    "Claudia Patricia Velez Garcia",
     "Cristiam Alexander Fonseca Bobadilla",
     "Eduardo Castañeda Vargas",
     "Edwin Dario Betancur Hoyos",
@@ -43,7 +43,7 @@ const ALUMNOS = {
     "Sandra Lorena Contreras Contreras",
     "Viviana Astrid González Guzmán",
     "William Chaparro",
-    "Yeisson Bejarano cordoba",
+    "Yeisson Bejarano Cordoba",
     "Yenny Elizabeth Gutiérrez López",
     "Torcoroma Lobo Rincón",
     "Norma Constanza Basto Salas",
