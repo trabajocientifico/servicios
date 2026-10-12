@@ -625,41 +625,28 @@ class CertificateApp {
       ctx.fillText(dateText, w / 2, 575);
     }
 
-    // 13. Firmas digitales al pie (Izquierda y Derecha)
+    // 13. Firma digital al pie (centrada)
     const sigY = 665;
-    const leftCx = 260;
-    const rightCx = w - 260;
+    const sigCx = w / 2;
     const lineHalf = 110;
 
-    // Líneas de firma
+    // Línea de firma
     ctx.strokeStyle = 'rgba(255, 255, 255, 0.2)';
     ctx.lineWidth = 1;
-    ctx.beginPath(); ctx.moveTo(leftCx - lineHalf, sigY); ctx.lineTo(leftCx + lineHalf, sigY); ctx.stroke();
-    ctx.beginPath(); ctx.moveTo(rightCx - lineHalf, sigY); ctx.lineTo(rightCx + lineHalf, sigY); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(sigCx - lineHalf, sigY); ctx.lineTo(sigCx + lineHalf, sigY); ctx.stroke();
 
     ctx.textAlign = 'center';
 
-    // Firma Izquierda — Oscar Ivan Vargas Pineda
+    // Firma — Oscar Ivan Vargas Pineda
     ctx.fillStyle = nameGrad;
     ctx.font = 'italic bold 26px "Segoe Script", "Brush Script MT", cursive';
-    ctx.fillText('Oscar I. Vargas', leftCx, sigY - 8);
+    ctx.fillText('Oscar I. Vargas', sigCx, sigY - 8);
     ctx.fillStyle = '#ffffff';
     ctx.font = 'bold 14px ' + FONT;
-    ctx.fillText('Oscar Ivan Vargas Pineda', leftCx, sigY + 22);
+    ctx.fillText('Oscar Ivan Vargas Pineda', sigCx, sigY + 22);
     ctx.fillStyle = '#8b8fa3';
     ctx.font = '11px ' + FONT;
-    ctx.fillText('CEO  ·  Trabajo Científico', leftCx, sigY + 38);
-
-    // Firma Derecha — Lali Valentina Pedroza
-    ctx.fillStyle = nameGrad;
-    ctx.font = 'italic bold 26px "Segoe Script", "Brush Script MT", cursive';
-    ctx.fillText('Lali V. Pedroza', rightCx, sigY - 8);
-    ctx.fillStyle = '#ffffff';
-    ctx.font = 'bold 14px ' + FONT;
-    ctx.fillText('Lali Valentina Pedroza', rightCx, sigY + 22);
-    ctx.fillStyle = '#8b8fa3';
-    ctx.font = '11px ' + FONT;
-    ctx.fillText('Gestora Educativa  ·  Trabajo Científico', rightCx, sigY + 38);
+    ctx.fillText('CEO  ·  Trabajo Científico', sigCx, sigY + 38);
 
     // 14. Fecha de emisión al centro inferior
     const meses = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio',
