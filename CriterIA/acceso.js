@@ -5,7 +5,7 @@
   const sessionKey = 'criteria-f2:sesion';
   const nodo = new URLSearchParams(location.search).get('nodo')?.toLowerCase();
   const seleccionado = habilitados.has(nodo) ? nodo : null;
-  let cuenta = null;
+  let cuenta = null, consultaMapa = 0;
   const tabKey = crypto.randomUUID();
   const mensajes = {
     CREDENCIALES:'Revisa el correo y la contraseña.',
@@ -62,6 +62,8 @@
     $(crear ? 'nombre' : 'correo').focus();
   }
   function sesionVisible(activa, nombre='') {
+    $('enlace-mapa').textContent=activa?'Ver mi avance':'Explorar los nodos';
+    if (!activa) for (const codigo of habilitados.keys()) mostrarAvance(codigo, null);
     document.querySelectorAll('[data-cuenta]').forEach(b=>b.hidden=activa);
     document.querySelector('.cabecera .salida').hidden=!activa;
     for (const etiqueta of document.querySelectorAll('[data-persona]')) {
@@ -117,6 +119,29 @@
     for (const raw of lista.values()) fusionar(base, JSON.parse(raw));
     return base;
   }
+  function pintarMapa(res) {
+    for (const codigo of habilitados.keys()) {
+      const base=res.nodos[codigo], recursos=base.recursos;
+      const cola=pendientes({prefijo:'criteria-'+codigo+':pendiente:'+res.id+':'});
+      const {avance}=combinar(cola, base);
+      mostrarAvance(codigo,{
+        total:recursos.length,
+        finalizados:recursos.filter(id=>avance.r[id]?.[0]===2).length,
+        iniciado:!!avance.loc || recursos.some(id=>avance.r[id])
+      });
+    }
+  }
+  async function refrescarMapa() {
+    const sesion=cuenta;
+    if (!sesion || seleccionado || document.hidden) return;
+    const turno=++consultaMapa;
+    try {
+      const res=await llamar('abrir',{token:sesion.token,vista:'mapa'});
+      if (cuenta===sesion && turno===consultaMapa) pintarMapa(res);
+    } catch (e) {
+      if (cuenta===sesion && e.codigo==='SESION') cerrar(e.message);
+    }
+  }
   function programar(ms=700) {
     clearTimeout(temporizador);
     temporizador = setTimeout(() => sincronizar(actual), ms);
@@ -150,7 +175,8 @@
     try { await tarea; } finally { if (s.enviando === tarea) s.enviando = null; }
   }
   function conectarCurso(s, base) {
-    const campos = {'cmi.suspend_data':JSON.stringify(base.avance)};
+    const iniciado = base.avance.loc || Object.keys(base.avance.r).length;
+    const campos = {'cmi.suspend_data':JSON.stringify(base.avance), 'cmi.entry':iniciado?'resume':'ab-initio'};
     // El curso original ya implementa SCORM 2004 y restaura sus recursos desde suspend_data.
     window.API_1484_11 = {
       Initialize:() => 'true', GetValue:k => campos[k] || '',
@@ -170,15 +196,18 @@
       Commit() { if (s.memoria) programar(100); return 'true'; }, Terminate:() => 'true'
     };
   }
-  async function abrir(res) {
+  async function abrir(res, desdeFormulario=false) {
+    if (!seleccionado && !res.nodos) throw error('SERVICIO');
     cuenta = {token:res.token, vence:res.vence};
     recordar(cuenta);
     clearTimeout(caducidad);
     caducidad = setTimeout(()=>cerrar(mensajes.SESION), Math.max(0,cuenta.vence-Date.now()));
     sesionVisible(true,res.nombre);
     if (!seleccionado) {
+      pintarMapa(res);
       if ($('acceso').open) $('acceso').close();
       $('clave').value='';
+      if (desdeFormulario) irAlMapa();
       return;
     }
     if (nodo !== 'f2' && res.nodo !== nodo) {
@@ -189,7 +218,7 @@
     const s = {...cuenta, prefijo:'criteria-'+nodo+':pendiente:'+res.id+':', reintento:1500};
     let html;
     try {
-      const respuesta = await fetch(nodo+'/curso.bin');
+      const respuesta = await fetch(nodo+'/curso.bin',{cache:'no-cache'});
       if (!respuesta.ok) throw Error();
       const bytes = new Uint8Array(await respuesta.arrayBuffer());
       const llave = await crypto.subtle.importKey('raw', Uint8Array.from(res.claveCurso.match(/../g), h=>parseInt(h,16)),
@@ -254,6 +283,7 @@
   $('cuenta').addEventListener('submit', async e => {
     e.preventDefault();
     const datos = {correo:$('correo').value.trim(), clave:$('clave').value};
+    if (!seleccionado) datos.vista='mapa';
     if (registro) {
       datos.nombre = $('nombre').value.trim();
       if (!/\p{L}/u.test(datos.nombre)) {
@@ -262,8 +292,8 @@
         return;
       }
     }
-    ocupado(true); $('aviso').textContent = 'Abriendo tu curso…';
-    try { await abrir(await llamar(registro?'registro':'ingreso', datos)); }
+    ocupado(true); $('aviso').textContent = seleccionado?'Abriendo tu curso…':'Recuperando tu mapa…';
+    try { await abrir(await llamar(registro?'registro':'ingreso', datos), true); }
     catch (e) { $('aviso').textContent = e.message; }
     finally { ocupado(false); }
   });
@@ -288,9 +318,9 @@
     await sincronizar(actual,true);
     location.assign(destino);
   });
-  window.addEventListener('online', () => programar(0));
+  window.addEventListener('online', () => { if (actual) programar(0); else refrescarMapa(); });
   window.addEventListener('pagehide', () => sincronizar(actual, true));
-  document.addEventListener('visibilitychange', () => { if (document.hidden) sincronizar(actual,true); });
+  document.addEventListener('visibilitychange', () => { if (document.hidden) sincronizar(actual,true); else refrescarMapa(); });
   window.addEventListener('pageshow', e => { if (e.persisted) location.reload(); });
   async function iniciar() {
     if (!/^https:\/\/script\.google\.com\/macros\/s\/[\w-]+\/exec$/.test(endpoint)) {
@@ -312,7 +342,7 @@
     try {
       const otroNodo = seleccionado && nodo !== 'f2';
       const respuesta = otroNodo ? await llamar('abrirNodo',{token:anterior.token,nodo})
-        : await llamar('abrir',{token:anterior.token});
+        : await llamar('abrir',seleccionado?{token:anterior.token}:{token:anterior.token,vista:'mapa'});
       if (otroNodo && respuesta.nodo !== nodo) throw error('SERVICIO');
       await abrir({...anterior,...respuesta});
     }

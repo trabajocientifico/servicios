@@ -58,6 +58,11 @@ for (const grupo of grupos) {
     fichas.set(codigo,insignia);
     const item=crear('li',''); item.append(ficha); nodos.append(item);
     if (activo) {
+      const estado=crear('span','estado-nodo');
+      estado.hidden=true;
+      estado.setAttribute('aria-hidden','true');
+      estado.append(crear('span','medida'),crear('span','avance-texto'));
+      ficha.append(estado);
       ficha.addEventListener('pointerenter',()=>iluminar(codigo));
       ficha.addEventListener('pointerleave',()=>iluminar(document.activeElement?.dataset.codigo));
       ficha.addEventListener('focus',()=>iluminar(codigo));
@@ -65,6 +70,25 @@ for (const grupo of grupos) {
     }
   }
   bloque.append(nodos); lista.append(bloque);
+}
+
+function mostrarAvance(codigo, avance) {
+  const ficha=fichas.get(codigo.toUpperCase()).parentElement;
+  const estado=ficha.querySelector('.estado-nodo'), lectura=ficha.querySelector('.solo-lectura');
+  estado.hidden=!avance;
+  if (!avance) {
+    lectura.textContent='Abrir curso';
+    ficha.removeAttribute('title');
+    return;
+  }
+  const {finalizados,total,iniciado}=avance;
+  const porcentaje=Math.round(100*finalizados/total);
+  const accion=finalizados===total?'Repasar':iniciado?'Continuar':'Empezar';
+  const detalle=finalizados+' de '+total+' recursos finalizados';
+  estado.style.setProperty('--porcentaje',porcentaje+'%');
+  estado.querySelector('.avance-texto').textContent=porcentaje+' % · '+accion;
+  lectura.textContent=accion+'. '+porcentaje+' %. '+detalle+'.';
+  ficha.title=detalle;
 }
 
 const ns='http://www.w3.org/2000/svg';
@@ -77,7 +101,7 @@ const caminos=tramos.map(([desde,hasta])=>{
   let pulso;
   if (rutasAnimadas.has(desde+'-'+hasta)) {
     pulso=document.createElementNS(ns,'path');
-    pulso.setAttribute('class','pulso');
+    pulso.setAttribute('class','pulso '+(desde==='F1'?'fundamentos':'investigacion'));
     pulso.setAttribute('pathLength','100');
     dibujo.append(pulso);
   }
@@ -121,6 +145,7 @@ new ResizeObserver(dibujar).observe(lista);
 document.fonts.ready.then(dibujar);
 for (const nombre of ['Todos',...grupos.map(g=>g.nombre)]) {
   const boton=crear('button','filtro',nombre); boton.type='button';
+  if (nombre!=='Todos') boton.dataset.grupo=nombre;
   boton.setAttribute('aria-pressed',String(nombre==='Todos'));
   boton.addEventListener('click',()=>{
     for (const b of filtros.children) b.setAttribute('aria-pressed',String(b===boton));
@@ -133,16 +158,32 @@ for (const nombre of ['Todos',...grupos.map(g=>g.nombre)]) {
 }
 dibujar();
 
-const pausar=document.querySelector('#pausar');
-const reducir=matchMedia('(prefers-reduced-motion: reduce)');
-function movimiento(pausa) {
-  document.body.classList.toggle('quieto',pausa);
-  pausar.setAttribute('aria-pressed',String(pausa));
-  pausar.textContent=pausa?'▶':'Ⅱ';
-  pausar.setAttribute('aria-label',pausa?'Activar animación':'Pausar animación');
-  pausar.title=pausar.getAttribute('aria-label');
+const guia=document.querySelector('#presentacion');
+const pasos=[...guia.querySelectorAll('.paso-guia')];
+const anterior=document.querySelector('#guia-anterior'), siguiente=document.querySelector('#guia-siguiente');
+let pagina=0;
+function presentar(indice) {
+  pagina=indice;
+  pasos.forEach((paso,i)=>paso.hidden=i!==pagina);
+  const titulo=pasos[pagina].querySelector('h2');
+  guia.setAttribute('aria-labelledby',titulo.id);
+  document.querySelector('#guia-pagina').textContent=(pagina+1)+' de '+pasos.length;
+  anterior.hidden=pagina===0;
+  siguiente.textContent=pagina===pasos.length-1?'Ir al mapa':'Siguiente';
+  if (!guia.open) guia.showModal();
+  guia.scrollTop=0;
+  titulo.focus({preventScroll:true});
 }
-movimiento(reducir.matches);
-reducir.addEventListener('change',e=>movimiento(e.matches));
-pausar.addEventListener('click',()=>movimiento(!document.body.classList.contains('quieto')));
+function irAlMapa() {
+  document.querySelector('#mapa-titulo').focus({preventScroll:true});
+  document.querySelector('#nodos').scrollIntoView({block:'start'});
+}
+for (const boton of document.querySelectorAll('[data-presentar]'))
+  boton.addEventListener('click',()=>presentar(Number(boton.dataset.presentar)));
+anterior.addEventListener('click',()=>presentar(pagina-1));
+siguiente.addEventListener('click',()=>{
+  if (pagina<pasos.length-1) presentar(pagina+1);
+  else {guia.close(); irAlMapa();}
+});
+guia.querySelector('.cerrar').addEventListener('click',()=>guia.close());
 

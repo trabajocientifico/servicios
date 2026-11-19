@@ -75,7 +75,7 @@ function huella_(s) {
 function respuesta_(obj) {
   return ContentService.createTextOutput(JSON.stringify(obj)).setMimeType(ContentService.MimeType.JSON);
 }
-function doGet() { return respuesta_({servicio: 'CriterIA', version: 4}); }
+function doGet() { return respuesta_({servicio: 'CriterIA', version: 5}); }
 function doPost(e) {
   try {
     if (!e || !e.postData || e.postData.contents.length > 10000) fallo_('DATOS');
@@ -86,7 +86,7 @@ function doPost(e) {
     const libro = SpreadsheetApp.openById(props.getProperty('HOJA_F2'));
     const usuarios = libro.getSheetByName('Avance'), sesiones = libro.getSheetByName('Sesiones');
     if (p.accion === 'registro' || p.accion === 'ingreso')
-      return respuesta_(Object.assign({ok:true}, autenticar_(p, usuarios, sesiones, props)));
+      return respuesta_(Object.assign({ok:true}, autenticar_(p, usuarios, sesiones, props, libro)));
     const result = conBloqueo_(() => {
       const sesion = sesion_(sesiones, p.token);
       if (p.accion === 'salir') { sesiones.deleteRow(sesion.fila); return {}; }
@@ -108,9 +108,8 @@ function doPost(e) {
         if (p.accion === 'abrirNodo') resultado.nombre = nombreCuenta_(usuarios, fila);
         return resultado;
       }
-      const rango = usuarios.getRange(fila, 1, 1, COLUMNAS_F2.length);
-      const datos = rango.getValues()[0];
-      if (p.accion === 'abrir') return {...abrir_(datos, props), nombre:nombreCuenta_(usuarios, fila)};
+      if (p.accion === 'abrir') return abrirCuenta_(p, libro, usuarios, fila, props);
+      const datos = usuarios.getRange(fila, 1, 1, COLUMNAS_F2.length).getValues()[0];
       guardar_(datos, p.avance, p.marca);
       usuarios.getRange(fila, 4, 1, datos.length - 3).setValues([datos.slice(3)]);
       return {};
@@ -143,7 +142,7 @@ function validarNombre_(valor) {
     fallo_('NOMBRE');
   return nombre;
 }
-function autenticar_(p, usuarios, sesiones, props) {
+function autenticar_(p, usuarios, sesiones, props, libro) {
   const correo = typeof p.correo === 'string' ? p.correo.trim().toLowerCase() : '';
   const nombre = p.accion === 'registro' ? validarNombre_(p.nombre) : '';
   if (correo.length > 254 || !/^[^@\s\x00-\x1f]+@[^@\s\x00-\x1f]+\.[^@\s\x00-\x1f]+$/.test(correo) ||
@@ -189,7 +188,7 @@ function autenticar_(p, usuarios, sesiones, props) {
       if (caducas) sesiones.deleteRows(2, caducas);
     }
     sesiones.appendRow([huella_(token), id, new Date(vence)]);
-    return Object.assign({token, vence, nombre:nombreCuenta_(usuarios, fila)}, abrir_(usuarios.getRange(fila,1,1,COLUMNAS_F2.length).getValues()[0], props));
+    return {token, vence, ...abrirCuenta_(p, libro, usuarios, fila, props)};
   });
 }
 function sesion_(hoja, token) {
@@ -200,19 +199,38 @@ function sesion_(hoja, token) {
   if (Number(vence) <= Date.now()) fallo_('SESION');
   return {fila, id};
 }
-function abrir_(datos, props, recursos = RECURSOS_F2) {
+function avanceGuardado_(datos, recursos) {
   const r = {};
   recursos.forEach((id, i) => {
     const inicio = datos[12+i*2], fin = datos[13+i*2];
     if (inicio) r[id] = [fin ? 2 : 1, Math.floor(Number(inicio)/1000), fin ? Math.floor(Number(fin)/1000) : 0];
   });
-  return {id:datos[8], claveCurso:props.getProperty('CLAVE_CURSO'), marca:Number(datos[10]),
+  return {marca:Number(datos[10]) || 0,
     avance:{v:1, r, loc:datos[11] ? JSON.parse(datos[11]) : null}};
+}
+function abrir_(datos, props, recursos = RECURSOS_F2) {
+  return {id:datos[8], claveCurso:props.getProperty('CLAVE_CURSO'), ...avanceGuardado_(datos, recursos)};
+}
+function abrirCuenta_(p, libro, usuarios, fila, props) {
+  const datos = usuarios.getRange(fila, 1, 1, COLUMNAS_F2.length).getValues()[0];
+  const nombre = nombreCuenta_(usuarios, fila);
+  if (p.vista !== 'mapa') return {nombre, ...abrir_(datos, props)};
+  const id = datos[8];
+  const nodos = {f2:{recursos:RECURSOS_F2, ...avanceGuardado_(datos, RECURSOS_F2)}};
+  for (const [codigo, config] of Object.entries(NODOS_INVESTIGACION)) {
+    const recursos = Object.keys(config.titulos);
+    const hoja = libro.getSheetByName('Avance ' + codigo.toUpperCase());
+    const filaNodo = hoja && hoja.getLastRow() > 1 && buscar_(hoja, 9, id);
+    const registro = filaNodo ? hoja.getRange(filaNodo, 1, 1, 12 + recursos.length*2).getValues()[0] : [];
+    nodos[codigo] = {recursos, ...avanceGuardado_(registro, recursos)};
+  }
+  return {id, nombre, nodos};
 }
 function ubicacion_(loc, recursos, temas) {
   if (!loc) return null;
   if (recursos.includes(loc.r)) return {r:loc.r};
-  if (['topics','subtopics','resources'].includes(loc.l) && Number.isInteger(loc.t) &&
+  if (loc.l === 'reflection' && recursos === RECURSOS_F2) return {l:'reflection'};
+  if (['welcome','value','topics','subtopics','resources'].includes(loc.l) && Number.isInteger(loc.t) &&
       Number.isInteger(loc.s) && loc.t >= 0 && loc.t < temas.length && loc.s >= 0 && loc.s < temas[loc.t])
     return {l:loc.l, t:loc.t, s:loc.s};
   fallo_('DATOS');
@@ -241,8 +259,8 @@ function guardar_(datos, estado, marca, recursos = RECURSOS_F2, titulos = TITULO
   if (loc && timestamp >= Number(datos[10])) {
     datos[10] = timestamp;
     datos[11] = JSON.stringify(loc);
-    datos[7] = loc.r ? titulos[recursos.indexOf(loc.r)] : loc.l === 'topics' ? 'Mapa de temas'
-      : loc.l === 'subtopics' ? 'Tema ' + (loc.t+1) : 'Subtema ' + (loc.t+1) + '.' + (loc.s+1);
+    const secciones = {welcome:'Bienvenida', value:'Valor del nodo', topics:'Mapa de temas', reflection:'Confiar con criterio'};
+    datos[7] = loc.r ? titulos[recursos.indexOf(loc.r)] : secciones[loc.l] || (loc.l === 'subtopics' ? 'Tema ' + (loc.t+1) : 'Subtema ' + (loc.t+1) + '.' + (loc.s+1));
   }
   datos[3] = new Date(ahora);
   datos[4] = hechos; datos[5] = curso; datos[6] = hechos/recursos.length;

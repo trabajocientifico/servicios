@@ -6,8 +6,8 @@
 <meta name="referrer" content="no-referrer">
 <meta name="f2-backend" content="https://script.google.com/macros/s/AKfycbzcg11zDof9M2D1vj_532XrgRwEsk2kRRwxnc_OFiKcdkZdtx2xFS5l2m-GfM5wQo-VFQ/exec">
 <title>CriterIA · Programa de formación en inteligencia artificial</title>
-<link rel="stylesheet" href="programa.css?v=2">
-<script defer src="mapa.js?v=2"></script><script defer src="acceso.js?v=2"></script>
+<link rel="stylesheet" href="programa.css?v=3">
+<script defer src="mapa.js?v=3"></script><script defer src="acceso.js?v=3"></script>
 </head>
 <body>
 <div id="entrada">
@@ -19,16 +19,44 @@
 <div class="intro">
 <h1 id="titulo">Formación en <em>inteligencia artificial</em></h1>
 <p class="presentacion">Explora cómo funciona la IA y cómo usarla con criterio en la enseñanza y la investigación. Elige tu propio recorrido por el programa.</p>
-<a class="primario explorar" href="#nodos">Explorar los nodos <span aria-hidden="true">↓</span></a></div>
+<div class="acciones-portada">
+  <a class="primario explorar" href="#nodos"><span id="enlace-mapa">Explorar los nodos</span><span aria-hidden="true">↓</span></a>
+  <div class="entradas-guia" role="group" aria-label="Presentación del programa">
+    <button type="button" class="enlace-guia" data-presentar="0" aria-haspopup="dialog">Bienvenida</button>
+    <button type="button" class="enlace-guia" data-presentar="1" aria-haspopup="dialog">Cómo se aprende</button>
+  </div>
+</div></div>
 <div class="sello"><span class="orbita" aria-hidden="true"></span><span class="orbita exterior" aria-hidden="true"></span><img src="assets/universidad-nacional.png" alt="Universidad Nacional de Colombia" width="600" height="600"></div>
 </section>
-<section id="nodos" aria-labelledby="mapa-titulo"><div class="mapa-enc"><div><h2 id="mapa-titulo">Mapa de nodos</h2><p>Selecciona F2, I2 o I3 para abrir el curso.</p></div><button id="pausar" type="button" aria-pressed="false" aria-label="Pausar animación" title="Pausar animación">Ⅱ</button></div>
+<section id="nodos" aria-labelledby="mapa-titulo"><div class="mapa-enc"><h2 id="mapa-titulo" tabindex="-1">Mapa de nodos</h2><span class="persona" data-persona hidden></span></div>
 <div id="filtros" aria-label="Filtrar nodos por grupo" role="group"></div>
 <div class="clave-mapa"><span id="conteo" role="status">16 nodos</span><span class="leyenda disponible">Disponible</span><span class="leyenda pendiente">En construcción</span></div>
 <div id="lista-nodos"><svg id="conexiones" aria-hidden="true" focusable="false"></svg></div></section>
 </main><footer>CriterIA · Programa de formación en inteligencia artificial</footer>
 <noscript>Activa JavaScript para explorar los nodos e ingresar al programa.</noscript>
 </div>
+<dialog id="presentacion" aria-labelledby="guia-bienvenida">
+  <button class="cerrar" type="button" aria-label="Cerrar presentación">×</button>
+  <section class="paso-guia">
+    <div class="arte-guia"><img src="assets/f2.webp" alt="" width="650" height="577"></div>
+    <div class="guia-contenido"><h2 id="guia-bienvenida" tabindex="-1">Bienvenida a CriterIA</h2>
+    <p>¿Qué decisión de tu práctica docente te gustaría explorar con IA? Puedes partir de una clase que estás preparando, un dato que necesitas interpretar o un texto de investigación que vas a publicar.</p>
+    <p>CriterIA es el programa de formación en inteligencia artificial de la Universidad Nacional de Colombia. Te invita a contrastar lo que propone la IA y a decidir cuándo tiene sentido usarla en tu contexto.</p></div>
+  </section>
+  <section class="paso-guia" hidden>
+    <div class="arte-guia"><img src="assets/i2.webp" alt="" width="628" height="539"></div>
+    <div class="guia-contenido"><h2 id="guia-aprender" tabindex="-1">Cómo se aprende</h2>
+    <p>Cada nodo propone cinco momentos para conectar tu experiencia con algo que puedas llevar a tu práctica.</p>
+    <ol class="momentos"><li>Conoce el propósito del nodo.</li><li>Reconoce lo que ya sabes.</li><li>Explora ideas y recursos nuevos.</li><li>Contrástalos con tu experiencia.</li><li>Muestra lo que aprendiste.</li></ol></div>
+  </section>
+  <section class="paso-guia" hidden>
+    <div class="arte-guia"><img src="assets/i3.webp" alt="" width="626" height="529"></div>
+    <div class="guia-contenido"><h2 id="guia-recorrido" tabindex="-1">Tu recorrido</h2>
+    <p>Puedes empezar por el nodo que responda a tu pregunta. F2 explora cómo aprenden los sistemas. I2 conecta las preguntas de investigación con los métodos y los datos. I3 trabaja la escritura, la citación y la autoría.</p>
+    <p>Al ingresar, el mapa muestra qué porcentaje de los recursos has finalizado. Abre un nodo que ya empezaste para volver a tu último punto guardado.</p></div>
+  </section>
+  <nav class="guia-pie" aria-label="Recorrer la presentación"><span id="guia-pagina"></span><button id="guia-anterior" class="texto" type="button">Anterior</button><button id="guia-siguiente" class="primario" type="button">Siguiente</button></nav>
+</dialog>
 <dialog id="acceso" aria-labelledby="modo"><button class="cerrar" type="button" aria-label="Cerrar formulario">×</button>
 <form id="cuenta"><p class="institucion">CriterIA</p><h2 id="modo">Ingresar al programa</h2><p id="contexto"></p>
 <div id="campo-nombre" hidden><label for="nombre">Nombre completo</label><input id="nombre" name="name" autocomplete="name" maxlength="150" disabled></div>

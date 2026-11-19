@@ -8,7 +8,7 @@ En la cuenta propietaria, abre **CriterIA F2 · Seguimiento** y selecciona **Ava
 
 Mantén la hoja y el proyecto de Apps Script con acceso restringido. El registro se abre desde la página del curso. La hoja conserva verificadores bcrypt y huellas de sesión. Las sesiones duran 12 horas y el cierre de sesión conectado las revoca. El avance anónimo que existiera antes del registro sigue perteneciendo al navegador en que se generó.
 
-Las pestañas **Avance I2** y **Avance I3** se crean al primer ingreso a cada nodo. Relacionan el correo y el nombre de la cuenta con los recursos del nodo. Una misma persona puede tener porcentajes y ubicaciones distintos en cada pestaña.
+Las pestañas **Avance I2** y **Avance I3** se crean al primer ingreso a cada nodo. El mapa consulta el avance de la cuenta en las pestañas existentes. El porcentaje corresponde a los recursos finalizados de cada nodo. Una persona que ha recorrido una sección puede ver **0 % · Continuar**. Al abrir un nodo empezado, el portal entrega su ubicación guardada y el valor SCORM `cmi.entry=resume`. Conserva esta reanudación en futuras versiones del HTML privado.
 
 ## Actualizar el material
 
