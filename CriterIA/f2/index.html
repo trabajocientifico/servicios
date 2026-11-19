@@ -30,6 +30,10 @@ small{display:block;margin-top:.4rem}#aula{height:100vh;height:100dvh;display:fl
 <h1 id="titulo">Sistemas que aprenden</h1>
 <form id="cuenta">
 <h2 id="modo">Iniciar sesión</h2>
+<div id="campo-nombre" hidden>
+<label for="nombre">Nombre completo</label>
+<input type="text" id="nombre" name="name" autocomplete="name" maxlength="150" disabled>
+</div>
 <label for="correo">Correo electrónico</label>
 <input type="email" id="correo" name="username" autocomplete="username" autocapitalize="none" maxlength="254" required>
 <label for="clave">Contraseña</label>
@@ -55,6 +59,7 @@ small{display:block;margin-top:.4rem}#aula{height:100vh;height:100dvh;display:fl
   const mensajes = {
     CREDENCIALES:'Revisa el correo y la contraseña.',
     REGISTRO:'No se pudo crear la cuenta con ese correo. Si ya te registraste, inicia sesión.',
+    NOMBRE:'Escribe tu nombre completo (hasta 150 caracteres).',
     INTENTOS:'Hubo varios intentos seguidos. Vuelve a intentarlo en 15 minutos.',
     CLAVE:'Usa una contraseña de al menos 10 caracteres.',
     SESION:'Tu sesión terminó. Vuelve a ingresar para continuar.',
@@ -78,10 +83,16 @@ small{display:block;margin-top:.4rem}#aula{height:100vh;height:100dvh;display:fl
   }
   function ocupado(valor) {
     for (const id of ['enviar','alternar','correo','clave']) $(id).disabled = valor;
+    $('nombre').disabled = valor || !registro;
     $('cuenta').setAttribute('aria-busy', String(valor));
   }
   function modo(crear) {
     registro = crear;
+    $('campo-nombre').hidden = !crear;
+    $('nombre').disabled = !crear;
+    $('nombre').required = crear;
+    $('nombre').setCustomValidity('');
+    if (!crear) $('nombre').value = '';
     $('modo').textContent = crear ? 'Crear una cuenta' : 'Iniciar sesión';
     $('enviar').textContent = crear ? 'Registrarme e ingresar' : 'Ingresar al curso';
     $('alternar').textContent = crear ? 'Ya tengo una cuenta' : 'Crear una cuenta';
@@ -214,10 +225,19 @@ small{display:block;margin-top:.4rem}#aula{height:100vh;height:100dvh;display:fl
     caducidad = setTimeout(()=>cerrar(mensajes.SESION), s.vence-Date.now());
     programar(100);
   }
-  $('alternar').addEventListener('click', () => { modo(!registro); $('correo').focus(); });
+  $('alternar').addEventListener('click', () => { modo(!registro); $(registro ? 'nombre' : 'correo').focus(); });
+  $('nombre').addEventListener('input', () => $('nombre').setCustomValidity(''));
   $('cuenta').addEventListener('submit', async e => {
     e.preventDefault();
     const datos = {correo:$('correo').value.trim(), clave:$('clave').value};
+    if (registro) {
+      datos.nombre = $('nombre').value.trim();
+      if (!/\p{L}/u.test(datos.nombre)) {
+        $('nombre').setCustomValidity(mensajes.NOMBRE);
+        $('nombre').reportValidity();
+        return;
+      }
+    }
     ocupado(true); $('aviso').textContent = 'Abriendo tu curso…';
     try { await abrir(await llamar(registro?'registro':'ingreso', datos)); }
     catch (e) { $('aviso').textContent = e.message; }
