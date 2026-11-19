@@ -39,6 +39,17 @@ function configurarF2() {
       avance.getRange('B2:D').setNumberFormat('yyyy-mm-dd hh:mm');
       avance.getRange(2, 13, avance.getMaxRows()-1, RECURSOS_F2.length*2).setNumberFormat('yyyy-mm-dd hh:mm');
     }
+    // Se agrega al final para que los identificadores y las fechas conserven sus columnas.
+    const colNombre = COLUMNAS_F2.length + 1;
+    if (avance.getMaxColumns() < colNombre)
+      avance.insertColumnsAfter(avance.getMaxColumns(), colNombre - avance.getMaxColumns());
+    const cabeceraNombre = avance.getRange(1, colNombre);
+    if (cabeceraNombre.isBlank()) {
+      cabeceraNombre.setValue('Nombre completo').setBackground('#02475b').setFontColor('#ffffff').setFontWeight('bold');
+      avance.setColumnWidth(colNombre, 260);
+    } else if (cabeceraNombre.getValue() !== 'Nombre completo') {
+      throw Error('La columna prevista para el nombre ya contiene otro encabezado.');
+    }
     const sesiones = libro.getSheetByName('Sesiones') || libro.insertSheet('Sesiones');
     if (!sesiones.getLastRow()) cabecera_(sesiones, ['Huella', 'Identificador', 'Vence']);
     sesiones.hideSheet();
@@ -64,7 +75,7 @@ function huella_(s) {
 function respuesta_(obj) {
   return ContentService.createTextOutput(JSON.stringify(obj)).setMimeType(ContentService.MimeType.JSON);
 }
-function doGet() { return respuesta_({servicio: 'CriterIA F2', version: 1}); }
+function doGet() { return respuesta_({servicio: 'CriterIA F2', version: 2}); }
 function doPost(e) {
   try {
     if (!e || !e.postData || e.postData.contents.length > 10000) fallo_('DATOS');
@@ -109,6 +120,9 @@ function limitar_(id) {
 }
 function autenticar_(p, usuarios, sesiones, props) {
   const correo = typeof p.correo === 'string' ? p.correo.trim().toLowerCase() : '';
+  const nombre = typeof p.nombre === 'string' ? p.nombre.trim().replace(/\s+/g, ' ') : '';
+  if (p.accion === 'registro' && (nombre.length > 150 || !/\p{L}/u.test(nombre) || /[\x00-\x1f\x7f]/.test(nombre)))
+    fallo_('NOMBRE');
   if (correo.length > 254 || !/^[^@\s\x00-\x1f]+@[^@\s\x00-\x1f]+\.[^@\s\x00-\x1f]+$/.test(correo) ||
       typeof p.clave !== 'string' || p.clave.length > 256 || !p.clave.length) fallo_('DATOS');
   if (p.accion === 'registro' && p.clave.length < 10) fallo_('CLAVE');
@@ -134,7 +148,8 @@ function autenticar_(p, usuarios, sesiones, props) {
     if (p.accion === 'registro') {
       if (fila) fallo_('REGISTRO');
       // La comilla fuerza texto literal en Sheets, también en correos que empiezan por "=".
-      usuarios.appendRow(["'" + correo, ahora, ahora, ahora, 0, 0, 0, '', id, hash, 0, '']);
+      const fechas = Array(RECURSOS_F2.length * 2).fill('');
+      usuarios.appendRow(["'" + correo, ahora, ahora, ahora, 0, 0, 0, '', id, hash, 0, '', ...fechas, "'" + nombre]);
       fila = usuarios.getLastRow();
     } else {
       if (!fila) fallo_('CREDENCIALES');

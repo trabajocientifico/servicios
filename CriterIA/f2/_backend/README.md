@@ -4,19 +4,26 @@ La página pública presenta el registro y la entrada. Apps Script valida la cue
 
 ## Consultar el seguimiento
 
-En la cuenta propietaria, abre **CriterIA F2 · Seguimiento** y selecciona **Avance**. Cada fila corresponde a un correo. Las columnas siguientes muestran el registro, el último ingreso, la última actividad, los recursos finalizados y en curso, el porcentaje y el último punto visitado. Hacia la derecha están las fechas de inicio y fin de los 20 recursos disponibles.
+En la cuenta propietaria, abre **CriterIA F2 · Seguimiento** y selecciona **Avance**. Cada fila corresponde a un correo. Las columnas siguientes muestran el registro, el último ingreso, la última actividad, los recursos finalizados y en curso, el porcentaje y el último punto visitado. Hacia la derecha están las fechas de inicio y fin de los 20 recursos disponibles. La columna BA, **Nombre completo**, recoge el nombre declarado en los nuevos registros.
 
 Mantén la hoja y el proyecto de Apps Script con acceso restringido. El registro se abre desde la página del curso. La hoja conserva verificadores bcrypt y huellas de sesión. Las sesiones duran 12 horas y el cierre de sesión conectado las revoca. El avance anónimo que existiera antes del registro sigue perteneciendo al navegador en que se generó.
 
 ## Actualizar el material
 
-Conserva en una carpeta privada una copia editable del HTML y `clave-f2.txt`. El empaquetador necesita Node.js. Ejecútalo desde esta carpeta con dos rutas externas al repositorio.
+En el equipo donde se instaló F2, edita el archivo privado `%LOCALAPPDATA%\CriterIA\F2\Sistemas-que-aprenden.html`. En esa carpeta se guarda también `clave-f2.txt`. Conserva una copia privada de ambos archivos. El `index.html` público contiene el formulario de acceso.
+
+Desde la raíz del repositorio, abre PowerShell y ejecuta estos comandos con Node.js y Git instalados.
 
 ```powershell
-node empaquetar.mjs "C:/ruta/privada/Sistemas-que-aprenden.html" "C:/ruta/privada"
+$privadoF2 = Join-Path $env:LOCALAPPDATA 'CriterIA\F2'
+node .\CriterIA\f2\_backend\empaquetar.mjs (Join-Path $privadoF2 'Sistemas-que-aprenden.html') $privadoF2
+if ($LASTEXITCODE -ne 0) { throw 'Corrige el error del empaquetado antes de publicar.' }
+git add -- CriterIA/f2/curso.bin
+git commit -m "Actualiza el material de F2" -- CriterIA/f2/curso.bin
+git push origin main
 ```
 
-Publica el nuevo `curso.bin` con Git. Reutiliza la misma clave para las actualizaciones. Si cambian los recursos evaluables, actualiza también el catálogo y la correspondencia de columnas del backend antes de migrar los datos de la hoja.
+El empaquetador comprueba que la clave abre el paquete actual. GitHub Pages publica el nuevo material en el mismo enlace. Las cuentas y los avances siguen en la hoja de Google. Para cambios de texto, imágenes o diseño, conserva el seguimiento SCORM y los identificadores de las actividades (`r01` a `r20`). Si agregas, retiras o reasignas actividades, adapta también el catálogo, las columnas y el cálculo del porcentaje antes de publicar. Conserva la correspondencia de cada identificador histórico con su actividad.
 
 ## Instalar el backend
 
