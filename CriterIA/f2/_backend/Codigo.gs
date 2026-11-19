@@ -75,13 +75,13 @@ function huella_(s) {
 function respuesta_(obj) {
   return ContentService.createTextOutput(JSON.stringify(obj)).setMimeType(ContentService.MimeType.JSON);
 }
-function doGet() { return respuesta_({servicio: 'CriterIA', version: 3}); }
+function doGet() { return respuesta_({servicio: 'CriterIA', version: 4}); }
 function doPost(e) {
   try {
     if (!e || !e.postData || e.postData.contents.length > 10000) fallo_('DATOS');
     let p;
     try { p = JSON.parse(e.postData.contents); } catch (_) { fallo_('DATOS'); }
-    if (!p || !['registro','ingreso','abrir','guardar','abrirNodo','guardarNodo','salir'].includes(p.accion)) fallo_('DATOS');
+    if (!p || !['registro','ingreso','abrir','guardar','abrirNodo','guardarNodo','completarNombre','salir'].includes(p.accion)) fallo_('DATOS');
     const props = PropertiesService.getScriptProperties();
     const libro = SpreadsheetApp.openById(props.getProperty('HOJA_F2'));
     const usuarios = libro.getSheetByName('Avance'), sesiones = libro.getSheetByName('Sesiones');
@@ -92,11 +92,25 @@ function doPost(e) {
       if (p.accion === 'salir') { sesiones.deleteRow(sesion.fila); return {}; }
       const fila = buscar_(usuarios, 9, sesion.id);
       if (!fila) fallo_('SESION');
-      if (p.accion === 'abrirNodo' || p.accion === 'guardarNodo')
-        return operarNodo_(p, libro, usuarios, fila, sesion.id, props);
+      if (p.accion === 'completarNombre') {
+        const celda = usuarios.getRange(fila, COLUMNAS_F2.length + 1);
+        const nombre = celda.getDisplayValue() || validarNombre_(p.nombre);
+        if (celda.isBlank()) celda.setValue("'" + nombre);
+        for (const codigo of Object.keys(NODOS_INVESTIGACION)) {
+          const hoja = libro.getSheetByName('Avance ' + codigo.toUpperCase());
+          const filaNodo = hoja && buscar_(hoja, 9, sesion.id);
+          if (filaNodo) hoja.getRange(filaNodo, 2).setValue("'" + nombre);
+        }
+        return {nombre};
+      }
+      if (p.accion === 'abrirNodo' || p.accion === 'guardarNodo') {
+        const resultado = operarNodo_(p, libro, usuarios, fila, sesion.id, props);
+        if (p.accion === 'abrirNodo') resultado.nombre = nombreCuenta_(usuarios, fila);
+        return resultado;
+      }
       const rango = usuarios.getRange(fila, 1, 1, COLUMNAS_F2.length);
       const datos = rango.getValues()[0];
-      if (p.accion === 'abrir') return abrir_(datos, props);
+      if (p.accion === 'abrir') return {...abrir_(datos, props), nombre:nombreCuenta_(usuarios, fila)};
       guardar_(datos, p.avance, p.marca);
       usuarios.getRange(fila, 4, 1, datos.length - 3).setValues([datos.slice(3)]);
       return {};
@@ -120,11 +134,18 @@ function limitar_(id) {
   if (n >= 12) fallo_('INTENTOS');
   cache.put(key, String(n + 1), 900);
 }
+function nombreCuenta_(usuarios, fila) {
+  return usuarios.getRange(fila, COLUMNAS_F2.length + 1).getDisplayValue();
+}
+function validarNombre_(valor) {
+  const nombre = typeof valor === 'string' ? valor.trim().replace(/\s+/g, ' ') : '';
+  if (nombre.length > 150 || !/\p{L}/u.test(nombre) || /[\x00-\x1f\x7f]/.test(nombre))
+    fallo_('NOMBRE');
+  return nombre;
+}
 function autenticar_(p, usuarios, sesiones, props) {
   const correo = typeof p.correo === 'string' ? p.correo.trim().toLowerCase() : '';
-  const nombre = typeof p.nombre === 'string' ? p.nombre.trim().replace(/\s+/g, ' ') : '';
-  if (p.accion === 'registro' && (nombre.length > 150 || !/\p{L}/u.test(nombre) || /[\x00-\x1f\x7f]/.test(nombre)))
-    fallo_('NOMBRE');
+  const nombre = p.accion === 'registro' ? validarNombre_(p.nombre) : '';
   if (correo.length > 254 || !/^[^@\s\x00-\x1f]+@[^@\s\x00-\x1f]+\.[^@\s\x00-\x1f]+$/.test(correo) ||
       typeof p.clave !== 'string' || p.clave.length > 256 || !p.clave.length) fallo_('DATOS');
   if (p.accion === 'registro' && p.clave.length < 10) fallo_('CLAVE');
@@ -168,7 +189,7 @@ function autenticar_(p, usuarios, sesiones, props) {
       if (caducas) sesiones.deleteRows(2, caducas);
     }
     sesiones.appendRow([huella_(token), id, new Date(vence)]);
-    return Object.assign({token, vence}, abrir_(usuarios.getRange(fila,1,1,COLUMNAS_F2.length).getValues()[0], props));
+    return Object.assign({token, vence, nombre:nombreCuenta_(usuarios, fila)}, abrir_(usuarios.getRange(fila,1,1,COLUMNAS_F2.length).getValues()[0], props));
   });
 }
 function sesion_(hoja, token) {

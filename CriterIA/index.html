@@ -6,29 +6,26 @@
 <meta name="referrer" content="no-referrer">
 <meta name="f2-backend" content="https://script.google.com/macros/s/AKfycbzcg11zDof9M2D1vj_532XrgRwEsk2kRRwxnc_OFiKcdkZdtx2xFS5l2m-GfM5wQo-VFQ/exec">
 <title>CriterIA · Programa de formación en inteligencia artificial</title>
-<link rel="stylesheet" href="programa.css">
-<script defer src="mapa.js"></script><script defer src="acceso.js"></script>
+<link rel="stylesheet" href="programa.css?v=2">
+<script defer src="mapa.js?v=2"></script><script defer src="acceso.js?v=2"></script>
 </head>
 <body>
 <div id="entrada">
 <a class="saltar" href="#nodos">Saltar al mapa de nodos</a>
 <header class="cabecera"><a href="./" aria-label="CriterIA, inicio"><img class="marca" src="assets/criteria.png" alt="CriterIA · Programa de Formación" width="152" height="45"></a>
-<nav aria-label="Cuenta"><button class="texto" data-cuenta="ingreso">Ingresar</button><button class="primario" data-cuenta="registro">Crear cuenta</button><button class="texto salida" hidden>Cerrar sesión</button></nav></header>
+<nav aria-label="Cuenta"><button class="texto" data-cuenta="ingreso">Ingresar</button><button class="primario" data-cuenta="registro">Crear cuenta</button><span class="persona" data-persona hidden></span><button class="texto" data-completar hidden>Añadir mi nombre</button><button class="texto salida" hidden>Cerrar sesión</button></nav></header>
 <main>
 <section class="portada" aria-labelledby="titulo">
-<div class="intro"><p class="institucion"><span aria-hidden="true"></span> Universidad Nacional de Colombia</p>
+<div class="intro">
 <h1 id="titulo">Formación en <em>inteligencia artificial</em></h1>
 <p class="presentacion">Explora cómo funciona la IA y cómo usarla con criterio en la enseñanza y la investigación. Elige tu propio recorrido por el programa.</p>
 <a class="primario explorar" href="#nodos">Explorar los nodos <span aria-hidden="true">↓</span></a></div>
-<div id="muestra" data-nodo="f2" aria-label="Explorar los tres nodos disponibles">
-<div class="selector"><div class="switch" role="group" aria-label="Vista previa del nodo">
-<button type="button" data-id="f2" aria-pressed="true">F2</button><button type="button" data-id="i2" aria-pressed="false">I2</button><button type="button" data-id="i3" aria-pressed="false">I3</button></div>
-<button id="pausar" type="button" aria-label="Pausar animación">Ⅱ</button></div>
-<div class="trayecto" aria-hidden="true"><i></i><i></i><i></i></div><img id="arte" src="assets/f2.webp" alt="" width="650" height="577">
-<div class="pie-muestra" aria-live="polite"><span id="categoria">Fundamentos</span><a id="destacado" href="?nodo=f2" aria-label="Abrir F2 · Sistemas que aprenden">Sistemas que aprenden</a></div></div>
+<div class="sello"><span class="orbita" aria-hidden="true"></span><span class="orbita exterior" aria-hidden="true"></span><img src="assets/universidad-nacional.png" alt="Universidad Nacional de Colombia" width="600" height="600"></div>
 </section>
-<section id="nodos" aria-labelledby="mapa-titulo"><div class="mapa-enc"><div><h2 id="mapa-titulo">Mapa de nodos</h2><p>Hay 3 nodos disponibles. Accede a cualquiera con tu cuenta de CriterIA.</p></div><span id="conteo" role="status">16 nodos</span></div>
-<div id="filtros" aria-label="Filtrar nodos por grupo" role="group"></div><div id="lista-nodos"></div></section>
+<section id="nodos" aria-labelledby="mapa-titulo"><div class="mapa-enc"><div><h2 id="mapa-titulo">Mapa de nodos</h2><p>Selecciona F2, I2 o I3 para abrir el curso.</p></div><button id="pausar" type="button" aria-pressed="false" aria-label="Pausar animación" title="Pausar animación">Ⅱ</button></div>
+<div id="filtros" aria-label="Filtrar nodos por grupo" role="group"></div>
+<div class="clave-mapa"><span id="conteo" role="status">16 nodos</span><span class="leyenda disponible">Disponible</span><span class="leyenda pendiente">En construcción</span></div>
+<div id="lista-nodos"><svg id="conexiones" aria-hidden="true" focusable="false"></svg></div></section>
 </main><footer>CriterIA · Programa de formación en inteligencia artificial</footer>
 <noscript>Activa JavaScript para explorar los nodos e ingresar al programa.</noscript>
 </div>
@@ -39,5 +36,8 @@
 <label for="clave">Contraseña</label><input type="password" id="clave" name="password" autocomplete="current-password" maxlength="256" required>
 <small id="regla" hidden>Usa al menos 10 caracteres.</small><button class="primario" id="enviar">Ingresar</button></form>
 <button class="texto" id="alternar" type="button">Crear una cuenta</button><p id="aviso" role="status"></p></dialog>
-<section id="aula" hidden aria-label="Nodo de CriterIA"><div class="barra"><a id="volver" href="./#nodos">← Mapa de nodos</a><p id="guardado" role="status"></p><button class="texto salida" id="salir">Cerrar sesión</button></div></section>
+<dialog id="perfil" aria-labelledby="perfil-titulo"><button class="cerrar" type="button" aria-label="Cerrar">×</button>
+<form id="form-perfil"><h2 id="perfil-titulo">Añadir mi nombre</h2><label for="nombre-perfil">Nombre completo</label><input id="nombre-perfil" autocomplete="name" maxlength="150" required>
+<button class="primario" type="submit">Guardar nombre</button><p id="estado-perfil" role="status"></p></form></dialog>
+<section id="aula" hidden aria-label="Nodo de CriterIA"><div class="barra"><a id="volver" href="./#nodos">← Mapa de nodos</a><span class="persona" data-persona hidden></span><button class="texto" data-completar hidden>Añadir mi nombre</button><p id="guardado" role="status"></p><button class="texto salida" id="salir">Cerrar sesión</button></div></section>
 </body></html>

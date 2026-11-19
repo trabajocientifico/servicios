@@ -54,15 +54,22 @@
     $('aviso').textContent = '';
   }
   function abrirFormulario(crear, mensaje='') {
+    delete $('acceso').dataset.cargando;
     modo(crear);
     $('contexto').textContent = seleccionado ? 'Para abrir '+seleccionado.toUpperCase()+' · '+habilitados.get(seleccionado) : 'Una cuenta para los nodos del programa.';
     if (!$('acceso').open) $('acceso').showModal();
     $('aviso').textContent = mensaje;
     $(crear ? 'nombre' : 'correo').focus();
   }
-  function sesionVisible(activa) {
+  function sesionVisible(activa, nombre='') {
     document.querySelectorAll('[data-cuenta]').forEach(b=>b.hidden=activa);
     document.querySelector('.cabecera .salida').hidden=!activa;
+    for (const etiqueta of document.querySelectorAll('[data-persona]')) {
+      etiqueta.textContent = activa ? nombre : '';
+      etiqueta.title = etiqueta.textContent;
+      etiqueta.hidden = !activa || !nombre;
+    }
+    for (const boton of document.querySelectorAll('[data-completar]')) boton.hidden = !activa || !!nombre;
   }
   function recordar(s) {
     try {
@@ -72,6 +79,7 @@
   }
   function cerrar(mensaje='') {
     actual = null; cuenta = null; sesionVisible(false);
+    if ($('perfil').open) $('perfil').close();
     clearTimeout(temporizador); clearTimeout(caducidad);
     delete window.API_1484_11;
     $('material')?.remove();
@@ -167,12 +175,10 @@
     recordar(cuenta);
     clearTimeout(caducidad);
     caducidad = setTimeout(()=>cerrar(mensajes.SESION), Math.max(0,cuenta.vence-Date.now()));
-    sesionVisible(true);
+    sesionVisible(true,res.nombre);
     if (!seleccionado) {
-      const desdeFormulario=$('acceso').open;
       if ($('acceso').open) $('acceso').close();
       $('clave').value='';
-      if (desdeFormulario) { location.hash='nodos'; document.getElementById('nodos').scrollIntoView(); }
       return;
     }
     if (nodo !== 'f2' && res.nodo !== nodo) {
@@ -207,6 +213,29 @@
   }
   for (const boton of document.querySelectorAll('[data-cuenta]'))
     boton.addEventListener('click',()=>abrirFormulario(boton.dataset.cuenta==='registro'));
+  for (const boton of document.querySelectorAll('[data-completar]')) boton.addEventListener('click',()=>{
+    $('estado-perfil').textContent = '';
+    $('nombre-perfil').value = '';
+    $('perfil').showModal();
+    $('nombre-perfil').focus();
+  });
+  $('perfil').querySelector('.cerrar').addEventListener('click',()=>$('perfil').close());
+  $('form-perfil').addEventListener('submit', async e=>{
+    e.preventDefault();
+    const sesion = cuenta, guardar = e.submitter;
+    if (!sesion || guardar.disabled) return;
+    guardar.disabled = true;
+    $('estado-perfil').textContent='Guardando…';
+    try {
+      const res = await llamar('completarNombre',{token:sesion.token, nombre:$('nombre-perfil').value});
+      if (sesion !== cuenta) return;
+      sesionVisible(true,res.nombre);
+      $('perfil').close();
+    } catch (err) {
+      if (err.codigo === 'SESION') cerrar(err.message);
+      else $('estado-perfil').textContent=err.message;
+    } finally { guardar.disabled=false; }
+  });
   const cancelarFormulario = () => {
     if ($('cuenta').getAttribute('aria-busy') === 'true') return;
     if (seleccionado) location.replace('./#nodos');
@@ -273,8 +302,12 @@
       if (seleccionado) abrirFormulario(false);
       return;
     }
-    if (seleccionado) abrirFormulario(false,'Abriendo el nodo…');
     if (!(anterior.vence > Date.now())) { cerrar(mensajes.SESION); return; }
+    if (seleccionado) {
+      $('acceso').dataset.cargando='true';
+      $('modo').textContent='Abriendo '+nodo.toUpperCase();
+      $('acceso').showModal();
+    }
     ocupado(true); $('aviso').textContent = 'Recuperando tu avance…';
     try {
       const otroNodo = seleccionado && nodo !== 'f2';
