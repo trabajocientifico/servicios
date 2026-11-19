@@ -75,13 +75,13 @@ function huella_(s) {
 function respuesta_(obj) {
   return ContentService.createTextOutput(JSON.stringify(obj)).setMimeType(ContentService.MimeType.JSON);
 }
-function doGet() { return respuesta_({servicio: 'CriterIA F2', version: 2}); }
+function doGet() { return respuesta_({servicio: 'CriterIA', version: 3}); }
 function doPost(e) {
   try {
     if (!e || !e.postData || e.postData.contents.length > 10000) fallo_('DATOS');
     let p;
     try { p = JSON.parse(e.postData.contents); } catch (_) { fallo_('DATOS'); }
-    if (!p || !['registro','ingreso','abrir','guardar','salir'].includes(p.accion)) fallo_('DATOS');
+    if (!p || !['registro','ingreso','abrir','guardar','abrirNodo','guardarNodo','salir'].includes(p.accion)) fallo_('DATOS');
     const props = PropertiesService.getScriptProperties();
     const libro = SpreadsheetApp.openById(props.getProperty('HOJA_F2'));
     const usuarios = libro.getSheetByName('Avance'), sesiones = libro.getSheetByName('Sesiones');
@@ -92,6 +92,8 @@ function doPost(e) {
       if (p.accion === 'salir') { sesiones.deleteRow(sesion.fila); return {}; }
       const fila = buscar_(usuarios, 9, sesion.id);
       if (!fila) fallo_('SESION');
+      if (p.accion === 'abrirNodo' || p.accion === 'guardarNodo')
+        return operarNodo_(p, libro, usuarios, fila, sesion.id, props);
       const rango = usuarios.getRange(fila, 1, 1, COLUMNAS_F2.length);
       const datos = rango.getValues()[0];
       if (p.accion === 'abrir') return abrir_(datos, props);
@@ -177,29 +179,29 @@ function sesion_(hoja, token) {
   if (Number(vence) <= Date.now()) fallo_('SESION');
   return {fila, id};
 }
-function abrir_(datos, props) {
+function abrir_(datos, props, recursos = RECURSOS_F2) {
   const r = {};
-  RECURSOS_F2.forEach((id, i) => {
+  recursos.forEach((id, i) => {
     const inicio = datos[12+i*2], fin = datos[13+i*2];
     if (inicio) r[id] = [fin ? 2 : 1, Math.floor(Number(inicio)/1000), fin ? Math.floor(Number(fin)/1000) : 0];
   });
   return {id:datos[8], claveCurso:props.getProperty('CLAVE_CURSO'), marca:Number(datos[10]),
     avance:{v:1, r, loc:datos[11] ? JSON.parse(datos[11]) : null}};
 }
-function ubicacion_(loc) {
+function ubicacion_(loc, recursos, temas) {
   if (!loc) return null;
-  if (RECURSOS_F2.includes(loc.r)) return {r:loc.r};
+  if (recursos.includes(loc.r)) return {r:loc.r};
   if (['topics','subtopics','resources'].includes(loc.l) && Number.isInteger(loc.t) &&
-      Number.isInteger(loc.s) && loc.t >= 0 && loc.t < 4 && loc.s >= 0 && loc.s < [3,3,4,2][loc.t])
+      Number.isInteger(loc.s) && loc.t >= 0 && loc.t < temas.length && loc.s >= 0 && loc.s < temas[loc.t])
     return {l:loc.l, t:loc.t, s:loc.s};
   fallo_('DATOS');
 }
-function guardar_(datos, estado, marca) {
+function guardar_(datos, estado, marca, recursos = RECURSOS_F2, titulos = TITULOS_F2, temas = [3,3,4,2]) {
   if (!estado || estado.v !== 1 || !estado.r || typeof estado.r !== 'object' ||
       !Number.isSafeInteger(marca) || marca < 0) fallo_('DATOS');
-  const loc = ubicacion_(estado.loc), ahora = Date.now();
+  const loc = ubicacion_(estado.loc, recursos, temas), ahora = Date.now();
   let hechos = 0, curso = 0;
-  RECURSOS_F2.forEach((id, i) => {
+  recursos.forEach((id, i) => {
     const rec = estado.r[id], a = 12+i*2, b = a+1;
     if (rec) {
       if (!Array.isArray(rec) || ![1,2].includes(rec[0]) || !Number.isSafeInteger(rec[1]) || rec[1]<=0 ||
@@ -218,9 +220,88 @@ function guardar_(datos, estado, marca) {
   if (loc && timestamp >= Number(datos[10])) {
     datos[10] = timestamp;
     datos[11] = JSON.stringify(loc);
-    datos[7] = loc.r ? TITULOS_F2[RECURSOS_F2.indexOf(loc.r)] : loc.l === 'topics' ? 'Mapa de temas'
+    datos[7] = loc.r ? titulos[recursos.indexOf(loc.r)] : loc.l === 'topics' ? 'Mapa de temas'
       : loc.l === 'subtopics' ? 'Tema ' + (loc.t+1) : 'Subtema ' + (loc.t+1) + '.' + (loc.s+1);
   }
   datos[3] = new Date(ahora);
-  datos[4] = hechos; datos[5] = curso; datos[6] = hechos/RECURSOS_F2.length;
+  datos[4] = hechos; datos[5] = curso; datos[6] = hechos/recursos.length;
+}
+
+const NODOS_INVESTIGACION = {
+  "i2": {
+    "temas": [
+      3,
+      4,
+      3,
+      2
+    ],
+    "titulos": {
+      "r01": "Comparador de diseños",
+      "r02": "La cadena de cuatro eslabones",
+      "r03": "¿Tu método responde tu pregunta?",
+      "r04": "Encuentra el eslabón roto"
+    }
+  },
+  "i3": {
+    "temas": [
+      3,
+      4,
+      3,
+      3
+    ],
+    "titulos": {
+      "r01": "¿Quién responde por este párrafo?",
+      "r02": "¿Qué puede apoyar la IA y qué solo quien firma?",
+      "r03": "¿Quién responde?",
+      "r04": "Lo que admiten las editoriales",
+      "r05": "Admitido, condicionado o no permitido",
+      "r06": "Revisión, imágenes y destino",
+      "r07": "El semáforo de usos",
+      "r08": "Ficha de producto",
+      "r09": "¿Se puede subir?",
+      "r10": "El taller · La IA como escritora",
+      "r11": "El encargo al agente",
+      "r12": "Revisa el borrador del agente",
+      "r13": "El taller · La IA como copiloto",
+      "r14": "Aceptar o descartar",
+      "r15": "¿Acepto esta sugerencia?",
+      "r16": "El taller · La IA como editora",
+      "r17": "Dictar a la editora",
+      "r18": "Coteja lo que compuso"
+    }
+  }
+};
+
+function operarNodo_(p, libro, usuarios, filaUsuario, id, props) {
+  if (typeof p.nodo !== 'string' || !Object.prototype.hasOwnProperty.call(NODOS_INVESTIGACION, p.nodo))
+    fallo_('DATOS');
+  const config = NODOS_INVESTIGACION[p.nodo];
+  const recursos = Object.keys(config.titulos), titulos = Object.values(config.titulos);
+  const nombreHoja = 'Avance ' + p.nodo.toUpperCase();
+  const hoja = libro.getSheetByName(nombreHoja) || libro.insertSheet(nombreHoja);
+  const ancho = 12 + recursos.length * 2;
+  if (!hoja.getLastRow()) {
+    if (hoja.getMaxColumns() < ancho) hoja.insertColumnsAfter(hoja.getMaxColumns(), ancho - hoja.getMaxColumns());
+    cabecera_(hoja, ['Correo','Nombre completo','Primer acceso','Última actividad','Finalizados','En curso',
+      'Avance','Último punto','Identificador','Nodo','Marca de navegación','Ubicación interna']
+      .concat(titulos.flatMap(t => ['Inicio · ' + t, 'Fin · ' + t])));
+    hoja.hideColumns(9,4);
+    hoja.getRange('G2:G').setNumberFormat('0%');
+    hoja.getRange('C2:D').setNumberFormat('yyyy-mm-dd hh:mm');
+    hoja.setColumnWidths(1,2,210);
+    hoja.setColumnWidth(8,250);
+    hoja.setColumnWidths(13,ancho-12,180);
+  }
+  const fila = buscar_(hoja,9,id);
+  let datos;
+  if (fila) datos = hoja.getRange(fila,1,1,ancho).getValues()[0];
+  else {
+    const usuario = usuarios.getRange(filaUsuario,1,1,COLUMNAS_F2.length+1).getValues()[0];
+    datos = ["'" + usuario[0], "'" + usuario[COLUMNAS_F2.length], new Date(), new Date(), 0, 0, 0,
+      '', id, p.nodo.toUpperCase(), 0, '', ...Array(recursos.length*2).fill('')];
+  }
+  if (p.accion === 'guardarNodo') guardar_(datos,p.avance,p.marca,recursos,titulos,config.temas);
+  if (!fila) hoja.appendRow(datos);
+  else if (p.accion === 'guardarNodo') hoja.getRange(fila,4,1,ancho-3).setValues([datos.slice(3)]);
+  return p.accion === 'abrirNodo' ? Object.assign({nodo:p.nodo}, abrir_(datos,props,recursos)) : {nodo:p.nodo};
 }

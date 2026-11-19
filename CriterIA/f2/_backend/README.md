@@ -1,6 +1,6 @@
-# Administración de Fundamentos F2
+# Administración de CriterIA
 
-La página pública presenta el registro y la entrada. Apps Script valida la cuenta, devuelve el avance individual y entrega la clave que abre `curso.bin`. El paquete contiene el HTML original completo. El curso usa su interfaz SCORM 2004 para informar las fechas, los recursos y el punto de reanudación.
+La portada `/CriterIA/` contiene el mapa, el registro y el ingreso común. Los enlaces de F2, I2 e I3 llevan al nodo elegido. Apps Script valida la cuenta, devuelve el avance del nodo y entrega la clave para abrir su paquete `curso.bin`. Cada curso comunica las fechas, los recursos y el punto de reanudación mediante SCORM 2004.
 
 ## Consultar el seguimiento
 
@@ -8,9 +8,11 @@ En la cuenta propietaria, abre **CriterIA F2 · Seguimiento** y selecciona **Ava
 
 Mantén la hoja y el proyecto de Apps Script con acceso restringido. El registro se abre desde la página del curso. La hoja conserva verificadores bcrypt y huellas de sesión. Las sesiones duran 12 horas y el cierre de sesión conectado las revoca. El avance anónimo que existiera antes del registro sigue perteneciendo al navegador en que se generó.
 
+Las pestañas **Avance I2** y **Avance I3** se crean al primer ingreso a cada nodo. Relacionan el correo y el nombre de la cuenta con los recursos del nodo. Una misma persona puede tener porcentajes y ubicaciones distintos en cada pestaña.
+
 ## Actualizar el material
 
-En el equipo donde se instaló F2, edita el archivo privado `%LOCALAPPDATA%\CriterIA\F2\Sistemas-que-aprenden.html`. En esa carpeta se guarda también `clave-f2.txt`. Conserva una copia privada de ambos archivos. El `index.html` público contiene el formulario de acceso.
+En el equipo donde se instaló F2, edita el archivo privado `%LOCALAPPDATA%\CriterIA\F2\Sistemas-que-aprenden.html`. En esa carpeta se guarda también `clave-f2.txt`, compartida por los tres nodos. Conserva una copia privada de la clave y de los originales. Los archivos editables de Investigación son `%LOCALAPPDATA%\CriterIA\I2\curso.html` y `%LOCALAPPDATA%\CriterIA\I3\curso.html`.
 
 Desde la raíz del repositorio, abre PowerShell y ejecuta estos comandos con Node.js y Git instalados.
 
@@ -24,6 +26,15 @@ git push origin main
 ```
 
 El empaquetador comprueba que la clave abre el paquete actual. GitHub Pages publica el nuevo material en el mismo enlace. Las cuentas y los avances siguen en la hoja de Google. Para cambios de texto, imágenes o diseño, conserva el seguimiento SCORM y los identificadores de las actividades (`r01` a `r20`). Si agregas, retiras o reasignas actividades, adapta también el catálogo, las columnas y el cálculo del porcentaje antes de publicar. Conserva la correspondencia de cada identificador histórico con su actividad.
+
+Para actualizar uno de los nodos de Investigación, indica su código al empaquetar y publica el `curso.bin` de esa carpeta. Por ejemplo, para I2:
+
+```powershell
+$privado = Join-Path $env:LOCALAPPDATA 'CriterIA'
+node .\CriterIA\f2\_backend\empaquetar.mjs (Join-Path $privado 'I2/curso.html') (Join-Path $privado 'F2') i2
+```
+
+El mapa público usa los títulos y grupos de `CriterIA/mapa.js`. Los recursos que cuentan para el avance de Investigación están en `NODOS_INVESTIGACION` de `Codigo.gs`. Antes de cambiar ese catálogo, conserva el orden de las columnas históricas y amplía la hoja existente para los recursos añadidos.
 
 ## Instalar el backend
 
