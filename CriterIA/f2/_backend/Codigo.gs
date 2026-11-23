@@ -299,14 +299,15 @@ const NODOS_INVESTIGACION = {
       "r08": "Ficha de producto",
       "r09": "¿Se puede subir?",
       "r10": "El taller · La IA como escritora",
-      "r11": "El encargo al agente",
+      "r11": "Actividad práctica · La IA como escritora",
       "r12": "Revisa el borrador del agente",
       "r13": "El taller · La IA como copiloto",
-      "r14": "Aceptar o descartar",
+      "r14": "Actividad práctica · La IA como asistente de escritura",
       "r15": "¿Acepto esta sugerencia?",
       "r16": "El taller · La IA como editora",
-      "r17": "Dictar a la editora",
-      "r18": "Coteja lo que compuso"
+      "r17": "Actividad práctica · La IA como estructuradora",
+      "r18": "Coteja lo que compuso",
+      "r19": "Actividad práctica · Traducción con IA"
     }
   }
 };
