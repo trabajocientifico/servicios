@@ -307,7 +307,9 @@ const NODOS_INVESTIGACION = {
       "r16": "El taller · La IA como editora",
       "r17": "Actividad práctica · La IA como estructuradora",
       "r18": "Coteja lo que compuso",
-      "r19": "Actividad práctica · Traducción con IA"
+      "r19": "Actividad práctica · Traducción con IA",
+      "r20": "Actividad práctica · Verificación de 20 referencias con IA",
+      "r21": "Actividad práctica · De referencias APA a Zotero y Mendeley"
     }
   }
 };
