@@ -113,6 +113,8 @@
     if (parte.avance.loc && parte.marca >= base.marca) {
       base.marca = parte.marca; base.avance.loc = parte.avance.loc;
     }
+    // Diagnóstico inicial de F2: se conserva el primero que se respondió.
+    if (parte.avance.d && !base.avance.d) base.avance.d = parte.avance.d;
     return base;
   }
   function combinar(lista, base={avance:{v:1,r:{},loc:null}, marca:0}) {

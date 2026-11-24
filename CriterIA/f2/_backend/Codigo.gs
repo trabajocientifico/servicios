@@ -13,6 +13,19 @@ const COLUMNAS_F2 = ['Correo', 'Registro', 'Último ingreso', 'Última actividad
   'Avance', 'Último punto', 'Identificador', 'Verificador', 'Marca de navegación', 'Ubicación interna']
   .concat(TITULOS_F2.flatMap(t => ['Inicio · ' + t, 'Fin · ' + t]));
 const DURACION_F2 = 12 * 60 * 60 * 1000;
+// Diagnóstico inicial de F2 (sin nota). El orden y la respuesta esperada deben coincidir con el banco DIAG_F2
+// del curso (Documento_Base/recursos/CHATGPT/tmp/f2-diagnostico/agregar_diagnostico.py). La opción 3 (D) es
+// «No estoy seguro/a». Las columnas van a la derecha de «Nombre completo» y nunca se sobrescriben.
+const DIAGNOSTICO_F2 = [
+  {etiqueta:'1 Tipos de sistema', tema:1, esperada:1},
+  {etiqueta:'2 Usar o entrenar', tema:2, esperada:2},
+  {etiqueta:'3 Verificar una respuesta', tema:2, esperada:1},
+  {etiqueta:'4 Datos y contexto', tema:3, esperada:0},
+  {etiqueta:'5 Datos personales', tema:4, esperada:2}
+];
+const COLUMNAS_DIAGNOSTICO_F2 = ['Diagnóstico · Fecha']
+  .concat(DIAGNOSTICO_F2.map(q => 'Diagnóstico · ' + q.etiqueta), ['Diagnóstico · Reconoce (de 5)', 'Diagnóstico · Empezar por']);
+const COL_DIAGNOSTICO_F2 = COLUMNAS_F2.length + 2;
 
 function configurarF2() {
   const props = PropertiesService.getScriptProperties();
@@ -75,7 +88,7 @@ function huella_(s) {
 function respuesta_(obj) {
   return ContentService.createTextOutput(JSON.stringify(obj)).setMimeType(ContentService.MimeType.JSON);
 }
-function doGet() { return respuesta_({servicio: 'CriterIA', version: 5}); }
+function doGet() { return respuesta_({servicio: 'CriterIA', version: 6}); }
 function doPost(e) {
   try {
     if (!e || !e.postData || e.postData.contents.length > 10000) fallo_('DATOS');
@@ -112,6 +125,7 @@ function doPost(e) {
       const datos = usuarios.getRange(fila, 1, 1, COLUMNAS_F2.length).getValues()[0];
       guardar_(datos, p.avance, p.marca);
       usuarios.getRange(fila, 4, 1, datos.length - 3).setValues([datos.slice(3)]);
+      guardarDiagnostico_(usuarios, fila, p.avance);
       return {};
     });
     return respuesta_(Object.assign({ok:true}, result));
@@ -208,13 +222,60 @@ function avanceGuardado_(datos, recursos) {
   return {marca:Number(datos[10]) || 0,
     avance:{v:1, r, loc:datos[11] ? JSON.parse(datos[11]) : null}};
 }
+function diagnosticoValido_(d) {
+  return !!d && typeof d === 'object' && Number.isSafeInteger(d.t) && d.t > 0 && Array.isArray(d.a) &&
+    d.a.length === DIAGNOSTICO_F2.length && d.a.every(x => Number.isInteger(x) && x >= 0 && x <= 3);
+}
+function celdasDiagnostico_(d, ahora) {
+  const reconoce = d.a.filter((x, i) => x === DIAGNOSTICO_F2[i].esperada).length;
+  const pendiente = DIAGNOSTICO_F2.find((q, i) => d.a[i] !== q.esperada);
+  return [new Date(Math.min(ahora, d.t * 1000))]
+    .concat(d.a.map((x, i) => 'ABCD'[x] + ' · ' +
+      (x === 3 ? 'No está seguro/a' : x === DIAGNOSTICO_F2[i].esperada ? 'Reconoce' : 'Por reforzar')),
+      [reconoce, pendiente ? 'Tema ' + pendiente.tema : 'Cualquier tema']);
+}
+function leerDiagnostico_(fila) {
+  if (!fila[0]) return null;
+  const d = {t: Math.floor(Number(fila[0]) / 1000),
+    a: fila.slice(1, 1 + DIAGNOSTICO_F2.length).map(v => 'ABCD'.indexOf(String(v).charAt(0)))};
+  return diagnosticoValido_(d) ? d : null;
+}
+function guardarDiagnostico_(hoja, fila, avance) {
+  const d = avance && avance.d;
+  if (!diagnosticoValido_(d)) return;
+  const ancho = COLUMNAS_DIAGNOSTICO_F2.length, ultima = COL_DIAGNOSTICO_F2 + ancho - 1;
+  if (hoja.getMaxColumns() < ultima) hoja.insertColumnsAfter(hoja.getMaxColumns(), ultima - hoja.getMaxColumns());
+  const cabecera = hoja.getRange(1, COL_DIAGNOSTICO_F2, 1, ancho);
+  const actual = cabecera.getDisplayValues()[0];
+  if (actual.every(v => !v)) {
+    cabecera.setValues([COLUMNAS_DIAGNOSTICO_F2]).setBackground('#02475b').setFontColor('#ffffff')
+      .setFontWeight('bold').setWrap(true);
+    hoja.getRange(2, COL_DIAGNOSTICO_F2, Math.max(1, hoja.getMaxRows() - 1), 1).setNumberFormat('yyyy-mm-dd hh:mm');
+    hoja.setColumnWidths(COL_DIAGNOSTICO_F2, ancho, 170);
+  } else if (actual[0] !== COLUMNAS_DIAGNOSTICO_F2[0]) {
+    console.error('Las columnas previstas para el diagnóstico ya contienen otro encabezado.');
+    return;
+  }
+  const celdas = hoja.getRange(fila, COL_DIAGNOSTICO_F2, 1, ancho);
+  if (celdas.getValues()[0][0]) return;
+  celdas.setValues([celdasDiagnostico_(d, Date.now())]);
+}
+function diagnosticoCuenta_(hoja, fila) {
+  if (hoja.getMaxColumns() < COL_DIAGNOSTICO_F2 + DIAGNOSTICO_F2.length) return null;
+  return leerDiagnostico_(hoja.getRange(fila, COL_DIAGNOSTICO_F2, 1, 1 + DIAGNOSTICO_F2.length).getValues()[0]);
+}
 function abrir_(datos, props, recursos = RECURSOS_F2) {
   return {id:datos[8], claveCurso:props.getProperty('CLAVE_CURSO'), ...avanceGuardado_(datos, recursos)};
 }
 function abrirCuenta_(p, libro, usuarios, fila, props) {
   const datos = usuarios.getRange(fila, 1, 1, COLUMNAS_F2.length).getValues()[0];
   const nombre = nombreCuenta_(usuarios, fila);
-  if (p.vista !== 'mapa') return {nombre, ...abrir_(datos, props)};
+  if (p.vista !== 'mapa') {
+    const res = {nombre, ...abrir_(datos, props)};
+    const diagnostico = diagnosticoCuenta_(usuarios, fila);
+    if (diagnostico) res.avance.d = diagnostico;
+    return res;
+  }
   const id = datos[8];
   const nodos = {f2:{recursos:RECURSOS_F2, ...avanceGuardado_(datos, RECURSOS_F2)}};
   for (const [codigo, config] of Object.entries(NODOS_INVESTIGACION)) {
