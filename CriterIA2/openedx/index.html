@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mi trayectoria · Simulación Open edX · CriterIA</title>
+<link rel="stylesheet" href="simulador.css">
+<link rel="stylesheet" href="trayectoria.css">
+<script src="red.js"></script>
+</head>
+<body class="tr-pagina">
+<a class="ox-saltar" href="#principal">Saltar al contenido</a>
+<div class="ox-sim">Simulación de Open edX para revisar los nodos · no es la plataforma real</div>
+<div class="ox-linea"></div>
+<header class="ox-cabecera">
+  <a class="ox-escudo" href="index.html" aria-label="Mi trayectoria"><img src="marca/universidad-nacional.png" alt="Universidad Nacional de Colombia"></a>
+  <p class="ox-programa">CriterIA - Programa de Formación en IA | Proyecto 714-10-140</p>
+</header>
+<div class="ox-usuario">
+  <a class="ox-trayectoria" href="index.html" aria-current="page"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>Mi trayectoria</a>
+  <span class="ox-avatar" aria-label="Cuenta de prueba" role="img"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm0 2c-3 0-8 1.5-8 4.5V20h16v-1.5c0-3-5-4.5-8-4.5z"/></svg></span>
+</div>
+<div class="tr-gris">
+  <nav class="ox-migas" aria-label="Ruta"><span>Bienvenida</span><span aria-hidden="true">/</span><strong aria-current="page">Mi trayectoria</strong></nav>
+  <main class="tr-hoja" id="principal" tabindex="-1">
+    <h1 class="tr-titulo">Mi <em>trayectoria</em><br>de aprendizaje</h1>
+    <section class="tr-mia" aria-label="Nodos de mi trayectoria"><ol id="trayecto" class="tr-trayecto"></ol></section>
+
+    <section class="tr-agregar" aria-labelledby="agregar-titulo">
+      <h2 id="agregar-titulo">Para <em>agregar</em> nodos a la <em>trayectoria</em>:</h2>
+      <ol class="tr-pasos"><li><span>1</span>Filtre o explore la red de nodos (o la vista en cuadrícula).</li><li><span>2</span>Seleccione el nodo que desee iniciar.</li></ol>
+      <section class="tr-red" id="red" aria-labelledby="red-titulo">
+        <div class="tr-red-cab"><h2 id="red-titulo">Red de nodos</h2>
+          <div class="tr-vistas" role="group" aria-label="Vista"><button type="button" data-vista="red" aria-pressed="true">Red</button><button type="button" data-vista="cuadricula" aria-pressed="false">Cuadrícula</button></div></div>
+        <p class="tr-filtrar"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M7 12h10M10 17h4"/></svg>Filtrar por categoría</p>
+        <div class="tr-filtros" id="filtros" role="group" aria-label="Filtrar por categoría"></div>
+        <div class="tr-lienzo" id="lienzo"><svg id="conexiones" aria-hidden="true"></svg></div>
+      </section>
+    </section>
+  </main>
+</div>
+<footer class="ox-pie-sitio"><span>© Copyright 2026 - Algunos Derechos Reservados</span><span>Dirección Nacional de Innovación Académica</span><span>Simulación para revisión interna</span></footer>
+
+<div class="tr-flotantes"><button type="button" class="tr-tutorial" data-abrir="tutorial">Accede al tutorial aquí</button><button type="button" class="tr-ayuda" data-abrir="tutorial" aria-label="Ayuda">?</button></div>
+
+<dialog id="ficha" class="tr-dialogo" aria-labelledby="ficha-titulo"><div id="ficha-cuerpo"></div></dialog>
+<dialog id="tutorial" class="tr-dialogo" aria-labelledby="tutorial-titulo">
+  <h2 id="tutorial-titulo">Cómo usar esta simulación</h2>
+  <ol>
+    <li><strong>Mi trayectoria</strong> muestra los nodos que agregaste y su estado: sin iniciar, en progreso o finalizado.</li>
+    <li>En la <strong>Red de nodos</strong> filtra por categoría y selecciona un nodo. Hoy se pueden abrir F2, I2 e I3; los demás aparecen como «Próximamente».</li>
+    <li>Dentro de un nodo, vuelve aquí con <strong>«Mi trayectoria»</strong> (arriba a la derecha) o con la ruta que aparece bajo la cabecera.</li>
+  </ol>
+  <p class="tr-nota">El avance se guarda solo en este navegador. En Open edX lo lleva la plataforma.</p>
+  <div class="tr-acciones"><button type="button" class="ox-boton" data-cerrar>Entendido</button></div>
+</dialog>
+<script src="trayectoria.js"></script>
+</body>
+</html>

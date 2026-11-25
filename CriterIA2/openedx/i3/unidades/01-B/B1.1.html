@@ -1,0 +1,67 @@
+<div class="cx-unidad">
+<style>
+.cx-unidad{color:#2E3233;font-size:1rem;line-height:1.65}
+.cx-unidad *{box-sizing:border-box}
+.cx-banner{position:relative;overflow:hidden;display:flex;align-items:center;min-height:150px;margin:0 0 26px;background:linear-gradient(100deg,#FFC2B9 0%,#FF9488 48%,#FF5E52 100%)}
+.cx-banner .cx-ola{position:absolute;left:-6%;top:-55%;width:62%;height:210%;border-radius:50%;background:#FFA79D;opacity:.75}
+.cx-pill{position:relative;z-index:1;margin-left:7%;max-width:64%;padding:20px 46px 20px 40px;border-radius:80px;background:#00222D;color:#FFFCEA;box-shadow:12px 0 0 #D9443A}
+.cx-pill .cx-k{display:block;font-size:.72rem;font-weight:700;letter-spacing:.01em;margin-bottom:6px}
+.cx-pill .cx-t{display:block;font-size:1.32rem;font-weight:700;line-height:1.2}
+.cx-pill .cx-m{display:block;margin-top:6px;font-size:.66rem;color:#FFC2B9;font-weight:600}
+.cx-deco{position:absolute;right:0;top:0;height:100%;width:44%;pointer-events:none}
+.cx-emblema{position:absolute;right:46px;top:50%;transform:translateY(-50%);width:118px;height:118px;border-radius:50%;background:#FFFCEA;padding:10px;z-index:1}
+.cx-emblema svg{width:100%;height:100%;display:block}
+.cx-cat{position:absolute;right:10px;top:50%;transform:translateY(-50%) rotate(180deg);writing-mode:vertical-rl;z-index:1;padding:8px 4px;border-radius:7px;background:#00222D;color:#FFC2B9;font-size:.6rem;font-weight:700;letter-spacing:.04em}
+.cx-sep{border:0;border-top:1px solid #DCD8C4;margin:0 0 22px}
+.cx-unidad h3{font-size:1.45rem;font-weight:600;color:#1F2324;margin:1.3em 0 .45em;line-height:1.25}
+.cx-unidad h3:first-of-type{margin-top:.2em}
+.cx-unidad h4{font-size:1.08rem;font-weight:700;color:#02475B;margin:0 0 .3em}
+.cx-unidad p{margin:0 0 .9em}
+.cx-unidad ul,.cx-unidad ol{margin:0 0 1em;padding-left:1.4em}
+.cx-unidad li{margin:.35em 0}
+.cx-unidad a{color:#02475B;font-weight:600}
+.cx-nota{display:flex;gap:16px;align-items:flex-start;margin:22px 0;padding:20px 24px;border-radius:26px;background:#FFF9E3;border:1px solid #EFE3B6}
+.cx-nota .cx-i{flex:0 0 40px;height:40px;border-radius:50%;background:#02475B;color:#FFFCEA;display:flex;align-items:center;justify-content:center;font:700 1.1rem/1 Georgia,serif}
+.cx-nota strong.cx-nt{display:block;margin-bottom:4px;color:#1F2324}
+.cx-nota p:last-child{margin-bottom:0}
+.cx-cita{margin:18px 0;padding:6px 0 6px 20px;border-left:5px solid #FF796F;font-size:1.1rem;font-style:italic;color:#02475B}
+.cx-terminos{display:grid;gap:14px;margin:12px 0 18px}
+.cx-termino{padding:16px 20px;border-radius:18px;background:#FFFCEA;border:1px solid #DCD8C4;border-left:6px solid var(--cx-acento,#FF796F)}
+.cx-termino p{margin:.3em 0 0}
+.cx-etiqueta{display:inline-block;margin:0 0 10px;padding:3px 12px;border-radius:999px;background:#F8F3DA;color:#02475B;font-size:.8rem;font-weight:700}
+.cx-recurso{margin:18px 0 8px;border-radius:20px;overflow:hidden;border:1px solid #DCD8C4;background:#F8F3DA}
+.cx-marco{display:block;width:100%;height:720px;border:0;background:#F8F3DA}
+.cx-marco.cx-video{height:auto;aspect-ratio:16/9}
+.cx-abrir{display:flex;justify-content:flex-end;gap:12px;padding:10px 16px;background:#FFFCEA;border-top:1px solid #DCD8C4;font-size:.9rem}
+.cx-descarga{display:flex;gap:16px;align-items:center;margin:22px 0;padding:16px 20px;border-radius:18px;border:1px solid #DCD8C4;background:#fff}
+.cx-descarga .cx-pdf{flex:0 0 44px;height:52px;border-radius:8px;background:#B83A30;color:#fff;display:flex;align-items:flex-end;justify-content:center;padding-bottom:7px;font-size:.7rem;font-weight:700}
+.cx-descarga span{display:block;font-size:.85rem;color:#5A5E60}
+.cx-pendiente{margin:18px 0;padding:26px;border:2px dashed #C9B97E;border-radius:22px;background:#FFFDF2;text-align:center}
+.cx-pendiente strong{display:block;font-size:1.1rem;color:#7A5B00;margin-bottom:6px}
+.cx-pendiente ul{text-align:left;max-width:560px;margin:12px auto 0}
+.cx-unidad details{margin:16px 0;padding:12px 18px;border-radius:16px;background:#F8F3DA}
+.cx-unidad summary{cursor:pointer;font-weight:700;color:#02475B}
+@media (max-width:640px){.cx-pill{max-width:78%;margin-left:5%;padding:16px 26px}.cx-emblema{display:none}.cx-marco{height:560px}}
+</style>
+<div class="cx-banner"><span class="cx-ola" aria-hidden="true"></span><svg class="cx-deco" viewBox="0 0 300 150" preserveAspectRatio="xMaxYMid slice" aria-hidden="true">
+<circle cx="250" cy="150" r="88" fill="#02475B"/><circle cx="118" cy="22" r="36" fill="#02475B"/><circle cx="178" cy="14" r="17" fill="none" stroke="#B83A30" stroke-width="2"/>
+<circle cx="94" cy="98" r="10" fill="none" stroke="#B83A30" stroke-width="2"/><circle cx="214" cy="118" r="40" fill="none" stroke="#D9443A" stroke-width="1.5" opacity=".7"/></svg>
+<div class="cx-pill"><span class="cx-k">Nodo I3 · Bienvenida</span><span class="cx-t">¿Cómo recorrer este nodo?</span>
+<span class="cx-m">Orientación · Lección: Bienvenida a Escritura, citación y comunicación con integridad</span></div>
+<span class="cx-cat" aria-hidden="true">Investigación</span></div><hr class="cx-sep">
+<h3>El mapa del recorrido</h3>
+<p>El nodo está organizado en secciones que conviene visitar en orden. Cada sección del menú «Esquema del nodo» es una parada del recorrido:</p>
+<ul><li><strong>Bienvenida.</strong> De qué trata el nodo, cómo recorrerlo y qué lograrás.</li>
+<li><strong>Conocimientos previos.</strong> La pregunta orientadora que guía todo el nodo.</li>
+<li><strong>Sección 1.</strong> Autoría, responsabilidad y uso de la IA en la escritura</li>
+<li><strong>Sección 2.</strong> Escribir con asistencia de herramientas de IA</li>
+<li><strong>Sección 3.</strong> Fuentes, transparencia y trazabilidad</li>
+<li><strong>Sección 4.</strong> Comunicación de la investigación para otras audiencias</li></ul>
+<h3>Tres lecciones en cada sección</h3>
+<ul><li><strong>Encuentro con el saber.</strong> La presentación del tema y una lectura breve con las definiciones básicas de cada subtema.</li>
+<li><strong>Reflexión con el saber.</strong> Los recursos para aprender: películas, tutoriales con voz, infografías y actividades para ver los conceptos en funcionamiento.</li>
+<li><strong>Evaluación.</strong> Una actividad por subtema para comprobar lo aprendido, con explicación inmediata.</li></ul>
+<h3>Tipos de recurso</h3>
+<ul><li>Animaciones cinematográficas</li><li>Infografías para explorar</li><li>Actividades para ubicar y anotar</li><li>Fichas y formatos para tu expediente</li><li>Preguntas con explicación inmediata</li><li>Lecturas con definiciones básicas</li></ul>
+<div class="cx-nota"><span class="cx-i" aria-hidden="true">i</span><div><strong class="cx-nt">Ten en cuenta</strong><p>Las actividades ofrecen pistas y permiten volver a intentar. Cada recurso interactivo se abre dentro de su unidad; si la pantalla te queda pequeña, usa «Abrir en una ventana nueva».</p><p>Dedicación estimada: 26 horas (propuesta por confirmar).</p></div></div>
+</div>

@@ -1,0 +1,62 @@
+>>Un buscador académico te muestra artículos ordenados según lo que estima que te interesa. ¿Qué tipo de sistema de IA es?<<
+
+( ) Un sistema generativo, porque crea la lista {{Lo verás en el Tema 1.}}
+(x) Un sistema de recomendación {{Ya lo reconoces.}}
+( ) Un sistema de clasificación, porque asigna una categoría {{Lo verás en el Tema 1.}}
+( ) No estoy seguro/a {{Lo verás en el Tema 1.}}
+
+[explanation]
+Los sistemas de recomendación ordenan opciones según lo que estiman pertinente para cada persona: su resultado es una lista priorizada.
+[explanation]
+
+---
+
+>>Cuando escribes una pregunta en un asistente de IA y te responde, ¿qué hace el modelo en ese momento?<<
+
+( ) Aprende de tu pregunta y se vuelve a entrenar {{Lo verás en el Tema 2.}}
+( ) Busca siempre la respuesta en internet {{Lo verás en el Tema 2.}}
+(x) Usa lo que aprendió en su entrenamiento para producir una respuesta {{Ya lo reconoces.}}
+( ) No estoy seguro/a {{Lo verás en el Tema 2.}}
+
+[explanation]
+Al usar una herramienta se hace inferencia: el modelo produce una salida con lo que ya aprendió y no vuelve a entrenarse con cada consulta.
+[explanation]
+
+---
+
+>>Un asistente te entrega un párrafo muy bien redactado, con una referencia bibliográfica. ¿Qué es lo más prudente antes de usarlo?<<
+
+( ) Usarlo: si está bien escrito, es correcto {{Lo verás en el Tema 2.}}
+(x) Abrir la referencia y comprobar lo que afirma {{Ya lo reconoces.}}
+( ) Repetir la pregunta y, si la respuesta coincide, darla por buena {{Lo verás en el Tema 2.}}
+( ) No estoy seguro/a {{Lo verás en el Tema 2.}}
+
+[explanation]
+Un modelo de lenguaje produce continuaciones plausibles: un texto puede ser fluido y a la vez incorrecto, e incluso citar una referencia que no existe.
+[explanation]
+
+---
+
+>>Un modelo que clasifica solicitudes se entrenó solo con solicitudes de una sede. Si se usa en otra sede, ¿qué es lo más probable?<<
+
+(x) Que funcione peor con situaciones de esa sede que no estaban en sus datos {{Ya lo reconoces.}}
+( ) Que funcione igual de bien, porque se entrenó con muchos datos {{Lo verás en el Tema 3.}}
+( ) Que aprenda solo las particularidades de la nueva sede {{Lo verás en el Tema 3.}}
+( ) No estoy seguro/a {{Lo verás en el Tema 3.}}
+
+[explanation]
+Un modelo solo puede aprender regularidades presentes en sus datos; si estos no representan las situaciones de otra sede, su desempeño allí puede ser menor.
+[explanation]
+
+---
+
+>>¿Cuál de estos contenidos NO conviene escribir en una herramienta de IA externa sin anonimizarlo?<<
+
+( ) Una pregunta general sobre un tema de tu clase {{Lo verás en el Tema 4.}}
+( ) Un texto tuyo ya publicado {{Lo verás en el Tema 4.}}
+(x) Nombres, documentos de identidad o datos de salud de estudiantes {{Ya lo reconoces.}}
+( ) No estoy seguro/a {{Lo verás en el Tema 4.}}
+
+[explanation]
+Lo que se escribe en una herramienta puede conservarse o usarse para entrenar; por eso no se ingresan datos personales ni sensibles sin anonimizarlos.
+[explanation]

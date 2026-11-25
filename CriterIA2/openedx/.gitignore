@@ -1,5 +1,0 @@
-# El material de los nodos va SIN CIFRAR en esta carpeta (visor, PDF, textos).
-# No se publica en GitHub Pages: solo se versiona el script de construcción.
-/*
-!.gitignore
-!_construccion/
