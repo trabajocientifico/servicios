@@ -36,6 +36,27 @@ node .\CriterIA\f2\_backend\empaquetar.mjs (Join-Path $privado 'I2/curso.html') 
 
 El mapa público usa los títulos y grupos de `CriterIA/mapa.js`. Los recursos que cuentan para el avance de Investigación están en `NODOS_INVESTIGACION` de `Codigo.gs`. Antes de cambiar ese catálogo, conserva el orden de las columnas históricas y amplía la hoja existente para los recursos añadidos.
 
+## Publicar en Open edX
+
+Cada nodo funciona también como paquete SCORM 2004 en Open edX. El material ya busca la API de la plataforma, guarda el avance en `cmi.suspend_data`, reanuda en el último punto y envía como nota el porcentaje de recursos finalizados (`completed` al 100 %). En Open edX no se usan la hoja de Google ni `curso.bin`: las cuentas, la inscripción y el progreso los lleva la plataforma.
+
+```powershell
+$privado = Join-Path $env:LOCALAPPDATA 'CriterIA'
+$scorm = Join-Path $privado 'SCORM'
+node .\CriterIA\f2\_backend\empaquetar-scorm.mjs (Join-Path $privado 'F2\Sistemas-que-aprenden.html') $scorm f2
+node .\CriterIA\f2\_backend\empaquetar-scorm.mjs (Join-Path $privado 'I2\curso.html') $scorm i2
+node .\CriterIA\f2\_backend\empaquetar-scorm.mjs (Join-Path $privado 'I3\curso.html') $scorm i3
+```
+
+Cada `CriterIA-<NODO>-scorm.zip` contiene el material **sin cifrar**. Guárdalo solo en ubicaciones privadas y nunca lo agregues al repositorio. Cualquier persona inscrita en el curso de Open edX puede descargar ese HTML.
+
+1. La instancia necesita la [SCORM XBlock](https://github.com/overhangio/openedx-scorm-xblock) (con Tutor: `pip install openedx-scorm-xblock` en la imagen). Pídela al administrador si no la tienes.
+2. En Studio, abre **Configuración → Configuración avanzada** y agrega `"scorm"` a **Advanced Module List**.
+3. En la unidad, elige **Avanzado → Scorm module**, edítalo y sube el zip. Marca **Scored** si el avance debe contar en la nota y usa la vista en ventana emergente o pantalla completa (o un alto de 800 px o más), porque el material ocupa todo el lienzo.
+4. F2 (~14 MB) e I3 (~23 MB) pueden superar el límite de subida de algunas instancias. Si Studio rechaza el archivo, el administrador debe ampliar el tamaño máximo de las peticiones de Studio.
+
+Antes de publicar, prueba el zip en [SCORM Cloud](https://cloud.scorm.com) o en un curso de prueba: abre un recurso, sal, vuelve y confirma que reanuda y que la nota aparece en **Progreso**.
+
 ## Instalar el backend
 
 El empaquetador también prepara `Instalar-F2.txt` en la carpeta privada. Contiene el servidor, bcryptjs 3.0.3 y la clave del material. Guarda ese archivo solo en ubicaciones privadas.
