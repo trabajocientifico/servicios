@@ -50,7 +50,23 @@ const ESTILO = p => `<style>
 .cx-pendiente ul{text-align:left;max-width:560px;margin:12px auto 0}
 .cx-unidad details{margin:16px 0;padding:12px 18px;border-radius:16px;background:#F8F3DA}
 .cx-unidad summary{cursor:pointer;font-weight:700;color:#02475B}
-@media (max-width:640px){.cx-pill{max-width:78%;margin-left:5%;padding:16px 26px}.cx-emblema{display:none}.cx-marco{height:560px}}
+.cx-avance{display:flex;margin:40px 0 0;background:#00222D;color:#FFFCEA;border-top:5px solid ${p.acento}}
+.cx-av-izq{flex:1;min-width:0;padding:26px 30px 22px}
+.cx-unidad .cx-av-t{margin:0 0 18px;font-weight:700;font-size:1rem;color:#FFFCEA}
+.cx-unidad ol.cx-pasos{position:relative;display:flex;justify-content:space-between;list-style:none;margin:0;padding:0}
+.cx-pasos::before{content:"";position:absolute;left:12px;right:12px;top:11px;height:2px;background:#5C6B70}
+.cx-unidad .cx-paso{position:relative;display:flex;flex-direction:column;align-items:center;gap:8px;margin:0;font-size:.7rem;font-weight:700;color:#C9CED0}
+.cx-paso i{display:block;width:16px;height:16px;margin-top:4px;border-radius:50%;border:2px solid #C9CED0;background:#00222D}
+.cx-paso.ya i{background:#C9CED0}
+.cx-paso.aqui{color:#FFFCEA}
+.cx-paso.aqui i{width:24px;height:24px;margin-top:0;background:${p.trazo};border:3px solid #FFFCEA}
+.cx-oculto{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.cx-av-der{flex:0 0 36%;display:flex;flex-direction:column;justify-content:center;gap:6px;margin:20px 0;padding:6px 24px;border-left:1px solid #3A5560}
+.cx-av-k{font-size:.66rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:${p.acento}}
+.cx-av-n{font-size:1rem;font-weight:700;line-height:1.3}
+.cx-av-l{font-size:.75rem;color:#C9CED0}
+@media (max-width:640px){.cx-pill{max-width:78%;margin-left:5%;padding:16px 26px}.cx-emblema{display:none}.cx-marco{height:560px}
+.cx-avance{flex-direction:column}.cx-av-der{margin:0 24px 20px;padding:14px 0 0;border-left:0;border-top:1px solid #3A5560}}
 </style>`;
 
 const deco = p => `<svg class="cx-deco" viewBox="0 0 300 150" preserveAspectRatio="xMaxYMid slice" aria-hidden="true">
@@ -149,7 +165,18 @@ ${props.length ? `<p><b>Propuesta del documento base:</b></p><ul>${props.map(([s
     }
     throw Error('Plantilla desconocida: ' + u.plantilla);
   }
-  return { banner, cuerpo, estilo: ESTILO(p) };
+  // Bloque final de la unidad: en qué punto de la lección va y con qué continúa.
+  function avance(sub, i, sig, cambiaLeccion) {
+    const n = sub.unidades.length, leccion = sub.titulo.replace(/ \(.*\)$/, '');
+    const pasos = sub.unidades.map((x, k) => `<li class="cx-paso${k < i ? ' ya' : k === i ? ' aqui' : ''}"${k === i ? ' aria-current="step"' : ''}><i aria-hidden="true"></i><span>${k + 1}</span><span class="cx-oculto"> · ${esc(x.titulo)}</span></li>`).join('');
+    const derecha = sig
+      ? `<span class="cx-av-k">Continúe con</span><span class="cx-av-n">${esc(sig.u.titulo)}</span>${cambiaLeccion ? `<span class="cx-av-l">Lección: ${esc(sig.sub.titulo.replace(/ \(.*\)$/, ''))}</span>` : ''}`
+      : `<span class="cx-av-k">Fin del nodo</span><span class="cx-av-n">Vuelva a Mi trayectoria para elegir otro nodo</span>`;
+    return `<div class="cx-avance" role="group" aria-label="Avance en la lección">
+<div class="cx-av-izq"><p class="cx-av-t">${esc(leccion)} · Unidad ${i + 1} de ${n}</p><ol class="cx-pasos">${pasos}</ol></div>
+<div class="cx-av-der">${derecha}</div></div>`;
+  }
+  return { banner, cuerpo, avance, estilo: ESTILO(p) };
 }
 
 function problemaDiagnostico(d) {
@@ -170,19 +197,27 @@ export function escribirUnidades(nodo, d, cfg, salida, archivos) {
   const g = generador(cfg, d);
   const dirU = join(salida, 'unidades');
   const filas = [];
+  const orden = nodo.secciones.flatMap(sec => sec.subsecciones.flatMap(sub => sub.unidades.map(u => ({ sec, sub, u }))));
   nodo.secciones.forEach((sec, si) => {
     const carpeta = `${String(si + 1).padStart(2, '0')}-${sec.clave}`;
     mkdirSync(join(dirU, carpeta), { recursive: true });
-    sec.subsecciones.forEach(sub => sub.unidades.forEach(u => {
-      const html = `<div class="cx-unidad">\n${g.estilo}\n${g.banner(sec, sub, u)}\n${g.cuerpo(u)}\n</div>`;
+    sec.subsecciones.forEach(sub => sub.unidades.forEach((u, ui) => {
+      const sig = orden[orden.findIndex(x => x.u === u) + 1];
+      const pie = g.avance(sub, ui, sig, sig && sig.sub !== sub);
       u.archivo = `${carpeta}/${u.codigo}.html`;
-      writeFileSync(join(dirU, u.archivo), html.replaceAll(A, '/static/'));
-      u.html = html.replaceAll(A, 'archivos/');
       if (u.plantilla === 'diagnostico') {
+        // Con un problema de Studio, el bloque de avance va en un tercer componente, después del problema.
         u.problema = { titulo: u.titulo, preguntas: problemaDiagnostico(d) };
         u.archivoProblema = `${carpeta}/${u.codigo}-problema.txt`;
         writeFileSync(join(dirU, u.archivoProblema), problemaMarkdown(u.problema.preguntas));
+        u.archivoCierre = `${carpeta}/${u.codigo}-cierre.html`;
+        const cierre = `<div class="cx-unidad">\n${g.estilo}\n${pie}\n</div>`;
+        writeFileSync(join(dirU, u.archivoCierre), cierre);
+        u.htmlCierre = cierre;
       }
+      const html = `<div class="cx-unidad">\n${g.estilo}\n${g.banner(sec, sub, u)}\n${g.cuerpo(u)}\n${u.problema ? '' : pie}\n</div>`;
+      writeFileSync(join(dirU, u.archivo), html.replaceAll(A, '/static/'));
+      u.html = html.replaceAll(A, 'archivos/');
       filas.push({ sec, sub, u });
     }));
   });
@@ -193,7 +228,7 @@ export function escribirUnidades(nodo, d, cfg, salida, archivos) {
 }
 
 function guia(nodo, d, cfg, filas, archivos) {
-  const tabla = filas.map(({ sec, sub, u }) => `| ${sec.titulo} | ${sub.titulo}${sub.nota ? ` *(tipo: ${sub.nota})*` : ''} | ${u.codigo} · ${u.titulo} | \`unidades/${u.archivo}\`${u.plantilla === 'pendiente' ? ' *(pendiente)*' : ''}${u.archivoProblema ? ` + problema \`unidades/${u.archivoProblema}\`` : ''} |`).join('\n');
+  const tabla = filas.map(({ sec, sub, u }) => `| ${sec.titulo} | ${sub.titulo}${sub.nota ? ` *(tipo: ${sub.nota})*` : ''} | ${u.codigo} · ${u.titulo} | \`unidades/${u.archivo}\`${u.plantilla === 'pendiente' ? ' *(pendiente)*' : ''}${u.archivoProblema ? ` + problema \`unidades/${u.archivoProblema}\` + cierre \`unidades/${u.archivoCierre}\`` : ''} |`).join('\n');
   const usos = archivos.map(([f, uso, mb]) => `| \`${f}\` | ${uso} | ${mb} |`).join('\n');
   const visor = archivos.find(a => a[0].startsWith('visor-'));
   return `# ${nodo.etiqueta} · Carga en Open edX
@@ -220,6 +255,7 @@ Para cada fila de la tabla: crea la sección, la subsección y la unidad con ese
 Las rutas \`/static/…\` apuntan a los archivos del paso 1; Studio las convierte solas.
 ${d.DIAG ? `
 En la unidad **CP1.2** agrega además **Problema → Opción múltiple**, cambia al **editor avanzado/Markdown** y pega el archivo \`-problema.txt\`.
+Después del problema agrega otro **Texto (HTML)** con el archivo \`-cierre.html\`: es el bloque de avance de la unidad.
 Deja la subsección *Mi punto de partida* **sin calificar**.
 ` : ''}
 En las subsecciones **Evaluación** usa el tipo de tarea *${limpiar(d.SLOTS[2])}* si el equipo decide calificarlas. Las actividades interactivas

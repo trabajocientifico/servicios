@@ -41,7 +41,23 @@
 .cx-pendiente ul{text-align:left;max-width:560px;margin:12px auto 0}
 .cx-unidad details{margin:16px 0;padding:12px 18px;border-radius:16px;background:#F8F3DA}
 .cx-unidad summary{cursor:pointer;font-weight:700;color:#02475B}
-@media (max-width:640px){.cx-pill{max-width:78%;margin-left:5%;padding:16px 26px}.cx-emblema{display:none}.cx-marco{height:560px}}
+.cx-avance{display:flex;margin:40px 0 0;background:#00222D;color:#FFFCEA;border-top:5px solid #FF796F}
+.cx-av-izq{flex:1;min-width:0;padding:26px 30px 22px}
+.cx-unidad .cx-av-t{margin:0 0 18px;font-weight:700;font-size:1rem;color:#FFFCEA}
+.cx-unidad ol.cx-pasos{position:relative;display:flex;justify-content:space-between;list-style:none;margin:0;padding:0}
+.cx-pasos::before{content:"";position:absolute;left:12px;right:12px;top:11px;height:2px;background:#5C6B70}
+.cx-unidad .cx-paso{position:relative;display:flex;flex-direction:column;align-items:center;gap:8px;margin:0;font-size:.7rem;font-weight:700;color:#C9CED0}
+.cx-paso i{display:block;width:16px;height:16px;margin-top:4px;border-radius:50%;border:2px solid #C9CED0;background:#00222D}
+.cx-paso.ya i{background:#C9CED0}
+.cx-paso.aqui{color:#FFFCEA}
+.cx-paso.aqui i{width:24px;height:24px;margin-top:0;background:#B83A30;border:3px solid #FFFCEA}
+.cx-oculto{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.cx-av-der{flex:0 0 36%;display:flex;flex-direction:column;justify-content:center;gap:6px;margin:20px 0;padding:6px 24px;border-left:1px solid #3A5560}
+.cx-av-k{font-size:.66rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:#FF796F}
+.cx-av-n{font-size:1rem;font-weight:700;line-height:1.3}
+.cx-av-l{font-size:.75rem;color:#C9CED0}
+@media (max-width:640px){.cx-pill{max-width:78%;margin-left:5%;padding:16px 26px}.cx-emblema{display:none}.cx-marco{height:560px}
+.cx-avance{flex-direction:column}.cx-av-der{margin:0 24px 20px;padding:14px 0 0;border-left:0;border-top:1px solid #3A5560}}
 </style>
 <div class="cx-banner"><span class="cx-ola" aria-hidden="true"></span><svg class="cx-deco" viewBox="0 0 300 150" preserveAspectRatio="xMaxYMid slice" aria-hidden="true">
 <circle cx="250" cy="150" r="88" fill="#02475B"/><circle cx="118" cy="22" r="36" fill="#02475B"/><circle cx="178" cy="14" r="17" fill="none" stroke="#B83A30" stroke-width="2"/>
@@ -54,4 +70,7 @@
 <div class="cx-nota"><span class="cx-i" aria-hidden="true">i</span><div><strong class="cx-nt">Cómo usarlo</strong><p>Capítulo 2 del taller: la IA como copiloto sugiere; unas sugerencias entran y otras vuelven. Avanza acto por acto con la flecha o “Avanzar”; “Explicación” tiene el texto de cada acto.</p></div></div>
 <div class="cx-recurso"><iframe class="cx-marco" src="/static/visor-i3.html?recurso=r13" title="Película: El taller · La IA como copiloto" allow="fullscreen; autoplay" allowfullscreen></iframe>
 <div class="cx-abrir"><a href="/static/visor-i3.html?recurso=r13" target="_blank" rel="noopener">Abrir en una ventana nueva ↗</a></div></div>
+<div class="cx-avance" role="group" aria-label="Avance en la lección">
+<div class="cx-av-izq"><p class="cx-av-t">Reflexión con el saber · Unidad 3 de 8</p><ol class="cx-pasos"><li class="cx-paso ya"><i aria-hidden="true"></i><span>1</span><span class="cx-oculto"> · El taller · La IA como escritora</span></li><li class="cx-paso ya"><i aria-hidden="true"></i><span>2</span><span class="cx-oculto"> · Actividad práctica · La IA como escritora</span></li><li class="cx-paso aqui" aria-current="step"><i aria-hidden="true"></i><span>3</span><span class="cx-oculto"> · El taller · La IA como copiloto</span></li><li class="cx-paso"><i aria-hidden="true"></i><span>4</span><span class="cx-oculto"> · Actividad práctica · La IA como asistente de escritura</span></li><li class="cx-paso"><i aria-hidden="true"></i><span>5</span><span class="cx-oculto"> · El taller · La IA como editora</span></li><li class="cx-paso"><i aria-hidden="true"></i><span>6</span><span class="cx-oculto"> · Actividad práctica · La IA como estructuradora</span></li><li class="cx-paso"><i aria-hidden="true"></i><span>7</span><span class="cx-oculto"> · Actividad práctica · Traducción con IA</span></li><li class="cx-paso"><i aria-hidden="true"></i><span>8</span><span class="cx-oculto"> · 2.4 · Recursos para aprender</span></li></ol></div>
+<div class="cx-av-der"><span class="cx-av-k">Continúe con</span><span class="cx-av-n">Actividad práctica · La IA como asistente de escritura</span></div></div>
 </div>

@@ -99,7 +99,12 @@ main:focus{outline:none}
 .ox-marcar[aria-pressed=true] svg{fill:#2E3233}
 .ox-componente{padding:0 20px}
 .ox-componente+.ox-componente{margin-top:28px;padding-top:24px;border-top:1px dashed #DADDE0}
-.ox-pie{display:flex;justify-content:space-between;gap:12px;padding:28px 20px 0;margin-top:28px;border-top:1px solid #E8EAEC}
+.ox-pie{display:flex;justify-content:center;gap:10px;padding:34px 20px 0}
+.ox-nav{display:inline-flex;align-items:center;justify-content:center;gap:14px;min-width:162px;padding:11px 22px;border:2px solid var(--verde-osc);border-radius:4px;background:#fff;color:var(--verde-osc);font-weight:700;font-size:15px;cursor:pointer}
+.ox-nav span{font-size:22px;line-height:0;font-weight:400}
+.ox-nav:hover:not(:disabled){background:#F4F7EA}
+.ox-nav:disabled{border-color:#D3D6D8;color:#B5B9BB;cursor:default}
+.ox-componente.ox-sin-linea{border-top:0;padding-top:0;margin-top:0}
 
 /* Problema (componente de Studio) */
 .ox-problema h2{font-size:22px;margin:0 0 14px}

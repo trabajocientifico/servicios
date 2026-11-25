@@ -28,6 +28,7 @@ Para cada fila de la tabla: crea la sección, la subsección y la unidad con ese
 Las rutas `/static/…` apuntan a los archivos del paso 1; Studio las convierte solas.
 
 En la unidad **CP1.2** agrega además **Problema → Opción múltiple**, cambia al **editor avanzado/Markdown** y pega el archivo `-problema.txt`.
+Después del problema agrega otro **Texto (HTML)** con el archivo `-cierre.html`: es el bloque de avance de la unidad.
 Deja la subsección *Mi punto de partida* **sin calificar**.
 
 En las subsecciones **Evaluación** usa el tipo de tarea *Repaso* si el equipo decide calificarlas. Las actividades interactivas
@@ -39,7 +40,7 @@ no envían nota a la plataforma: para que cuenten, hay que cargarlas como paquet
 | Bienvenida | Bienvenida a Sistemas que aprenden | B1.2 · Comencemos | `unidades/01-B/B1.2.html` |
 | Bienvenida | Bienvenida a Sistemas que aprenden | B1.3 · Introducción al nodo | `unidades/01-B/B1.3.html` |
 | Conocimientos previos | Mi punto de partida | CP1.1 · Antes de empezar | `unidades/02-CP/CP1.1.html` |
-| Conocimientos previos | Mi punto de partida | CP1.2 · ¿Qué sabes ya? | `unidades/02-CP/CP1.2.html` + problema `unidades/02-CP/CP1.2-problema.txt` |
+| Conocimientos previos | Mi punto de partida | CP1.2 · ¿Qué sabes ya? | `unidades/02-CP/CP1.2.html` + problema `unidades/02-CP/CP1.2-problema.txt` + cierre `unidades/02-CP/CP1.2-cierre.html` |
 | S1 · Sistemas de IA: ¿Qué hacen y en qué se diferencian? | Encuentro con el saber | T1.E1 · Presentación del Tema 1 | `unidades/03-S1/T1.E1.html` |
 | S1 · Sistemas de IA: ¿Qué hacen y en qué se diferencian? | Encuentro con el saber | T1.E2 · 1.1 · Herramienta, sistema y modelo | `unidades/03-S1/T1.E2.html` |
 | S1 · Sistemas de IA: ¿Qué hacen y en qué se diferencian? | Encuentro con el saber | T1.E3 · 1.2 · Enfoque simbólico (basado en reglas) y Enfoque basado en datos (aprendizaje automático) | `unidades/03-S1/T1.E3.html` |

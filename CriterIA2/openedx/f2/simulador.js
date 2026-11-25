@@ -111,7 +111,8 @@ function unidad(cod) {
      <button type="button" class="ox-marcar" aria-pressed="${marcas.has(u.codigo)}">${ICONO.marca}${marcas.has(u.codigo) ? 'Página marcada' : 'Marcar esta página'}</button>
      <div class="ox-componente">${u.html}</div>
      ${u.problema ? `<div class="ox-componente">${problema(u)}</div>` : ''}
-     <div class="ox-pie">${ant ? `<button class="ox-boton sec" type="button" data-ir="${ant.u.codigo}">← Anterior</button>` : '<span></span>'}${sig ? `<button class="ox-boton" type="button" data-ir="${sig.u.codigo}">Siguiente →</button>` : ''}</div>
+     ${u.htmlCierre ? `<div class="ox-componente ox-sin-linea">${u.htmlCierre}</div>` : ''}
+     <div class="ox-pie"><button class="ox-nav" type="button" data-ir="${ant?.u.codigo ?? ''}" ${ant ? '' : 'disabled'}><span aria-hidden="true">‹</span> Anterior</button><button class="ox-nav" type="button" data-ir="${sig?.u.codigo ?? ''}" ${sig ? '' : 'disabled'}>Siguiente <span aria-hidden="true">›</span></button></div>
     </article></div>`;
     activarProblema(u);
   };
